@@ -6,11 +6,11 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
 
 framework:
     #esi:             ~
-    #translator:      { fallbacks: ["%locale%"] }
+    translator:      { fallbacks: ["%locale%"] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -78,3 +78,29 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+
+
+# Fos User
+fos_user:
+    db_driver: orm
+    firewall_name: admin
+    user_class: UserBundle\Entity\AdminUser
+    group:
+        group_class: UserBundle\Entity\AdminGroup
+    registration:
+        confirmation:
+            enabled:    false # change to true for required email confirmation
+            from_email: # Use this node only if you don't want the global email address for the confirmation email
+                address: %contact_email%
+                sender_name: %contact_name%
+    resetting:
+        token_ttl: 86400
+        email:
+            from_email: # Use this node only if you don't want the global email address for the resetting email
+                address: %contact_email%
+                sender_name: %contact_name%
+        form:
+            type:               fos_user_resetting
+            name:               fos_user_resetting_form
+            validation_groups:  [ResetPassword, Default]
