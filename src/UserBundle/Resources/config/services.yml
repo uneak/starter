@@ -1,4 +1,8 @@
+parameters:
+    uneak.oauth.user.provider.class: UserBundle\Security\Provider\OAuthUserProvider
+
 services:
-#    user.example:
-#        class: UserBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    uneak.oauth.user.provider:
+        class: %uneak.oauth.user.provider.class%
+        arguments:
+            - @doctrine.orm.entity_manager

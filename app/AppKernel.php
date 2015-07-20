@@ -19,6 +19,7 @@
 				new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
 				// USER,
 				new FOS\UserBundle\FOSUserBundle(),
+				new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
 				// OWN,
 				new AppBundle\AppBundle(),
             new UserBundle\UserBundle(),
@@ -29,6 +30,7 @@
 				$bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
 				$bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
 				$bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+				$bundles[] = new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle();
 			}
 
 			return $bundles;

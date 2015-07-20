@@ -4,6 +4,7 @@ security:
 
     encoders:
         FOS\UserBundle\Model\UserInterface: bcrypt
+        UserBundle\Entity\User: bcrypt
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
@@ -42,8 +43,24 @@ security:
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
 
 
+        secured_area:
+            anonymous: ~
+            oauth:
+                resource_owners:
+                    facebook: "/login/check-facebook"
+
+                login_path: /login
+                use_forward: false
+                failure_path: /login
+
+                oauth_user_provider:
+                    service: uneak.oauth.user.provider
+
+
     access_control:
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

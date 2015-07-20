@@ -20,3 +20,6 @@ parameters:
 
     contact_name: Marc Galoyer
     contact_email: contact@uneak.fr
+
+    facebook_client_id: 123
+    facebook_client_secret: 123

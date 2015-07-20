@@ -104,3 +104,21 @@ fos_user:
             type:               fos_user_resetting
             name:               fos_user_resetting_form
             validation_groups:  [ResetPassword, Default]
+
+
+# HWI Oauth
+hwi_oauth:
+    firewall_name: secured_area
+    http_client:
+        timeout:       10 # Time in seconds, after library will shutdown request, by default: 5
+        verify_peer:   true # Setting allowing you to turn off SSL verification, by default: true
+        ignore_errors: true # Setting allowing you to easier debug request errors, by default: true
+        max_redirects: 5 # Number of HTTP redirection request after which library will shutdown request,
+                         # by default: 5
+    resource_owners:
+        facebook:
+            type:                facebook
+            client_id:           %facebook_client_id%
+            client_secret:       %facebook_client_secret%
+            scope:               "email,public_profile,user_friends"
+            infos_url:           https://graph.facebook.com/me?fields=id,first_name,last_name,email,birthday,picture.type(square)
