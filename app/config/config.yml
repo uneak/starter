@@ -85,25 +85,60 @@ swiftmailer:
 fos_user:
     db_driver: orm
     firewall_name: admin
-    user_class: UserBundle\Entity\AdminUser
-    group:
-        group_class: UserBundle\Entity\AdminGroup
-    registration:
-        confirmation:
-            enabled:    false # change to true for required email confirmation
-            from_email: # Use this node only if you don't want the global email address for the confirmation email
-                address: %contact_email%
-                sender_name: %contact_name%
-    resetting:
-        token_ttl: 86400
-        email:
-            from_email: # Use this node only if you don't want the global email address for the resetting email
-                address: %contact_email%
-                sender_name: %contact_name%
-        form:
-            type:               fos_user_resetting
-            name:               fos_user_resetting_form
-            validation_groups:  [ResetPassword, Default]
+    user_class: UserBundle\Entity\User
+    service:
+        user_manager: pugx_user_manager
+
+#    group:
+#        group_class: UserBundle\Entity\AdminGroup
+#    registration:
+#        confirmation:
+#            enabled:    false # change to true for required email confirmation
+#            from_email: # Use this node only if you don't want the global email address for the confirmation email
+#                address: %contact_email%
+#                sender_name: %contact_name%
+#    resetting:
+#        token_ttl: 86400
+#        email:
+#            from_email: # Use this node only if you don't want the global email address for the resetting email
+#                address: %contact_email%
+#                sender_name: %contact_name%
+#        form:
+#            type:               fos_user_resetting
+#            name:               fos_user_resetting_form
+#            validation_groups:  [ResetPassword, Default]
+
+
+pugx_multi_user:
+    users:
+        user_admin:
+            entity:
+                class: UserBundle\Entity\UserAdmin
+#          factory:
+#        registration:
+#          form:
+#            type: UserBundle\Form\Type\UserUserType
+#            name: fos_user_registration_form
+#            validation_groups:  [Registration, Default]
+#          template: UserBundle:Registration:user_user.form.html.twig
+#        profile:
+#          form:
+#            type: Acme\UserBundle\Form\Type\ProfileUserOneFormType
+#            name: fos_user_profile_form
+#            validation_groups:  [Profile, Default]
+        user_user:
+            entity:
+                class: UserBundle\Entity\UserUser
+            registration:
+                form:
+                    type: UserBundle\Form\Type\UserUserType
+                    name: fos_user_registration_form
+                    validation_groups:  [Registration, Default]
+                template: UserBundle:Registration:user_user.html.twig
+      #        profile:
+      #          form:
+      #            type: Acme\UserBundle\Form\Type\ProfileUserTwoFormType
+
 
 
 # HWI Oauth

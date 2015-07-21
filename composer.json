@@ -22,6 +22,7 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "friendsofsymfony/user-bundle": "~2.0@dev",
+        "pugx/multi-user-bundle": "3.0.*@dev",
         "hwi/oauth-bundle": "0.4.*@dev"
     },
     "require-dev": {

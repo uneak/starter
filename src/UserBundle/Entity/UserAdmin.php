@@ -3,17 +3,19 @@
 	namespace UserBundle\Entity;
 
 	use Doctrine\ORM\Mapping as ORM;
-	use FOS\UserBundle\Model\User as BaseUser;
+    use PUGX\MultiUserBundle\Validator\Constraints\UniqueEntity;
 
 
 	/**
 	 * User
 	 *
-	 * @ORM\Table(name="Admin_User")
-	 * @ORM\Entity(repositoryClass="UserBundle\Entity\AdminUserRepository")
+	 * @ORM\Table(name="User_Admin")
+	 * @ORM\Entity(repositoryClass="UserBundle\Entity\UserAdminRepository")
+     * @UniqueEntity(fields = "username", targetClass = "UserBundle\Entity\User", message="fos_user.username.already_used")
+     * @UniqueEntity(fields = "email", targetClass = "UserBundle\Entity\User", message="fos_user.email.already_used")
 	 *
 	 */
-	class AdminUser extends BaseUser {
+	class UserAdmin extends User {
 
 		/**
 		 * @var integer
