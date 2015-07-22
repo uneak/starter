@@ -6,17 +6,14 @@
 	use FOS\UserBundle\Model\User as BaseUser;
 
 
-    /**
-     * user
-     *
-     * @ORM\Entity
-     * @ORM\Table(name="User")
-     * @ORM\InheritanceType("JOINED")
-     * @ORM\DiscriminatorColumn(name="type", type="string")
-     * @ORM\DiscriminatorMap({"user_admin" = "UserAdmin", "user_user" = "UserUser"})
-     *
-     */
-    abstract class User extends BaseUser {
+	/**
+	 * User
+	 *
+	 * @ORM\Table(name="User")
+	 * @ORM\Entity(repositoryClass="UserBundle\Entity\UserRepository")
+	 *
+	 */
+	class User extends BaseUser {
 
 		/**
 		 * @var integer
@@ -27,5 +24,21 @@
 		 */
 		protected $id;
 
+
+		/**
+		 * @ORM\ManyToMany(targetEntity="UserBundle\Entity\Group")
+		 * @ORM\JoinTable(name="UserGroup",
+		 *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+		 *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
+		 * )
+		 */
+		protected $groups;
+
+
+
+		public function __construct() {
+			parent::__construct();
+			// your own logic
+		}
 
 	}

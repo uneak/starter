@@ -3,19 +3,17 @@
 	namespace UserBundle\Entity;
 
 	use Doctrine\ORM\Mapping as ORM;
-    use PUGX\MultiUserBundle\Validator\Constraints\UniqueEntity;
+	use FOS\UserBundle\Model\User as BaseUser;
 
 
 	/**
-	 * User
+	 * Member
 	 *
-	 * @ORM\Table(name="User_User")
-	 * @ORM\Entity(repositoryClass="UserBundle\Entity\UserUserRepository")
-     * @UniqueEntity(fields = "username", targetClass = "UserBundle\Entity\User", message="fos_user.username.already_used")
-     * @UniqueEntity(fields = "email", targetClass = "UserBundle\Entity\User", message="fos_user.email.already_used")
+	 * @ORM\Table(name="Member")
+	 * @ORM\Entity(repositoryClass="UserBundle\Entity\MemberRepository")
 	 *
 	 */
-	class UserUser extends User {
+	class Member extends BaseUser {
 
 		/**
 		 * @var integer
@@ -27,17 +25,17 @@
 		protected $id;
 
         /**
-         * @ORM\Column(name="facebook_id", type="string", length=64)
+         * @ORM\Column(name="facebook_id", type="string", length=64, nullable=true)
          */
         protected $facebookId;
 
         /**
-         * @ORM\Column(name="google_id", type="string", length=64)
+         * @ORM\Column(name="google_id", type="string", length=64, nullable=true)
          */
         protected $googleId;
 
         /**
-         * @ORM\Column(name="twitter_id", type="string", length=64)
+         * @ORM\Column(name="twitter_id", type="string", length=64, nullable=true)
          */
         protected $twitterId;
 

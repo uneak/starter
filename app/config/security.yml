@@ -4,7 +4,6 @@ security:
 
     encoders:
         FOS\UserBundle\Model\UserInterface: bcrypt
-        UserBundle\Entity\User: bcrypt
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
@@ -15,6 +14,9 @@ security:
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username
+
+#        uneak_member:
+#            id: uneak.user_provider.username
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs

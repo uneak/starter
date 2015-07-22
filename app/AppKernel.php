@@ -18,7 +18,6 @@
 				// DATABASE,
 				new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
 				// USER,
-                new PUGX\MultiUserBundle\PUGXMultiUserBundle(),
 				new FOS\UserBundle\FOSUserBundle(),
 				new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
 				// OWN,

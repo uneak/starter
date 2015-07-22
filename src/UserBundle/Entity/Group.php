@@ -8,11 +8,11 @@
 	/**
 	 * User
 	 *
-	 * @ORM\Table(name="Admin_Group")
-	 * @ORM\Entity(repositoryClass="UserBundle\Entity\AdminGroupRepository")
+	 * @ORM\Table(name="Group")
+	 * @ORM\Entity(repositoryClass="UserBundle\Entity\GroupRepository")
 	 *
 	 */
-	class AdminGroup extends BaseGroup {
+	class Group extends BaseGroup {
 
 		/**
 		 * @var integer

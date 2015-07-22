@@ -21,7 +21,7 @@
 
 		public function __construct(EntityManager $em) {
 			$this->em = $em;
-			$this->repository = $em->getRepository("UserBundle:User");
+			$this->repository = $em->getRepository("UserBundle:Member");
 		}
 
 		/**
@@ -94,6 +94,6 @@
 		 * {@inheritdoc}
 		 */
 		public function supportsClass($class) {
-			return $class === 'UserBundle\\Entity\\User' || is_subclass_of($class, 'UserBundle\\Entity\\User');
+			return $class === 'UserBundle\\Entity\\Member' || is_subclass_of($class, 'UserBundle\\Entity\\Member');
 		}
 	}

@@ -1,8 +1,20 @@
 parameters:
     uneak.oauth.user.provider.class: UserBundle\Security\Provider\OAuthUserProvider
+    uneak.member_manager.class: FOS\UserBundle\Doctrine\UserManager
+    uneak.member_manager.class: FOS\UserBundle\Doctrine\UserManager
 
 services:
     uneak.oauth.user.provider:
         class: %uneak.oauth.user.provider.class%
         arguments:
             - @doctrine.orm.entity_manager
+
+    uneak.member_manager:
+        class: %uneak.member_manager.class%
+        arguments:
+            - @security.encoder_factory
+            - @fos_user.util.username_canonicalizer
+            - @fos_user.util.email_canonicalizer
+            - @fos_user.entity_manager
+            - "UserBundle\Entity\Member"
+
