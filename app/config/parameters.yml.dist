@@ -23,3 +23,9 @@ parameters:
 
     facebook_client_id: 123
     facebook_client_secret: 123
+
+    google_client_id: 123
+    google_client_secret: 123
+
+    twitter_client_id: 123
+    twitter_client_secret: 123

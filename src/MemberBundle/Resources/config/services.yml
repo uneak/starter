@@ -1,0 +1,46 @@
+parameters:
+    uneak.member_manager.class: FOS\UserBundle\Doctrine\UserManager
+    uneak.member_provider.class: MemberBundle\Security\MemberProvider
+    uneak.member_provider.username.class: FOS\UserBundle\Security\UserProvider
+    uneak.member_provider.username_email.class: FOS\UserBundle\Security\EmailUserProvider
+    uneak.member_registration.form.type.class: MemberBundle\Form\Type\RegistrationFormType
+    uneak.member_registration.form.handler.class: MemberBundle\Form\Handler\MemberRegistrationFormHandler
+
+services:
+    uneak.member_provider:
+        class: %uneak.member_provider.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @uneak.member_manager
+
+    uneak.member_manager:
+        class: %uneak.member_manager.class%
+        arguments:
+            - @security.encoder_factory
+            - @fos_user.util.username_canonicalizer
+            - @fos_user.util.email_canonicalizer
+            - @fos_user.entity_manager
+            - "MemberBundle\Entity\Member"
+
+    uneak.member_provider.username:
+        class: %uneak.member_provider.username.class%
+        arguments:
+            - @uneak.member_manager
+
+    uneak.member_provider.username_email:
+        class: %uneak.member_provider.username_email.class%
+        arguments:
+            - @uneak.member_manager
+
+    uneak.member_registration.form.type:
+        class: %uneak.member_registration.form.type.class%
+        tags:
+          - { name: form.type, alias: uneak_member_registration }
+
+
+    uneak.member_registration.form.handler:
+        class: %uneak.member_registration.form.handler.class%
+        arguments:
+            - @uneak.member_manager
+            - @fos_user.mailer
+            - @fos_user.util.token_generator

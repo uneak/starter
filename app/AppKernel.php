@@ -22,7 +22,7 @@
 				new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
 				// OWN,
 				new AppBundle\AppBundle(),
-            new UserBundle\UserBundle(),
+            	new MemberBundle\MemberBundle(),
 			);
 
 			if (in_array($this->getEnvironment(), array('dev', 'test'))) {

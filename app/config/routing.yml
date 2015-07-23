@@ -13,28 +13,33 @@ app:
 #    prefix: /admin/group
 
 uneak_member:
-    resource: "@UserBundle/Resources/config/routing_member.yml"
+    resource: "@MemberBundle/Resources/config/routing_member.yml"
     prefix: /
 
 
 # HWI Oauth User
 hwi_oauth_connect:
     path: /connect
-    defaults: { _controller: UserBundle:Connect:connect }
+    defaults: { _controller: MemberBundle:Connect:connect }
 
 hwi_oauth_connect_service:
     path: /connect/service/{service}
-    defaults: { _controller: UserBundle:Connect:connectService }
+    defaults: { _controller: MemberBundle:Connect:connectService }
 
 hwi_oauth_connect_registration:
     path: /connect/registration/{key}
-    defaults: { _controller: UserBundle:Connect:registration }
+    defaults: { _controller: MemberBundle:Connect:registration }
 
 hwi_oauth_service_redirect:
     path: /connect/{service}
-    defaults: { _controller: UserBundle:Connect:redirectToService }
+    defaults: { _controller: MemberBundle:Connect:redirectToService }
 
 facebook_login:
     path: /connect/check-facebook
 
+google_login:
+    pattern: /connect/check-google
 
+
+twitter_login:
+    pattern: /connect/check-twitter

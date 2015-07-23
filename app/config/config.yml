@@ -86,9 +86,9 @@ swiftmailer:
 fos_user:
     db_driver: orm
     firewall_name: admin
-    user_class: UserBundle\Entity\User
+    user_class: MemberBundle\Entity\User
     group:
-        group_class: UserBundle\Entity\AdminGroup
+        group_class: MemberBundle\Entity\AdminGroup
     registration:
         confirmation:
             enabled:    false # change to true for required email confirmation
@@ -125,12 +125,43 @@ hwi_oauth:
             client_secret:       %facebook_client_secret%
             scope:               "email,public_profile,user_friends"
             infos_url:           https://graph.facebook.com/me?fields=id,first_name,last_name,email,birthday,picture.type(large)
+            user_response_class: HWI\Bundle\OAuthBundle\OAuth\Response\PathUserResponse
             paths:
                 identifier: id
                 firstname: first_name
                 lastname: last_name
+                realname: ["first_name", "last_name"]
+                nickname: ["first_name", "last_name"]
                 email: email
                 profilepicture: picture.data.url
+
+        google:
+            type:                google
+            client_id:           %google_client_id%
+            client_secret:       %google_client_secret%
+            scope:               "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+            paths:
+                identifier: id
+                firstname: given_name
+                lastname: family_name
+                realname: name
+                nickname: name
+                email: email
+                profilepicture: picture
+
+        twitter:
+            type:                twitter
+            client_id:           %twitter_client_id%
+            client_secret:       %twitter_client_secret%
+#            scope:               "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+            paths:
+                identifier: id
+#                firstname: given_name
+#                lastname: family_name
+#                realname: name
+                nickname: name
+                email: email
+                profilepicture: profile_image_url
 
     connect:
         confirmation: false
