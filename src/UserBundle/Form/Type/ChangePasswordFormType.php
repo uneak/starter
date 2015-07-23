@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace FOS\UserBundle\Form\Type;
+namespace UserBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -54,6 +54,6 @@ class ChangePasswordFormType extends AbstractType
 
     public function getName()
     {
-        return 'fos_user_change_password';
+        return 'uneak_member_change_password';
     }
 }

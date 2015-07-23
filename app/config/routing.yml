@@ -3,29 +3,38 @@ app:
     type:     annotation
 
 
+
+
+
+
 # FOS User
 #fos_user_group:
 #    resource: "@FOSUserBundle/Resources/config/routing/group.xml"
 #    prefix: /admin/group
 
-
-fos_user_group:
+uneak_member:
     resource: "@UserBundle/Resources/config/routing_member.yml"
     prefix: /
 
 
-
-
-
-
 # HWI Oauth User
-hwi_oauth_redirect:
-    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
-    prefix:   /connect
+hwi_oauth_connect:
+    path: /connect
+    defaults: { _controller: UserBundle:Connect:connect }
 
-hwi_oauth_login:
-    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
-    prefix:   /login
+hwi_oauth_connect_service:
+    path: /connect/service/{service}
+    defaults: { _controller: UserBundle:Connect:connectService }
+
+hwi_oauth_connect_registration:
+    path: /connect/registration/{key}
+    defaults: { _controller: UserBundle:Connect:registration }
+
+hwi_oauth_service_redirect:
+    path: /connect/{service}
+    defaults: { _controller: UserBundle:Connect:redirectToService }
 
 facebook_login:
-    path: /login/check-facebook
+    path: /connect/check-facebook
+
+

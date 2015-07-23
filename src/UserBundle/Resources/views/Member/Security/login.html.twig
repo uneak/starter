@@ -9,7 +9,7 @@
 
 <form action="{{ path("member_security_check") }}" method="post">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-ADMIN
+
     <label for="username">{{ 'security.login.username'|trans }}</label>
     <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
 
@@ -21,4 +21,12 @@ ADMIN
 
     <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
 </form>
+
+    {% if error is defined and error %}
+        {#<span>{{ error }}</span>#}
+    {% endif %}
+    {% for owner in hwi_oauth_resource_owners() %}
+        <a href="{{ hwi_oauth_login_url(owner) }}">{{ owner | trans({}, 'HWIOAuthBundle') }}</a> <br />
+    {% endfor %}
+
 {% endblock member_content %}

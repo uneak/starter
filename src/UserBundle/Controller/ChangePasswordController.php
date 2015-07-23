@@ -20,6 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use UserBundle\Form\Type\ChangePasswordFormType;
 
 /**
  * Controller managing the password change
@@ -49,11 +50,9 @@ class ChangePasswordController extends Controller
             return $event->getResponse();
         }
 
-        /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
-        $formFactory = $this->get('fos_user.change_password.form.factory');
 
-        $form = $formFactory->createForm();
-        $form->setData($user);
+
+        $form = $this->createForm(new ChangePasswordFormType(), $user);
 
         $form->handleRequest($request);
 

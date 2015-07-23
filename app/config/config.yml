@@ -113,7 +113,7 @@ fos_user:
 hwi_oauth:
     firewall_name: secured_area
     http_client:
-        timeout:       10 # Time in seconds, after library will shutdown request, by default: 5
+        timeout:       60 # Time in seconds, after library will shutdown request, by default: 5
         verify_peer:   true # Setting allowing you to turn off SSL verification, by default: true
         ignore_errors: true # Setting allowing you to easier debug request errors, by default: true
         max_redirects: 5 # Number of HTTP redirection request after which library will shutdown request,
@@ -124,4 +124,22 @@ hwi_oauth:
             client_id:           %facebook_client_id%
             client_secret:       %facebook_client_secret%
             scope:               "email,public_profile,user_friends"
-            infos_url:           https://graph.facebook.com/me?fields=id,first_name,last_name,email,birthday,picture.type(square)
+            infos_url:           https://graph.facebook.com/me?fields=id,first_name,last_name,email,birthday,picture.type(large)
+            paths:
+                identifier: id
+                firstname: first_name
+                lastname: last_name
+                email: email
+                profilepicture: picture.data.url
+
+    connect:
+        confirmation: false
+        account_connector: uneak.member_provider
+        registration_form: uneak.member_registration.form.type
+        registration_form_handler: uneak.member_registration.form.handler
+
+#    fosub:
+#        username_iterations: 30
+#        properties:
+#            facebook: facebook_id
+#            google: google_id

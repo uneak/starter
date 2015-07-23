@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace FOS\UserBundle\Form\Type;
+namespace UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -49,7 +49,7 @@ class ProfileFormType extends AbstractType
 
     public function getName()
     {
-        return 'fos_user_profile';
+        return 'uneak_member_profile';
     }
 
     /**

@@ -25,9 +25,15 @@
 		protected $id;
 
         /**
-         * @ORM\Column(name="facebook_id", type="string", length=64, nullable=true)
+         * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
          */
         protected $facebookId;
+
+        /**
+         * @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true)
+         */
+        protected $facebookAccessToken;
+
 
         /**
          * @ORM\Column(name="google_id", type="string", length=64, nullable=true)

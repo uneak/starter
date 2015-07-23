@@ -11,6 +11,7 @@
 
 namespace UserBundle\Controller;
 
+use UserBundle\Form\Type\ProfileFormType;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
@@ -63,11 +64,8 @@ class ProfileController extends Controller
             return $event->getResponse();
         }
 
-        /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
-        $formFactory = $this->get('fos_user.profile.form.factory');
 
-        $form = $formFactory->createForm();
-        $form->setData($user);
+        $form = $this->createForm(new ProfileFormType(), $user);
 
         $form->handleRequest($request);
 

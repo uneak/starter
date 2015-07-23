@@ -97,7 +97,6 @@ class RegistrationController extends Controller
      */
     public function confirmAction(Request $request, $token)
     {
-        /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
         $userManager = $this->get('uneak.member_manager');
 
         $user = $userManager->findUserByConfirmationToken($token);
@@ -106,7 +105,7 @@ class RegistrationController extends Controller
             throw new NotFoundHttpException(sprintf('The user with confirmation token "%s" does not exist', $token));
         }
 
-        /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
+
         $dispatcher = $this->get('event_dispatcher');
 
         $user->setConfirmationToken(null);

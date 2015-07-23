@@ -1,6 +1,6 @@
 <?php
 
-namespace FOS\UserBundle\Form\Type;
+namespace UserBundle\Form\Type;
 
 use FOS\UserBundle\Form\DataTransformer\UserToUsernameTransformer;
 use Symfony\Component\Form\AbstractType;
@@ -49,6 +49,6 @@ class UsernameFormType extends AbstractType
      */
     public function getName()
     {
-        return 'fos_user_username';
+        return 'uneak_member_username';
     }
 }
