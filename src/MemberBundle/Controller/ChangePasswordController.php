@@ -1,20 +1,8 @@
 <?php
 
-	/*
-	 * This file is part of the FOSUserBundle package.
-	 *
-	 * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
-	 *
-	 * For the full copyright and license information, please view the LICENSE
-	 * file that was distributed with this source code.
-	 */
 
 	namespace MemberBundle\Controller;
 
-	use FOS\UserBundle\FOSUserEvents;
-	use FOS\UserBundle\Event\FormEvent;
-	use FOS\UserBundle\Event\FilterUserResponseEvent;
-	use FOS\UserBundle\Event\GetResponseUserEvent;
 	use FOS\UserBundle\Model\UserInterface;
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 	use Symfony\Component\HttpFoundation\Request;
@@ -22,12 +10,6 @@
 	use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 	use MemberBundle\Form\Type\ChangePasswordFormType;
 
-	/**
-	 * Controller managing the password change
-	 *
-	 * @author Thibault Duplessis <thibault.duplessis@gmail.com>
-	 * @author Christophe Coevoet <stof@notk.org>
-	 */
 	class ChangePasswordController extends Controller {
 		/**
 		 * Change user password
@@ -38,38 +20,14 @@
 				throw new AccessDeniedException('This user does not have access to this section.');
 			}
 
-			/** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
-			$dispatcher = $this->get('event_dispatcher');
-
-			$event = new GetResponseUserEvent($user, $request);
-			$dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_INITIALIZE, $event);
-
-			if (null !== $event->getResponse()) {
-				return $event->getResponse();
-			}
-
-
 			$form = $this->createForm(new ChangePasswordFormType(), $user);
-
 			$form->handleRequest($request);
 
 			if ($form->isValid()) {
-				/** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
 				$userManager = $this->get('uneak.member_manager');
-
-				$event = new FormEvent($form, $request);
-				$dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_SUCCESS, $event);
-
 				$userManager->updateUser($user);
-
-				if (null === $response = $event->getResponse()) {
-					$url = $this->generateUrl('member_profile_show');
-					$response = new RedirectResponse($url);
-				}
-
-				$dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-
-				return $response;
+				$url = $this->generateUrl('member_profile_show');
+				return new RedirectResponse($url);
 			}
 
 			return $this->render('MemberBundle:Member/ChangePassword:changePassword.html.twig', array(

@@ -51,37 +51,15 @@
 				throw new AccessDeniedException('This user does not have access to this section.');
 			}
 
-			/** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
-			$dispatcher = $this->get('event_dispatcher');
-
-			$event = new GetResponseUserEvent($user, $request);
-			$dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_INITIALIZE, $event);
-
-			if (null !== $event->getResponse()) {
-				return $event->getResponse();
-			}
-
-
 			$form = $this->createForm(new ProfileFormType(), $user);
-
 			$form->handleRequest($request);
 
 			if ($form->isValid()) {
 				/** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
 				$userManager = $this->get('uneak.member_manager');
-
-				$event = new FormEvent($form, $request);
-				$dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_SUCCESS, $event);
-
 				$userManager->updateUser($user);
-
-				if (null === $response = $event->getResponse()) {
-					$url = $this->generateUrl('member_profile_show');
-					$response = new RedirectResponse($url);
-				}
-
-				$dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-
+				$url = $this->generateUrl('member_profile_show');
+				$response = new RedirectResponse($url);
 				return $response;
 			}
 

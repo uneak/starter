@@ -43,14 +43,7 @@
 			// last username entered by the user
 			$lastUsername = (null === $session) ? '' : $session->get($lastUsernameKey);
 
-			if ($this->has('security.csrf.token_manager')) {
-				$csrfToken = $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue();
-			} else {
-				// BC for SF < 2.4
-				$csrfToken = $this->has('form.csrf_provider')
-					? $this->get('form.csrf_provider')->generateCsrfToken('authenticate')
-					: null;
-			}
+			$csrfToken = $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue();
 
 			return $this->renderLogin(array(
 				'last_username' => $lastUsername,

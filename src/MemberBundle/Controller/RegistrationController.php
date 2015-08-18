@@ -34,36 +34,16 @@
 		public function registerAction(Request $request) {
 			/** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
 			$userManager = $this->get('uneak.member_manager');
-			/** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
-			$dispatcher = $this->get('event_dispatcher');
-
 
 			$user = $userManager->createUser();
 			$user->setEnabled(true);
-
-			$event = new GetResponseUserEvent($user, $request);
-			$dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
-
-			if (null !== $event->getResponse()) {
-				return $event->getResponse();
-			}
-
 			$form = $this->createForm(new RegistrationFormType(), $user);
-
 			$form->handleRequest($request);
 
 			if ($form->isValid()) {
-				$event = new FormEvent($form, $request);
-				$dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
-
 				$userManager->updateUser($user);
-
-				if (null === $response = $event->getResponse()) {
-					$url = $this->generateUrl('member_registration_confirmed');
-					$response = new RedirectResponse($url);
-				}
-
-				$dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+				$url = $this->generateUrl('member_registration_confirmed');
+				$response = new RedirectResponse($url);
 
 				return $response;
 			}
@@ -102,23 +82,11 @@
 				throw new NotFoundHttpException(sprintf('The user with confirmation token "%s" does not exist', $token));
 			}
 
-
-			$dispatcher = $this->get('event_dispatcher');
-
 			$user->setConfirmationToken(null);
 			$user->setEnabled(true);
-
-			$event = new GetResponseUserEvent($user, $request);
-			$dispatcher->dispatch(FOSUserEvents::REGISTRATION_CONFIRM, $event);
-
 			$userManager->updateUser($user);
-
-			if (null === $response = $event->getResponse()) {
-				$url = $this->generateUrl('member_registration_confirmed');
-				$response = new RedirectResponse($url);
-			}
-
-			$dispatcher->dispatch(FOSUserEvents::REGISTRATION_CONFIRMED, new FilterUserResponseEvent($user, $request, $response));
+			$url = $this->generateUrl('member_registration_confirmed');
+			$response = new RedirectResponse($url);
 
 			return $response;
 		}

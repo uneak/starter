@@ -28,11 +28,6 @@
 	use Symfony\Component\Security\Http\SecurityEvents;
 	use MemberBundle\Form\Type\RegistrationFormType;
 
-	/**
-	 * ConnectController
-	 *
-	 * @author Alexander <iam.asm89@gmail.com>
-	 */
 	class ConnectController extends ContainerAware {
 		/**
 		 * Action that handles the login 'form'. If connecting is enabled the
@@ -107,16 +102,8 @@
 				->getResourceOwnerByName($error->getResourceOwnerName())
 				->getUserInformation($error->getRawToken());
 
-			// enable compatibility with FOSUserBundle 1.3.x and 2.x
-			//        if (interface_exists('FOS\UserBundle\Form\Factory\FactoryInterface')) {
-			//            $form = $this->container->get('hwi_oauth.registration.form.factory')->createForm();
-			//        } else {
-
 
 			$form = $this->container->get('form.factory')->create(new RegistrationFormType(), null, array());
-			//                $this->container->get('hwi_oauth.registration.form');
-			//        }
-
 
 			$formHandler = $this->container->get('hwi_oauth.registration.form.handler');
 			if ($formHandler->process($request, $form, $userInformation)) {
