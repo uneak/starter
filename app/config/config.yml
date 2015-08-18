@@ -67,10 +67,52 @@ doctrine:
         #   3. Uncomment next line:
         #     path:     "%database_path%"
 
+
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
+
+        entity_managers:
+            default:
+                auto_mapping: true
+                mappings:
+
+                    gedmo_translatable:
+                        type: annotation
+                        prefix: Gedmo\Translatable\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+                        alias: GedmoTranslatable # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
+                    gedmo_translator:
+                        type: annotation
+                        prefix: Gedmo\Translator\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translator/Entity"
+                        alias: GedmoTranslator # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
+                    gedmo_loggable:
+                        type: annotation
+                        prefix: Gedmo\Loggable\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Loggable/Entity"
+                        alias: GedmoLoggable # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
+                    gedmo_tree:
+                        type: annotation
+                        prefix: Gedmo\Tree\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
+                        alias: GedmoTree # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
+
+stof_doctrine_extensions:
+    default_locale: "%locale%"
+
+    orm:
+        default:
+            tree: false
+            timestampable: false
+            sluggable: false
+            uploadable: false
+
+
+
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -86,9 +128,9 @@ swiftmailer:
 fos_user:
     db_driver: orm
     firewall_name: admin
-    user_class: MemberBundle\Entity\User
+    user_class: UserBundle\Entity\User
     group:
-        group_class: MemberBundle\Entity\AdminGroup
+        group_class: UserBundle\Entity\Group
     registration:
         confirmation:
             enabled:    false # change to true for required email confirmation
@@ -174,3 +216,69 @@ hwi_oauth:
 #        properties:
 #            facebook: facebook_id
 #            google: google_id
+
+
+
+# Liip Imagine
+liip_imagine:
+    resolvers:
+        default:
+            web_path:
+                web_root: %kernel.root_dir%/../web
+                cache_prefix: uploads/cache
+
+    loaders:
+        default:
+            filesystem:
+                data_root: %kernel.root_dir%/../web
+
+
+    driver: gd
+    cache: default
+    data_loader: default
+    controller:
+        filter_action:  liip_imagine.controller:filterAction
+        filter_runtime_action: liip_imagine.controller:filterRuntimeAction
+
+    filter_sets:
+        cache: ~
+
+        thumbs:
+            quality: 100
+            filters:
+                upscale: { min: [100, 100] }
+                thumbnail: { size: [100, 100], mode: outbound }
+
+        avatar:
+            quality: 100
+            filters:
+                upscale: { min: [29, 29] }
+                thumbnail: { size: [29, 29], mode: outbound }
+
+
+# Bower
+sp_bower:
+    install_on_warmup: true
+    allow_root: true
+    bundles:
+        AppBundle:
+            config_dir: %kernel.root_dir%/../app/config
+            asset_dir: %kernel.root_dir%/../web/vendor
+            json_file: bower.json
+            cache: %kernel.root_dir%/cache
+
+
+# Vich Uploader
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+
+        user_image:
+            uri_prefix:         /uploads/user
+            upload_destination: %kernel.root_dir%/../web/uploads/user
+            namer: vich_uploader.namer_uniqid
+
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true

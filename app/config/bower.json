@@ -1,0 +1,7 @@
+{
+	"name": "main",
+	"dependencies": {
+		"bootstrap": "latest",
+		"jquery": "latest"
+	}
+}

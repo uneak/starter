@@ -1,9 +1,10 @@
 <?php
 
-	namespace MemberBundle\Entity;
+	namespace UserBundle\Entity;
 
 	use Doctrine\ORM\EntityRepository;
 	use Doctrine\ORM\Query\Expr;
+	use Doctrine\ORM\QueryBuilder;
 
 	/**
 	 * UserRepository

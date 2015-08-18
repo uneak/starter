@@ -14,7 +14,6 @@
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 	use Symfony\Component\HttpFoundation\Request;
 	use Symfony\Component\Security\Core\Security;
-	use Symfony\Component\Security\Core\SecurityContextInterface;
 	use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 	class SecurityController extends Controller {
@@ -23,14 +22,9 @@
 			/** @var $session \Symfony\Component\HttpFoundation\Session\Session */
 			$session = $request->getSession();
 
-			if (class_exists('\Symfony\Component\Security\Core\Security')) {
-				$authErrorKey = Security::AUTHENTICATION_ERROR;
-				$lastUsernameKey = Security::LAST_USERNAME;
-			} else {
-				// BC for SF < 2.6
-				$authErrorKey = SecurityContextInterface::AUTHENTICATION_ERROR;
-				$lastUsernameKey = SecurityContextInterface::LAST_USERNAME;
-			}
+            $authErrorKey = Security::AUTHENTICATION_ERROR;
+            $lastUsernameKey = Security::LAST_USERNAME;
+
 
 			// get the error if any (works with forward and redirect -- see below)
 			if ($request->attributes->has($authErrorKey)) {

@@ -15,14 +15,20 @@
 				new Symfony\Bundle\AsseticBundle\AsseticBundle(),
 				new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
 				new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+                // FRONTAL,
+                new Sp\BowerBundle\SpBowerBundle(),
+                new Liip\ImagineBundle\LiipImagineBundle(),
 				// DATABASE,
-				new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+                new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+                new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+                new Vich\UploaderBundle\VichUploaderBundle(),
 				// USER,
 				new FOS\UserBundle\FOSUserBundle(),
 				new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
 				// OWN,
 				new AppBundle\AppBundle(),
             	new MemberBundle\MemberBundle(),
+                new UserBundle\UserBundle(),
 			);
 
 			if (in_array($this->getEnvironment(), array('dev', 'test'))) {

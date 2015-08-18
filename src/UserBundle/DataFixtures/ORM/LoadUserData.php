@@ -1,13 +1,13 @@
 <?php
 
-	namespace MemberBundle\DataFixtures\ORM;
+	namespace UserBundle\DataFixtures\ORM;
 
 	use Doctrine\Common\DataFixtures\FixtureInterface;
 	use Doctrine\Common\Persistence\ObjectManager;
 	use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 	use Symfony\Component\DependencyInjection\ContainerInterface;
 
-	class LoadMemberData implements FixtureInterface, ContainerAwareInterface {
+	class LoadUserData implements FixtureInterface, ContainerAwareInterface {
 
 		private $container;
 
@@ -27,6 +27,8 @@
 
 			$user = $userManager->createUser();
 			$user->setUsername('admin');
+//			$user->setFirstname('admin');
+//			$user->setLastname('admin');
 			$user->setEmail('contact@uneak.fr');
 			$user->setPlainPassword('admin');
 			$user->setEnabled(true);

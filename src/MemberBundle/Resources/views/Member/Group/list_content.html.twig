@@ -1,7 +1,0 @@
-<div class="member_group_list">
-    <ul>
-    {% for group in groups %}
-        <li><a href="{{ path('member_group_show', {'groupName': group.getName()} ) }}">{{ group.getName() }}</a></li>
-    {% endfor %}
-    </ul>
-</div>
