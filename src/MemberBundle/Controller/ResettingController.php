@@ -16,6 +16,7 @@
 	use FOS\UserBundle\Event\GetResponseUserEvent;
 	use FOS\UserBundle\Event\FilterUserResponseEvent;
 	use FOS\UserBundle\Model\UserInterface;
+	use MemberBundle\Form\Type\ResettingFormType;
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 	use Symfony\Component\HttpFoundation\Request;
 	use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -89,8 +90,6 @@
 		 * Reset user password
 		 */
 		public function resetAction(Request $request, $token) {
-			/** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
-			$formFactory = $this->get('fos_user.resetting.form.factory');
 			/** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
 			$userManager = $this->get('uneak.member_manager');
 
@@ -100,10 +99,9 @@
 				throw new NotFoundHttpException(sprintf('The user with "confirmation token" does not exist for value "%s"', $token));
 			}
 
-			$form = $formFactory->createForm();
-			$form->setData($user);
-
+			$form = $this->createForm(new ResettingFormType(), $user);
 			$form->handleRequest($request);
+
 
 			if ($form->isValid()) {
 				$userManager->updateUser($user);

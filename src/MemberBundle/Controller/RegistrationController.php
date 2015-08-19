@@ -32,7 +32,7 @@
 	class RegistrationController extends Controller {
 
 		public function registerAction(Request $request) {
-			/** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
+
 			$userManager = $this->get('uneak.member_manager');
 
 			$user = $userManager->createUser();
@@ -41,10 +41,35 @@
 			$form->handleRequest($request);
 
 			if ($form->isValid()) {
-				$userManager->updateUser($user);
-				$url = $this->generateUrl('member_registration_confirmed');
-				$response = new RedirectResponse($url);
 
+
+				$emailConfirm = true;
+				if ($emailConfirm) {
+
+					$tokenGenerator = $this->get("fos_user.util.token_generator");
+					$mailer = $this->get("fos_user.mailer");
+					$session = $this->get("session");
+
+
+					$user->setEnabled(false);
+					if (null === $user->getConfirmationToken()) {
+						$user->setConfirmationToken($tokenGenerator->generateToken());
+					}
+
+					$mailer->sendConfirmationEmailMessage($user);
+					$session->set('member_send_confirmation_email/email', $user->getEmail());
+
+					$url = $this->generateUrl('member_registration_check_email');
+					$response = new RedirectResponse($url);
+
+				} else {
+
+					$url = $this->generateUrl('member_registration_confirmed');
+					$response = new RedirectResponse($url);
+				}
+
+
+				$userManager->updateUser($user);
 				return $response;
 			}
 
@@ -57,7 +82,7 @@
 		 * Tell the user to check his email provider
 		 */
 		public function checkEmailAction() {
-			$email = $this->get('session')->get('fos_user_send_confirmation_email/email');
+			$email = $this->get('session')->get('member_send_confirmation_email/email');
 			$this->get('session')->remove('member_send_confirmation_email/email');
 			$user = $this->get('uneak.member_manager')->findUserByEmail($email);
 
