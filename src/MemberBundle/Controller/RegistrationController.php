@@ -47,7 +47,7 @@
 				if ($emailConfirm) {
 
 					$tokenGenerator = $this->get("fos_user.util.token_generator");
-					$mailer = $this->get("fos_user.mailer");
+					$mailer = $this->get("mailer");
 					$session = $this->get("session");
 
 
@@ -56,7 +56,40 @@
 						$user->setConfirmationToken($tokenGenerator->generateToken());
 					}
 
-					$mailer->sendConfirmationEmailMessage($user);
+
+					// SEND EMAIL
+
+
+					$url = $this->generateUrl('member_registration_confirm', array('token' => $user->getConfirmationToken()), true);
+					$rendered = $this->render('MemberBundle:Registration:email.txt.twig', array(
+						'user' => $user,
+						'confirmationUrl' =>  $url
+					));
+
+					$renderedLines = explode("\n", trim($rendered));
+					$subject = $renderedLines[0];
+					$body = implode("\n", array_slice($renderedLines, 1));
+
+					$message = \Swift_Message::newInstance()
+						->setSubject($subject)
+						->setFrom('mgaloyer@uneak.fr')
+						->setTo($user->getEmail())
+						->setBody($body);
+
+					$mailer->send($message);
+
+					//
+
+//					<argument key="confirmation.template">%fos_user.registration.confirmation.template%</argument>
+//                <argument key="resetting.template">%fos_user.resetting.email.template%</argument>
+//                <argument key="from_email" type="collection">
+//                    <argument key="confirmation">%fos_user.registration.confirmation.from_email%</argument>
+//                    <argument key="resetting">%fos_user.resetting.email.from_email%</argument>
+//                </argument>
+
+
+
+
 					$session->set('member_send_confirmation_email/email', $user->getEmail());
 
 					$url = $this->generateUrl('member_registration_check_email');
@@ -73,7 +106,7 @@
 				return $response;
 			}
 
-			return $this->render('MemberBundle:Member/Registration:register.html.twig', array(
+			return $this->render('MemberBundle:Registration:register.html.twig', array(
 				'form' => $form->createView(),
 			));
 		}
@@ -90,7 +123,7 @@
 				throw new NotFoundHttpException(sprintf('The user with email "%s" does not exist', $email));
 			}
 
-			return $this->render('MemberBundle:Member/Registration:checkEmail.html.twig', array(
+			return $this->render('MemberBundle:Registration:checkEmail.html.twig', array(
 				'user' => $user,
 			));
 		}
@@ -125,7 +158,7 @@
 				throw new AccessDeniedException('This user does not have access to this section.');
 			}
 
-			return $this->render('MemberBundle:Member/Registration:confirmed.html.twig', array(
+			return $this->render('MemberBundle:Registration:confirmed.html.twig', array(
 				'user' => $user,
 			));
 		}

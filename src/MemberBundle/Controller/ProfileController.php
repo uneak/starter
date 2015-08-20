@@ -37,7 +37,7 @@
 				throw new AccessDeniedException('This user does not have access to this section.');
 			}
 
-			return $this->render('MemberBundle:Member/Profile:show.html.twig', array(
+			return $this->render('MemberBundle:Profile:show.html.twig', array(
 				'user' => $user
 			));
 		}
@@ -63,7 +63,7 @@
 				return $response;
 			}
 
-			return $this->render('MemberBundle:Member/Profile:edit.html.twig', array(
+			return $this->render('MemberBundle:Profile:edit.html.twig', array(
 				'form' => $form->createView()
 			));
 		}

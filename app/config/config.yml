@@ -8,6 +8,12 @@ imports:
 parameters:
     locale: fr
 
+
+#templates:
+#    member_connect_login: HWIOAuthBundle:Connect:login.html.twig
+
+
+
 framework:
     #esi:             ~
     ide: "phpstorm://open?file=%%f&line=%%l"

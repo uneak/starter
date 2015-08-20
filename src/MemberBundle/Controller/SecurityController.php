@@ -61,7 +61,7 @@
 		 * @return \Symfony\Component\HttpFoundation\Response
 		 */
 		protected function renderLogin(array $data) {
-			return $this->render('MemberBundle:Member/Security:login.html.twig', $data);
+			return $this->render('MemberBundle:Security:login.html.twig', $data);
 		}
 
 		public function checkAction() {

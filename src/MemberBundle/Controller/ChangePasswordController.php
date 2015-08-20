@@ -30,7 +30,7 @@
 				return new RedirectResponse($url);
 			}
 
-			return $this->render('MemberBundle:Member/ChangePassword:changePassword.html.twig', array(
+			return $this->render('MemberBundle:ChangePassword:changePassword.html.twig', array(
 				'form' => $form->createView()
 			));
 		}

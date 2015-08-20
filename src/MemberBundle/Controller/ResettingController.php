@@ -33,7 +33,7 @@
 		 * Request reset user password: show form
 		 */
 		public function requestAction() {
-			return $this->render('MemberBundle:Member/Resetting:request.html.twig');
+			return $this->render('MemberBundle:Resetting:request.html.twig');
 		}
 
 		/**
@@ -46,13 +46,13 @@
 			$user = $this->get('uneak.member_manager')->findUserByUsernameOrEmail($username);
 
 			if (null === $user) {
-				return $this->render('MemberBundle:Member/Resetting:request.html.twig', array(
+				return $this->render('MemberBundle:Resetting:request.html.twig', array(
 					'invalid_username' => $username
 				));
 			}
 
 			if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
-				return $this->render('MemberBundle:Member/Resetting:passwordAlreadyRequested.html.twig');
+				return $this->render('MemberBundle:Resetting:passwordAlreadyRequested.html.twig');
 			}
 
 			if (null === $user->getConfirmationToken()) {
@@ -81,7 +81,7 @@
 				return new RedirectResponse($this->generateUrl('member_resetting_request'));
 			}
 
-			return $this->render('MemberBundle:Member/Resetting:checkEmail.html.twig', array(
+			return $this->render('MemberBundle:Resetting:checkEmail.html.twig', array(
 				'email' => $email,
 			));
 		}
@@ -111,7 +111,7 @@
 				return $response;
 			}
 
-			return $this->render('MemberBundle:Member/Resetting:reset.html.twig', array(
+			return $this->render('MemberBundle:Resetting:reset.html.twig', array(
 				'token' => $token,
 				'form'  => $form->createView(),
 			));
