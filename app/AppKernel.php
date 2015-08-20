@@ -25,10 +25,17 @@
 				// USER,
 				new FOS\UserBundle\FOSUserBundle(),
 				new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+				// UNEAK,
+				new Uneak\TemplatesManagerBundle\UneakTemplatesManagerBundle(),
+				new Uneak\AssetsManagerBundle\UneakAssetsManagerBundle(),
+				new Uneak\FormsManagerBundle\UneakFormsManagerBundle(),
+				new Uneak\BlocksManagerBundle\UneakBlocksManagerBundle(),
+				new Uneak\RoutesManagerBundle\UneakRoutesManagerBundle(),
 				// OWN,
 				new AppBundle\AppBundle(),
             	new MemberBundle\MemberBundle(),
                 new UserBundle\UserBundle(),
+
 			);
 
 			if (in_array($this->getEnvironment(), array('dev', 'test'))) {

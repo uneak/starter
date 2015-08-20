@@ -1,0 +1,3 @@
+uneak_templates_manager_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: UneakTemplatesManagerBundle:Default:index }

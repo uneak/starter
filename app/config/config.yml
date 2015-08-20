@@ -9,8 +9,8 @@ parameters:
     locale: fr
 
 
-#templates:
-#    member_connect_login: HWIOAuthBundle:Connect:login.html.twig
+uneak_templates_manager:
+    member_connect_login: HWIOAuthBundle:Connect:login.html.twig
 
 
 
