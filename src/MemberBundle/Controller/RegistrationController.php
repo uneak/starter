@@ -34,6 +34,8 @@
 		public function registerAction(Request $request) {
 
 			$userManager = $this->get('uneak.member_manager');
+			$templates = $this->get("uneak.templatesmanager");
+
 
 			$user = $userManager->createUser();
 			$user->setEnabled(true);
@@ -61,7 +63,7 @@
 
 
 					$url = $this->generateUrl('member_registration_confirm', array('token' => $user->getConfirmationToken()), true);
-					$rendered = $this->render('MemberBundle:Registration:email.txt.twig', array(
+					$rendered = $this->render($templates->get("member_registration_email_txt"), array(
 						'user' => $user,
 						'confirmationUrl' =>  $url
 					));
@@ -77,18 +79,6 @@
 						->setBody($body);
 
 					$mailer->send($message);
-
-					//
-
-//					<argument key="confirmation.template">%fos_user.registration.confirmation.template%</argument>
-//                <argument key="resetting.template">%fos_user.resetting.email.template%</argument>
-//                <argument key="from_email" type="collection">
-//                    <argument key="confirmation">%fos_user.registration.confirmation.from_email%</argument>
-//                    <argument key="resetting">%fos_user.resetting.email.from_email%</argument>
-//                </argument>
-
-
-
 
 					$session->set('member_send_confirmation_email/email', $user->getEmail());
 
@@ -106,7 +96,8 @@
 				return $response;
 			}
 
-			return $this->render('MemberBundle:Registration:register.html.twig', array(
+
+			return $this->render($templates->get("member_registration_register"), array(
 				'form' => $form->createView(),
 			));
 		}
@@ -115,6 +106,8 @@
 		 * Tell the user to check his email provider
 		 */
 		public function checkEmailAction() {
+			$templates = $this->get("uneak.templatesmanager");
+
 			$email = $this->get('session')->get('member_send_confirmation_email/email');
 			$this->get('session')->remove('member_send_confirmation_email/email');
 			$user = $this->get('uneak.member_manager')->findUserByEmail($email);
@@ -123,7 +116,7 @@
 				throw new NotFoundHttpException(sprintf('The user with email "%s" does not exist', $email));
 			}
 
-			return $this->render('MemberBundle:Registration:checkEmail.html.twig', array(
+			return $this->render($templates->get("member_registration_check_email"), array(
 				'user' => $user,
 			));
 		}
@@ -153,12 +146,14 @@
 		 * Tell the user his account is now confirmed
 		 */
 		public function confirmedAction() {
+			$templates = $this->get("uneak.templatesmanager");
+
 			$user = $this->getUser();
 			if (!is_object($user) || !$user instanceof UserInterface) {
 				throw new AccessDeniedException('This user does not have access to this section.');
 			}
 
-			return $this->render('MemberBundle:Registration:confirmed.html.twig', array(
+			return $this->render($templates->get("member_registration_confirmed"), array(
 				'user' => $user,
 			));
 		}

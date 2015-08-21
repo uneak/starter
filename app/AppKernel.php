@@ -18,6 +18,7 @@
                 // FRONTAL,
                 new Sp\BowerBundle\SpBowerBundle(),
                 new Liip\ImagineBundle\LiipImagineBundle(),
+				new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 				// DATABASE,
                 new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
                 new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
@@ -35,7 +36,7 @@
 				new AppBundle\AppBundle(),
             	new MemberBundle\MemberBundle(),
                 new UserBundle\UserBundle(),
-
+	            new Uneak\MaterialDesignBlocksBundle\UneakMaterialDesignBlocksBundle(),
 			);
 
 			if (in_array($this->getEnvironment(), array('dev', 'test'))) {

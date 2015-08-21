@@ -33,7 +33,8 @@
 		 * Request reset user password: show form
 		 */
 		public function requestAction() {
-			return $this->render('MemberBundle:Resetting:request.html.twig');
+			$templates = $this->get("uneak.templatesmanager");
+			return $this->render($templates->get("member_resetting_request"));
 		}
 
 		/**
@@ -41,19 +42,23 @@
 		 */
 		public function sendEmailAction(Request $request) {
 			$username = $request->request->get('username');
+			$templates = $this->get("uneak.templatesmanager");
+
 
 			/** @var $user UserInterface */
 			$user = $this->get('uneak.member_manager')->findUserByUsernameOrEmail($username);
 
 			if (null === $user) {
-				return $this->render('MemberBundle:Resetting:request.html.twig', array(
+				return $this->render($templates->get("member_resetting_request"), array(
 					'invalid_username' => $username
 				));
 			}
 
 			if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
-				return $this->render('MemberBundle:Resetting:passwordAlreadyRequested.html.twig');
+				return $this->render($templates->get("member_resetting_password_already_requested"));
 			}
+
+
 
 			if (null === $user->getConfirmationToken()) {
 				/** @var $tokenGenerator \FOS\UserBundle\Util\TokenGeneratorInterface */
@@ -75,13 +80,14 @@
 		 */
 		public function checkEmailAction(Request $request) {
 			$email = $request->query->get('email');
+			$templates = $this->get("uneak.templatesmanager");
 
 			if (empty($email)) {
 				// the user does not come from the sendEmail action
 				return new RedirectResponse($this->generateUrl('member_resetting_request'));
 			}
 
-			return $this->render('MemberBundle:Resetting:checkEmail.html.twig', array(
+			return $this->render($templates->get("member_resetting_check_email"), array(
 				'email' => $email,
 			));
 		}
@@ -92,6 +98,7 @@
 		public function resetAction(Request $request, $token) {
 			/** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
 			$userManager = $this->get('uneak.member_manager');
+			$templates = $this->get("uneak.templatesmanager");
 
 			$user = $userManager->findUserByConfirmationToken($token);
 
@@ -111,7 +118,8 @@
 				return $response;
 			}
 
-			return $this->render('MemberBundle:Resetting:reset.html.twig', array(
+
+			return $this->render($templates->get("member_resetting_reset"), array(
 				'token' => $token,
 				'form'  => $form->createView(),
 			));

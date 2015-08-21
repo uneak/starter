@@ -1,0 +1,7 @@
+{
+	"name": "MaterialDesignBlocksBundle",
+	"dependencies": {
+	  	"jquery": "2.1.*",
+		"material-design-lite": "1.0.*"
+	}
+}

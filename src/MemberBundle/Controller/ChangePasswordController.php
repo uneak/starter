@@ -20,6 +20,8 @@
 				throw new AccessDeniedException('This user does not have access to this section.');
 			}
 
+			$templates = $this->get("uneak.templatesmanager");
+
 			$form = $this->createForm(new ChangePasswordFormType(), $user);
 			$form->handleRequest($request);
 
@@ -30,7 +32,9 @@
 				return new RedirectResponse($url);
 			}
 
-			return $this->render('MemberBundle:ChangePassword:changePassword.html.twig', array(
+
+
+			return $this->render($templates->get("member_changepassword_change_password"), array(
 				'form' => $form->createView()
 			));
 		}

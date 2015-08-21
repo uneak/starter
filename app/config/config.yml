@@ -7,11 +7,8 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: fr
-
-
-uneak_templates_manager:
-    member_connect_login: HWIOAuthBundle:Connect:login.html.twig
-
+#    uneak_templates:
+#        member_security_login: MemberBundle:Security:login.html.twig
 
 
 framework:
@@ -266,9 +263,16 @@ liip_imagine:
 sp_bower:
     install_on_warmup: true
     allow_root: true
+    bin: /usr/local/bin/bower
     bundles:
-        AppBundle:
-            config_dir: %kernel.root_dir%/../app/config
+#        AppBundle:
+#            config_dir: %kernel.root_dir%/../app/config
+#            asset_dir: %kernel.root_dir%/../web/vendor
+#            json_file: bower.json
+#            cache: %kernel.root_dir%/cache
+
+        UneakMaterialDesignBlocksBundle:
+            config_dir: %kernel.root_dir%/../src/Uneak/MaterialDesignBlocksBundle/Resources/config
             asset_dir: %kernel.root_dir%/../web/vendor
             json_file: bower.json
             cache: %kernel.root_dir%/cache

@@ -1,6 +1,6 @@
 <?php
 
-namespace Uneak\TemplatesManagerBundle\Tests\Controller;
+namespace Uneak\MaterialDesignBlocksBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

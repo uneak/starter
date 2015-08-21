@@ -40,6 +40,7 @@
 		public function connectAction(Request $request) {
 			$connect = $this->container->getParameter('hwi_oauth.connect');
 			$hasUser = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
+			$templates = $this->container->get("uneak.templatesmanager");
 
 			$error = $this->getErrorForRequest($request);
 
@@ -60,7 +61,8 @@
 				$error = $error->getMessage();
 			}
 
-			return $this->container->get('templating')->renderResponse('HWIOAuthBundle:Connect:login.html.' . $this->getTemplatingEngine(), array(
+
+			return $this->container->get('templating')->renderResponse($templates->get("member_connect_login"), array(
 				'error' => $error,
 			));
 		}
@@ -98,6 +100,8 @@
 				throw new \Exception('Cannot register an account.');
 			}
 
+			$templates = $this->container->get("uneak.templatesmanager");
+
 			$userInformation = $this
 				->getResourceOwnerByName($error->getResourceOwnerName())
 				->getUserInformation($error->getRawToken());
@@ -112,7 +116,7 @@
 				// Authenticate the user
 				$this->authenticateUser($request, $form->getData(), $error->getResourceOwnerName(), $error->getRawToken());
 
-				return $this->container->get('templating')->renderResponse('HWIOAuthBundle:Connect:registration_success.html.' . $this->getTemplatingEngine(), array(
+				return $this->container->get('templating')->renderResponse($templates->get("member_connect_registration_success"), array(
 					'userInformation' => $userInformation,
 				));
 			}
@@ -121,7 +125,7 @@
 			$key = time();
 			$session->set('_hwi_oauth.registration_error.' . $key, $error);
 
-			return $this->container->get('templating')->renderResponse('HWIOAuthBundle:Connect:registration.html.' . $this->getTemplatingEngine(), array(
+			return $this->container->get('templating')->renderResponse($templates->get("member_connect_registration"), array(
 				'key'             => $key,
 				'form'            => $form->createView(),
 				'userInformation' => $userInformation,
@@ -177,6 +181,10 @@
 				goto show_confirmation_page;
 			}
 
+
+			$templates = $this->container->get("uneak.templatesmanager");
+
+
 			// Handle the form
 			/** @var $form FormInterface */
 			$form = $this->container->get('form.factory')
@@ -200,14 +208,14 @@
 						$this->authenticateUser($request, $currentUser, $service, $currentToken->getRawToken(), false);
 					}
 
-					return $this->container->get('templating')->renderResponse('HWIOAuthBundle:Connect:connect_success.html.' . $this->getTemplatingEngine(), array(
+					return $this->container->get('templating')->renderResponse($templates->get("member_connect_connect_success"), array(
 						'userInformation' => $userInformation,
 						'service'         => $service,
 					));
 				}
 			}
 
-			return $this->container->get('templating')->renderResponse('HWIOAuthBundle:Connect:connect_confirm.html.' . $this->getTemplatingEngine(), array(
+			return $this->container->get('templating')->renderResponse($templates->get("member_connect_connect_confirm"), array(
 				'key'             => $key,
 				'service'         => $service,
 				'form'            => $form->createView(),
@@ -332,12 +340,5 @@
 			}
 		}
 
-		/**
-		 * Returns templating engine name.
-		 *
-		 * @return string
-		 */
-		protected function getTemplatingEngine() {
-			return $this->container->getParameter('hwi_oauth.templating.engine');
-		}
+
 	}

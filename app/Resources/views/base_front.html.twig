@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block html_tag %}
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js"><!--<![endif]-->
+{% endblock %}
+
+{% block title %}{% endblock %}
+{% block icon %}{{ asset('bundles/uneakcore/images/favicon.ico') }}{% endblock %}
+
+{% block metas %}
+    {{ parent() }}
+    <meta property="og:title" content="{% block og_title %}{% endblock %}" />
+    <meta property="og:type" content="{% block og_type %}{% endblock %}" />
+    <meta property="og:url" content="{% block og_url %}{% endblock %}" />
+    <meta property="og:image" content="{% block og_image %}{% endblock %}" />
+{% endblock %}
+
+{% block meta_viewport %}width=device-width, initial-scale=1.0{% endblock %}
+{% block meta_keywords %}{% endblock %}
+{% block meta_description %}{% endblock %}
+{% block meta_author %}uneak.fr{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block stylesheets %}
+	<link href="{{ asset('css/frontend.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block javascripts_top %}
+{% endblock %}
+
+{% block javascripts_bottom %}
+{% endblock %}
+
+{% block javascript_script %}
+{% endblock %}

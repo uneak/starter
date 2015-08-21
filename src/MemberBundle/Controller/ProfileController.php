@@ -32,12 +32,14 @@
 		 * Show the user
 		 */
 		public function showAction() {
+			$templates = $this->get("uneak.templatesmanager");
+
 			$user = $this->getUser();
 			if (!is_object($user) || !$user instanceof UserInterface) {
 				throw new AccessDeniedException('This user does not have access to this section.');
 			}
 
-			return $this->render('MemberBundle:Profile:show.html.twig', array(
+			return $this->render($templates->get("member_profile_show"), array(
 				'user' => $user
 			));
 		}
@@ -46,6 +48,8 @@
 		 * Edit the user
 		 */
 		public function editAction(Request $request) {
+			$templates = $this->get("uneak.templatesmanager");
+
 			$user = $this->getUser();
 			if (!is_object($user) || !$user instanceof UserInterface) {
 				throw new AccessDeniedException('This user does not have access to this section.');
@@ -63,7 +67,7 @@
 				return $response;
 			}
 
-			return $this->render('MemberBundle:Profile:edit.html.twig', array(
+			return $this->render($templates->get("member_profile_edit"), array(
 				'form' => $form->createView()
 			));
 		}

@@ -61,7 +61,8 @@
 		 * @return \Symfony\Component\HttpFoundation\Response
 		 */
 		protected function renderLogin(array $data) {
-			return $this->render('MemberBundle:Security:login.html.twig', $data);
+			$templates = $this->get("uneak.templatesmanager");
+			return $this->render($templates->get("member_security_login"), $data);
 		}
 
 		public function checkAction() {

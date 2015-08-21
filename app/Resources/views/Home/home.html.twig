@@ -1,0 +1,26 @@
+{% extends '::base_front.html.twig' %}
+
+{% block title %}Administration - {{ parent() }}{% endblock %}
+
+{% block content %}
+
+    HELLO
+    {{ renderBlock('card') }}
+
+{% endblock %}
+
+
+{% block stylesheets_page %}
+    {{ parent() }}
+    {#{{ renderAssets('AssetExternalCss') }}#}
+{% endblock %}
+
+{% block javascripts_bottom_page %}
+    {{ parent() }}
+    {#{{ renderAssets('AssetExternalJs') }}#}
+{% endblock %}
+
+{% block javascript_script %}
+    {{ parent() }}
+    {#{{ renderAssets('AssetInternalJs') }}#}
+{% endblock %}
