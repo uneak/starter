@@ -8,9 +8,9 @@
 
 	namespace Uneak\MaterialDesignBlocksBundle\Blocks;
 
-
 	use Uneak\AssetsManagerBundle\Assets\AssetBuilder;
-	use Uneak\AssetsManagerBundle\Assets\Js\AssetExternalJs;
+    use Uneak\AssetsManagerBundle\Assets\Css\AssetExternalCss;
+    use Uneak\AssetsManagerBundle\Assets\Js\AssetExternalJs;
 	use Uneak\AssetsManagerBundle\Assets\Js\AssetInternalJs;
 	use Uneak\BlocksManagerBundle\Blocks\BlockTemplate;
 
@@ -18,10 +18,13 @@
 
 		public function buildAsset(AssetBuilder $builder, $parameters) {
 			$builder
-				->add("google_map_js", new AssetExternalJs(), array(
-					"src" => "http://maps.google.com/maps/api/js?sensor=false&libraries=places"
+				->add("material_design_lite_js", new AssetExternalJs(), array(
+					"src" => "vendor/material-design-lite/material.js"
 				))
-				->add("script_google_map", new AssetInternalJs(), array(
+                ->add("material_design_lite_css", new AssetExternalCss(), array(
+					"href" => "vendor/material-design-lite/material.css"
+				))
+				->add("card_block_script", new AssetInternalJs(), array(
 					"template"   => "block_card_script",
 					"parameters" => array('item' => $parameters)
 				));

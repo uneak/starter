@@ -4,23 +4,27 @@
 
 {% block content %}
 
-    HELLO
+
     {{ renderBlock('card') }}
 
 {% endblock %}
 
 
-{% block stylesheets_page %}
+{% block stylesheets %}
     {{ parent() }}
-    {#{{ renderAssets('AssetExternalCss') }}#}
+    {{ renderAssets('AssetExternalCss') }}
 {% endblock %}
 
-{% block javascripts_bottom_page %}
+{% block javascripts_top %}
     {{ parent() }}
-    {#{{ renderAssets('AssetExternalJs') }}#}
+{% endblock %}
+
+{% block javascripts_bottom %}
+    {{ parent() }}
+    {{ renderAssets('AssetExternalJs') }}
 {% endblock %}
 
 {% block javascript_script %}
     {{ parent() }}
-    {#{{ renderAssets('AssetInternalJs') }}#}
+    {{ renderAssets('AssetInternalJs') }}
 {% endblock %}

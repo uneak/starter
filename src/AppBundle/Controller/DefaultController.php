@@ -15,7 +15,15 @@
 			$blockManager = $this->get("uneak.blocksmanager");
 
 			$cardBlock = new CardBlock();
-			$blockManager->addBlock($cardBlock, 'card');
+            $cardBlock->setTitle("Marc");
+            $cardBlock->setTitleColor("#FFF");
+            $cardBlock->setDescription("Marc Galoyer Developpeur web");
+            $cardBlock->setBackground("/apple-touch-icon.png");
+            $cardBlock->setBackgroundHeight("200px");
+            $cardBlock->setWidth("300px");
+            $cardBlock->setHeight("300px");
+            $blockManager->addBlock($cardBlock, 'card');
+
 
 			return $this->render(':Home:home.html.twig');
 		}
