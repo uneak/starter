@@ -1,0 +1,12 @@
+parameters:
+
+#    uneak_templates:
+#        block_card_script: UneakMaterialDesignBlocksBundle:Block:card_script.html.twig
+#        block_card_template: UneakMaterialDesignBlocksBundle:Block:card.html.twig
+
+    uneak_assets_default:
+
+        jquery_js:
+            type: externaljs
+            config:
+                src: vendor/jquery/dist/jquery.js

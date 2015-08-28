@@ -1,4 +1,5 @@
 parameters:
+
     uneak_templates:
 
         member_connect_login: HWIOAuthBundle:Connect:login.html.twig

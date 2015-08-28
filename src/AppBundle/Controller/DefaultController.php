@@ -12,6 +12,10 @@
 		 * @Route("/", name="homepage")
 		 */
 		public function indexAction() {
+
+//			$templateManager = $this->get("uneak.templatesmanager");
+//			ldd($templateManager->all());
+
 			$blockManager = $this->get("uneak.blocksmanager");
 
 			$cardBlock = new CardBlock();
