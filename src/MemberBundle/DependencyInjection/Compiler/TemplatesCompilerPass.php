@@ -5,7 +5,7 @@
 	use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 	use Symfony\Component\DependencyInjection\Reference;
 
-	class MemberCompilerPass implements CompilerPassInterface {
+	class TemplatesCompilerPass implements CompilerPassInterface {
 		public function process(ContainerBuilder $container) {
 			if ($container->hasDefinition('uneak.templatesmanager') === false) {
 				return;

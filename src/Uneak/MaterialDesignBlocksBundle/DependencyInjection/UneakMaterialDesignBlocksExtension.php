@@ -32,7 +32,6 @@ class UneakMaterialDesignBlocksExtension extends Extension
 
         $location = new FileLocator(__DIR__.'/../Resources/config');
         $loader = new Loader\YamlFileLoader($container, $location);
-        $loader->load('parameters.yml');
         $loader->load('services.yml');
 
 
