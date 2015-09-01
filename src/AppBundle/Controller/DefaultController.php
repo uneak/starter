@@ -18,15 +18,40 @@
 
 			$blockManager = $this->get("uneak.blocksmanager");
 
+
+
+
 			$cardBlock = new CardBlock();
-            $cardBlock->setTitle("Marc");
-            $cardBlock->setTitleColor("#FFF");
-            $cardBlock->setDescription("Marc Galoyer Developpeur web");
-            $cardBlock->setBackground("/apple-touch-icon.png");
-            $cardBlock->setBackgroundHeight("200px");
-            $cardBlock->setWidth("300px");
-            $cardBlock->setHeight("300px");
-            $blockManager->addBlock($cardBlock, 'card');
+			$cardBlock->setTitle("Marc1");
+			$cardBlock->setTitleColor("#FFF");
+			$cardBlock->setDescription("Marc Galoyer Developpeur web");
+			$cardBlock->setBackground("/apple-touch-icon.png");
+			$cardBlock->setBackgroundHeight("200px");
+			$cardBlock->setWidth("300px");
+			$cardBlock->setHeight("300px");
+			$blockManager->addBlock($cardBlock, 'card1');
+
+
+			$cardBlock = new CardBlock();
+			$cardBlock->setTitle("Marc2");
+			$cardBlock->setTitleColor("#FFF");
+			$cardBlock->setDescription("Marc Galoyer Developpeur web");
+			$cardBlock->setBackground("/apple-touch-icon.png");
+			$cardBlock->setBackgroundHeight("200px");
+			$cardBlock->setWidth("300px");
+			$cardBlock->setHeight("300px");
+			$blockManager->addBlock($cardBlock, 'card2');
+
+
+			$cardBlock = new CardBlock();
+			$cardBlock->setTitle("Marc3");
+			$cardBlock->setTitleColor("#FFF");
+			$cardBlock->setDescription("Marc Galoyer Developpeur web");
+			$cardBlock->setBackground("/apple-touch-icon.png");
+			$cardBlock->setBackgroundHeight("200px");
+			$cardBlock->setWidth("300px");
+			$cardBlock->setHeight("300px");
+			$blockManager->addBlock($cardBlock, 'card3');
 
 
 			return $this->render(':Home:home.html.twig');

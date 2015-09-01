@@ -208,7 +208,6 @@
 
 
 
-
 		public function getBlockName() {
 			return "block_card_model";
 		}

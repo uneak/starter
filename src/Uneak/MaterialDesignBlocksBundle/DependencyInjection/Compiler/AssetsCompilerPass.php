@@ -14,15 +14,30 @@
 			$definition = $container->getDefinition('uneak.assetsmanager');
 
 			$assets = array(
-				"jquery_js" => array(
-					"type" => "externaljs",
-					"build" => true,
-					"config" => array(
-						"src" => "vendor/jquery/dist/jquery.js",
-					),
-				)
-			);
+//				"jquery_js" => array(
+//					"type" => "externaljs",
+//					"build" => true,
+//					"config" => array(
+//						"src" => "vendor/jquery/dist/jquery.js",
+//					),
+//				),
 
+				"material_design_lite_js" => array(
+					"type" => "externaljs",
+					"config" => array(
+						"src" => "vendor/material-design-lite/material.js",
+					),
+				),
+
+				"material_design_lite_css" => array(
+					"type" => "externalcss",
+					"config" => array(
+						"href" => "vendor/material-design-lite/material.css",
+					),
+				),
+
+
+			);
 
 
 			foreach ($assets as $id => $asset) {
