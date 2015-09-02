@@ -5,9 +5,19 @@
 	use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 	use Symfony\Component\HttpFoundation\Request;
-	use Uneak\MaterialDesignBlocksBundle\Blocks\CardBlock;
+	use Uneak\MaterialDesignBundle\Blocks\CardBlock;
 
 	class DefaultController extends Controller {
+
+		/**
+		 * @Route("/test", name="test")
+		 */
+		public function testAction() {
+
+			return $this->render('UneakPortoAdminBundle:Layout:interface.html.twig');
+		}
+
+
 		/**
 		 * @Route("/", name="homepage")
 		 */
@@ -17,9 +27,6 @@
 //			ldd($templateManager->all());
 
 			$blockManager = $this->get("uneak.blocksmanager");
-
-
-
 
 			$cardBlock = new CardBlock();
 			$cardBlock->setTitle("Marc1");

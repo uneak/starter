@@ -29,3 +29,14 @@ parameters:
 
     twitter_client_id: 123
     twitter_client_secret: 123
+
+
+    assetic_node: /usr/local/bin/node
+    assetic_node_paths:
+        - /usr/lib/node_modules
+        - /usr/local/lib/node_modules
+    assetic_ruby: /usr/bin/ruby
+    assetic_sass: /usr/bin/sass
+    assetic_compass: /usr/bin/compass
+    bower: /usr/local/bin/bower
+

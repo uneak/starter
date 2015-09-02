@@ -1,0 +1,118 @@
+
+porto_admin_fonts_css:
+    type: externalcss
+    build: true
+    config:
+        href: "http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light"
+
+porto_admin_theme_css:
+    type: externalcss
+    build: true
+    config:
+        href: "bundles/uneakportoadmin/css/theme.css"
+        dependencies: [ "bootstrap_css" ]
+
+porto_admin_skins_default_css:
+    type: externalcss
+    build: true
+    config:
+        href: "bundles/uneakportoadmin/css/skins/default.css"
+
+porto_admin_theme_custom_css:
+    type: externalcss
+    build: true
+    config:
+        href: "bundles/uneakportoadmin/css/theme-custom.css"
+        dependencies: [ "porto_admin_theme_css" ]
+
+font_awesome_css:
+    type: externalcss
+    build: true
+    config:
+        href: "vendor/font-awesome/css/font-awesome.css"
+
+bootstrap_css:
+    type: externalcss
+    build: true
+    config:
+        href: "vendor/bootstrap/dist/css/bootstrap.css"
+
+modernizr_js:
+    type: externaljs
+    build: true
+    config:
+#        src: "vendor/modernizr/modernizr.js"
+        src: "bundles/uneakportoadmin/js/modernizr.js"
+        category: "AssetExternalJs_top"
+
+jquery_js:
+    type: externaljs
+    build: true
+    config:
+        src: "vendor/jquery/dist/jquery.js"
+
+jquery_browser_mobile_js:
+    type: externaljs
+    build: true
+    config:
+        src: "bundles/uneakportoadmin/js/jquery.browser.mobile.js"
+        dependencies: [ "jquery_js" ]
+
+bootstrap_js:
+    type: externaljs
+    build: true
+    config:
+        src: "vendor/bootstrap/dist/js/bootstrap.js"
+        dependencies: [ "jquery_js" ]
+
+nanoscroller_js:
+    type: externaljs
+    build: true
+    config:
+        src: "vendor/nanoscroller/bin/javascripts/jquery.nanoscroller.js"
+#        src: "bundles/uneakportoadmin/js/nanoscroller.js"
+        dependencies: [ "jquery_js" ]
+
+jquery_placeholder_js:
+    type: externaljs
+    build: true
+    config:
+        src: "vendor/jquery-placeholder/jquery.placeholder.js"
+        dependencies: [ "jquery_js" ]
+
+porto_admin_theme_js:
+    type: externaljs
+    build: true
+    config:
+        src: "bundles/uneakportoadmin/js/theme.js"
+        category: "AssetExternalJs_theme"
+
+porto_admin_theme_custom_js:
+    type: externaljs
+    build: true
+    config:
+        src: "bundles/uneakportoadmin/js/theme.custom.js"
+        dependencies: [ "porto_admin_theme_js" ]
+        category: "AssetExternalJs_theme"
+
+porto_admin_theme_init_js:
+    type: externaljs
+    build: true
+    config:
+        src: "bundles/uneakportoadmin/js/theme.init.js"
+        dependencies: [ "porto_admin_theme_custom_js" ]
+        category: "AssetExternalJs_theme"
+
+
+porto_admin_theme_admin_extension_css:
+    type: externalcss
+    config:
+        href: "bundles/uneakportoadmin/css/theme-admin-extension.css"
+
+porto_admin_invoice_print_css:
+    type: externalcss
+    config:
+        href: "bundles/uneakportoadmin/css/invoice-print.css"
+
+
+

@@ -1,0 +1,2 @@
+block_card_script: "UneakMaterialDesignBundle:Block:card_script.html.twig"
+block_card_template: "UneakMaterialDesignBundle:Block:card.html.twig"

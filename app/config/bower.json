@@ -1,7 +1,7 @@
 {
 	"name": "main",
 	"dependencies": {
-		"bootstrap": "latest",
-		"jquery": "latest"
+		"bootstrap-sass-official": "latest",
+	  	"font-awesome": "latest"
 	}
 }

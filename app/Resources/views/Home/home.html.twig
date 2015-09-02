@@ -1,4 +1,4 @@
-{% extends '::base_front.html.twig' %}
+{% extends 'UneakMaterialDesignBundle:Layout:base.html.twig' %}
 
 {% block title %}Administration - {{ parent() }}{% endblock %}
 
@@ -10,22 +10,3 @@
 
 {% endblock %}
 
-
-{% block stylesheets %}
-    {{ parent() }}
-    {{ renderAssets('AssetExternalCss') }}
-{% endblock %}
-
-{% block javascripts_top %}
-    {{ parent() }}
-{% endblock %}
-
-{% block javascripts_bottom %}
-    {{ parent() }}
-    {{ renderAssets('AssetExternalJs') }}
-{% endblock %}
-
-{% block javascript_script %}
-    {{ parent() }}
-    {{ renderAssets('AssetInternalJs') }}
-{% endblock %}

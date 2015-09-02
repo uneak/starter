@@ -1,8 +1,0 @@
-parameters:
-    uneak.card.template.class: Uneak\MaterialDesignBlocksBundle\Templates\CardBlockTemplate
-
-services:
-    uneak.card.template:
-        class: %uneak.card.template.class%
-        tags:
-            - { name: uneak.blocksmanager.template, model: block_card_model }

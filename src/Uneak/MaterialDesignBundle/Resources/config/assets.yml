@@ -1,0 +1,12 @@
+material_design_lite_js:
+    type: externaljs
+    config:
+        src: "vendor/material-design-lite/material.js"
+
+
+material_design_lite_css:
+    type: externalcss
+    config:
+        href: "vendor/material-design-lite/material.css"
+
+

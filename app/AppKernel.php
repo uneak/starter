@@ -32,11 +32,14 @@
 				new Uneak\FormsManagerBundle\UneakFormsManagerBundle(),
 				new Uneak\BlocksManagerBundle\UneakBlocksManagerBundle(),
 				new Uneak\RoutesManagerBundle\UneakRoutesManagerBundle(),
+				// UNEAK SKIN
+				new Uneak\MaterialDesignBundle\UneakMaterialDesignBundle(),
+				new Uneak\PortoAdminBundle\UneakPortoAdminBundle(),
 				// OWN,
 				new AppBundle\AppBundle(),
             	new MemberBundle\MemberBundle(),
                 new UserBundle\UserBundle(),
-	            new Uneak\MaterialDesignBlocksBundle\UneakMaterialDesignBlocksBundle(),
+
 			);
 
 			if (in_array($this->getEnvironment(), array('dev', 'test'))) {
