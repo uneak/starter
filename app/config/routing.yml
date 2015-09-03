@@ -46,4 +46,11 @@ google_login:
 
 
 twitter_login:
-    pattern: /connect/check-twitter
+    pattern: /connect/check-twitte
+
+
+
+# uneak_routesmanager
+uneak_routesmanager:
+    resource: .
+    type: uneak_routesmanager

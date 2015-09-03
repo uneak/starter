@@ -1,8 +1,21 @@
 parameters:
-#    uneak.card.template.class: Uneak\MaterialDesignBundle\Templates\CardBlockTemplate
+    uneak.portoadmin.menu.template.class: Uneak\PortoAdminBundle\Templates\Menu\MenuTemplate
+    uneak.portoadmin.user.template.class: Uneak\PortoAdminBundle\Templates\User\UserTemplate
+    uneak.portoadmin.breadcrumb.template.class: Uneak\PortoAdminBundle\Templates\Breadcrumb\BreadcrumbTemplate
 
 services:
-#    uneak.card.template:
-#        class: %uneak.card.template.class%
-#        tags:
-#            - { name: uneak.blocksmanager.template, model: block_card_model }
+    uneak.portoadmin.menu.template:
+        class: %uneak.portoadmin.menu.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, model: block_menu }
+
+    uneak.portoadmin.user.template:
+        class: %uneak.portoadmin.user.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, model: block_user }
+
+
+    uneak.portoadmin.breadcrumb.template:
+        class: %uneak.portoadmin.breadcrumb.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, model: block_breadcrumb }

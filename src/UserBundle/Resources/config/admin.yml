@@ -1,0 +1,13 @@
+parameters:
+    uneak.admin.user.admin.class: UserBundle\Admin\User
+
+services:
+
+    uneak.admin.user.admin:
+        class: %uneak.admin.user.admin.class%
+        arguments: [ user ]
+        calls:
+            - [ setController, [ UserBundle\Controller\AdminClientController ] ]
+        tags:
+            -  { name: uneak.routesmanager.route }
+

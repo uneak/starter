@@ -1,2 +1,3 @@
-block_card_script: "UneakMaterialDesignBundle:Block:card_script.html.twig"
-block_card_template: "UneakMaterialDesignBundle:Block:card.html.twig"
+block_menu_template: "UneakPortoAdminBundle:Block:menu.html.twig"
+block_user_template: "UneakPortoAdminBundle:Block:user.html.twig"
+block_breadcrumb_template: "UneakPortoAdminBundle:Block:breadcrumb.html.twig"

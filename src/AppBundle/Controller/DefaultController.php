@@ -6,6 +6,7 @@
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 	use Symfony\Component\HttpFoundation\Request;
 	use Uneak\MaterialDesignBundle\Blocks\CardBlock;
+	use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
 
 	class DefaultController extends Controller {
 
@@ -14,7 +15,6 @@
 		 */
 		public function testAction() {
 
-			return $this->render('UneakPortoAdminBundle:Layout:interface.html.twig');
 		}
 
 

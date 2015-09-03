@@ -1,4 +1,9 @@
+
+parameters:
+    knp_menu.voter.uri.class: Uneak\PortoAdminBundle\Menu\Matcher\Voter\UriVoter
+
 services:
-#    uneak_porto_admin.example:
-#        class: Uneak\PortoAdminBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    knp_menu.voter.uri:
+        class: %knp_menu.voter.uri.class%
+        tags:
+            - { name: knp_menu.voter, request: true }

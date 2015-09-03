@@ -27,8 +27,8 @@
 
 			$user = $userManager->createUser();
 			$user->setUsername('admin');
-//			$user->setFirstname('admin');
-//			$user->setLastname('admin');
+			$user->setFirstname('Marc');
+			$user->setLastname('Galoyer');
 			$user->setEmail('contact@uneak.fr');
 			$user->setPlainPassword('admin');
 			$user->setEnabled(true);

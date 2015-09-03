@@ -1,0 +1,17 @@
+<div id="userbox" class="userbox">
+	<a href="#" data-toggle="dropdown">
+		<figure class="profile-picture">
+			<img src="{{ item.user.image }}" alt="{{ item.user.firstname }} {{ item.user.lastname }}" class="img-circle" data-lock-picture="{{ item.user.image }}" />
+		</figure>
+		<div class="profile-info" data-lock-name="{{ item.user.firstname }} {{ item.user.lastname }}" data-lock-email="{{ item.user.email }}">
+			<span class="name">{{ item.user.firstname }} {{ item.user.lastname }}</span>
+			<span class="role">{{ item.user.username }}</span>
+		</div>
+
+		<i class="fa custom-caret"></i>
+	</a>
+
+	<div class="dropdown-menu">
+		{{ renderBlock(item.menu) }}
+	</div>
+</div>

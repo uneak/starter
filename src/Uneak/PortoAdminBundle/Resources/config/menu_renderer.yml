@@ -1,0 +1,10 @@
+parameters:
+    uneak.portoadmin.mainmenu.menu.renderer.class: Uneak\PortoAdminBundle\Menu\MainMenuRenderer
+
+services:
+
+    uneak.portoadmin.mainmenu.menu.renderer:
+            # The class implements Knp\Menu\Renderer\RendererInterface
+            class: %uneak.portoadmin.mainmenu.menu.renderer.class%
+            tags:
+                - { name: knp_menu.renderer, alias: main-menu }
