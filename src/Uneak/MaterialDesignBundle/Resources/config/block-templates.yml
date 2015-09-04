@@ -5,4 +5,4 @@ services:
     uneak.card.template:
         class: %uneak.card.template.class%
         tags:
-            - { name: uneak.blocksmanager.template, model: block_card_model }
+            - { name: uneak.blocksmanager.template, alias: block_card_model }

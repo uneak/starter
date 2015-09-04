@@ -4,23 +4,17 @@
 
 	use Knp\Menu\ItemInterface;
 	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
-    use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
+	use Uneak\PortoAdminBundle\Blocks\Menu\UserMenu;
 
-    class User extends BlockModel {
+	class User extends BlockModel {
 
 		protected $user;
 		protected $menu;
 
 		public function __construct($user, ItemInterface $menuItem = null) {
 			$this->user = $user;
-            $this->menu = new Menu(null, array(
-                'template' => 'UneakPortoAdminBundle:Menu:user_menu_template.html.twig',
-                'currentClass' => 'active',
-            ));
-            if ($menuItem) {
-                $this->setMenuItem($menuItem);
-            }
-            $this->addBlock($this->menu, "menu", $priority = 0, $group = "user");
+            $this->menu = new UserMenu($menuItem);
+            $this->addBlock($this->menu, "menu", 0, "user");
 		}
 
 		public function getMenu() {
@@ -29,7 +23,6 @@
 
 		public function setMenuItem(ItemInterface $menuItem) {
             $this->menu->setRoot($menuItem);
-            $menuItem->setChildrenAttribute('class', 'list-unstyled');
 		}
 
         public function getMenuItem() {
@@ -45,7 +38,7 @@
 		}
 
 
-		public function getBlockName() {
+		public function getTemplateName() {
 			return "block_user";
 		}
 

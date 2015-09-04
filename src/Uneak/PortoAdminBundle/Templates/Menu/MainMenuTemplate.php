@@ -1,14 +1,12 @@
 <?php
 
-	namespace Uneak\PortoAdminBundle\Templates\Breadcrumb;
+	namespace Uneak\PortoAdminBundle\Templates\Menu;
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
 	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
-	use Uneak\BlocksManagerBundle\Blocks\BlockTemplate;
-	use Uneak\PortoAdminBundle\Templates\Menu\MenuTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
-	class BreadcrumbTemplate extends MenuTemplate {
+	class MainMenuTemplate extends MenuTemplate {
 
 		public function buildAsset(AssetsBuilderManager $builder, $parameters) {
 			parent::buildAsset($builder, $parameters);
@@ -27,26 +25,19 @@
 			$parameters = $block->getParameters();
 			$renderer = $block->getRenderer();
 
-//			$root->setChildrenAttribute('class', 'breadcrumbs');
+
+			$root->setChildrenAttribute('class', 'nav nav-main');
 
 			$options['root'] = $root;
 			$options['parameters'] = array_merge($parameters, array(
-				'template' => $templatesManager->get('block_breadcrumb_menu_template'),
+				'template' => $templatesManager->get('block_main_menu_template'),
 				'leaf_class' => 'nav nav-children',
 				'branch_class' => 'nav-parent',
 				'ancestorClass' => 'nav-active nav-expanded',
 				'currentClass' => 'nav-active',
-				'depth' => 1,
 			));
 			$options['renderer'] = $renderer;
-
-
-
-
 		}
 
-//		public function getRenderTemplate() {
-//			return 'block_breadcrumb_template';
-//		}
 
 	}

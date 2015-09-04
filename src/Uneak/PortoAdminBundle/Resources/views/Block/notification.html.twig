@@ -1,0 +1,21 @@
+<a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown">
+	<i class="fa fa-{{ icon }}"></i>
+	<span class="badge">{{ badge }}</span>
+</a>
+
+<div class="dropdown-menu notification-menu large">
+	<div class="notification-title">
+		<span class="pull-right label label-default">{{ badge }}</span>
+		{{ title }}
+	</div>
+
+	<div class="content">
+		<ul>
+			{% for item in items %}
+				<li>
+					{{ renderBlock(item) }}
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>

@@ -1,15 +1,15 @@
 <?php
 
-	namespace Uneak\PortoAdminBundle\Templates\User;
+	namespace Uneak\PortoAdminBundle\Templates\Menu;
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
 	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
-	use Uneak\BlocksManagerBundle\Blocks\BlockTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
-	class UserTemplate extends BlockTemplate {
+	class UserMenuTemplate extends MenuTemplate {
 
 		public function buildAsset(AssetsBuilderManager $builder, $parameters) {
+			parent::buildAsset($builder, $parameters);
 //			$builder
 //				->add('material_design_lite_js')
 //                ->add('material_design_lite_css')
@@ -21,13 +21,19 @@
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
 
-			$options['menu'] = $block->getMenu();
-			$options['user'] = $block->getUser();
+			$root = $block->getRoot();
+			$parameters = $block->getParameters();
+			$renderer = $block->getRenderer();
 
+			$root->setChildrenAttribute('class', 'list-unstyled');
+
+			$options['root'] = $root;
+			$options['parameters'] = array_merge($parameters, array(
+				'template' => $templatesManager->get('block_user_menu_template'),
+				'currentClass' => 'active',
+			));
+			$options['renderer'] = $renderer;
 		}
 
-		public function getRenderTemplate() {
-			return 'block_user_template';
-		}
 
 	}

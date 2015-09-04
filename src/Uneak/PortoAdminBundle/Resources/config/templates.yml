@@ -1,3 +1,18 @@
 block_menu_template: "UneakPortoAdminBundle:Block:menu.html.twig"
 block_user_template: "UneakPortoAdminBundle:Block:user.html.twig"
 block_breadcrumb_template: "UneakPortoAdminBundle:Block:breadcrumb.html.twig"
+
+block_user_menu_template: "UneakPortoAdminBundle:Menu:user_menu_template.html.twig"
+block_main_menu_template: "UneakPortoAdminBundle:Menu:main_menu_template.html.twig"
+block_breadcrumb_menu_template: "UneakPortoAdminBundle:Menu:breadcrumb_template.html.twig"
+
+block_notification_template: "UneakPortoAdminBundle:Block:notification.html.twig"
+block_notifications_template: "UneakPortoAdminBundle:Block:notifications.html.twig"
+
+
+block_progress_bar_notification_template: "UneakPortoAdminBundle:Block:progress_bar_notification.html.twig"
+block_message_notification_template: "UneakPortoAdminBundle:Block:message_notification.html.twig"
+block_icon_message_notification_template: "UneakPortoAdminBundle:Block:icon_message_notification.html.twig"
+
+block_search_template: "UneakPortoAdminBundle:Block:search.html.twig"
+block_brand_template: "UneakPortoAdminBundle:Block:brand.html.twig"

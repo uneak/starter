@@ -6,3 +6,8 @@ porto_admin_user_avatar:
     filters:
         upscale: { min: [35, 35] }
         thumbnail: { size: [35, 35], mode: outbound }
+
+porto_admin_brand_photo:
+    quality: 100
+    filters:
+        relative_resize: { heighten: 35 }

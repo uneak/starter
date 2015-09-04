@@ -42,7 +42,7 @@
 			return $this;
 		}
 
-		public function getBlockName() {
+		public function getTemplateName() {
 			return "block_menu";
 		}
 

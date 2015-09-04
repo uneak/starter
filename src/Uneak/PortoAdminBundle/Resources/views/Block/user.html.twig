@@ -1,24 +1,24 @@
 <div id="userbox" class="userbox">
 	<a href="#" data-toggle="dropdown">
 		<figure class="profile-picture">
-            {% if item.user.image %}
-                {% set userImage = item.user.image %}
+            {% if user.image %}
+                {% set userImage = user.image %}
             {% else %}
                 {% set userImage = "bundles/uneakportoadmin/images/default_avatar.jpg" %}
             {% endif %}
 
-			<img src="{{ asset(userImage) | imagine_filter('porto_admin_user_avatar') }}" alt="{{ item.user.firstname }} {{ item.user.lastname }}" class="img-circle" data-lock-picture="{{ asset(userImage) | imagine_filter('porto_admin_user_avatar')}}" />
+			<img src="{{ asset(userImage) | imagine_filter('porto_admin_user_avatar') }}" alt="{{ user.firstname }} {{ user.lastname }}" class="img-circle" data-lock-picture="{{ asset(userImage) | imagine_filter('porto_admin_user_avatar')}}" />
 
 		</figure>
-		<div class="profile-info" data-lock-name="{{ item.user.firstname }} {{ item.user.lastname }}" data-lock-email="{{ item.user.email }}">
-			<span class="name">{{ item.user.firstname }} {{ item.user.lastname }}</span>
-			<span class="role">{{ item.user.username }}</span>
+		<div class="profile-info" data-lock-name="{{ user.firstname }} {{ user.lastname }}" data-lock-email="{{ user.email }}">
+			<span class="name">{{ user.firstname }} {{ user.lastname }}</span>
+			<span class="role">{{ user.username }}</span>
 		</div>
 
 		<i class="fa custom-caret"></i>
 	</a>
 
 	<div class="dropdown-menu">
-		{{ renderBlock(item.menu) }}
+		{{ renderBlock(menu) }}
 	</div>
 </div>

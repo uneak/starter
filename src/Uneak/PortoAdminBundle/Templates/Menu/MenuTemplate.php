@@ -3,7 +3,9 @@
 	namespace Uneak\PortoAdminBundle\Templates\Menu;
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
+	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
 	use Uneak\BlocksManagerBundle\Blocks\BlockTemplate;
+	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
 	class MenuTemplate extends BlockTemplate {
 
@@ -17,7 +19,13 @@
 //				));
 		}
 
-		public function getTemplate() {
+		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
+			$options['root'] = $block->getRoot();
+			$options['parameters'] = $block->getParameters();
+			$options['renderer'] = $block->getRenderer();
+		}
+
+		public function getRenderTemplate() {
 			return 'block_menu_template';
 		}
 

@@ -1,0 +1,7 @@
+<ul class="notifications">
+	{% for notification in notifications %}
+		<li>
+			{{ renderBlock(notification) }}
+		</li>
+	{% endfor %}
+</ul>

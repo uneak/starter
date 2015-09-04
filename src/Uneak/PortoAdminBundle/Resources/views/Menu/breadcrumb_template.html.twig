@@ -1,0 +1,126 @@
+{% extends 'knp_menu.html.twig' %}
+
+
+{% block root %}
+	{% set listAttributes = item.childrenAttributes %}
+	{% import 'knp_menu.html.twig' as knp_menu %}
+	<ol class="breadcrumbs">
+		{{ block('children') }}
+	</ol>
+{% endblock %}
+
+{% block label %}
+	{% if item.getExtra('icon') is not null %}<i class="fa fa-{{ item.getExtra('icon') }}" aria-hidden="true"></i>{% endif %}
+	<span>{% if options.allow_safe_labels and item.getExtra('safe_label', false) %}{{ item.label|raw }}{% else %}{{ item.label }}{% endif %}</span>
+{% endblock %}
+
+
+
+{#{% block linkElement %}#}
+
+	{#{%- set linkAttributes = item.linkAttributes is not empty ? [item.linkAttributes] : [] %}#}
+
+	{#{% if item.hasChildren and options.depth is not sameas(0) %}#}
+		{#{%- set linkAttributes = linkAttributes | merge({'data-toggle': 'dropdown'}) %}#}
+	{#{%- endif %}#}
+
+	{#{% import 'knp_menu.html.twig' as knp_menu %}#}
+
+	{#<a href="{{ item.uri }}"{{ knp_menu.attributes(linkAttributes) }}>#}
+		{#{{ block('label') }}#}
+		{#{% if item.hasChildren and options.depth is not sameas(0) %}#}
+			{#<i class="fa custom-caret"></i>#}
+		{#{%- endif %}#}
+	{#</a>#}
+{#{% endblock %}#}
+
+
+{#{% block spanElement %}#}
+	{#{%- set linkAttributes = item.linkAttributes is not empty ? [item.linkAttributes] : [] %}#}
+
+	{#{% if item.hasChildren and options.depth is not sameas(0) %}#}
+		{#{%- set linkAttributes = linkAttributes | merge({'data-toggle': 'dropdown'}) %}#}
+	{#{%- endif %}#}
+
+	{#{% import 'knp_menu.html.twig' as knp_menu %}#}
+
+	{#<a href="#"{{ knp_menu.attributes(linkAttributes) }}>#}
+		{#{{ block('label') }}#}
+		{#{% if item.hasChildren and options.depth is not sameas(0) %}#}
+			{#<i class="fa custom-caret"></i>#}
+		{#{%- endif %}#}
+	{#</a>#}
+{#{% endblock %}#}
+
+
+
+
+{#{% block item %}#}
+	{#{% if item.displayed %}#}
+		{#&#123;&#35; building the class of the item &#35;&#125;#}
+		{#{%- set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}#}
+
+		{#{%- if matcher.isCurrent(item) %}#}
+			{#{%- set classes = classes|merge([options.currentClass]) %}#}
+		{#{%- elseif matcher.isAncestor(item, options.matchingDepth) %}#}
+			{#{%- set classes = classes|merge([options.ancestorClass]) %}#}
+		{#{%- endif %}#}
+		{#{%- if item.actsLikeFirst %}#}
+			{#{%- set classes = classes|merge([options.firstClass]) %}#}
+		{#{%- endif %}#}
+		{#{%- if item.actsLikeLast %}#}
+			{#{%- set classes = classes|merge([options.lastClass]) %}#}
+		{#{%- endif %}#}
+
+
+		{#{% if item.hasChildren and options.depth is not sameas(0) %}#}
+			{#{% if options.branch_class is not empty and item.displayChildren %}#}
+				{#{%- set classes = classes|merge([options.branch_class]) %}#}
+			{#{% endif %}#}
+		{#{%- endif %}#}
+
+		{#{%- set attributes = item.attributes %}#}
+		{#{%- if classes is not empty %}#}
+			{#{%- set attributes = attributes|merge({'class': classes|join(' ')}) %}#}
+		{#{%- endif %}#}
+		{#&#123;&#35; displaying the item &#35;&#125;#}
+		{#{% import 'knp_menu.html.twig' as knp_menu %}#}
+
+		{#<li{{ knp_menu.attributes(attributes) }}>#}
+			{#<div class="breadcrumb-box">#}
+				{#{%- if item.uri is not empty and (not matcher.isCurrent(item) or options.currentAsLink) %}#}
+					{#{{ block('linkElement') }}#}
+				{#{%- else %}#}
+					{#{{ block('spanElement') }}#}
+				{#{%- endif %}#}
+				{#&#123;&#35; render the list of children&#35;&#125;#}
+				{#{%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}#}
+				{#{%- set childrenClasses = childrenClasses|merge(['menu_level_' ~ item.level]) %}#}
+				{#{%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}#}
+
+				{#<div class="dropdown-menu">#}
+					{#{{ block('list') }}#}
+				{#</div>#}
+			{#</div>#}
+		{#</li>#}
+	{#{% endif %}#}
+{#{% endblock %}#}
+
+
+{#{% block list %}#}
+	{#{% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}#}
+		{#{%- set listAttributes = listAttributes | merge({'class': 'list-unstyled'}) %}#}
+		{#{% import 'knp_menu.html.twig' as knp_menu %}#}
+		{#<ul{{ knp_menu.attributes(listAttributes) }}>#}
+			{#{{ block('children') }}#}
+		{#</ul>#}
+	{#{% endif %}#}
+{#{% endblock %}#}
+
+
+
+{#{% block label %}#}
+	{#{% if item.getExtra('badge') is not null %}<span class="pull-right label label-{{ item.getExtra('badge_context', 'primary') }}">{{ item.getExtra('badge') }}</span>{% endif %}#}
+	{#{% if item.getExtra('icon') is not null %}<i class="fa fa-{{ item.getExtra('icon') }}" aria-hidden="true"></i>{% endif %}#}
+	{#<span>{% if options.allow_safe_labels and item.getExtra('safe_label', false) %}{{ item.label|raw }}{% else %}{{ item.label }}{% endif %}</span>#}
+{#{% endblock %}#}

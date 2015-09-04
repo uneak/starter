@@ -1,0 +1,15 @@
+<a href="#" class="clearfix">
+	<figure class="image">
+
+		{% if photo %}
+			{% set userImage = photo %}
+		{% else %}
+			{% set userImage = "bundles/uneakportoadmin/images/default_avatar.jpg" %}
+		{% endif %}
+
+		<img src="{{ asset(userImage) | imagine_filter('porto_admin_user_avatar') }}" alt="{{ title }}" class="img-circle" data-lock-picture="{{ asset(userImage) | imagine_filter('porto_admin_user_avatar')}}" />
+
+	</figure>
+	<span class="title">{{ title }}</span>
+	<span class="message">{{ description }}</span>
+</a>

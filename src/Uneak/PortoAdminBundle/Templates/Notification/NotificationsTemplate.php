@@ -1,13 +1,13 @@
 <?php
 
-	namespace Uneak\PortoAdminBundle\Templates\User;
+	namespace Uneak\PortoAdminBundle\Templates\Notification;
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
 	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
 	use Uneak\BlocksManagerBundle\Blocks\BlockTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
-	class UserTemplate extends BlockTemplate {
+	class NotificationsTemplate extends BlockTemplate {
 
 		public function buildAsset(AssetsBuilderManager $builder, $parameters) {
 //			$builder
@@ -21,13 +21,12 @@
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
 
-			$options['menu'] = $block->getMenu();
-			$options['user'] = $block->getUser();
+			$options['notifications'] = $block->getBlocks("notifications");
 
 		}
 
 		public function getRenderTemplate() {
-			return 'block_user_template';
+			return 'block_notifications_template';
 		}
 
 	}
