@@ -14,7 +14,6 @@ services:
         tags:
             - { name: uneak.blocksmanager.template, model: block_user }
 
-
     uneak.portoadmin.breadcrumb.template:
         class: %uneak.portoadmin.breadcrumb.template.class%
         tags:

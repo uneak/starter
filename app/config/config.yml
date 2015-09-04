@@ -239,7 +239,7 @@ stof_doctrine_extensions:
     orm:
         default:
             tree: false
-            timestampable: false
+            timestampable: true
             sluggable: false
             uploadable: false
 
@@ -375,17 +375,6 @@ liip_imagine:
     filter_sets:
         cache: ~
 
-        thumbs:
-            quality: 100
-            filters:
-                upscale: { min: [100, 100] }
-                thumbnail: { size: [100, 100], mode: outbound }
-
-        avatar:
-            quality: 100
-            filters:
-                upscale: { min: [29, 29] }
-                thumbnail: { size: [29, 29], mode: outbound }
 
 
 # Bower

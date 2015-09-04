@@ -1,6 +1,7 @@
 {
   "name": "bower-assets",
   "dependencies": {
+    "bourbon": "*",
 	"jquery": "*",
 	"font-awesome": "*",
 	"mjolnic-bootstrap-colorpicker": "*",

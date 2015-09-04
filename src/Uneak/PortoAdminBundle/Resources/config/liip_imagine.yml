@@ -1,0 +1,8 @@
+
+
+
+porto_admin_user_avatar:
+    quality: 100
+    filters:
+        upscale: { min: [35, 35] }
+        thumbnail: { size: [35, 35], mode: outbound }

@@ -62,9 +62,9 @@
 			$tokenStorage = $this->get("security.token_storage");
 			$user = $tokenStorage->getToken()->getUser();
 
-			$root = $factory->createItem('root');
-			$root->setChildrenAttribute('class', 'list-unstyled');
 
+
+			$root = $factory->createItem('root');
 			$choices = $factory->createItem('top-separator', array(
 				'attributes' => array('class' => 'divider'),
 			));
@@ -85,13 +85,7 @@
 				$root->addChild($itemNews2);
 			}
 
-			$options2 = array(
-				'template' => 'UneakPortoAdminBundle:Menu:user_menu_template.html.twig',
-				'currentClass' => 'active',
-			);
-			$menu2 = new Menu($root, $options2);
-
-			$user = new User($user, $menu2);
+			$user = new User($user, $root);
 			$blockManager->addBlock($user, 'user');
 
 

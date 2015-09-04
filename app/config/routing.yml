@@ -54,3 +54,7 @@ twitter_login:
 uneak_routesmanager:
     resource: .
     type: uneak_routesmanager
+
+# Lii Imagine
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"

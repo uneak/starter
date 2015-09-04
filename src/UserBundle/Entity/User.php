@@ -4,7 +4,8 @@
 
 	use Doctrine\ORM\Mapping as ORM;
 	use FOS\UserBundle\Model\User as BaseUser;
-	use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+    use Gedmo\Timestampable\Traits\TimestampableEntity;
+    use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 	use Symfony\Component\HttpFoundation\File\File;
 	use Vich\UploaderBundle\Mapping\Annotation as Vich;
 	use Gedmo\Mapping\Annotation as Gedmo;
@@ -30,21 +31,11 @@
 		 */
 		protected $id;
 
-		/**
-		 * @var datetime $createdAt
-		 *
-		 * @Gedmo\Timestampable(on="create")
-		 * @ORM\Column(name="created_at", type="datetime")
-		 */
-		protected $createdAt;
-
-		/**
-		 * @var datetime $updatedAt
-		 *
-		 * @Gedmo\Timestampable(on="update")
-		 * @ORM\Column(name="updated_at", type="datetime")
-		 */
-		protected $updatedAt;
+        /**
+         * Hook timestampable behavior
+         * updates createdAt, updatedAt fields
+         */
+        use TimestampableEntity;
 
 		/**
 		 * @ORM\Column(name="firstName", type="string", length=64)
@@ -90,49 +81,6 @@
 			return $this->firstName . " " . $this->lastName;
 		}
 
-
-		/**
-		 * Set createdAt
-		 *
-		 * @param \DateTime $createdAt
-		 *
-		 * @return instance
-		 */
-		public function setCreatedAt($createdAt) {
-			$this->createdAt = $createdAt;
-
-			return $this;
-		}
-
-		/**
-		 * Get createdAt
-		 *
-		 * @return \DateTime
-		 */
-		public function getCreatedAt() {
-			return $this->createdAt;
-		}
-
-		/**
-		 * Set updatedAt
-		 *
-		 * @param \DateTime $updatedAt
-		 *
-		 * @return User
-		 */
-		public function setUpdatedAt($updatedAt) {
-			$this->updatedAt = $updatedAt;
-			return $this;
-		}
-
-		/**
-		 * Get updatedAt
-		 *
-		 * @return \DateTime
-		 */
-		public function getUpdatedAt() {
-			return $this->updatedAt;
-		}
 
 
 		/**

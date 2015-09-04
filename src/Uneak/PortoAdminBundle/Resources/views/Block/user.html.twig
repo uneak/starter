@@ -1,7 +1,14 @@
 <div id="userbox" class="userbox">
 	<a href="#" data-toggle="dropdown">
 		<figure class="profile-picture">
-			<img src="{{ item.user.image }}" alt="{{ item.user.firstname }} {{ item.user.lastname }}" class="img-circle" data-lock-picture="{{ item.user.image }}" />
+            {% if item.user.image %}
+                {% set userImage = item.user.image %}
+            {% else %}
+                {% set userImage = "bundles/uneakportoadmin/images/default_avatar.jpg" %}
+            {% endif %}
+
+			<img src="{{ asset(userImage) | imagine_filter('porto_admin_user_avatar') }}" alt="{{ item.user.firstname }} {{ item.user.lastname }}" class="img-circle" data-lock-picture="{{ asset(userImage) | imagine_filter('porto_admin_user_avatar')}}" />
+
 		</figure>
 		<div class="profile-info" data-lock-name="{{ item.user.firstname }} {{ item.user.lastname }}" data-lock-email="{{ item.user.email }}">
 			<span class="name">{{ item.user.firstname }} {{ item.user.lastname }}</span>
