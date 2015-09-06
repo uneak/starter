@@ -1,0 +1,9 @@
+<div class="widget-stats">
+    <ul>
+        {% for progressBar in progressBars %}
+            <li>
+                {{ renderBlock(progressBar) }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>

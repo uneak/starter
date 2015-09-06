@@ -5,6 +5,7 @@
 	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
 
 	class Message extends BlockModel {
+        protected $templateAlias = "block_template_message";
 
 		protected $title;
 		protected $description;
@@ -58,8 +59,7 @@
 			$this->photo = $photo;
 		}
 
-		public function getTemplateName() {
-			return "block_message";
-		}
+
+
 
 	}

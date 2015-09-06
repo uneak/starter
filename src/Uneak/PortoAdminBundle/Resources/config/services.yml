@@ -2,6 +2,7 @@
 parameters:
     knp_menu.voter.uri.class: Uneak\PortoAdminBundle\Menu\Matcher\Voter\UriVoter
 
+
 services:
     knp_menu.voter.uri:
         class: %knp_menu.voter.uri.class%

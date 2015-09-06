@@ -29,7 +29,7 @@
 
 			$options['root'] = $root;
 			$options['parameters'] = array_merge($parameters, array(
-				'template' => $templatesManager->get('block_user_menu_template'),
+				'template' => $templatesManager->getTemplate('knp_user_menu_template'),
 				'currentClass' => 'active',
 			));
 			$options['renderer'] = $renderer;

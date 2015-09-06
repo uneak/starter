@@ -9,12 +9,11 @@
 
 	class Breadcrumb extends Menu {
 
+        protected $templateAlias = "block_template_breadcrumb";
+
 		public function __construct($root = null, array $parameters = array(), $renderer = null) {
 			parent::__construct($root, $parameters, $renderer);
 		}
 
-		public function getTemplateName() {
-			return "block_breadcrumb";
-		}
 
 	}

@@ -5,7 +5,7 @@
 	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
 
 	class Notifications extends BlockModel {
-
+        protected $templateAlias = "block_template_notifications";
 		protected $cmpt = 1000;
 
 		public function __construct() {
@@ -16,8 +16,6 @@
 			$this->addBlock($notification, null, $this->cmpt--, "notifications");
 		}
 
-		public function getTemplateName() {
-			return "block_notifications";
-		}
+
 
 	}

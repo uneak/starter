@@ -1,8 +1,87 @@
 parameters:
 
     uneak.admin.app.admin.class: Uneak\RoutesManagerBundle\Routes\NestedRoute
+#    uneak.admin.main.interface.layout.class: Uneak\PortoAdminBundle\Blocks\Layout\MainInterface
+
+#    uneak.portoadmin.layout.content.class: Uneak\PortoAdminBundle\Blocks\Layout\Content
+#    uneak.portoadmin.layout.header.class: Uneak\PortoAdminBundle\Blocks\Layout\Header
+#    uneak.portoadmin.layout.left.sidebar.class: Uneak\PortoAdminBundle\Blocks\Layout\LeftSidebar
+#    uneak.portoadmin.layout.right.sidebar.class: Uneak\PortoAdminBundle\Blocks\Layout\RightSidebar
+#    uneak.portoadmin.layout.page.body.class: Uneak\PortoAdminBundle\Blocks\Layout\PageBody
+#    uneak.portoadmin.layout.page.header.class: Uneak\PortoAdminBundle\Blocks\Layout\PageHeader
+
+
+    uneak.starter.block.main.menu.class: AppBundle\Blocks\Menu\MainMenu
+    uneak.starter.block.user.menu.class: AppBundle\Blocks\Menu\UserMenu
+    uneak.starter.block.user.class: AppBundle\Blocks\User\User
+
+    uneak.starter.block.left.sidebar.class: AppBundle\Blocks\Layout\LeftSidebar
+    uneak.starter.block.right.sidebar.class: AppBundle\Blocks\Layout\RightSidebar
+
+    uneak.starter.block.brand.class: AppBundle\Blocks\Brand\Brand
+    uneak.starter.block.breadcrumb.class: AppBundle\Blocks\Breadcrumb\Breadcrumb
+    uneak.starter.block.notifications.class: AppBundle\Blocks\Notification\Notifications
+
 
 services:
+
+    uneak.starter.block.breadcrumb:
+        class: %uneak.starter.block.breadcrumb.class%
+        arguments:
+            - @uneak.routesmanager.menu.helper
+            - @uneak.routesmanager.flattenmanager
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_breadcrumb }
+
+    uneak.starter.block.notifications:
+        class: %uneak.starter.block.notifications.class%
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_notifications }
+
+    uneak.starter.block.brand:
+        class: %uneak.starter.block.brand.class%
+        arguments:
+            - @uneak.routesmanager.menu.helper
+            - @uneak.routesmanager.flattenmanager
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_brand }
+
+    uneak.starter.block.main.menu:
+        class: %uneak.starter.block.main.menu.class%
+        arguments:
+            - @uneak.routesmanager.menu.helper
+            - @uneak.routesmanager.flattenmanager
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_main_menu }
+
+    uneak.starter.block.user.menu:
+        class: %uneak.starter.block.user.menu.class%
+        arguments:
+            - @uneak.routesmanager.menu.helper
+            - @uneak.routesmanager.flattenmanager
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_user_menu }
+
+    uneak.starter.block.user:
+        class: %uneak.starter.block.user.class%
+        arguments:
+            - @security.token_storage
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_user }
+
+    uneak.starter.block.left.sidebar:
+        class: %uneak.starter.block.left.sidebar.class%
+        calls:
+            - [ setTitle, [ 'Menu' ] ]
+            - [ addWidget, [ 'main-menu-gros', @uneak.starter.block.main.menu, 10000 ] ]
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_left_sidebar }
+
+    uneak.starter.block.right.sidebar:
+        class: %uneak.starter.block.right.sidebar.class%
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_right_sidebar }
+
 
     uneak.admin.app.admin:
         class: %uneak.admin.app.admin.class%

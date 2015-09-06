@@ -208,7 +208,7 @@
 
 
 
-		public function getTemplateName() {
+		public function getTemplateAlias() {
 			return "block_card_model";
 		}
 

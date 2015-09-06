@@ -5,10 +5,11 @@
 	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
 
 	class Search extends BlockModel {
+        protected $templateAlias = "block_template_search";
 
 		protected $link;
 
-		public function __construct($link) {
+		public function __construct($link = null) {
 			$this->link = $link;
 		}
 
@@ -27,8 +28,5 @@
 		}
 
 
-		public function getTemplateName() {
-			return "block_search";
-		}
 
 	}

@@ -7,7 +7,9 @@
 
 	class Menu extends BlockModel {
 
-		protected $root;
+        protected $templateAlias = "block_template_menu";
+
+        protected $root;
 		protected $renderer;
 		protected $parameters;
 
@@ -42,8 +44,5 @@
 			return $this;
 		}
 
-		public function getTemplateName() {
-			return "block_menu";
-		}
 
 	}

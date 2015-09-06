@@ -1,0 +1,77 @@
+
+parameters:
+    uneak.portoadmin.layout.main.interface.class: Uneak\PortoAdminBundle\Blocks\Layout\MainInterface
+    uneak.portoadmin.layout.content.class: Uneak\PortoAdminBundle\Blocks\Layout\Content
+    uneak.portoadmin.layout.header.class: Uneak\PortoAdminBundle\Blocks\Layout\Header
+    uneak.portoadmin.layout.left.sidebar.class: Uneak\PortoAdminBundle\Blocks\Layout\LeftSidebar
+    uneak.portoadmin.layout.right.sidebar.class: Uneak\PortoAdminBundle\Blocks\Layout\RightSidebar
+    uneak.portoadmin.layout.page.body.class: Uneak\PortoAdminBundle\Blocks\Layout\PageBody
+    uneak.portoadmin.layout.page.header.class: Uneak\PortoAdminBundle\Blocks\Layout\PageHeader
+
+    uneak.portoadmin.block.user.class: Uneak\PortoAdminBundle\Blocks\User\User
+    uneak.portoadmin.block.user.menu.class: Uneak\PortoAdminBundle\Blocks\Menu\UserMenu
+    uneak.portoadmin.block.brand.class: Uneak\PortoAdminBundle\Blocks\Brand\Brand
+    uneak.portoadmin.block.breadcrumb.class: Uneak\PortoAdminBundle\Blocks\Breadcrumb\Breadcrumb
+    uneak.portoadmin.block.notifications.class: Uneak\PortoAdminBundle\Blocks\Notification\Notifications
+
+services:
+
+    uneak.portoadmin.layout.main.interface:
+        class: %uneak.portoadmin.layout.main.interface.class%
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_main_interface, override: false }
+
+    uneak.portoadmin.layout.content:
+        class: %uneak.portoadmin.layout.content.class%
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_content, override: false }
+
+    uneak.portoadmin.layout.header:
+        class: %uneak.portoadmin.layout.header.class%
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_header, override: false }
+
+    uneak.portoadmin.layout.left.sidebar:
+        class: %uneak.portoadmin.layout.left.sidebar.class%
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_left_sidebar, override: false }
+
+    uneak.portoadmin.layout.right.sidebar:
+        class: %uneak.portoadmin.layout.right.sidebar.class%
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_right_sidebar, override: false }
+
+    uneak.portoadmin.layout.page.body:
+        class: %uneak.portoadmin.layout.page.body.class%
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_page_body, override: false }
+
+    uneak.portoadmin.layout.page.header:
+        class: %uneak.portoadmin.layout.page.header.class%
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_page_header, override: false }
+
+    uneak.portoadmin.block.user:
+        class: %uneak.portoadmin.block.user.class%
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_user, override: false }
+
+    uneak.portoadmin.block.user.menu:
+        class: %uneak.portoadmin.block.user.menu.class%
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_user_menu, override: false }
+
+    uneak.portoadmin.block.brand:
+        class: %uneak.portoadmin.block.brand.class%
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_brand, override: false }
+
+    uneak.portoadmin.block.breadcrumb:
+        class: %uneak.portoadmin.block.breadcrumb.class%
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_breadcrumb, override: false }
+
+    uneak.portoadmin.block.notifications:
+        class: %uneak.portoadmin.block.notifications.class%
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_notifications, override: false }

@@ -6,6 +6,7 @@
 	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
 
 	class Notification extends BlockModel {
+        protected $templateAlias = "block_template_notification";
 
 		protected $title;
 		protected $icon;
@@ -78,8 +79,6 @@
 			$this->addBlock($block, null, $this->cmpt--, "notification_item");
 		}
 
-		public function getTemplateName() {
-			return "block_notification";
-		}
+
 
 	}

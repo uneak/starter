@@ -35,7 +35,7 @@
 
 			foreach ($templates as $id => $template) {
 				$definition->addMethodCall(
-					'set', array($id, $template, false)
+					'setTemplate', array($id, $template, false)
 				);
 			}
 		}

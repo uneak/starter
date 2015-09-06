@@ -1,45 +1,39 @@
 
 porto_admin_fonts_css:
     type: externalcss
-    build: true
     config:
         href: "http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light"
 
 porto_admin_theme_css:
     type: externalcss
-    build: true
     config:
         href: "bundles/uneakportoadmin/css/theme.css"
-        dependencies: [ "bootstrap_css" ]
+        dependencies: [ "bootstrap_css", "porto_admin_fonts_css", "font_awesome_css" ]
 
 porto_admin_skins_default_css:
     type: externalcss
-    build: true
     config:
         href: "bundles/uneakportoadmin/css/skins/default.css"
+        dependencies: [ "porto_admin_theme_css" ]
 
 porto_admin_theme_custom_css:
     type: externalcss
-    build: true
     config:
         href: "bundles/uneakportoadmin/css/theme-custom.css"
-        dependencies: [ "porto_admin_theme_css" ]
+        dependencies: [ "porto_admin_skins_default_css" ]
 
 font_awesome_css:
     type: externalcss
-    build: true
     config:
         href: "vendor/font-awesome/css/font-awesome.css"
 
 bootstrap_css:
     type: externalcss
-    build: true
     config:
         href: "vendor/bootstrap/dist/css/bootstrap.css"
 
 modernizr_js:
     type: externaljs
-    build: true
     config:
 #        src: "vendor/modernizr/modernizr.js"
         src: "bundles/uneakportoadmin/js/modernizr.js"
@@ -47,27 +41,23 @@ modernizr_js:
 
 jquery_js:
     type: externaljs
-    build: true
     config:
         src: "vendor/jquery/dist/jquery.js"
 
 jquery_browser_mobile_js:
     type: externaljs
-    build: true
     config:
         src: "bundles/uneakportoadmin/js/jquery.browser.mobile.js"
         dependencies: [ "jquery_js" ]
 
 bootstrap_js:
     type: externaljs
-    build: true
     config:
         src: "vendor/bootstrap/dist/js/bootstrap.js"
         dependencies: [ "jquery_js" ]
 
 nanoscroller_js:
     type: externaljs
-    build: true
     config:
         src: "vendor/nanoscroller/bin/javascripts/jquery.nanoscroller.js"
 #        src: "bundles/uneakportoadmin/js/nanoscroller.js"
@@ -75,44 +65,117 @@ nanoscroller_js:
 
 jquery_placeholder_js:
     type: externaljs
-    build: true
     config:
         src: "vendor/jquery-placeholder/jquery.placeholder.js"
         dependencies: [ "jquery_js" ]
 
-porto_admin_theme_js:
-    type: externaljs
-    build: true
+
+
+
+porto_admin_window_theme_js:
+    type: internaljs
     config:
-        src: "bundles/uneakportoadmin/js/theme.js"
+        content: "window.theme = {};"
         category: "AssetExternalJs_theme"
+
+porto_admin_theme_navigation_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/navigation.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_scroll_to_top_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/scroll_to_top.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_skeleton_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/skeleton.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_base_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/base.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_theme_skeleton_js" ]
+
+porto_admin_theme_mail_box_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/mail_box.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_lock_screen_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/lock_screen.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_panels_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/panels.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_bootstrap_toggle_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/bootstrap_toggle.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_form_to_object_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/form_to_object.js"
+        category: "AssetExternalJs_theme"
+
+
+porto_admin_theme_loading_overlay_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/loading_overlay.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+#porto_admin_theme_js:
+#    type: externaljs
+#    config:
+#        src: "bundles/uneakportoadmin/js/theme.js"
+#        category: "AssetExternalJs_theme"
 
 porto_admin_theme_custom_js:
     type: externaljs
-    build: true
     config:
         src: "bundles/uneakportoadmin/js/theme.custom.js"
-        dependencies: [ "porto_admin_theme_js" ]
-        category: "AssetExternalJs_theme"
+        category: "AssetExternalJs_theme_custom"
 
 porto_admin_theme_init_js:
     type: externaljs
-    build: true
     config:
         src: "bundles/uneakportoadmin/js/theme.init.js"
-        dependencies: [ "porto_admin_theme_custom_js" ]
-        category: "AssetExternalJs_theme"
+        category: "AssetExternalJs_theme_init"
 
 
-porto_admin_theme_admin_extension_css:
-    type: externalcss
-    config:
-        href: "bundles/uneakportoadmin/css/theme-admin-extension.css"
-
-porto_admin_invoice_print_css:
-    type: externalcss
-    config:
-        href: "bundles/uneakportoadmin/css/invoice-print.css"
+#porto_admin_theme_admin_extension_css:
+#    type: externalcss
+#    config:
+#        href: "bundles/uneakportoadmin/css/theme-admin-extension.css"
+#
+#porto_admin_invoice_print_css:
+#    type: externalcss
+#    config:
+#        href: "bundles/uneakportoadmin/css/invoice-print.css"
 
 
 

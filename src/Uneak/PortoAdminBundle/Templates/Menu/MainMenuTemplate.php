@@ -10,13 +10,14 @@
 
 		public function buildAsset(AssetsBuilderManager $builder, $parameters) {
 			parent::buildAsset($builder, $parameters);
-//			$builder
-//				->add('material_design_lite_js')
-//                ->add('material_design_lite_css')
+			$builder
+                ->add('porto_admin_theme_navigation_js')
+
 //				->add('card_block_script', 'internaljs', array(
 //					'template'   => 'block_card_script',
 //					'parameters' => array('item' => $parameters)
-//				));
+//				))
+            ;
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
@@ -30,7 +31,7 @@
 
 			$options['root'] = $root;
 			$options['parameters'] = array_merge($parameters, array(
-				'template' => $templatesManager->get('block_main_menu_template'),
+				'template' => $templatesManager->getTemplate('knp_main_menu_template'),
 				'leaf_class' => 'nav nav-children',
 				'branch_class' => 'nav-parent',
 				'ancestorClass' => 'nav-active nav-expanded',
@@ -39,5 +40,8 @@
 			$options['renderer'] = $renderer;
 		}
 
+        public function getRenderTemplate() {
+            return 'block_main_menu_template';
+        }
 
 	}

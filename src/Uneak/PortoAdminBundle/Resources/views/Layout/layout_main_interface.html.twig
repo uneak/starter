@@ -1,0 +1,50 @@
+{% extends 'UneakPortoAdminBundle:Layout:base.html.twig' %}
+
+	{% block title %}{{ title }} - {{ parent() }}{% endblock %}
+	{% block meta_keywords %}{% endblock %}
+	{% block meta_description %}{% endblock %}
+
+	{% block content %}
+		<section class="body">
+
+			<header class="header">
+				{{ renderBlock(header) }}
+			</header>
+
+			<div class="inner-wrapper">
+				{{ renderBlock(left_sidebar) }}
+
+				<section role="main" class="content-body">
+					{{ renderBlock(content) }}
+				</section>
+			</div>
+
+			<aside id="sidebar-right" class="sidebar-right">
+				{{ renderBlock(right_sidebar) }}
+			</aside>
+		</section>
+	{% endblock %}
+
+
+	{% block stylesheets %}
+		{{ parent() }}
+		{{ renderAssets('AssetExternalCss') }}
+	{% endblock %}
+
+	{% block javascripts_top %}
+		{{ parent() }}
+		{{ renderAssets('AssetExternalJs_top') }}
+	{% endblock %}
+
+	{% block javascripts_bottom %}
+		{{ parent() }}
+		{{ renderAssets('AssetExternalJs') }}
+		{{ renderAssets('AssetExternalJs_theme') }}
+		{{ renderAssets('AssetExternalJs_theme_custom') }}
+		{{ renderAssets('AssetExternalJs_theme_init') }}
+	{% endblock %}
+
+	{% block javascript_script %}
+		{{ parent() }}
+		{{ renderAssets('AssetInternalJs') }}
+	{% endblock %}

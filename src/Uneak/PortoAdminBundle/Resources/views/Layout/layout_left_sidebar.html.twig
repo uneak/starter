@@ -1,0 +1,30 @@
+<!-- start: sidebar -->
+<aside id="sidebar-left" class="sidebar-left">
+
+    <div class="sidebar-header">
+        <div class="sidebar-title">
+            {{ title }}
+        </div>
+        <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+        </div>
+    </div>
+
+    <div class="nano">
+        <div class="nano-content">
+
+            {% for widget in widgets %}
+                {{ renderBlock(widget) }}
+                <hr class="separator" />
+            {% endfor %}
+
+            {#{{ renderBlock('main-menu') }}#}
+            {#<hr class="separator" />#}
+            {#{{ renderBlock('widget-tasks') }}#}
+            {#<hr class="separator" />#}
+            {#{{ renderBlock('widget-stats') }}#}
+        </div>
+    </div>
+
+</aside>
+<!-- end: sidebar -->

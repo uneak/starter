@@ -1,0 +1,16 @@
+<div class="logo-container">
+    {{ renderBlock(brand) }}
+    <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+        <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+    </div>
+</div>
+
+<!-- start: search & user box -->
+<div class="header-right">
+    {{ renderBlock(search) }}
+    <span class="separator"></span>
+    {{ renderBlock(notifications) }}
+    <span class="separator"></span>
+    {{ renderBlock(user) }}
+</div>
+<!-- end: search & user box -->

@@ -31,7 +31,7 @@
 
 			$options['root'] = $root;
 			$options['parameters'] = array_merge($parameters, array(
-				'template' => $templatesManager->get('block_breadcrumb_menu_template'),
+				'template' => $templatesManager->getTemplate('knp_breadcrumb_menu_template'),
 				'leaf_class' => 'nav nav-children',
 				'branch_class' => 'nav-parent',
 				'ancestorClass' => 'nav-active nav-expanded',

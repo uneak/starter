@@ -17,63 +17,133 @@ parameters:
 
     uneak.portoadmin.brand.template.class: Uneak\PortoAdminBundle\Templates\Brand\BrandTemplate
 
+    uneak.portoadmin.widget.wrapper.template.class: Uneak\PortoAdminBundle\Templates\Widget\WidgetWrapperTemplate
+    uneak.portoadmin.widget.tasks.template.class: Uneak\PortoAdminBundle\Templates\Widget\WidgetTasksTemplate
+
+    uneak.portoadmin.widget.stats.progress.template.class: Uneak\PortoAdminBundle\Templates\Widget\WidgetStatsProgressTemplate
+    uneak.portoadmin.widget.stats.template.class: Uneak\PortoAdminBundle\Templates\Widget\WidgetStatsTemplate
+
+
+    uneak.portoadmin.layout.main.interface.template.class: Uneak\PortoAdminBundle\Templates\Layout\MainInterfaceTemplate
+    uneak.portoadmin.layout.content.template.class: Uneak\PortoAdminBundle\Templates\Layout\ContentTemplate
+    uneak.portoadmin.layout.header.template.class: Uneak\PortoAdminBundle\Templates\Layout\HeaderTemplate
+    uneak.portoadmin.layout.left.sidebar.template.class: Uneak\PortoAdminBundle\Templates\Layout\LeftSidebarTemplate
+    uneak.portoadmin.layout.right.sidebar.template.class: Uneak\PortoAdminBundle\Templates\Layout\RightSidebarTemplate
+    uneak.portoadmin.layout.page.body.template.class: Uneak\PortoAdminBundle\Templates\Layout\PageBodyTemplate
+    uneak.portoadmin.layout.page.header.template.class: Uneak\PortoAdminBundle\Templates\Layout\PageHeaderTemplate
+
 services:
     uneak.portoadmin.menu.template:
         class: %uneak.portoadmin.menu.template.class%
         tags:
-            - { name: uneak.blocksmanager.template, alias: block_menu }
+            - { name: uneak.blocksmanager.template, alias: block_template_menu }
 
     uneak.portoadmin.mainmenu.template:
         class: %uneak.portoadmin.mainmenu.template.class%
         tags:
-            - { name: uneak.blocksmanager.template, alias: block_main_menu }
+            - { name: uneak.blocksmanager.template, alias: block_template_main_menu }
 
     uneak.portoadmin.usermenu.template:
         class: %uneak.portoadmin.usermenu.template.class%
         tags:
-            - { name: uneak.blocksmanager.template, alias: block_user_menu }
+            - { name: uneak.blocksmanager.template, alias: block_template_user_menu }
 
     uneak.portoadmin.user.template:
         class: %uneak.portoadmin.user.template.class%
         tags:
-            - { name: uneak.blocksmanager.template, alias: block_user }
+            - { name: uneak.blocksmanager.template, alias: block_template_user }
 
     uneak.portoadmin.breadcrumb.template:
         class: %uneak.portoadmin.breadcrumb.template.class%
         tags:
-            - { name: uneak.blocksmanager.template, alias: block_breadcrumb }
+            - { name: uneak.blocksmanager.template, alias: block_template_breadcrumb }
 
     uneak.portoadmin.notifications.template:
         class: %uneak.portoadmin.notifications.template.class%
         tags:
-            - { name: uneak.blocksmanager.template, alias: block_notifications }
+            - { name: uneak.blocksmanager.template, alias: block_template_notifications }
 
     uneak.portoadmin.notification.template:
         class: %uneak.portoadmin.notification.template.class%
         tags:
-            - { name: uneak.blocksmanager.template, alias: block_notification }
+            - { name: uneak.blocksmanager.template, alias: block_template_notification }
 
     uneak.portoadmin.progress.bar.notification.template:
         class: %uneak.portoadmin.progress.bar.notification.template.class%
         tags:
-            - { name: uneak.blocksmanager.template, alias: block_progress_bar }
+            - { name: uneak.blocksmanager.template, alias: block_template_progress_bar }
 
     uneak.portoadmin.message.notification.template:
         class: %uneak.portoadmin.message.notification.template.class%
         tags:
-            - { name: uneak.blocksmanager.template, alias: block_message }
+            - { name: uneak.blocksmanager.template, alias: block_template_message }
 
     uneak.portoadmin.icon.message.notification.template:
         class: %uneak.portoadmin.icon.message.notification.template.class%
         tags:
-            - { name: uneak.blocksmanager.template, alias: block_icon_message }
+            - { name: uneak.blocksmanager.template, alias: block_template_icon_message }
 
     uneak.portoadmin.search.template:
         class: %uneak.portoadmin.search.template.class%
         tags:
-            - { name: uneak.blocksmanager.template, alias: block_search }
+            - { name: uneak.blocksmanager.template, alias: block_template_search }
 
     uneak.portoadmin.brand.template:
         class: %uneak.portoadmin.brand.template.class%
         tags:
-            - { name: uneak.blocksmanager.template, alias: block_brand }
+            - { name: uneak.blocksmanager.template, alias: block_template_brand }
+
+    uneak.portoadmin.widget.wrapper.template:
+        class: %uneak.portoadmin.widget.wrapper.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_widget_wrapper }
+
+    uneak.portoadmin.widget.tasks.template:
+        class: %uneak.portoadmin.widget.tasks.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_widget_tasks }
+
+    uneak.portoadmin.widget.stats.template:
+        class: %uneak.portoadmin.widget.stats.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_widget_stats }
+
+    uneak.portoadmin.widget.stats.progress.template:
+        class: %uneak.portoadmin.widget.stats.progress.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_widget_stats_progress }
+
+    uneak.portoadmin.layout.main.interface.template:
+        class: %uneak.portoadmin.layout.main.interface.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: layout_template_main_interface }
+
+    uneak.portoadmin.layout.content.template:
+        class: %uneak.portoadmin.layout.content.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: layout_template_content }
+
+    uneak.portoadmin.layout.header.template:
+        class: %uneak.portoadmin.layout.header.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: layout_template_header }
+
+    uneak.portoadmin.layout.left.sidebar.template:
+        class: %uneak.portoadmin.layout.left.sidebar.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: layout_template_left_sidebar }
+
+    uneak.portoadmin.layout.right.sidebar.template:
+        class: %uneak.portoadmin.layout.right.sidebar.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: layout_template_right_sidebar }
+
+    uneak.portoadmin.layout.page.body.template:
+        class: %uneak.portoadmin.layout.page.body.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: layout_template_page_body }
+
+    uneak.portoadmin.layout.page.header.template:
+        class: %uneak.portoadmin.layout.page.header.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: layout_template_page_header }

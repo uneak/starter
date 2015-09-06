@@ -1,10 +1,11 @@
 block_menu_template: "UneakPortoAdminBundle:Block:menu.html.twig"
+block_main_menu_template: "UneakPortoAdminBundle:Block:main_menu.html.twig"
 block_user_template: "UneakPortoAdminBundle:Block:user.html.twig"
 block_breadcrumb_template: "UneakPortoAdminBundle:Block:breadcrumb.html.twig"
 
-block_user_menu_template: "UneakPortoAdminBundle:Menu:user_menu_template.html.twig"
-block_main_menu_template: "UneakPortoAdminBundle:Menu:main_menu_template.html.twig"
-block_breadcrumb_menu_template: "UneakPortoAdminBundle:Menu:breadcrumb_template.html.twig"
+knp_user_menu_template: "UneakPortoAdminBundle:KnpMenu:user_menu_template.html.twig"
+knp_main_menu_template: "UneakPortoAdminBundle:KnpMenu:main_menu_template.html.twig"
+knp_breadcrumb_menu_template: "UneakPortoAdminBundle:KnpMenu:breadcrumb_template.html.twig"
 
 block_notification_template: "UneakPortoAdminBundle:Block:notification.html.twig"
 block_notifications_template: "UneakPortoAdminBundle:Block:notifications.html.twig"
@@ -16,3 +17,20 @@ block_icon_message_notification_template: "UneakPortoAdminBundle:Block:icon_mess
 
 block_search_template: "UneakPortoAdminBundle:Block:search.html.twig"
 block_brand_template: "UneakPortoAdminBundle:Block:brand.html.twig"
+
+block_widget_wrapper_template: "UneakPortoAdminBundle:Block:widget_wrapper.html.twig"
+block_widget_tasks_template: "UneakPortoAdminBundle:Block:widget_tasks.html.twig"
+
+block_widget_stats_template: "UneakPortoAdminBundle:Block:widget_stats.html.twig"
+block_widget_stats_progress_template: "UneakPortoAdminBundle:Block:widget_stats_progress.html.twig"
+
+
+# LAYOUT
+layout_main_interface_template: "UneakPortoAdminBundle:Layout:layout_main_interface.html.twig"
+layout_content_template: "UneakPortoAdminBundle:Layout:layout_content.html.twig"
+layout_header_template: "UneakPortoAdminBundle:Layout:layout_header.html.twig"
+layout_left_sidebar_template: "UneakPortoAdminBundle:Layout:layout_left_sidebar.html.twig"
+layout_right_sidebar_template: "UneakPortoAdminBundle:Layout:layout_right_sidebar.html.twig"
+layout_page_body_template: "UneakPortoAdminBundle:Layout:layout_page_body.html.twig"
+layout_page_header_template: "UneakPortoAdminBundle:Layout:layout_page_header.html.twig"
+

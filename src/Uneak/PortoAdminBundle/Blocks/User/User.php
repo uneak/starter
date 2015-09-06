@@ -7,27 +7,18 @@
 	use Uneak\PortoAdminBundle\Blocks\Menu\UserMenu;
 
 	class User extends BlockModel {
+        protected $templateAlias = "block_template_user";
 
 		protected $user;
-		protected $menu;
 
-		public function __construct($user, ItemInterface $menuItem = null) {
+		public function __construct($user = null) {
 			$this->user = $user;
-            $this->menu = new UserMenu($menuItem);
-            $this->addBlock($this->menu, "menu", 0, "user");
+            $this->addBlock('block_user_menu', "menu");
 		}
 
 		public function getMenu() {
-			return $this->getBlock("menu", "user");
+			return $this->getBlock("menu");
 		}
-
-		public function setMenuItem(ItemInterface $menuItem) {
-            $this->menu->setRoot($menuItem);
-		}
-
-        public function getMenuItem() {
-            return $this->menu->getRoot();
-        }
 
 		public function getUser() {
 			return $this->user;
@@ -38,8 +29,6 @@
 		}
 
 
-		public function getTemplateName() {
-			return "block_user";
-		}
+
 
 	}

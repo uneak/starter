@@ -15,39 +15,31 @@ uneak_assets_manager:
 
     porto_admin_theme_css:
         type: externalcss
-        build: true
         config:
             href: "css/porto_admin/theme.css"
-            dependencies: [ "bootstrap_css" ]
 
     porto_admin_theme_custom_css:
         type: externalcss
-        build: true
         config:
             href: "css/porto_admin/theme-custom.css"
-            dependencies: [ "porto_admin_theme_css" ]
 
     porto_admin_theme_admin_extension_css:
         type: externalcss
-        build: true
         config:
             href: "css/porto_admin/theme-admin-extension.css"
 
     porto_admin_invoice_print_css:
         type: externalcss
-        build: true
         config:
             href: "css/porto_admin/invoice-print.css"
 
     bootstrap_css:
         type: externalcss
-        build: true
         config:
             href: "css/bootstrap.css"
 
     font_awesome_css:
         type: externalcss
-        build: true
         config:
             href: "css/font-awesome.css"
 

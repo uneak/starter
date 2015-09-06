@@ -6,13 +6,12 @@
 	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
 
 	class UserMenu extends Menu {
+        protected $templateAlias = "block_template_user_menu";
 
 		public function __construct($root = null, array $parameters = array(), $renderer = null) {
 			parent::__construct($root, $parameters, $renderer);
 		}
 
-		public function getTemplateName() {
-			return "block_user_menu";
-		}
+
 
 	}

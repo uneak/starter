@@ -7,12 +7,12 @@
 
 	class MainMenu extends Menu {
 
+        protected $templateAlias = "block_template_main_menu";
+
 		public function __construct($root = null, array $parameters = array(), $renderer = null) {
 			parent::__construct($root, $parameters, $renderer);
 		}
 
-		public function getTemplateName() {
-			return "block_main_menu";
-		}
+
 
 	}

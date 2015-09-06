@@ -5,6 +5,7 @@
 	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
 
 	class ProgressBar extends BlockModel {
+        protected $templateAlias = "block_template_progress_bar";
 
 		protected $title;
 		protected $percent;
@@ -63,8 +64,6 @@
 		}
 
 
-		public function getTemplateName() {
-			return "block_progress_bar";
-		}
+
 
 	}

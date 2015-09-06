@@ -5,6 +5,7 @@
 	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
 
 	class IconMessage extends BlockModel {
+        protected $templateAlias = "block_template_icon_message";
 
 		protected $title;
 		protected $description;
@@ -76,8 +77,6 @@
 
 
 
-		public function getTemplateName() {
-			return "block_icon_message";
-		}
+
 
 	}

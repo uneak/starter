@@ -1,0 +1,11 @@
+<div class="sidebar-widget">
+    <div class="widget-header">
+        <h6>{{ title }}</h6>
+        {% if toggle %}<div class="widget-toggle">+</div>{% endif %}
+    </div>
+    <div class="widget-content">
+        {% for widget in widgets %}
+            {{ renderBlock(widget) }}
+        {% endfor %}
+    </div>
+</div>

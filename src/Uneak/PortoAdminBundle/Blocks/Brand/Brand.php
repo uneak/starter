@@ -6,11 +6,12 @@
 
 	class Brand extends BlockModel {
 
+        protected $templateAlias = "block_template_brand";
 		protected $link;
 		protected $name;
 		protected $photo;
 
-		public function __construct($name, $link, $photo = null) {
+		public function __construct($name = null, $link = null, $photo = null) {
 			$this->name = $name;
 			$this->link = $link;
 			$this->photo = $photo;
@@ -58,9 +59,5 @@
 			$this->link = $link;
 		}
 
-
-		public function getTemplateName() {
-			return "block_brand";
-		}
 
 	}
