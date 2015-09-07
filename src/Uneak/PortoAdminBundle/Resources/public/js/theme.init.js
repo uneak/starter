@@ -1,153 +1,16 @@
-// Popover
-(function( $ ) {
 
-	'use strict';
 
-	if ( $.isFunction( $.fn['popover'] ) ) {
-		$( '[data-toggle=popover]' ).popover();
-	}
 
-}).apply( this, [ jQuery ]);
 
-// Tooltip
-(function( $ ) {
 
-	'use strict';
 
-	if ( $.isFunction( $.fn['tooltip'] ) ) {
-		$( '[data-toggle=tooltip],[rel=tooltip]' ).tooltip({ container: 'body' });
-	}
 
-}).apply( this, [ jQuery ]);
 
-// Scroll to Top
-(function(theme, $) {
-	// Scroll to Top Button.
-	if (typeof theme.PluginScrollToTop !== 'undefined') {
-		theme.PluginScrollToTop.initialize();
-	}
-}).apply(this, [ window.theme, jQuery ]);
 
-// Sidebar Widgets
-(function( $ ) {
 
-	'use strict';
 
-	function expand( content ) {
-		content.children( '.widget-content' ).slideDown( 'fast', function() {
-			$(this).css( 'display', '' );
-			content.removeClass( 'widget-collapsed' );
-		});
-	}
 
-	function collapse( content ) {
-		content.children('.widget-content' ).slideUp( 'fast', function() {
-			content.addClass( 'widget-collapsed' );
-			$(this).css( 'display', '' );
-		});
-	}
 
-	var $widgets = $( '.sidebar-widget' );
-
-	$widgets.each( function() {
-
-		var $widget = $( this ),
-			$toggler = $widget.find( '.widget-toggle' );
-
-		$toggler.on('click.widget-toggler', function() {
-			$widget.hasClass('widget-collapsed') ? expand($widget) : collapse($widget);
-		});
-	});
-
-}).apply( this, [ jQuery ]);
-
-// iosSwitcher
-(function( $ ) {
-
-	'use strict';
-
-	if ( $.isFunction( $.fn.confirmation ) ) {
-
-		$.extend( $.fn.confirmation.Constructor.DEFAULTS, {
-			btnOkIcon 		: 'fa fa-check',
-			btnCancelIcon 	: 'fa fa-times'
-		});
-
-	}
-
-}).apply(this, [ jQuery ]);
-
-// Codemirror
-(function( $ ) {
-
-	'use strict';
-
-	if ( typeof CodeMirror !== 'undefined' ) {
-
-		$(function() {
-			$('[data-plugin-codemirror]').each(function() {
-				var $this = $( this ),
-					opts = {};
-
-				var pluginOptions = $this.data('plugin-options');
-				if (pluginOptions)
-					opts = pluginOptions;
-
-				$this.themePluginCodeMirror(opts);
-			});
-		});
-
-	}
-
-}).apply(this, [ jQuery ]);
-
-// Colorpicker
-(function( $ ) {
-
-	'use strict';
-
-	if ( $.isFunction($.fn[ 'colorpicker' ]) ) {
-
-		$(function() {
-			$('[data-plugin-colorpicker]').each(function() {
-				var $this = $( this ),
-					opts = {};
-
-				var pluginOptions = $this.data('plugin-options');
-				if (pluginOptions)
-					opts = pluginOptions;
-
-				$this.themePluginColorPicker(opts);
-			});
-		});
-
-	}
-
-}).apply(this, [ jQuery ]);
-
-// Datepicker
-(function( $ ) {
-
-	'use strict';
-
-	if ( $.isFunction($.fn[ 'datepicker' ]) ) {
-
-		$(function() {
-			$('[data-plugin-datepicker]').each(function() {
-				var $this = $( this ),
-					opts = {};
-
-				var pluginOptions = $this.data('plugin-options');
-				if (pluginOptions)
-					opts = pluginOptions;
-
-				$this.themePluginDatePicker(opts);
-			});
-		});
-
-	}
-
-}).apply(this, [ jQuery ]);
 
 // iosSwitcher
 (function( $ ) {

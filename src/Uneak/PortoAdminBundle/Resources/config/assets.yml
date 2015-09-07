@@ -148,6 +148,197 @@ porto_admin_theme_loading_overlay_js:
         category: "AssetExternalJs_theme"
         dependencies: [ "porto_admin_window_theme_js" ]
 
+
+porto_admin_theme_codemirror_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/codemirror.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_color_picker_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/color_picker.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_date_picker_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/date_picker.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_ios_switcher_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/ios_switcher.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_markdown_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/markdown.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_masked_input_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/masked_input.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_max_length_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/max_length.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_multi_select_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/multi_select.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_select2_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/select2.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_spinner_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/spinner.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_summer_note_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/summer_note.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_textarea_autosize_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/textarea_autosize.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_time_picker_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/time_picker.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_map_builder_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/map_builder.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+
+porto_admin_theme_animate_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/animate.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_carousel_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/carousel.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_chart_circular_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/chart_circular.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_lightbox_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/lightbox.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_portlets_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/portlets.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_scrollable_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/scrollable.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_slider_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/slider.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_toggle_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/toggle.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_widget_todo_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/widget_todo.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_widget_toggle_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/widget_toggle.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_word_rotate_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/word_rotate.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+porto_admin_theme_datatable_config_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/datatable_config.js"
+        category: "AssetExternalJs_theme"
+
+porto_admin_theme_notifications_config_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/notifications_config.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
+
+
 #porto_admin_theme_js:
 #    type: externaljs
 #    config:
@@ -165,6 +356,56 @@ porto_admin_theme_init_js:
     config:
         src: "bundles/uneakportoadmin/js/theme.init.js"
         category: "AssetExternalJs_theme_init"
+
+porto_admin_theme_init_popover_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme.init/popover.js"
+        category: "AssetExternalJs_theme_init"
+        dependencies: [ "bootstrap_js" ]
+
+porto_admin_theme_init_tooltip_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme.init/tooltip.js"
+        category: "AssetExternalJs_theme_init"
+        dependencies: [ "bootstrap_js" ]
+
+porto_admin_theme_init_sidebar_widget_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme.init/sidebar_widget.js"
+        category: "AssetExternalJs_theme_init"
+        dependencies: [ "jquery_js" ]
+
+porto_admin_theme_init_ios_switcher_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme.init/ios_switcher.js"
+        category: "AssetExternalJs_theme_init"
+        dependencies: [ "jquery_js" ]
+
+
+porto_admin_theme_init_codemirror_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme.init/codemirror.js"
+        category: "AssetExternalJs_theme_init"
+        dependencies: [ "porto_admin_theme_codemirror_js" ]
+
+porto_admin_theme_init_color_picker_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme.init/color_picker.js"
+        category: "AssetExternalJs_theme_init"
+        dependencies: [ "porto_admin_theme_color_picker_js", "jquery_js" ]
+
+porto_admin_theme_init_date_picker_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme.init/date_picker.js"
+        category: "AssetExternalJs_theme_init"
+        dependencies: [ "porto_admin_theme_date_picker_js", "jquery_js" ]
 
 
 #porto_admin_theme_admin_extension_css:
