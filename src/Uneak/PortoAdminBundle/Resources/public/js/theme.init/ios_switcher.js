@@ -1,13 +1,16 @@
-// iosSwitcher ???
+// iosSwitcher
 (function( $ ) {
 
     'use strict';
 
-    if ( $.isFunction( $.fn.confirmation ) ) {
+    if ( typeof Switch !== 'undefined' && $.isFunction( Switch ) ) {
 
-        $.extend( $.fn.confirmation.Constructor.DEFAULTS, {
-            btnOkIcon 		: 'fa fa-check',
-            btnCancelIcon 	: 'fa fa-times'
+        $(function() {
+            $('[data-plugin-ios-switch]').each(function() {
+                var $this = $( this );
+
+                $this.themePluginIOS7Switch();
+            });
         });
 
     }

@@ -1,0 +1,24 @@
+<section class="panel{% if collapsed %} panel-collapsed{% endif %}{% if featured_context is not null %} panel-featured panel-featured-{{ featured_context }}{% endif %}{% if context is not null %} panel-{{ context }}{% endif %}{% if transparent %} panel-transparent{% endif %}">
+	{% if title or subtitle or toggle or dismiss %}
+	<header class="panel-heading{% if header_transparent %} panel-heading-transparent{% endif %}">
+		{% if toggle or dismiss %}
+		<div class="panel-actions">
+			{% if toggle %}<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>{% endif %}
+			{% if dismiss %}<a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>{% endif %}
+		</div>
+		{% endif %}
+		{% if title %}<h2 class="panel-title">{{ title }}</h2>{% endif %}
+		{% if subtitle %}<p class="panel-subtitle">Subtitle</p>{% endif %}
+	</header>
+	{% endif %}
+	<div class="panel-body">
+		{% for block in blocks %}
+			{{ renderBlock(block) }}
+		{% endfor %}
+	</div>
+	{% if footer %}
+	<div class="panel-footer">
+		{{ footer }}
+	</div>
+	{% endif %}
+</section>

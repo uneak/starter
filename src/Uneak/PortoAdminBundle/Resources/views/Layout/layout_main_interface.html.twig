@@ -39,8 +39,9 @@
 	{% block javascripts_bottom %}
 		{{ parent() }}
 		{{ renderAssets('AssetExternalJs') }}
+		<!-- Theme -->
 		{{ renderAssets('AssetExternalJs_theme') }}
-		{{ renderAssets('AssetExternalJs_theme_custom') }}
+		<!-- Theme init -->
 		{{ renderAssets('AssetExternalJs_theme_init') }}
 	{% endblock %}
 

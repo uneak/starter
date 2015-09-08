@@ -24,6 +24,9 @@ block_widget_tasks_template: "UneakPortoAdminBundle:Block:widget_tasks.html.twig
 block_widget_stats_template: "UneakPortoAdminBundle:Block:widget_stats.html.twig"
 block_widget_stats_progress_template: "UneakPortoAdminBundle:Block:widget_stats_progress.html.twig"
 
+block_panel_template: "UneakPortoAdminBundle:Block:panel.html.twig"
+block_carousel_template: "UneakPortoAdminBundle:Block:carousel.html.twig"
+
 
 # LAYOUT
 layout_main_interface_template: "UneakPortoAdminBundle:Layout:layout_main_interface.html.twig"

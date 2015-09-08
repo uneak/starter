@@ -10,13 +10,10 @@
 	class LeftSidebarTemplate extends BlockTemplate {
 
 		public function buildAsset(AssetsBuilderManager $builder, $parameters) {
-//			$builder
-//				->add('material_design_lite_js')
-//                ->add('material_design_lite_css')
-//				->add('card_block_script', 'internaljs', array(
-//					'template'   => 'block_card_script',
-//					'parameters' => array('item' => $parameters)
-//				));
+			$builder
+				->add('porto_admin_theme_init_sidebar_widget_js')
+				->add('porto_admin_theme_bootstrap_toggle_js')
+			;
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {

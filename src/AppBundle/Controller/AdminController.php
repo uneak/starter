@@ -4,8 +4,10 @@
 
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 	use Symfony\Component\HttpFoundation\Request;
+	use Uneak\PortoAdminBundle\Blocks\Carousel\Carousel;
 	use Uneak\PortoAdminBundle\Blocks\Message\IconMessage;
 	use Uneak\PortoAdminBundle\Blocks\Notification\Notification;
+	use Uneak\PortoAdminBundle\Blocks\Panel\Panel;
 	use Uneak\PortoAdminBundle\Blocks\Progress\ProgressBar;
     use Uneak\PortoAdminBundle\Blocks\Widget\WidgetStats;
     use Uneak\PortoAdminBundle\Blocks\Widget\WidgetWrapper;
@@ -20,6 +22,27 @@
 
             $blockBuilder = $this->get("uneak.blocksmanager.builder");
             $blockBuilder->addBlock("layout", "block_main_interface");
+
+			$body = $blockBuilder->getBlock('layout/content/body');
+
+
+			$carousel = new Carousel();
+
+
+			$panel = new Panel();
+			$panel->setTitle("Hello");
+			$panel->setSubtitle("World");
+			$panel->setToggle(true);
+			$panel->setDismiss(true);
+			$panel->setFooter("Marc galoyer");
+			$panel->setCollapsed(false);
+			$panel->setFeaturedContext("primary");
+			$panel->setContext("caca");
+			$panel->setTransparent(false);
+			$panel->setHeaderTransparent(false);
+			$panel->addBlock($carousel);
+			$body->addBlock($panel);
+
 //
 //            $layoutLeftSidebar = $blockBuilder->getBlock('layout/left_sidebar');
 //            $layoutContentHeader = $blockBuilder->getBlock('layout/content/header');

@@ -21,6 +21,8 @@
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
 
+			$options['blocks'] = $block->getBlocks();
+
 		}
 
 		public function getRenderTemplate() {

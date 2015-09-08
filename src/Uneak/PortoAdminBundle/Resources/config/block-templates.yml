@@ -23,6 +23,9 @@ parameters:
     uneak.portoadmin.widget.stats.progress.template.class: Uneak\PortoAdminBundle\Templates\Widget\WidgetStatsProgressTemplate
     uneak.portoadmin.widget.stats.template.class: Uneak\PortoAdminBundle\Templates\Widget\WidgetStatsTemplate
 
+    uneak.portoadmin.panel.template.class: Uneak\PortoAdminBundle\Templates\Panel\PanelTemplate
+    uneak.portoadmin.carousel.template.class: Uneak\PortoAdminBundle\Templates\Carousel\CarouselTemplate
+
 
     uneak.portoadmin.layout.main.interface.template.class: Uneak\PortoAdminBundle\Templates\Layout\MainInterfaceTemplate
     uneak.portoadmin.layout.content.template.class: Uneak\PortoAdminBundle\Templates\Layout\ContentTemplate
@@ -37,6 +40,16 @@ services:
         class: %uneak.portoadmin.menu.template.class%
         tags:
             - { name: uneak.blocksmanager.template, alias: block_template_menu }
+
+    uneak.portoadmin.carousel.template:
+        class: %uneak.portoadmin.carousel.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_carousel }
+
+    uneak.portoadmin.panel.template:
+        class: %uneak.portoadmin.panel.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_panel }
 
     uneak.portoadmin.mainmenu.template:
         class: %uneak.portoadmin.mainmenu.template.class%
