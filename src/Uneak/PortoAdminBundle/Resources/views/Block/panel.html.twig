@@ -4,10 +4,22 @@
 		{% if toggle or dismiss %}
 		<div class="panel-actions">
 			{% if toggle %}<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>{% endif %}
+			{% for action in actions%}
+				<a href="{{ action.link }}" class="fa fa-{{ action.icon }}" alt="{{ action.title }}"></a>
+			{% endfor %}
 			{% if dismiss %}<a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>{% endif %}
 		</div>
 		{% endif %}
-		{% if title %}<h2 class="panel-title">{{ title }}</h2>{% endif %}
+		{% if title %}
+			<h2 class="panel-title">
+				{% if badge %}
+					<span class="label label-{{ badge_context }} label-sm text-weight-normal va-middle mr-sm">198</span>
+					<span class="va-middle">{{ title }}</span>
+				{% else %}
+					{{ title }}
+				{% endif %}
+			</h2>
+		{% endif %}
 		{% if subtitle %}<p class="panel-subtitle">Subtitle</p>{% endif %}
 	</header>
 	{% endif %}

@@ -14,14 +14,40 @@
 		protected $dismiss = true;
 		protected $collapsed = false;
 		protected $badge;
-		protected $badgeContext;
+		protected $badgeContext = "primary";
 		protected $context;
 		protected $featuredContext = null;
 		protected $transparent = false;
 		protected $headerTransparent = false;
 
+		protected $actions = array();
+
 		public function __construct() {
 		}
+
+		public function addAction($icon, $title, $link) {
+			$this->actions[] = array(
+				'icon' => $icon,
+				'title' => $title,
+				'link' => $link,
+			);
+			return $this;
+		}
+
+		/**
+		 * @return array
+		 */
+		public function getActions() {
+			return $this->actions;
+		}
+
+		/**
+		 * @param array $actions
+		 */
+		public function setActions($actions) {
+			$this->actions = $actions;
+		}
+
 
 		/**
 		 * @return string

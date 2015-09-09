@@ -57,6 +57,8 @@
 			$panel->setTitle("Hello");
 			$panel->setSubtitle("World");
 			$panel->setToggle(true);
+			$panel->setBadge(158);
+			$panel->setBadgeContext("primary");
 			$panel->setDismiss(true);
 			$panel->setFooter("Marc galoyer");
 			$panel->setCollapsed(false);
@@ -64,6 +66,9 @@
 			$panel->setContext("caca");
 			$panel->setTransparent(false);
 			$panel->setHeaderTransparent(false);
+
+            $panel->addAction("user", "utilisateur", "http://www.uneak.fr");
+
 			$panel->addBlock($carousel);
 
 
@@ -118,7 +123,7 @@
 //            $body->addBlock($counter);
 //            $body->addBlock($accordion);
 //            $body->addBlock($tabs);
-//            $body->addBlock($panel);
+            $body->addBlock($panel);
 
 
 //

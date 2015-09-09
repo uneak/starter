@@ -30,6 +30,8 @@
 			$options['header_transparent'] = $block->isHeaderTransparent();
 			$options['transparent'] = $block->isTransparent();
 
+			$options['actions'] = $block->getActions();
+
 			$options['blocks'] = $block->getBlocks();
 
 		}
