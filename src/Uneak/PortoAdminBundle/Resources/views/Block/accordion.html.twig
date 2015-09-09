@@ -1,0 +1,31 @@
+{% if toggle or collapse_other %}
+    <div class="toggle" data-plugin-toggle{% if collapse_other %} data-plugin-options='{ "isAccordion": true }'{% endif %}>
+        {% for id, tab in tabs %}
+            <section class="toggle{% if collapse_other %}{% if loop.first %} active{% endif %}{% endif %}">
+                <label>{% if tab.icon %}<i class="fa fa-{{ tab.icon }}"></i> {% endif %}{{ tab.title }}</label>
+                <div class="toggle-content">
+                    {{ renderBlock(tab.block) }}
+                </div>
+            </section>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="panel-group" id="accordion">
+        {% for id, tab in tabs %}
+            <div class="panel panel-accordion{% if tab.context is not null %} panel-accordion-{{ tab.context }}{% endif %}">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ id }}">
+                            {% if tab.icon %}<i class="fa fa-{{ tab.icon }}"></i> {% endif %}{{ tab.title }}
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse-{{ id }}" class="accordion-body collapse{% if loop.first %} in{% endif %}">
+                    <div class="panel-body">
+                        {{ renderBlock(tab.block) }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

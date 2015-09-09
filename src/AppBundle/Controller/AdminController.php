@@ -4,11 +4,14 @@
 
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 	use Symfony\Component\HttpFoundation\Request;
-	use Uneak\PortoAdminBundle\Blocks\Carousel\Carousel;
-	use Uneak\PortoAdminBundle\Blocks\Message\IconMessage;
+    use Uneak\PortoAdminBundle\Blocks\Accordion\Accordion;
+    use Uneak\PortoAdminBundle\Blocks\Carousel\Carousel;
+    use Uneak\PortoAdminBundle\Blocks\Content\Content;
+    use Uneak\PortoAdminBundle\Blocks\Message\IconMessage;
 	use Uneak\PortoAdminBundle\Blocks\Notification\Notification;
 	use Uneak\PortoAdminBundle\Blocks\Panel\Panel;
 	use Uneak\PortoAdminBundle\Blocks\Progress\ProgressBar;
+    use Uneak\PortoAdminBundle\Blocks\Tabs\Tabs;
     use Uneak\PortoAdminBundle\Blocks\Widget\WidgetStats;
     use Uneak\PortoAdminBundle\Blocks\Widget\WidgetWrapper;
     use Uneak\RoutesManagerBundle\Routes\FlattenRoute;
@@ -25,8 +28,26 @@
 
 			$body = $blockBuilder->getBlock('layout/content/body');
 
-
 			$carousel = new Carousel();
+            $carousel->setOptions(array(
+                'autoPlay' => 3000,
+                'items' => 4,
+                'itemsDesktop' => array(1199,4),
+                'itemsDesktopSmall' => array(979,3),
+                'itemsTablet' => array(768,2),
+                'itemsMobile' => array(479,1),
+
+            ));
+            $carousel->addItem(new Content("<img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
+            $carousel->addItem(new Content("<img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
+            $carousel->addItem(new Content("<img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
+            $carousel->addItem(new Content("<img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
+            $carousel->addItem(new Content("<img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
+            $carousel->addItem(new Content("<img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
+            $carousel->addItem(new Content("<img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
+            $carousel->addItem(new Content("<img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
+
+
 
 
 			$panel = new Panel();
@@ -41,7 +62,33 @@
 			$panel->setTransparent(false);
 			$panel->setHeaderTransparent(false);
 			$panel->addBlock($carousel);
-			$body->addBlock($panel);
+
+
+            $tabs = new Tabs();
+            $tabs->setContext("primary");
+            $tabs->setRight(false);
+            $tabs->setBottom(false);
+            $tabs->setJustified(false);
+            $tabs->setVertical(false);
+
+            $tabs->addTab('user', 'Utilisateur', new Content("<img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
+            $tabs->addTab(null, 'Deux', new Content("Hello<br/><img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
+            $tabs->addTab('user', 'Trois', new Content("<img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
+
+
+            $accordion = new Accordion();
+            $accordion->setToggle(true);
+            $accordion->setCollapseOther(false);
+
+            $accordion->addTab('user', 'Utilisateur', null, new Content("<img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
+            $accordion->addTab(null, 'Deux', 'primary', new Content("Hello<br/><img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
+            $accordion->addTab('user', 'Trois', 'danger', new Content("<img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
+
+
+            $body->addBlock($accordion);
+            $body->addBlock($tabs);
+            $body->addBlock($panel);
+
 
 //
 //            $layoutLeftSidebar = $blockBuilder->getBlock('layout/left_sidebar');

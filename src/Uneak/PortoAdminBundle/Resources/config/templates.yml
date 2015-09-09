@@ -26,6 +26,8 @@ block_widget_stats_progress_template: "UneakPortoAdminBundle:Block:widget_stats_
 
 block_panel_template: "UneakPortoAdminBundle:Block:panel.html.twig"
 block_carousel_template: "UneakPortoAdminBundle:Block:carousel.html.twig"
+block_tabs_template: "UneakPortoAdminBundle:Block:tabs.html.twig"
+block_tabs_accordion: "UneakPortoAdminBundle:Block:accordion.html.twig"
 
 
 # LAYOUT

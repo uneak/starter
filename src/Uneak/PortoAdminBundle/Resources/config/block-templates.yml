@@ -25,6 +25,9 @@ parameters:
 
     uneak.portoadmin.panel.template.class: Uneak\PortoAdminBundle\Templates\Panel\PanelTemplate
     uneak.portoadmin.carousel.template.class: Uneak\PortoAdminBundle\Templates\Carousel\CarouselTemplate
+    uneak.portoadmin.content.template.class: Uneak\PortoAdminBundle\Templates\Content\ContentTemplate
+    uneak.portoadmin.tabs.template.class: Uneak\PortoAdminBundle\Templates\Tabs\TabsTemplate
+    uneak.portoadmin.accordion.template.class: Uneak\PortoAdminBundle\Templates\Accordion\AccordionTemplate
 
 
     uneak.portoadmin.layout.main.interface.template.class: Uneak\PortoAdminBundle\Templates\Layout\MainInterfaceTemplate
@@ -45,6 +48,21 @@ services:
         class: %uneak.portoadmin.carousel.template.class%
         tags:
             - { name: uneak.blocksmanager.template, alias: block_template_carousel }
+
+    uneak.portoadmin.accordion.template:
+        class: %uneak.portoadmin.accordion.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_accordion }
+
+    uneak.portoadmin.tabs.template:
+        class: %uneak.portoadmin.tabs.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_tabs }
+
+    uneak.portoadmin.content.template:
+        class: %uneak.portoadmin.content.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_content }
 
     uneak.portoadmin.panel.template:
         class: %uneak.portoadmin.panel.template.class%

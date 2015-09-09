@@ -22,7 +22,7 @@
             $notificationTask->add(new IconMessage("Marc Galoyer", "10 ventes 10 ventes 10 ventes 10 ventes 10 ventes ", "user"));
 
 
-            $this->add($notificationTask);
+            $this->addNotification($notificationTask);
 
 
 		}

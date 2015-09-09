@@ -12,10 +12,13 @@
 
 		}
 
-		public function add(Notification $notification) {
+		public function addNotification(Notification $notification) {
 			$this->addBlock($notification, null, $this->cmpt--, "notifications");
 		}
 
+        public function getNotifications() {
+            return $this->getBlocks("notifications");
+        }
 
 
 	}

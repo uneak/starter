@@ -1,0 +1,33 @@
+<div class="tabs{% if vertical %} tabs-vertical{% if right %} tabs-right{% else %} tabs-left{% endif %}{% else %}{% if bottom %} tabs-bottom{% endif %}{% endif %}
+{% if context is not null %} tabs-{{ context }}{% endif %}">
+    {% set tabsTopPos = ((vertical and not right) or (not vertical and not bottom)) %}
+
+    {% if tabsTopPos %}
+        {{ _self.tabs(right, justified, vertical, tabs) }}
+    {% endif %}
+
+    <div class="tab-content">
+        {% for id, tab in tabs %}
+            <div id="tab-{{ id }}" class="tab-pane{% if loop.first %} active{% endif %}">
+                {{ renderBlock(tab.block) }}
+            </div>
+        {% endfor %}
+
+    </div>
+
+    {% if not tabsTopPos %}
+        {{ _self.tabs(right, justified, vertical, tabs) }}
+    {% endif %}
+
+</div>
+
+{% macro tabs(right, justified, vertical, tabs) %}
+    <ul class="nav nav-tabs{% if vertical %} col-sm-3 col-xs-5{% else %}{% if right %} text-right{% endif %}{% if justified %} nav-justified{% endif %}{% endif %}">
+        {% for id, tab in tabs %}
+            <li{% if loop.first %} class="active"{% endif %}>
+                <a href="#tab-{{ id }}" data-toggle="tab">{% if tab.icon %}<i class="fa fa-{{ tab.icon }}"></i> {% endif %}{{ tab.title }}</a>
+            </li>
+        {% endfor %}
+
+    </ul>
+{% endmacro %}

@@ -3,29 +3,25 @@
 	namespace Uneak\PortoAdminBundle\Blocks\Carousel;
 
 	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
+    use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
 
-	class Carousel extends BlockModel {
+    class Carousel extends BlockModel {
 
         protected $templateAlias = "block_template_carousel";
+        protected $cmpt = 1000;
 		protected $options = array();
-		protected $items = array();
 
 		public function __construct() {
 		}
 
-		/**
-		 * @return array
-		 */
-		public function getItems() {
-			return $this->items;
-		}
 
-		/**
-		 * @param array $items
-		 */
-		public function setItems($items) {
-			$this->items = $items;
-		}
+        public function addItem(BlockModelInterface $block) {
+            $this->addBlock($block, null, $this->cmpt--, "items");
+        }
+
+        public function getItems() {
+            return $this->getBlocks("items");
+        }
 
 		/**
 		 * @return array
