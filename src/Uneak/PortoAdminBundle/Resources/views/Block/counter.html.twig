@@ -1,0 +1,26 @@
+{% if not context %}{% set default_context = "dark" %}{% else %}{% set default_context = context %}{% endif %}
+<section class="panel{% if featured is not null %} panel-featured-{{ featured }} panel-featured-{{ default_context }}{% endif %}">
+    <div class="panel-body{% if featured is null and context %} bg-{{ default_context }}{% endif %}">
+        <div class="widget-summary{% if size is not null %} widget-summary-{{ size }}{% endif %}">
+            {% if icon %}
+            <div class="widget-summary-col widget-summary-col-icon">
+                <div class="summary-icon bg-{{ default_context }}">
+                    <i class="fa fa-{{ icon }}"></i>
+                </div>
+            </div>
+            {% endif %}
+            <div class="widget-summary-col">
+                <div class="summary">
+                    <h4 class="title">{{ title }}</h4>
+                    <div class="info">
+                        <strong class="amount">{{ value }}</strong>
+                        <span{% if featured is not null %} class="text-{{ default_context }}"{% endif %}>{{ comment }}</span>
+                    </div>
+                </div>
+                <div class="summary-footer">
+                    <a class="text-muted text-uppercase">(view all)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

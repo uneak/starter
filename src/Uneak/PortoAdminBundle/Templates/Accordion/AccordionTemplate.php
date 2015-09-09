@@ -23,7 +23,7 @@
 		}
 
 		public function getRenderTemplate() {
-			return 'block_tabs_accordion';
+			return 'block_accordion_template';
 		}
 
 	}

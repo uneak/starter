@@ -7,11 +7,14 @@
     use Uneak\PortoAdminBundle\Blocks\Accordion\Accordion;
     use Uneak\PortoAdminBundle\Blocks\Carousel\Carousel;
     use Uneak\PortoAdminBundle\Blocks\Content\Content;
+    use Uneak\PortoAdminBundle\Blocks\Counter\Counter;
     use Uneak\PortoAdminBundle\Blocks\Message\IconMessage;
 	use Uneak\PortoAdminBundle\Blocks\Notification\Notification;
 	use Uneak\PortoAdminBundle\Blocks\Panel\Panel;
 	use Uneak\PortoAdminBundle\Blocks\Progress\ProgressBar;
     use Uneak\PortoAdminBundle\Blocks\Tabs\Tabs;
+    use Uneak\PortoAdminBundle\Blocks\Teaser\Teaser;
+    use Uneak\PortoAdminBundle\Blocks\User\UserBadge;
     use Uneak\PortoAdminBundle\Blocks\Widget\WidgetStats;
     use Uneak\PortoAdminBundle\Blocks\Widget\WidgetWrapper;
     use Uneak\RoutesManagerBundle\Routes\FlattenRoute;
@@ -85,9 +88,37 @@
             $accordion->addTab('user', 'Trois', 'danger', new Content("<img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
 
 
-            $body->addBlock($accordion);
-            $body->addBlock($tabs);
-            $body->addBlock($panel);
+
+            $counter = new Counter();
+            $counter->setTitle("Utilisateurs");
+            $counter->setIcon("users");
+            $counter->setComment("(non connecté)");
+            $counter->setContext("danger");
+            $counter->setValue("58");
+            $counter->setSize(Counter::SIZE_XLG);
+//            $counter->setFeatured(Counter::FEATURED_NONE);
+
+
+            $teaser = new Teaser();
+            $teaser->setTitle("Utilisateurs");
+            $teaser->setIcon("users");
+            $teaser->setDescription("Nullam quiris risus eget urna mollis ornare vel eu leo. Soccis natoque penatibus et magnis dis parturient montes. Soccis natoque penatibus et magnis dis parturient montes.");
+            $teaser->setContext("primary");
+            $teaser->setHorizontal(true);
+            $teaser->setHeaderContext("danger");
+//            $counter->setFeatured(Counter::FEATURED_NONE);
+
+            $userBadge = new UserBadge();
+
+//            $counter->setFeatured(Counter::FEATURED_NONE);
+
+
+            $body->addBlock($userBadge);
+//            $body->addBlock($teaser);
+//            $body->addBlock($counter);
+//            $body->addBlock($accordion);
+//            $body->addBlock($tabs);
+//            $body->addBlock($panel);
 
 
 //

@@ -1,0 +1,14 @@
+{% if not header_context %}{% set default_header_context = "white" %}{% else %}{% set default_header_context = header_context %}{% endif %}
+<section class="panel{% if horizontal %} panel-horizontal{% endif %}">
+    {% if icon %}
+    <header class="panel-heading bg-{{ default_header_context }}">
+        <div class="panel-heading-icon{% if header_context is null %} bg-{{ context }}{% endif %} mt-sm">
+            <i class="fa fa-{{ icon }}"></i>
+        </div>
+    </header>
+    {% endif %}
+    <div class="panel-body">
+        <h3 class="text-weight-semibold mt-none text-center">{{ title }}</h3>
+        <p class="text-center">{{ description }}</p>
+    </div>
+</section>

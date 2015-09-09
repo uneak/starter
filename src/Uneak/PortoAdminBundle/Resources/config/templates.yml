@@ -27,7 +27,10 @@ block_widget_stats_progress_template: "UneakPortoAdminBundle:Block:widget_stats_
 block_panel_template: "UneakPortoAdminBundle:Block:panel.html.twig"
 block_carousel_template: "UneakPortoAdminBundle:Block:carousel.html.twig"
 block_tabs_template: "UneakPortoAdminBundle:Block:tabs.html.twig"
-block_tabs_accordion: "UneakPortoAdminBundle:Block:accordion.html.twig"
+block_accordion_template: "UneakPortoAdminBundle:Block:accordion.html.twig"
+block_counter_template: "UneakPortoAdminBundle:Block:counter.html.twig"
+block_teaser_template: "UneakPortoAdminBundle:Block:teaser.html.twig"
+block_user_badge_template: "UneakPortoAdminBundle:Block:user_badge.html.twig"
 
 
 # LAYOUT

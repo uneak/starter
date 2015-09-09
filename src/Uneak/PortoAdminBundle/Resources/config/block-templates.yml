@@ -28,6 +28,9 @@ parameters:
     uneak.portoadmin.content.template.class: Uneak\PortoAdminBundle\Templates\Content\ContentTemplate
     uneak.portoadmin.tabs.template.class: Uneak\PortoAdminBundle\Templates\Tabs\TabsTemplate
     uneak.portoadmin.accordion.template.class: Uneak\PortoAdminBundle\Templates\Accordion\AccordionTemplate
+    uneak.portoadmin.counter.template.class: Uneak\PortoAdminBundle\Templates\Counter\CounterTemplate
+    uneak.portoadmin.teaser.template.class: Uneak\PortoAdminBundle\Templates\Teaser\TeaserTemplate
+    uneak.portoadmin.user.badge.template.class: Uneak\PortoAdminBundle\Templates\User\UserBadgeTemplate
 
 
     uneak.portoadmin.layout.main.interface.template.class: Uneak\PortoAdminBundle\Templates\Layout\MainInterfaceTemplate
@@ -48,6 +51,21 @@ services:
         class: %uneak.portoadmin.carousel.template.class%
         tags:
             - { name: uneak.blocksmanager.template, alias: block_template_carousel }
+
+    uneak.portoadmin.user.badge.template:
+        class: %uneak.portoadmin.user.badge.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_user_badge }
+
+    uneak.portoadmin.teaser.template:
+        class: %uneak.portoadmin.teaser.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_teaser }
+
+    uneak.portoadmin.counter.template:
+        class: %uneak.portoadmin.counter.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_counter }
 
     uneak.portoadmin.accordion.template:
         class: %uneak.portoadmin.accordion.template.class%
