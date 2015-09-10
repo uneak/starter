@@ -7,16 +7,16 @@
 	use Uneak\BlocksManagerBundle\Blocks\BlockTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
-	class MainInterfaceTemplate extends BlockTemplate {
+	class EntityTemplate extends BlockTemplate {
 
 		public function buildAsset(AssetsBuilderManager $builder, $parameters) {
 			$builder
-				->add('porto_admin_theme_custom_css')
-                ->add('modernizr_js')
-                ->add('jquery_browser_mobile_js')
-                ->add('bootstrap_js')
-//
-                ->add('porto_admin_theme_base_js')
+//				->add('porto_admin_theme_init_mail_box_js')
+//                ->add('modernizr_js')
+//                ->add('jquery_browser_mobile_js')
+//                ->add('bootstrap_js')
+////
+//                ->add('porto_admin_theme_base_js')
 
 
 
@@ -70,21 +70,12 @@
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
-			$options['left_sidebar'] = $block->getLeftSidebar();
-			$options['right_sidebar'] = $block->getRightSidebar();
-			$options['header'] = $block->getHeader();
+			$options['sidebar'] = $block->getEntitySidebar();
 			$options['content'] = $block->getContent();
-			$options['title'] = $block->getTitle();
-			$options['left_sidebar_collapsed'] = $block->isLeftSidebarCollapsed();
-			$options['layout_style'] = $block->getLayoutStyle();
-			$options['background_color'] = $block->getBackgroundColor();
-			$options['header_color'] = 'header-'.$block->getHeaderColor();
-			$options['left_sidebar_size'] = 'sidebar-left-'.$block->getSidebarLeftSize();
-
 		}
 
 		public function getRenderTemplate() {
-			return 'layout_main_interface_template';
+			return 'layout_entity_template';
 		}
 
 	}

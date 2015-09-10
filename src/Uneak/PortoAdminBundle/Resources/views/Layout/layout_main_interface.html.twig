@@ -1,5 +1,8 @@
 {% extends 'UneakPortoAdminBundle:Layout:base.html.twig' %}
 
+    {% block html_tag %}<html class="{{ layout_style }} {{ background_color }} {{ header_color }} {{ left_sidebar_size }}{% if left_sidebar_collapsed %} sidebar-left-collapsed{% endif %}" lang="fr">{% endblock %}
+
+
 	{% block title %}{{ title }} - {{ parent() }}{% endblock %}
 	{% block meta_keywords %}{% endblock %}
 	{% block meta_description %}{% endblock %}

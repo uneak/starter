@@ -1,14 +1,23 @@
 <section class="panel-group mb-xlg">
     <div class="widget-twitter-profile">
         <div class="top-image">
-            <img src="assets/images/widget-twitter-profile.jpg" alt="">
+            <img src="{{ asset("bundles/uneakportoadmin/images/default_avatar.jpg") | imagine_filter('porto_admin_user_badge_cover') }}" alt="">
         </div>
         <div class="profile-info">
             <div class="profile-picture">
-                <img src="assets/images/!logged-user.jpg" alt="">
+
+                {% if user.image %}
+                    {% set userImage = user.image %}
+                {% else %}
+                    {% set userImage = "bundles/uneakportoadmin/images/default_avatar.jpg" %}
+                {% endif %}
+
+                <img src="{{ asset(userImage) | imagine_filter('porto_admin_user_avatar_100') }}" alt="{{ user.firstname }} {{ user.lastname }}" />
+
+
             </div>
             <div class="profile-account">
-                <h3 class="name text-weight-semibold">John Doe</h3>
+                <h3 class="name text-weight-semibold">{{ user.firstname }} {{ user.lastname }}</h3>
                 <a href="#" class="account">@oklerthemes</a>
             </div>
             <ul class="profile-stats">

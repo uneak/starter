@@ -41,4 +41,8 @@ layout_left_sidebar_template: "UneakPortoAdminBundle:Layout:layout_left_sidebar.
 layout_right_sidebar_template: "UneakPortoAdminBundle:Layout:layout_right_sidebar.html.twig"
 layout_page_body_template: "UneakPortoAdminBundle:Layout:layout_page_body.html.twig"
 layout_page_header_template: "UneakPortoAdminBundle:Layout:layout_page_header.html.twig"
+layout_entity_template: "UneakPortoAdminBundle:Layout:layout_entity.html.twig"
+layout_entity_sidebar_template: "UneakPortoAdminBundle:Layout:layout_entity_sidebar.html.twig"
+layout_entity_header_template: "UneakPortoAdminBundle:Layout:layout_entity_header.html.twig"
+layout_entity_content_template: "UneakPortoAdminBundle:Layout:layout_entity_content.html.twig"
 

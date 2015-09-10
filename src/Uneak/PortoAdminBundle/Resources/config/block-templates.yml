@@ -41,6 +41,11 @@ parameters:
     uneak.portoadmin.layout.page.body.template.class: Uneak\PortoAdminBundle\Templates\Layout\PageBodyTemplate
     uneak.portoadmin.layout.page.header.template.class: Uneak\PortoAdminBundle\Templates\Layout\PageHeaderTemplate
 
+    uneak.portoadmin.layout.entity.template.class: Uneak\PortoAdminBundle\Templates\Layout\EntityTemplate
+    uneak.portoadmin.layout.entity.sidebar.template.class: Uneak\PortoAdminBundle\Templates\Layout\EntitySidebarTemplate
+    uneak.portoadmin.layout.entity.header.template.class: Uneak\PortoAdminBundle\Templates\Layout\EntityHeaderTemplate
+    uneak.portoadmin.layout.entity.content.template.class: Uneak\PortoAdminBundle\Templates\Layout\EntityContentTemplate
+
 services:
     uneak.portoadmin.menu.template:
         class: %uneak.portoadmin.menu.template.class%
@@ -196,3 +201,23 @@ services:
         class: %uneak.portoadmin.layout.page.header.template.class%
         tags:
             - { name: uneak.blocksmanager.template, alias: layout_template_page_header }
+
+    uneak.portoadmin.layout.entity.template:
+        class: %uneak.portoadmin.layout.entity.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: layout_template_entity }
+
+    uneak.portoadmin.layout.entity.sidebar.template:
+        class: %uneak.portoadmin.layout.entity.sidebar.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: layout_template_entity_sidebar }
+
+    uneak.portoadmin.layout.entity.header.template:
+        class: %uneak.portoadmin.layout.entity.header.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: layout_template_entity_header }
+
+    uneak.portoadmin.layout.entity.content.template:
+        class: %uneak.portoadmin.layout.entity.content.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: layout_template_entity_content }

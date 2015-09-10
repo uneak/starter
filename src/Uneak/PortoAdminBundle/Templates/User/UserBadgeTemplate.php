@@ -21,8 +21,8 @@
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
 
-//			$options['menu'] = $block->getMenu();
-//			$options['user'] = $block->getUser();
+//            $options['menu'] = $block->getMenu();
+            $options['user'] = $block->getUser();
 
 		}
 

@@ -7,14 +7,19 @@
 	class UserBadge extends BlockModel {
 
         protected $templateAlias = "block_template_user_badge";
-		protected $context;
+        protected $user;
 
+        public function __construct($user = null) {
+            $this->user = $user;
+        }
 
+        public function getUser() {
+            return $this->user;
+        }
 
-		public function __construct() {
-		}
-
-
+        public function setUser($user) {
+            $this->user = $user;
+        }
 
 
 	}

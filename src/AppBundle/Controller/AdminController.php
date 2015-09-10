@@ -8,6 +8,8 @@
     use Uneak\PortoAdminBundle\Blocks\Carousel\Carousel;
     use Uneak\PortoAdminBundle\Blocks\Content\Content;
     use Uneak\PortoAdminBundle\Blocks\Counter\Counter;
+    use Uneak\PortoAdminBundle\Blocks\Layout\Entity;
+    use Uneak\PortoAdminBundle\Blocks\Layout\MainInterface;
     use Uneak\PortoAdminBundle\Blocks\Message\IconMessage;
 	use Uneak\PortoAdminBundle\Blocks\Notification\Notification;
 	use Uneak\PortoAdminBundle\Blocks\Panel\Panel;
@@ -30,6 +32,20 @@
             $blockBuilder->addBlock("layout", "block_main_interface");
 
 			$body = $blockBuilder->getBlock('layout/content/body');
+			$layout = $blockBuilder->getBlock('layout');
+            $layout->setLeftSidebarCollapsed(true);
+
+//            $layout->setLayoutStyle(MainInterface::LAYOUT_STYLE_DEFAULT);
+//            $layout->setBackgroundColor(MainInterface::COLOR_LIGHT);
+//            $layout->setHeaderColor(MainInterface::COLOR_LIGHT);
+//            $layout->setSidebarLeftSize(MainInterface::SIDEBAR_LEFT_SIZE_MD);
+
+
+
+            $entityLayout = new Entity();
+
+//            $body->addBlock($entityLayout);
+
 
 			$carousel = new Carousel();
             $carousel->setOptions(array(
@@ -113,17 +129,21 @@
             $teaser->setHeaderContext("danger");
 //            $counter->setFeatured(Counter::FEATURED_NONE);
 
-            $userBadge = new UserBadge();
+
+
+            $userManager = $this->get("fos_user.user_manager");
+            $user = $userManager->findUserBy(array("username" => "admin"));
+            $userBadge = new UserBadge($user);
 
 //            $counter->setFeatured(Counter::FEATURED_NONE);
 
 
-            $body->addBlock($userBadge);
+//            $body->addBlock($userBadge);
 //            $body->addBlock($teaser);
 //            $body->addBlock($counter);
-//            $body->addBlock($accordion);
+            $body->addBlock($accordion);
 //            $body->addBlock($tabs);
-            $body->addBlock($panel);
+//            $body->addBlock($panel);
 
 
 //
@@ -141,13 +161,16 @@
 //            $layoutSearch->setLink("http://uneak.fr");
 //
 //
-//            $widgetStats = new WidgetStats();
-//            $widgetStats->addProgress(new ProgressBar("title", "25%", 25));
-//            $widgetStats->addProgress(new ProgressBar("title", "35%", 35));
-//            $widgetStats->addProgress(new ProgressBar("title", "10 ventes", 68));
-//
-//            $widgetWrapper = new WidgetWrapper("STATS", true);
-//            $widgetWrapper->add($widgetStats);
+            $widgetStats = new WidgetStats();
+            $widgetStats->addProgress(new ProgressBar("title", "25%", 25));
+            $widgetStats->addProgress(new ProgressBar("title", "35%", 35));
+            $widgetStats->addProgress(new ProgressBar("title", "10 ventes", 68));
+
+            $widgetWrapper = new WidgetWrapper("STATS", true);
+            $widgetWrapper->add($widgetStats);
+
+            $entityLayout->getEntitySidebar()->addWidget("stats", $widgetWrapper);
+
 //
 //            $layoutLeftSidebar->addWidget("stats", $widgetWrapper);
 

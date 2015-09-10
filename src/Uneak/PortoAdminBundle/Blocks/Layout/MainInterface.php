@@ -7,14 +7,111 @@ use Uneak\BlocksManagerBundle\Blocks\BlockModel;
 class MainInterface extends BlockModel
 {
 
+    const LAYOUT_STYLE_DEFAULT = "fixed";
+    const LAYOUT_STYLE_BOXED = "boxed";
+    const LAYOUT_STYLE_SCROLL = "scroll";
+
+    const COLOR_LIGHT = "light";
+    const COLOR_DARK = "dark";
+
+    const SIDEBAR_LEFT_SIZE_XS = "xs";
+    const SIDEBAR_LEFT_SIZE_SM = "sm";
+    const SIDEBAR_LEFT_SIZE_MD = "md";
+
+
     protected $templateAlias = "layout_template_main_interface";
     protected $title = "Administration Interface";
+    protected $leftSidebarCollapsed = false;
+    protected $layoutStyle = self::LAYOUT_STYLE_DEFAULT;
+    protected $backgroundColor = self::COLOR_LIGHT;
+    protected $headerColor = self::COLOR_LIGHT;
+    protected $sidebarLeftSize = self::SIDEBAR_LEFT_SIZE_MD;
 
     public function __construct() {
         $this->setLeftSidebar("block_left_sidebar");
         $this->setRightSidebar("block_right_sidebar");
         $this->setHeader("block_header");
         $this->setContent("block_content");
+    }
+
+    /**
+     * @return string
+     */
+    public function getLayoutStyle()
+    {
+        return $this->layoutStyle;
+    }
+
+    /**
+     * @param string $layoutStyle
+     */
+    public function setLayoutStyle($layoutStyle)
+    {
+        $this->layoutStyle = $layoutStyle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBackgroundColor()
+    {
+        return $this->backgroundColor;
+    }
+
+    /**
+     * @param string $backgroundColor
+     */
+    public function setBackgroundColor($backgroundColor)
+    {
+        $this->backgroundColor = $backgroundColor;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHeaderColor()
+    {
+        return $this->headerColor;
+    }
+
+    /**
+     * @param string $headerColor
+     */
+    public function setHeaderColor($headerColor)
+    {
+        $this->headerColor = $headerColor;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSidebarLeftSize()
+    {
+        return $this->sidebarLeftSize;
+    }
+
+    /**
+     * @param string $sidebarLeftSize
+     */
+    public function setSidebarLeftSize($sidebarLeftSize)
+    {
+        $this->sidebarLeftSize = $sidebarLeftSize;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isLeftSidebarCollapsed()
+    {
+        return $this->leftSidebarCollapsed;
+    }
+
+    /**
+     * @param boolean $leftSidebarCollapsed
+     */
+    public function setLeftSidebarCollapsed($leftSidebarCollapsed)
+    {
+        $this->leftSidebarCollapsed = $leftSidebarCollapsed;
     }
 
 

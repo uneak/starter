@@ -7,7 +7,7 @@
                 {% set userImage = "bundles/uneakportoadmin/images/default_avatar.jpg" %}
             {% endif %}
 
-			<img src="{{ asset(userImage) | imagine_filter('porto_admin_user_avatar') }}" alt="{{ user.firstname }} {{ user.lastname }}" class="img-circle" data-lock-picture="{{ asset(userImage) | imagine_filter('porto_admin_user_avatar')}}" />
+			<img src="{{ asset(userImage) | imagine_filter('porto_admin_user_avatar_35') }}" alt="{{ user.firstname }} {{ user.lastname }}" class="img-circle" data-lock-picture="{{ asset(userImage) | imagine_filter('porto_admin_user_avatar_35')}}" />
 
 		</figure>
 		<div class="profile-info" data-lock-name="{{ user.firstname }} {{ user.lastname }}" data-lock-email="{{ user.email }}">
