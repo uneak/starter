@@ -181,12 +181,12 @@ porto_admin_theme_panels_js:
         category: "AssetExternalJs_theme"
         dependencies: [ "porto_admin_window_theme_js" ]
 
-#porto_admin_theme_bootstrap_toggle_js:
-#    type: externaljs
-#    config:
-#        src: "bundles/uneakportoadmin/js/theme/bootstrap_toggle.js"
-#        category: "AssetExternalJs_theme"
-#        dependencies: [ "porto_admin_window_theme_js" ]
+porto_admin_theme_bootstrap_toggle_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/bootstrap_toggle.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "porto_admin_window_theme_js" ]
 
 porto_admin_theme_form_to_object_js:
     type: externaljs
@@ -337,12 +337,12 @@ porto_admin_theme_portlets_js:
         category: "AssetExternalJs_theme"
         dependencies: [ "porto_admin_window_theme_js" ]
 
-#porto_admin_theme_scrollable_js:
-#    type: externaljs
-#    config:
-#        src: "bundles/uneakportoadmin/js/theme/scrollable.js"
-#        category: "AssetExternalJs_theme"
-#        dependencies: [ "nanoscroller_js", "porto_admin_window_theme_js" ]
+porto_admin_theme_scrollable_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/theme/scrollable.js"
+        category: "AssetExternalJs_theme"
+        dependencies: [ "nanoscroller_js", "porto_admin_window_theme_js" ]
 
 porto_admin_theme_slider_js:
     type: externaljs

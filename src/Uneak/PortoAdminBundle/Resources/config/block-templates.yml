@@ -2,6 +2,7 @@ parameters:
     uneak.portoadmin.menu.template.class: Uneak\PortoAdminBundle\Templates\Menu\MenuTemplate
     uneak.portoadmin.mainmenu.template.class: Uneak\PortoAdminBundle\Templates\Menu\MainMenuTemplate
     uneak.portoadmin.usermenu.template.class: Uneak\PortoAdminBundle\Templates\Menu\UserMenuTemplate
+    uneak.portoadmin.entity.content.headermenu.template.class: Uneak\PortoAdminBundle\Templates\Menu\EntityContentHeaderMenuTemplate
 
     uneak.portoadmin.user.template.class: Uneak\PortoAdminBundle\Templates\User\UserTemplate
     uneak.portoadmin.breadcrumb.template.class: Uneak\PortoAdminBundle\Templates\Breadcrumb\BreadcrumbTemplate
@@ -96,6 +97,11 @@ services:
         class: %uneak.portoadmin.mainmenu.template.class%
         tags:
             - { name: uneak.blocksmanager.template, alias: block_template_main_menu }
+
+    uneak.portoadmin.entity.content.headermenu.template:
+        class: %uneak.portoadmin.entity.content.headermenu.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_entity_content_header }
 
     uneak.portoadmin.usermenu.template:
         class: %uneak.portoadmin.usermenu.template.class%

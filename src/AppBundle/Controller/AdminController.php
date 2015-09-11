@@ -33,7 +33,7 @@
 
 			$body = $blockBuilder->getBlock('layout/content/body');
 			$layout = $blockBuilder->getBlock('layout');
-//            $layout->setLeftSidebarCollapsed(true);
+            $layout->setLeftSidebarCollapsed(true);
 
 //            $layout->setLayoutStyle(MainInterface::LAYOUT_STYLE_DEFAULT);
 //            $layout->setBackgroundColor(MainInterface::COLOR_LIGHT);
@@ -43,6 +43,44 @@
 
 
             $entityLayout = new Entity();
+            $entityLayoutHeader = $entityLayout->getContent()->getHeader();
+            $entityLayoutHeader->setTitle("Uneak");
+
+
+
+            $menuHelper = $this->get("uneak.routesmanager.menu.helper");
+            $fRouteManager = $this->get("uneak.routesmanager.flattenmanager");
+
+            $factory = $menuHelper->getFactory();
+            $root = $factory->createItem('root');
+
+            $choices = $factory->createItem('test', array(
+                'label' => 'choix',
+                'icon' => 'user',
+            ));
+            $root->addChild($choices);
+
+            $choices2 = $factory->createItem('test2', array(
+                'label' => 'choiXx',
+                'icon' => 'users',
+                'context' => 'danger'
+            ));
+            $root->addChild($choices2);
+
+            if (null !== $itemNews = $menuHelper->createItem($fRouteManager->getFlattenRoute('user/index'))) {
+                $itemNews->setExtra("badge", "15");
+                $itemNews->setExtra("badge_context", "danger");
+                $choices->addChild($itemNews);
+            }
+
+            if (null !== $itemNews2 = $menuHelper->createItem($fRouteManager->getFlattenRoute('admin'))) {
+                $itemNews2->setExtra("badge", "15");
+                $choices->addChild($itemNews2);
+            }
+
+
+            $entityLayoutHeader->getActions()->setRoot($root);
+
 
             $body->addBlock($entityLayout);
 

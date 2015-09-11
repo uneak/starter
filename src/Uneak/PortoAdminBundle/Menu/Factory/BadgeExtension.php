@@ -18,6 +18,7 @@
 			return array_merge(
 				array(
 					'icon'          => null,
+					'context'       => null,
 					'badge'         => null,
 					'badge_context' => "primary",
 				),
@@ -33,8 +34,10 @@
 		 */
 		public function buildItem(ItemInterface $item, array $options) {
 			$item->setExtra("icon", $options['icon']);
+            $item->setExtra("context", $options['context']);
 			$item->setExtra("badge", $options['badge']);
 			$item->setExtra("badge_context", $options['badge_context']);
+
 		}
 
 

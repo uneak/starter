@@ -11,23 +11,23 @@
 
 		public function buildAsset(AssetsBuilderManager $builder, $parameters) {
 			$builder
-//				->add('porto_admin_theme_init_sidebar_widget_js')
-//				->add('porto_admin_theme_bootstrap_toggle_js')
+				->add('porto_admin_theme_bootstrap_toggle_js')
+				->add('porto_admin_theme_scrollable_js')
 
-                ->add("porto_admin_sidebar_toggle_script", "internaljs", array(
-                    "template"   => 'porto_admin_sidebar_toggle_script_template',
-                    "parameters" => array(
-                        'uniqid' => $parameters->getUniqid()
-                    )
-                ))
+//                ->add("porto_admin_sidebar_toggle_script", "internaljs", array(
+//                    "template"   => 'porto_admin_sidebar_toggle_script_template',
+//                    "parameters" => array(
+//                        'uniqid' => $parameters->getUniqid()
+//                    )
+//                ))
 
-                ->add("porto_admin_scrollable_script", "internaljs", array(
-                    "template"   => 'porto_admin_scrollable_script_template',
-                    "parameters" => array(
-                        'uniqid' => $parameters->getUniqid()
-                    ),
-                    "dependencies" => array("nanoscroller_js")
-                ))
+//                ->add("porto_admin_scrollable_script", "internaljs", array(
+//                    "template"   => 'porto_admin_scrollable_script_template',
+//                    "parameters" => array(
+//                        'uniqid' => $parameters->getUniqid()
+//                    ),
+//                    "dependencies" => array("nanoscroller_js")
+//                ))
 
 			;
 		}

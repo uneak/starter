@@ -76,7 +76,7 @@
 {% endblock %}
 
 {% block label %}
-	{% if item.getExtra('badge') is not null %}<span class="pull-right label label-{{ item.getExtra('badge_context', 'primary') }}">{{ item.getExtra('badge') }}</span>{% endif %}
-	{% if item.getExtra('icon') is not null %}<i class="fa fa-{{ item.getExtra('icon') }}" aria-hidden="true"></i>{% endif %}
-	<span>{% if options.allow_safe_labels and item.getExtra('safe_label', false) %}{{ item.label|raw }}{% else %}{{ item.label }}{% endif %}</span>
+    {% if item.getExtra('badge') is not null %}<span class="pull-right label label-{{ item.getExtra('badge_context', 'primary') }}">{{ item.getExtra('badge') }}</span>{% endif %}
+    {% if item.getExtra('icon') is not null %}<i class="fa fa-{{ item.getExtra('icon') }}{% if item.getExtra('context', null) is not null %} text-{{ item.getExtra('context') }}{% endif %}" aria-hidden="true"></i>{% endif %}
+    <span class="{% if item.getExtra('context', null) is not null %} text-{{ item.getExtra('context') }}{% endif %}">{% if options.allow_safe_labels and item.getExtra('safe_label', false) %}{{ item.label|raw }}{% else %}{{ item.label }}{% endif %}</span>
 {% endblock %}
