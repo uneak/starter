@@ -10,17 +10,19 @@
 	class WidgetWrapperTemplate extends BlockTemplate {
 
 		public function buildAsset(AssetsBuilderManager $builder, $parameters) {
-//			$builder
-//				->add('material_design_lite_js')
-//                ->add('material_design_lite_css')
-//				->add('card_block_script', 'internaljs', array(
-//					'template'   => 'block_card_script',
-//					'parameters' => array('item' => $parameters)
-//				));
+            $builder
+
+                ->add("porto_admin_widget_wrapper_script", "internaljs", array(
+                    "template"   => 'porto_admin_sidebar_widget_wrapper_script_template',
+                    "parameters" => array(
+                        'uniqid' => $parameters->getUniqid()
+                    ),
+                    "dependencies" => array("porto_admin_theme_init_widget_wrapper_js")
+                ));
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
-
+            $options['uniqid'] = $block->getUniqid();
 			$options['title'] = $block->getTitle();
 			$options['toggle'] = $block->isToggle();
             $options['widgets'] = $block->getBlocks("widgets");

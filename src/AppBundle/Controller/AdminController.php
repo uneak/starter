@@ -33,7 +33,7 @@
 
 			$body = $blockBuilder->getBlock('layout/content/body');
 			$layout = $blockBuilder->getBlock('layout');
-            $layout->setLeftSidebarCollapsed(true);
+//            $layout->setLeftSidebarCollapsed(true);
 
 //            $layout->setLayoutStyle(MainInterface::LAYOUT_STYLE_DEFAULT);
 //            $layout->setBackgroundColor(MainInterface::COLOR_LIGHT);
@@ -44,7 +44,7 @@
 
             $entityLayout = new Entity();
 
-//            $body->addBlock($entityLayout);
+            $body->addBlock($entityLayout);
 
 
 			$carousel = new Carousel();
@@ -141,7 +141,7 @@
 //            $body->addBlock($userBadge);
 //            $body->addBlock($teaser);
 //            $body->addBlock($counter);
-            $body->addBlock($accordion);
+//            $body->addBlock($accordion);
 //            $body->addBlock($tabs);
 //            $body->addBlock($panel);
 

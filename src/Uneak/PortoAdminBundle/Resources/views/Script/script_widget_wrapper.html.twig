@@ -1,0 +1,14 @@
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var $widget = $('#{{ uniqid }}'),
+        $toggler = $widget.find( '.widget-toggle' );
+
+        $toggler.on('click.widget-toggler', function() {
+            $widget.hasClass('widget-collapsed') ? expandWidget($widget) : collapseWidget($widget);
+        });
+
+    });
+
+</script>

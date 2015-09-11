@@ -7,11 +7,16 @@
 
         protected $templateAlias = "layout_template_left_sidebar";
 		protected $title;
+        protected $uniqid;
 
         public function __construct($title = "") {
             $this->title = $title;
+            $this->uniqid = uniqid('comp_');
         }
 
+        public function getUniqid() {
+            return $this->uniqid;
+        }
 
         public function getTitle()
         {

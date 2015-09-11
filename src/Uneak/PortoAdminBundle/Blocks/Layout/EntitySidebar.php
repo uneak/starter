@@ -7,8 +7,14 @@
 
         protected $templateAlias = "layout_template_entity_sidebar";
 		protected $photo;
+        protected $uniqid;
 
         public function __construct() {
+            $this->uniqid = uniqid('comp_');
+        }
+
+        public function getUniqid() {
+            return $this->uniqid;
         }
 
         /**

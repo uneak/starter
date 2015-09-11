@@ -46,3 +46,9 @@ layout_entity_sidebar_template: "UneakPortoAdminBundle:Layout:layout_entity_side
 layout_entity_header_template: "UneakPortoAdminBundle:Layout:layout_entity_header.html.twig"
 layout_entity_content_template: "UneakPortoAdminBundle:Layout:layout_entity_content.html.twig"
 
+
+# SCRIPT
+porto_admin_scrollable_script_template: "UneakPortoAdminBundle:Script:script_scrollable.html.twig"
+porto_admin_sidebar_widget_wrapper_script_template: "UneakPortoAdminBundle:Script:script_widget_wrapper.html.twig"
+porto_admin_sidebar_toggle_script_template: "UneakPortoAdminBundle:Script:script_sidebar_toggle.html.twig"
+

@@ -11,7 +11,7 @@
 
 		public function buildAsset(AssetsBuilderManager $builder, $parameters) {
 			$builder
-				->add('porto_admin_theme_init_sidebar_widget_js')
+//				->add('porto_admin_theme_init_sidebar_widget_js')
 			;
 		}
 

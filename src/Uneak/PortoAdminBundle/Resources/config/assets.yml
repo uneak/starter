@@ -89,7 +89,6 @@ jquery_placeholder_js:
         src: "vendor/jquery-placeholder/jquery.placeholder.js"
         dependencies: [ "jquery_js" ]
 
-
 owl_carousel_js:
     type: externaljs
     config:
@@ -106,6 +105,19 @@ owl_carousel_theme_css:
     config:
         href: "vendor/owl-carousel/owl-carousel/owl.theme.css"
         dependencies: [ "owl_carousel_css" ]
+
+
+#
+#
+#       UNEAK
+#
+#
+porto_admin_theme_init_widget_wrapper_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/js/widget_wrapper.js"
+        category: "AssetExternalJs_theme_init"
+        dependencies: [ "jquery_js" ]
 
 
 
@@ -169,12 +181,12 @@ porto_admin_theme_panels_js:
         category: "AssetExternalJs_theme"
         dependencies: [ "porto_admin_window_theme_js" ]
 
-porto_admin_theme_bootstrap_toggle_js:
-    type: externaljs
-    config:
-        src: "bundles/uneakportoadmin/js/theme/bootstrap_toggle.js"
-        category: "AssetExternalJs_theme"
-        dependencies: [ "porto_admin_window_theme_js" ]
+#porto_admin_theme_bootstrap_toggle_js:
+#    type: externaljs
+#    config:
+#        src: "bundles/uneakportoadmin/js/theme/bootstrap_toggle.js"
+#        category: "AssetExternalJs_theme"
+#        dependencies: [ "porto_admin_window_theme_js" ]
 
 porto_admin_theme_form_to_object_js:
     type: externaljs
@@ -325,12 +337,12 @@ porto_admin_theme_portlets_js:
         category: "AssetExternalJs_theme"
         dependencies: [ "porto_admin_window_theme_js" ]
 
-porto_admin_theme_scrollable_js:
-    type: externaljs
-    config:
-        src: "bundles/uneakportoadmin/js/theme/scrollable.js"
-        category: "AssetExternalJs_theme"
-        dependencies: [ "nanoscroller_js", "porto_admin_window_theme_js" ]
+#porto_admin_theme_scrollable_js:
+#    type: externaljs
+#    config:
+#        src: "bundles/uneakportoadmin/js/theme/scrollable.js"
+#        category: "AssetExternalJs_theme"
+#        dependencies: [ "nanoscroller_js", "porto_admin_window_theme_js" ]
 
 porto_admin_theme_slider_js:
     type: externaljs
@@ -407,12 +419,13 @@ porto_admin_theme_init_tooltip_js:
         dependencies: [ "bootstrap_js" ]
         # Depend de la $.fn['tooltip']
 
-porto_admin_theme_init_sidebar_widget_js:
-    type: externaljs
-    config:
-        src: "bundles/uneakportoadmin/js/theme.init/sidebar_widget.js"
-        category: "AssetExternalJs_theme_init"
-        dependencies: [ "porto_admin_theme_init_scrollable_js", "jquery_js" ]
+#porto_admin_theme_init_sidebar_widget_js:
+#    type: externaljs
+#    config:
+#        src: "bundles/uneakportoadmin/js/theme.init/sidebar_widget.js"
+#        category: "AssetExternalJs_theme_init"
+##        dependencies: [ "porto_admin_theme_init_scrollable_js", "jquery_js" ]
+#        dependencies: [ "jquery_js" ]
 
 porto_admin_theme_init_ios_switcher___js:
     type: externaljs
@@ -578,12 +591,12 @@ porto_admin_theme_init_portlets_js:
         category: "AssetExternalJs_theme_init"
         dependencies: [ "porto_admin_theme_portlets_js" ]
 
-porto_admin_theme_init_scrollable_js:
-    type: externaljs
-    config:
-        src: "bundles/uneakportoadmin/js/theme.init/scrollable.js"
-        category: "AssetExternalJs_theme_init"
-        dependencies: [ "porto_admin_theme_scrollable_js" ]
+#porto_admin_theme_init_scrollable_js:
+#    type: externaljs
+#    config:
+#        src: "bundles/uneakportoadmin/js/theme.init/scrollable.js"
+#        category: "AssetExternalJs_theme_init"
+#        dependencies: [ "porto_admin_theme_scrollable_js" ]
 
 porto_admin_theme_init_slider_js:
     type: externaljs

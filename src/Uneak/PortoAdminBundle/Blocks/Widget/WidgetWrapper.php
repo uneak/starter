@@ -11,11 +11,17 @@
         protected $cmpt = 1000;
         protected $title;
 		protected $toggle = true;
+        protected $uniqid;
 
 		public function __construct($title, $toggle = true) {
+            $this->uniqid = uniqid('comp_');
 			$this->title = $title;
 			$this->toggle = $toggle;
 		}
+
+        public function getUniqid() {
+            return $this->uniqid;
+        }
 
         public function add(BlockModelInterface $widget) {
             $this->addBlock($widget, null, $this->cmpt--, "widgets");

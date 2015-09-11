@@ -1,5 +1,6 @@
 <!-- start: sidebar -->
-<aside id="sidebar-left" class="sidebar-left">
+{#<aside id="sidebar-left" class="sidebar-left">#}
+<aside id="{{ uniqid }}" class="sidebar-left">
 
     <div class="sidebar-header">
         <div class="sidebar-title">
@@ -15,14 +16,9 @@
 
             {% for widget in widgets %}
                 {{ renderBlock(widget) }}
-                <hr class="separator" />
+                {% if not loop.last %}<hr class="separator" />{% endif %}
             {% endfor %}
 
-            {#{{ renderBlock('main-menu') }}#}
-            {#<hr class="separator" />#}
-            {#{{ renderBlock('widget-tasks') }}#}
-            {#<hr class="separator" />#}
-            {#{{ renderBlock('widget-stats') }}#}
         </div>
     </div>
 
