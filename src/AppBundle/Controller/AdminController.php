@@ -38,11 +38,11 @@
 			$body = $blockBuilder->getBlock('layout/content/body');
             $layoutSideBar = $blockBuilder->getBlock('layout/left_sidebar');
 			$layout = $blockBuilder->getBlock('layout');
-            $layout->setLeftSidebarCollapsed(true);
 
+            $layout->setLeftSidebarCollapsed(true);
 //            $layout->setLayoutStyle(MainInterface::LAYOUT_STYLE_DEFAULT);
-//            $layout->setBackgroundColor(MainInterface::COLOR_LIGHT);
-//            $layout->setHeaderColor(MainInterface::COLOR_LIGHT);
+//            $layout->setBackgroundColor(MainInterface::COLOR_DARK);
+//            $layout->setHeaderColor(MainInterface::COLOR_DARK);
 //            $layout->setSidebarLeftSize(MainInterface::SIDEBAR_LEFT_SIZE_MD);
 
 
@@ -50,10 +50,10 @@
             $entityLayout = new Entity();
             $entitySidebar = $entityLayout->getEntitySidebar();
 
-//            $entityLayoutHeader = $entityLayout->getContent()->getHeader();
-//            $entityLayoutHeader->setTitle("Uneak");
-            $entityLayout->getContent()->setTitle("Uneak");
-            $entityLayout->getContent()->setSubtitle('From <a href="#">Okler Themes</a> to <a href="#">You</a>, started on July, 05, 2014');
+            $entityLayoutHeader = $entityLayout->getContent()->getHeader();
+            $entityLayoutHeader->setTitle("Uneak");
+//            $entityLayout->getContent()->setTitle("Uneak");
+//            $entityLayout->getContent()->setSubtitle('From <a href="#">Okler Themes</a> to <a href="#">You</a>, started on July, 05, 2014');
 
 
 
@@ -91,17 +91,16 @@
 
 
 
-            $entityLayout->getToolbar()->setRoot($root);
-
+//            $entityLayout->getToolbar()->setRoot($root);
             $entitySidebarMenu = new Menu();
             $entitySidebarMenu->setRoot($root);
             $entitySidebar->addWidget("menu", $entitySidebarMenu, false, 9999);
 
-
-//            $entityLayoutHeader->getActions()->setRoot($root);
-//            $search = new Search("#");
-//            $entityLayoutHeader->addWidget("search", $search);
-
+//
+            $entityLayout->getContent()->getActions()->setRoot($root);
+            $search = new Search("#");
+            $entityLayoutHeader->addWidget("search", $search);
+//
             $body->addBlock($entityLayout);
 
 
@@ -238,6 +237,8 @@
 
 //
 //            $layoutLeftSidebar->addWidget("stats", $widgetWrapper);
+
+
 
             return $blockBuilder->render("layout");
 //			return $this->render('{{ renderBlock("layout") }}');

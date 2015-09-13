@@ -15,7 +15,6 @@
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
             parent::buildOptions($templatesManager, $block, $options);
 			$options['title'] = $block->getTitle();
-			$options['actions'] = $block->getActions();
 
             $widgets = $block->getWidgets();
 //            foreach ($widgets as $widget) {

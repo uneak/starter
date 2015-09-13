@@ -3,6 +3,7 @@
 	namespace Uneak\PortoAdminBundle\Blocks\Layout;
 
     use Uneak\PortoAdminBundle\Blocks\Block;
+    use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
 
     class EntityContent extends Block {
 
@@ -13,6 +14,9 @@
 
             $header = new EntityHeader();
             $this->addBlock($header, "header");
+
+            $actionsMenu = new Menu();
+            $this->addBlock(array($actionsMenu, 'block_template_entity_content_header_menu'), "actions_menu");
 
             $body = new PageBody();
             $this->addBlock($body, "body");
@@ -34,6 +38,12 @@
         }
 
 
-
+        /**
+         * @return mixed
+         */
+        public function getActions()
+        {
+            return $this->getBlock("actions_menu");
+        }
 
 	}

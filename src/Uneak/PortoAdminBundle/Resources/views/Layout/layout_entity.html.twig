@@ -1,7 +1,7 @@
-<section class="content-with-menu{% if toolbar.root %} content-with-menu-has-toolbar{% endif %} mailbox">
-    <div class="content-with-menu-container" data-mailbox data-mailbox-view="folder">
+<section class="content-with-menu{% if toolbar.root %} content-with-menu-has-toolbar{% endif %} entity">
+    <div class="content-with-menu-container">
         {{ renderBlock(sidebar) }}
-        <div class="inner-body mailbox-folder">
+        <div class="inner-body entity-content">
             {% if toolbar.root %}
                 <div class="inner-toolbar clearfix">
                     {{ renderBlock(toolbar) }}

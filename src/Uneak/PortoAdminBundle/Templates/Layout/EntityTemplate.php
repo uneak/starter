@@ -11,7 +11,6 @@
 
 		public function buildAsset(AssetsBuilderManager $builder, $parameters) {
 			$builder
-//				->add('porto_admin_theme_init_mail_box_js')
 //                ->add('modernizr_js')
 //                ->add('jquery_browser_mobile_js')
 //                ->add('bootstrap_js')

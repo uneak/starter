@@ -13,6 +13,16 @@ parameters:
 
 uneak_assets_manager:
 
+    porto_admin_entity_scroll_css:
+        type: externalcss
+        config:
+            href: "css/porto_admin/entity-scroll.css"
+
+    porto_admin_entity_css:
+        type: externalcss
+        config:
+            href: "css/porto_admin/entity.css"
+
     porto_admin_theme_css:
         type: externalcss
         config:
@@ -127,6 +137,20 @@ assetic:
         #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
 
     assets:
+
+        porto_admin_entity__css:
+            inputs:
+                - %kernel.root_dir%/Resources/sass/porto_admin/entity.scss
+            filters:
+                - sass
+            output: css/porto_admin/entity.css
+
+        porto_admin_entity_scroll__css:
+            inputs:
+                - %kernel.root_dir%/Resources/sass/porto_admin/entity-scroll.scss
+            filters:
+                - sass
+            output: css/porto_admin/entity-scroll.css
 
         porto_admin_theme__css:
             inputs:

@@ -19,8 +19,8 @@ class Entity extends Block
         $entitySideBar = new EntitySidebar();
         $this->addBlock($entitySideBar, "entity_sidebar");
 
-        $content = new EntityContentScroll();
-//        $content = new EntityContent();
+//        $content = new EntityContentScroll();
+        $content = new EntityContent();
         $this->addBlock($content, "content");
 
     }

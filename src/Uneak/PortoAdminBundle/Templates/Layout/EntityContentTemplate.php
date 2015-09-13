@@ -10,6 +10,7 @@
 
 		public function buildAsset(AssetsBuilderManager $builder, $parameters) {
             $builder
+                ->add('porto_admin_entity_css')
                 ->add("porto_admin_scrollable_script", "internaljs", array(
                     "template"   => 'porto_admin_scrollable_script_template',
                     "parameters" => array(
@@ -23,6 +24,7 @@
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
             parent::buildOptions($templatesManager, $block, $options);
 			$options['header'] = $block->getHeader();
+            $options['actions'] = $block->getActions();
 			$options['body'] = $block->getBody();
 		}
 

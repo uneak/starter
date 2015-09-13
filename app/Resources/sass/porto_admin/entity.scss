@@ -1,0 +1,221 @@
+// COMMON IMPORTS
+// -----------------------------------------------------------------------------
+@import "../imports";
+
+
+
+.entity {
+  .content-with-menu-container {
+    background: #FFF;
+  }
+}
+
+
+// ENTITY MAIN
+// -----------------------------------------------------------------------------
+.entity .entity-content {
+  height: auto !important;
+  padding: 0 0 $content-body-padding;
+}
+
+// ENTITY HEADER
+// -----------------------------------------------------------------------------
+/* entity - main header */
+.entity .entity-content .entity-header {
+  padding: 38px 40px 43px;
+
+  @media only screen and (max-width: 767px) {
+    padding: 20px;
+  }
+
+  .entity-title {
+    @media only screen and (max-width: 767px) {
+      margin-bottom: 10px !important;
+    }
+  }
+
+}
+
+
+.entity-header-widgets {
+  float: right;
+
+  & > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.search {
+  max-width: 100px;
+
+  input[type="text"] {
+    @include transition-property( width, margin );
+    @include transition-duration( .3s );
+    @include transition-timing-function( cubic-bezier(.05, .91, .25, .99) );
+
+    &:focus {
+      margin-left: -150%;
+      width: 250%;
+
+      @media only screen and (max-width: 767px) {
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    max-width: none;
+  }
+}
+
+
+
+/* Entity - Showing Menu Toggle */
+@media only screen and (min-width: 768px) and (max-width: 1365px) {
+  .entity .entity-content .entity-header {
+    .entity-title {
+      position: relative;
+      top: 28px;
+    }
+  }
+
+  html.inner-menu-opened {
+    .entity .entity-content .entity-header {
+      .entity-title {
+        position: static;
+      }
+    }
+
+  }
+}
+
+
+
+.entity .entity-body {
+  border: {
+    top: 1px solid lighten($color-light-grey, 3%);
+  }
+  @include font-size( 15 );
+  font-weight: 300;
+
+  @media only screen and (max-width: 767px) {
+    position: static !important;
+  }
+
+  li {
+    border: {
+      bottom: 1px solid lighten($color-light-grey, 3%);
+    }
+    height: 50px;
+    line-height: 50px;
+    padding: 0 40px;
+    position: relative;
+
+    @media only screen and (max-width: 767px) {
+      height: 75px;
+      padding: 0 20px;
+    }
+
+    a {
+      color: #777;
+    }
+
+    &:hover {
+      background: #FAFAFA;
+    }
+
+    &.unread {
+      a {
+        color: #555;
+        font-weight: 500;
+      }
+    }
+
+    &.active {
+      background: $color-primary;
+      a {
+        color: $color-primary-inverse;
+      }
+    }
+  }
+
+}
+
+/* Entity Mail List - Unstyle nano for non fixed layouts and responsive */
+html.scroll,
+html.boxed {
+  .entity .entity-body {
+    .nano {
+      position: static;
+      height: auto;
+      overflow: visible;
+      width: auto;
+
+      .nano-content {
+        position: static;
+        overflow: visible;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .entity .entity-body {
+    .nano {
+      position: static;
+      height: auto;
+      overflow: visible;
+      width: auto;
+
+      .nano-content {
+        position: static;
+        overflow: visible;
+      }
+    }
+  }
+}
+
+/* Entity Mail List + Fixed Layout */
+@media only screen and (min-width: 768px) {
+  html.fixed {
+    .entity .entity-body {
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      right: 0;
+      overflow: hidden;
+      top: 121px;
+
+      &.content-with-menu-has-actions {
+        top: 191px;
+      }
+    }
+
+  }
+}
+
+
+
+
+// DARK
+// -----------------------------------------------------------------------------
+/* dark */
+html.dark {
+  .entity {
+
+    .entity-body {
+      border-top-color: lighten($dark-bg, 5%);
+    }
+
+    .content-with-menu-container {
+      background: $dark-bg;
+    }
+
+    .entity-content .entity-header .input-search .btn-default {
+      background: transparent;
+    }
+
+  }
+}

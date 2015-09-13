@@ -10,7 +10,6 @@
 
 		public function buildAsset(AssetsBuilderManager $builder, $parameters) {
             $builder
-
                 ->add("porto_admin_widget_wrapper_script", "internaljs", array(
                     "template"   => 'porto_admin_sidebar_widget_wrapper_script_template',
                     "parameters" => array(

@@ -9,7 +9,9 @@
 	class EntityContentScrollTemplate extends BlockTemplate {
 
 		public function buildAsset(AssetsBuilderManager $builder, $parameters) {
-
+            $builder
+                ->add('porto_admin_entity_scroll_css')
+            ;
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {

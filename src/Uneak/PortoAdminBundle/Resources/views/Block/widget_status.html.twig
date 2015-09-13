@@ -1,6 +1,7 @@
-<ul class="list-unstyled mailbox-bullets{{ classes }}">
-    {% for st in status %}
-        <li><a href="{{ st.link }}" class="menu-item">{{ st.title }} <span class="ball {{ st.color }}"></span></a></li>
-    {% endfor %}
-</ul>
-
+<div class="widget-status{{ classes }}">
+    <ul class="list-unstyled">
+        {% for st in status %}
+            <li><a href="{{ st.link }}" class="menu-item">{{ st.title }} <span class="ball {{ st.color }}"></span></a></li>
+        {% endfor %}
+    </ul>
+</div>

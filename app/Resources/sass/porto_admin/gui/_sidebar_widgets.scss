@@ -80,6 +80,56 @@
 
 
 
+// WIDGET: STATUS
+// -----------------------------------------------------------------------------
+
+.widget-status {
+
+  ul {
+    li {
+      position: relative;
+
+      a {
+        color: $menu-item-text-color;
+        display: block;
+//        margin: 0 -25px 0 -30px;
+        padding: 10px 0 10px 0px;
+
+        &:hover {
+          background: #21262d;
+          text-decoration: none;
+        }
+      }
+
+    }
+  }
+
+
+  .ball {
+    border: 5px solid red;
+    border-radius: 100px;
+    display: block;
+    float: right;
+    margin-top: 6px;
+
+    &.pink {
+      border-color: $color-pink;
+    }
+    &.green {
+      border-color: $color-green;
+    }
+    &.blue {
+      border-color: $color-blue;
+    }
+    &.orange {
+      border-color: $color-orange;
+    }
+  }
+}
+
+
+
+
 
 // WIDGET: TASKS
 // -----------------------------------------------------------------------------

@@ -2,7 +2,6 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Layout;
 
-    use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
 
     class EntityHeader extends Sidebar {
 
@@ -12,8 +11,6 @@
 
 		public function __construct() {
             parent::__construct();
-            $actionsMenu = new Menu();
-            $this->addBlock(array($actionsMenu, 'block_template_entity_content_header_menu'), "actions_menu");
 		}
 
         public function addWidget($id, $widget, $wrap = true, $priority = null) {
@@ -38,13 +35,7 @@
             $this->title = $title;
         }
 
-        /**
-         * @return mixed
-         */
-        public function getActions()
-        {
-            return $this->getBlock("actions_menu");
-        }
+
 
 
 	}
