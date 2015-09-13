@@ -2,14 +2,15 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Search;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-	class Search extends BlockModel {
+    class Search extends Block {
         protected $templateAlias = "block_template_search";
 
 		protected $link;
 
 		public function __construct($link = null) {
+            parent::__construct();
 			$this->link = $link;
 		}
 

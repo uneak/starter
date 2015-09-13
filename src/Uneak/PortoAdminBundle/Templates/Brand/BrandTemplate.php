@@ -4,7 +4,7 @@
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
 	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
-	use Uneak\BlocksManagerBundle\Blocks\BlockTemplate;
+	use Uneak\PortoAdminBundle\Templates\BlockTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
 	class BrandTemplate extends BlockTemplate {
@@ -20,7 +20,7 @@
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
-
+            parent::buildOptions($templatesManager, $block, $options);
 			$options['link'] = $block->getLink();
 			$options['name'] = $block->getName();
 			$options['photo'] = $block->getPhoto();

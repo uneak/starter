@@ -3,8 +3,7 @@
 	namespace Uneak\PortoAdminBundle\Templates\Widget;
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
-	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
-	use Uneak\BlocksManagerBundle\Blocks\BlockTemplate;
+	use Uneak\PortoAdminBundle\Templates\BlockTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
 	class WidgetWrapperTemplate extends BlockTemplate {
@@ -22,7 +21,8 @@
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
-            $options['uniqid'] = $block->getUniqid();
+            parent::buildOptions($templatesManager, $block, $options);
+
 			$options['title'] = $block->getTitle();
 			$options['toggle'] = $block->isToggle();
             $options['widgets'] = $block->getBlocks("widgets");

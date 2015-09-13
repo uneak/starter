@@ -1,4 +1,4 @@
-<div class="tabs{% if vertical %} tabs-vertical{% if right %} tabs-right{% else %} tabs-left{% endif %}{% else %}{% if bottom %} tabs-bottom{% endif %}{% endif %}
+<div class="tabs{{ classes }}{% if vertical %} tabs-vertical{% if right %} tabs-right{% else %} tabs-left{% endif %}{% else %}{% if bottom %} tabs-bottom{% endif %}{% endif %}
 {% if context is not null %} tabs-{{ context }}{% endif %}">
     {% set tabsTopPos = ((vertical and not right) or (not vertical and not bottom)) %}
 

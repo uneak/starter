@@ -8,6 +8,7 @@
         protected $templateAlias = "layout_template_right_sidebar";
 
 		public function __construct() {
+            parent::__construct();
 		}
 
 

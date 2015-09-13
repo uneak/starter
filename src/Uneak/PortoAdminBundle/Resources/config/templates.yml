@@ -1,13 +1,19 @@
 block_menu_template: "UneakPortoAdminBundle:Block:menu.html.twig"
 block_main_menu_template: "UneakPortoAdminBundle:Block:main_menu.html.twig"
 block_user_template: "UneakPortoAdminBundle:Block:user.html.twig"
-block_breadcrumb_template: "UneakPortoAdminBundle:Block:breadcrumb.html.twig"
-block_entity_content_header_menu_template: "UneakPortoAdminBundle:Block:entity_content_header_menu.html.twig"
+
+
+block_breadcrumb_template: "UneakPortoAdminBundle:Block:menu.html.twig"
+block_entity_toolbar_menu_template: "UneakPortoAdminBundle:Block:menu.html.twig"
+block_entity_menu_template: "UneakPortoAdminBundle:Block:menu.html.twig"
+block_entity_content_header_menu_template: "UneakPortoAdminBundle:Block:menu.html.twig"
 
 knp_user_menu_template: "UneakPortoAdminBundle:KnpMenu:user_menu_template.html.twig"
 knp_main_menu_template: "UneakPortoAdminBundle:KnpMenu:main_menu_template.html.twig"
 knp_entity_content_header_menu_template: "UneakPortoAdminBundle:KnpMenu:entity_content_header_menu_template.html.twig"
 knp_breadcrumb_menu_template: "UneakPortoAdminBundle:KnpMenu:breadcrumb_template.html.twig"
+knp_entity_menu_template: "UneakPortoAdminBundle:KnpMenu:entity_template.html.twig"
+knp_entity_toolbar_menu_template: "UneakPortoAdminBundle:KnpMenu:entity_toolbar_template.html.twig"
 
 block_notification_template: "UneakPortoAdminBundle:Block:notification.html.twig"
 block_notifications_template: "UneakPortoAdminBundle:Block:notifications.html.twig"
@@ -22,6 +28,8 @@ block_brand_template: "UneakPortoAdminBundle:Block:brand.html.twig"
 
 block_widget_wrapper_template: "UneakPortoAdminBundle:Block:widget_wrapper.html.twig"
 block_widget_tasks_template: "UneakPortoAdminBundle:Block:widget_tasks.html.twig"
+
+block_widget_status_template: "UneakPortoAdminBundle:Block:widget_status.html.twig"
 
 block_widget_stats_template: "UneakPortoAdminBundle:Block:widget_stats.html.twig"
 block_widget_stats_progress_template: "UneakPortoAdminBundle:Block:widget_stats_progress.html.twig"
@@ -47,6 +55,7 @@ layout_entity_template: "UneakPortoAdminBundle:Layout:layout_entity.html.twig"
 layout_entity_sidebar_template: "UneakPortoAdminBundle:Layout:layout_entity_sidebar.html.twig"
 layout_entity_header_template: "UneakPortoAdminBundle:Layout:layout_entity_header.html.twig"
 layout_entity_content_template: "UneakPortoAdminBundle:Layout:layout_entity_content.html.twig"
+layout_entity_content_scroll_template: "UneakPortoAdminBundle:Layout:layout_entity_content_scroll.html.twig"
 
 
 # SCRIPT

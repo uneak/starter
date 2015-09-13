@@ -4,6 +4,7 @@ $color-red: #D23B3D;
 $color-orange: #E2A917;
 $color-blue: #1BC3E1;
 $color-green: #9AE14F;
+$color-pink: #EA4C89;
 
 // MAILBOX GENERIC
 // -----------------------------------------------------------------------------
@@ -21,16 +22,16 @@ $color-green: #9AE14F;
 			margin-top: 6px;
 
 			&.pink {
-				border-color: #EA4C89;
+				border-color: $color-pink;
 			}
 			&.green {
-				border-color: #9AE14F;
+				border-color: $color-green;
 			}
 			&.blue {
-				border-color: #1BC3E1;
+				border-color: $color-blue;
 			}
 			&.orange {
-				border-color: #E2A917;
+				border-color: $color-orange;
 			}
 		}
 	}

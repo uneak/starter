@@ -2,16 +2,16 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Widget;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
-    use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-    class WidgetTasks extends BlockModel {
+    class WidgetTasks extends Block {
 
         protected $templateAlias = "block_template_widget_tasks";
         protected $cmpt = 1000;
         protected $tasks = array();
 
 		public function __construct() {
+            parent::__construct();
 		}
 
         public function addTask($title, $link) {

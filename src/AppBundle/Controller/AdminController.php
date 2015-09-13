@@ -10,14 +10,18 @@
     use Uneak\PortoAdminBundle\Blocks\Counter\Counter;
     use Uneak\PortoAdminBundle\Blocks\Layout\Entity;
     use Uneak\PortoAdminBundle\Blocks\Layout\MainInterface;
+    use Uneak\PortoAdminBundle\Blocks\Menu\EntityMenu;
+    use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
     use Uneak\PortoAdminBundle\Blocks\Message\IconMessage;
 	use Uneak\PortoAdminBundle\Blocks\Notification\Notification;
 	use Uneak\PortoAdminBundle\Blocks\Panel\Panel;
 	use Uneak\PortoAdminBundle\Blocks\Progress\ProgressBar;
+    use Uneak\PortoAdminBundle\Blocks\Search\Search;
     use Uneak\PortoAdminBundle\Blocks\Tabs\Tabs;
     use Uneak\PortoAdminBundle\Blocks\Teaser\Teaser;
     use Uneak\PortoAdminBundle\Blocks\User\UserBadge;
     use Uneak\PortoAdminBundle\Blocks\Widget\WidgetStats;
+    use Uneak\PortoAdminBundle\Blocks\Widget\WidgetStatus;
     use Uneak\PortoAdminBundle\Blocks\Widget\WidgetWrapper;
     use Uneak\RoutesManagerBundle\Routes\FlattenRoute;
 	use Doctrine\ORM\Query\Expr;
@@ -32,6 +36,7 @@
             $blockBuilder->addBlock("layout", "block_main_interface");
 
 			$body = $blockBuilder->getBlock('layout/content/body');
+            $layoutSideBar = $blockBuilder->getBlock('layout/left_sidebar');
 			$layout = $blockBuilder->getBlock('layout');
             $layout->setLeftSidebarCollapsed(true);
 
@@ -43,8 +48,12 @@
 
 
             $entityLayout = new Entity();
-            $entityLayoutHeader = $entityLayout->getContent()->getHeader();
-            $entityLayoutHeader->setTitle("Uneak");
+            $entitySidebar = $entityLayout->getEntitySidebar();
+
+//            $entityLayoutHeader = $entityLayout->getContent()->getHeader();
+//            $entityLayoutHeader->setTitle("Uneak");
+            $entityLayout->getContent()->setTitle("Uneak");
+            $entityLayout->getContent()->setSubtitle('From <a href="#">Okler Themes</a> to <a href="#">You</a>, started on July, 05, 2014');
 
 
 
@@ -57,6 +66,8 @@
             $choices = $factory->createItem('test', array(
                 'label' => 'choix',
                 'icon' => 'user',
+                'badge' => '15',
+                'badge_context' => 'warning',
             ));
             $root->addChild($choices);
 
@@ -79,8 +90,17 @@
             }
 
 
-            $entityLayoutHeader->getActions()->setRoot($root);
 
+            $entityLayout->getToolbar()->setRoot($root);
+
+            $entitySidebarMenu = new Menu();
+            $entitySidebarMenu->setRoot($root);
+            $entitySidebar->addWidget("menu", $entitySidebarMenu, false, 9999);
+
+
+//            $entityLayoutHeader->getActions()->setRoot($root);
+//            $search = new Search("#");
+//            $entityLayoutHeader->addWidget("search", $search);
 
             $body->addBlock($entityLayout);
 
@@ -204,10 +224,17 @@
             $widgetStats->addProgress(new ProgressBar("title", "35%", 35));
             $widgetStats->addProgress(new ProgressBar("title", "10 ventes", 68));
 
-            $widgetWrapper = new WidgetWrapper("STATS", true);
-            $widgetWrapper->add($widgetStats);
+            $entityLayout->getEntitySidebar()->addWidget("stats", $widgetStats);
 
-            $entityLayout->getEntitySidebar()->addWidget("stats", $widgetWrapper);
+
+            $widgetStatus = new WidgetStatus();
+            $widgetStatus->addStatus("title 1", "#", WidgetStatus::COLOR_GREEN);
+            $widgetStatus->addStatus("title 2", "#", WidgetStatus::COLOR_ORANGE);
+            $widgetStatus->addStatus("title RAID", "#", WidgetStatus::COLOR_RED);
+
+            $entityLayout->getEntitySidebar()->addWidget("status", $widgetStatus);
+            $layoutSideBar->addWidget("status", $widgetStatus);
+
 
 //
 //            $layoutLeftSidebar->addWidget("stats", $widgetWrapper);

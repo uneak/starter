@@ -2,15 +2,15 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Content;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
-    use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-    class Content extends BlockModel {
+    class Content extends Block {
 
         protected $templateAlias = "block_template_content";
         protected $content;
 
 		public function __construct($content) {
+            parent::__construct();
             $this->content = $content;
 		}
 

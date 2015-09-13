@@ -4,7 +4,7 @@
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
 	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
-	use Uneak\BlocksManagerBundle\Blocks\BlockTemplate;
+	use Uneak\PortoAdminBundle\Templates\BlockTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
 	class MainInterfaceTemplate extends BlockTemplate {
@@ -70,6 +70,7 @@
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
+            parent::buildOptions($templatesManager, $block, $options);
 			$options['left_sidebar'] = $block->getLeftSidebar();
 			$options['right_sidebar'] = $block->getRightSidebar();
 			$options['header'] = $block->getHeader();

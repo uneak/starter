@@ -9,9 +9,9 @@ parameters:
     uneak.portoadmin.layout.page.header.class: Uneak\PortoAdminBundle\Blocks\Layout\PageHeader
 
     uneak.portoadmin.block.user.class: Uneak\PortoAdminBundle\Blocks\User\User
-    uneak.portoadmin.block.user.menu.class: Uneak\PortoAdminBundle\Blocks\Menu\UserMenu
+    uneak.portoadmin.block.user.menu.class: Uneak\PortoAdminBundle\Blocks\Menu\Menu
+    uneak.portoadmin.block.breadcrumb.class: Uneak\PortoAdminBundle\Blocks\Menu\Menu
     uneak.portoadmin.block.brand.class: Uneak\PortoAdminBundle\Blocks\Brand\Brand
-    uneak.portoadmin.block.breadcrumb.class: Uneak\PortoAdminBundle\Blocks\Breadcrumb\Breadcrumb
     uneak.portoadmin.block.notifications.class: Uneak\PortoAdminBundle\Blocks\Notification\Notifications
 
 services:

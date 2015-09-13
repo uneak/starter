@@ -3,6 +3,8 @@ parameters:
     uneak.portoadmin.mainmenu.template.class: Uneak\PortoAdminBundle\Templates\Menu\MainMenuTemplate
     uneak.portoadmin.usermenu.template.class: Uneak\PortoAdminBundle\Templates\Menu\UserMenuTemplate
     uneak.portoadmin.entity.content.headermenu.template.class: Uneak\PortoAdminBundle\Templates\Menu\EntityContentHeaderMenuTemplate
+    uneak.portoadmin.entitymenu.template.class: Uneak\PortoAdminBundle\Templates\Menu\EntityMenuTemplate
+    uneak.portoadmin.entity.toolbarmenu.template.class: Uneak\PortoAdminBundle\Templates\Menu\EntityToolbarMenuTemplate
 
     uneak.portoadmin.user.template.class: Uneak\PortoAdminBundle\Templates\User\UserTemplate
     uneak.portoadmin.breadcrumb.template.class: Uneak\PortoAdminBundle\Templates\Breadcrumb\BreadcrumbTemplate
@@ -23,6 +25,8 @@ parameters:
 
     uneak.portoadmin.widget.stats.progress.template.class: Uneak\PortoAdminBundle\Templates\Widget\WidgetStatsProgressTemplate
     uneak.portoadmin.widget.stats.template.class: Uneak\PortoAdminBundle\Templates\Widget\WidgetStatsTemplate
+
+    uneak.portoadmin.widget.status.template.class: Uneak\PortoAdminBundle\Templates\Widget\WidgetStatusTemplate
 
     uneak.portoadmin.panel.template.class: Uneak\PortoAdminBundle\Templates\Panel\PanelTemplate
     uneak.portoadmin.carousel.template.class: Uneak\PortoAdminBundle\Templates\Carousel\CarouselTemplate
@@ -47,11 +51,23 @@ parameters:
     uneak.portoadmin.layout.entity.header.template.class: Uneak\PortoAdminBundle\Templates\Layout\EntityHeaderTemplate
     uneak.portoadmin.layout.entity.content.template.class: Uneak\PortoAdminBundle\Templates\Layout\EntityContentTemplate
 
+    uneak.portoadmin.layout.entity.content.scroll.template.class: Uneak\PortoAdminBundle\Templates\Layout\EntityContentScrollTemplate
+
 services:
     uneak.portoadmin.menu.template:
         class: %uneak.portoadmin.menu.template.class%
         tags:
             - { name: uneak.blocksmanager.template, alias: block_template_menu }
+
+    uneak.portoadmin.entitymenu.template:
+        class: %uneak.portoadmin.entitymenu.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_entity_menu }
+
+    uneak.portoadmin.entity.toolbarmenu.template:
+        class: %uneak.portoadmin.entity.toolbarmenu.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_entity_toolbar_menu }
 
     uneak.portoadmin.carousel.template:
         class: %uneak.portoadmin.carousel.template.class%
@@ -101,7 +117,7 @@ services:
     uneak.portoadmin.entity.content.headermenu.template:
         class: %uneak.portoadmin.entity.content.headermenu.template.class%
         tags:
-            - { name: uneak.blocksmanager.template, alias: block_template_entity_content_header }
+            - { name: uneak.blocksmanager.template, alias: block_template_entity_content_header_menu }
 
     uneak.portoadmin.usermenu.template:
         class: %uneak.portoadmin.usermenu.template.class%
@@ -168,6 +184,11 @@ services:
         tags:
             - { name: uneak.blocksmanager.template, alias: block_template_widget_stats }
 
+    uneak.portoadmin.widget.status.template:
+        class: %uneak.portoadmin.widget.status.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_widget_status }
+
     uneak.portoadmin.widget.stats.progress.template:
         class: %uneak.portoadmin.widget.stats.progress.template.class%
         tags:
@@ -227,3 +248,8 @@ services:
         class: %uneak.portoadmin.layout.entity.content.template.class%
         tags:
             - { name: uneak.blocksmanager.template, alias: layout_template_entity_content }
+
+    uneak.portoadmin.layout.entity.content.scroll.template:
+        class: %uneak.portoadmin.layout.entity.content.scroll.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: layout_template_entity_content_scroll }

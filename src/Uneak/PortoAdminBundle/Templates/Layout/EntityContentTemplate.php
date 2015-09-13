@@ -3,7 +3,7 @@
 	namespace Uneak\PortoAdminBundle\Templates\Layout;
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
-	use Uneak\BlocksManagerBundle\Blocks\BlockTemplate;
+	use Uneak\PortoAdminBundle\Templates\BlockTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
 	class EntityContentTemplate extends BlockTemplate {
@@ -21,7 +21,7 @@
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
-			$options['uniqid'] = $block->getUniqid();
+            parent::buildOptions($templatesManager, $block, $options);
 			$options['header'] = $block->getHeader();
 			$options['body'] = $block->getBody();
 		}

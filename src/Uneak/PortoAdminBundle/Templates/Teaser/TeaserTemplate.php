@@ -3,7 +3,7 @@
 	namespace Uneak\PortoAdminBundle\Templates\Teaser;
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
-	use Uneak\BlocksManagerBundle\Blocks\BlockTemplate;
+	use Uneak\PortoAdminBundle\Templates\BlockTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
 	class TeaserTemplate extends BlockTemplate {
@@ -15,7 +15,7 @@
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
-
+            parent::buildOptions($templatesManager, $block, $options);
 			$options['title'] = $block->getTitle();
 			$options['icon'] = $block->getIcon();
 			$options['description'] = $block->getDescription();

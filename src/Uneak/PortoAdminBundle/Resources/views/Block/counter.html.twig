@@ -1,5 +1,5 @@
 {% if not context %}{% set default_context = "dark" %}{% else %}{% set default_context = context %}{% endif %}
-<section class="panel{% if featured is not null %} panel-featured-{{ featured }} panel-featured-{{ default_context }}{% endif %}">
+<section class="panel{{ classes }}{% if featured is not null %} panel-featured-{{ featured }} panel-featured-{{ default_context }}{% endif %}">
     <div class="panel-body{% if featured is null and context %} bg-{{ default_context }}{% endif %}">
         <div class="widget-summary{% if size is not null %} widget-summary-{{ size }}{% endif %}">
             {% if icon %}

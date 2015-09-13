@@ -73,7 +73,7 @@ services:
         class: %uneak.starter.block.left.sidebar.class%
         calls:
             - [ setTitle, [ 'Menu' ] ]
-            - [ addWidget, [ 'main-menu-gros', @uneak.starter.block.main.menu, 10000 ] ]
+            - [ addWidget, [ 'menu', @uneak.starter.block.main.menu, false, 10000 ] ]
         tags:
             - { name: uneak.blocksmanager.block, alias: block_left_sidebar }
 

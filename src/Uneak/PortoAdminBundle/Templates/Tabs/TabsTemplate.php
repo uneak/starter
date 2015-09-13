@@ -3,7 +3,7 @@
 	namespace Uneak\PortoAdminBundle\Templates\Tabs;
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
-	use Uneak\BlocksManagerBundle\Blocks\BlockTemplate;
+	use Uneak\PortoAdminBundle\Templates\BlockTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
 	class TabsTemplate extends BlockTemplate {
@@ -19,7 +19,7 @@
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
-
+            parent::buildOptions($templatesManager, $block, $options);
 			$options['context'] = $block->getContext();
 			$options['justified'] = $block->isJustified();
 			$options['bottom'] = $block->isBottom();

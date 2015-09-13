@@ -2,9 +2,9 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Counter;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-	class Counter extends BlockModel {
+    class Counter extends Block {
 
         const FEATURED_NONE = "";
         const FEATURED_TOP = "top";
@@ -30,6 +30,7 @@
 
 
 		public function __construct() {
+            parent::__construct();
 		}
 
         /**

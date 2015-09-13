@@ -11,16 +11,12 @@
         public function __construct($title = "") {
             parent::__construct($title);
 
-
             $widgetTasks = new WidgetTasks();
             $widgetTasks->addTask("Uneak", "http://wwww.uneak.fr");
             $widgetTasks->addTask("Marc Galoyer", "http://wwww.uneak.fr");
             $widgetTasks->addTask("Maurice et Renée", "#");
 
-            $widgetWrapper = new WidgetWrapper("uneak", true);
-            $widgetWrapper->add($widgetTasks);
-
-            $this->addWidget("task", $widgetWrapper);
+            $this->addWidget("task", $widgetTasks);
 
         }
 

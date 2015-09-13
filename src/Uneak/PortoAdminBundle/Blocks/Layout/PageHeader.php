@@ -2,15 +2,16 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Layout;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-    class PageHeader extends BlockModel {
+    class PageHeader extends Block {
 
         protected $templateAlias = "layout_template_page_header";
         protected $title;
 
 		public function __construct($title = "") {
-            $this->setBreadcrumb("block_breadcrumb");
+            parent::__construct();
+            $this->setBreadcrumb(array("block_breadcrumb", "block_template_breadcrumb"));
             $this->title = $title;
 		}
 

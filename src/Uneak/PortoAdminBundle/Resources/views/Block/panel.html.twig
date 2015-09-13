@@ -1,4 +1,4 @@
-<section class="panel{% if collapsed %} panel-collapsed{% endif %}{% if featured_context is not null %} panel-featured panel-featured-{{ featured_context }}{% endif %}{% if context is not null %} panel-{{ context }}{% endif %}{% if transparent %} panel-transparent{% endif %}">
+<section class="panel{{ classes }}{% if collapsed %} panel-collapsed{% endif %}{% if featured_context is not null %} panel-featured panel-featured-{{ featured_context }}{% endif %}{% if context is not null %} panel-{{ context }}{% endif %}{% if transparent %} panel-transparent{% endif %}">
 	{% if title or subtitle or toggle or dismiss %}
 	<header class="panel-heading{% if header_transparent %} panel-heading-transparent{% endif %}">
 		{% if toggle or dismiss %}

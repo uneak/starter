@@ -2,10 +2,10 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Tabs;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
     use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-    class Tabs extends BlockModel {
+    class Tabs extends Block {
 
         protected $templateAlias = "block_template_tabs";
 
@@ -18,7 +18,7 @@
         protected $tabs = array();
 
 		public function __construct() {
-
+            parent::__construct();
 		}
 
         public function addTab($icon, $title, BlockModelInterface $block)

@@ -4,8 +4,9 @@
 
 	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
 	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-	class Notification extends BlockModel {
+    class Notification extends Block {
         protected $templateAlias = "block_template_notification";
 
 		protected $title;
@@ -15,6 +16,7 @@
 
 
 		public function __construct($title, $icon, $badge = null) {
+            parent::__construct();
 			$this->title = $title;
 			$this->icon = $icon;
 			$this->badge = $badge;

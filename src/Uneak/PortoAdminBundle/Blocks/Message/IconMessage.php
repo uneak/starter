@@ -2,9 +2,9 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Message;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-	class IconMessage extends BlockModel {
+    class IconMessage extends Block {
         protected $templateAlias = "block_template_icon_message";
 
 		protected $title;
@@ -13,6 +13,7 @@
 		protected $context;
 
 		public function __construct($title, $description, $icon, $context = "primary") {
+            parent::__construct();
 			$this->title = $title;
 			$this->description = $description;
 			$this->icon = $icon;

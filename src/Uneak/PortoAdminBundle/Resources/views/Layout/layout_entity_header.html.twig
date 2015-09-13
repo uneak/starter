@@ -15,16 +15,16 @@
 
         </div>
         <div class="col-sm-6">
-            <div class="search">
-                <div class="input-group input-search">
-                    <input type="text" class="form-control" name="q" id="q" placeholder="Search...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                    </span>
-                </div>
-            </div>
+
+            {% for widget in widgets %}
+                {{ renderBlock(widget) }}
+                {% if not loop.last %}<span class="separator"></span>{% endif %}
+            {% endfor %}
+
         </div>
     </div>
 </header>
 
-{{ renderBlock(actions) }}
+<div class="mailbox-actions">
+    {{ renderBlock(actions) }}
+</div>

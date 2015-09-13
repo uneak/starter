@@ -4,7 +4,7 @@
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
 	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
-	use Uneak\BlocksManagerBundle\Blocks\BlockTemplate;
+	use Uneak\PortoAdminBundle\Templates\BlockTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
 	class EntityHeaderTemplate extends BlockTemplate {
@@ -13,12 +13,15 @@
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
+            parent::buildOptions($templatesManager, $block, $options);
 			$options['title'] = $block->getTitle();
 			$options['actions'] = $block->getActions();
 
-
-//            protected $actions;
-//            protected $rightBlocks;
+            $widgets = $block->getWidgets();
+//            foreach ($widgets as $widget) {
+//                $widget->addClass(CssClasses::m_none);
+//            }
+            $options['widgets'] = $widgets;
 
 		}
 

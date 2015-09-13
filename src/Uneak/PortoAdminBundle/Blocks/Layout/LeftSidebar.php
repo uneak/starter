@@ -3,20 +3,24 @@
 	namespace Uneak\PortoAdminBundle\Blocks\Layout;
 
 
+    use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
+
     class LeftSidebar extends Sidebar {
 
         protected $templateAlias = "layout_template_left_sidebar";
 		protected $title;
-        protected $uniqid;
 
         public function __construct($title = "") {
             $this->title = $title;
-            $this->uniqid = uniqid('comp_');
         }
 
-        public function getUniqid() {
-            return $this->uniqid;
+        public function addWidget($id, $widget, $wrap = true, $priority = null) {
+            if ($widget instanceof Menu) {
+                $widget->setTemplateAlias("block_template_main_menu");
+            }
+            return parent::addWidget($id, $widget, $wrap, $priority);
         }
+
 
         public function getTitle()
         {

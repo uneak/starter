@@ -20,6 +20,7 @@
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
+            parent::buildOptions($templatesManager, $block, $options);
 
 			$root = $block->getRoot();
 			$parameters = $block->getParameters();

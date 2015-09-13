@@ -2,19 +2,19 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Widget;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
-    use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-    class WidgetWrapper extends BlockModel {
+    class WidgetWrapper extends Block {
 
         protected $templateAlias = "block_template_widget_wrapper";
         protected $cmpt = 1000;
         protected $title;
 		protected $toggle = true;
-        protected $uniqid;
+
+
 
 		public function __construct($title, $toggle = true) {
-            $this->uniqid = uniqid('comp_');
+            parent::__construct();
 			$this->title = $title;
 			$this->toggle = $toggle;
 		}
@@ -23,7 +23,7 @@
             return $this->uniqid;
         }
 
-        public function add(BlockModelInterface $widget) {
+        public function addWidget($widget) {
             $this->addBlock($widget, null, $this->cmpt--, "widgets");
         }
 

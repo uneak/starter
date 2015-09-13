@@ -2,11 +2,11 @@
 
     namespace AppBundle\Blocks\Breadcrumb;
 
-	use Uneak\PortoAdminBundle\Blocks\Breadcrumb\Breadcrumb as PortoAdminBreadcrumb;
+	use Uneak\PortoAdminBundle\Blocks\Menu\Menu as PortoAdminMenu;
     use Uneak\RoutesManagerBundle\Helper\MenuHelper;
     use Uneak\RoutesManagerBundle\Routes\FlattenRouteManager;
 
-    class Breadcrumb extends PortoAdminBreadcrumb {
+    class Breadcrumb extends PortoAdminMenu {
 
         protected $menuHelper;
         protected $fRouteManager;

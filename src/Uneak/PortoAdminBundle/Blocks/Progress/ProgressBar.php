@@ -2,9 +2,9 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Progress;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-	class ProgressBar extends BlockModel {
+    class ProgressBar extends Block {
         protected $templateAlias = "block_template_progress_bar";
 
 		protected $title;
@@ -12,6 +12,7 @@
 		protected $value;
 
 		public function __construct($title, $value, $percent = 0) {
+            parent::__construct();
 			$this->title = $title;
 			$this->value = $value;
 			$this->percent = $percent;

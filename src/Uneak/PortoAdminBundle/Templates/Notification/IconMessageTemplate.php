@@ -4,7 +4,7 @@
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
 	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
-	use Uneak\BlocksManagerBundle\Blocks\BlockTemplate;
+	use Uneak\PortoAdminBundle\Templates\BlockTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
 	class IconMessageTemplate extends BlockTemplate {
@@ -20,7 +20,7 @@
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
-
+            parent::buildOptions($templatesManager, $block, $options);
 			$options['title'] = $block->getTitle();
 			$options['description'] = $block->getDescription();
 			$options['icon'] = $block->getIcon();

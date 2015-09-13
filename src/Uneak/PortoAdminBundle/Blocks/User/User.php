@@ -2,18 +2,18 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\User;
 
-	use Knp\Menu\ItemInterface;
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
-	use Uneak\PortoAdminBundle\Blocks\Menu\UserMenu;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-	class User extends BlockModel {
+    class User extends Block {
         protected $templateAlias = "block_template_user";
 
 		protected $user;
 
+
 		public function __construct($user = null) {
+            parent::__construct();
 			$this->user = $user;
-            $this->addBlock('block_user_menu', "menu");
+            $this->addBlock(array('block_user_menu', 'block_template_user_menu'), "menu");
 		}
 
 		public function getMenu() {

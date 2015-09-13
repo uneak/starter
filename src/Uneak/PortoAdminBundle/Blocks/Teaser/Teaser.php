@@ -2,9 +2,9 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Teaser;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-	class Teaser extends BlockModel {
+    class Teaser extends Block {
 
         protected $templateAlias = "block_template_teaser";
 		protected $title;
@@ -16,6 +16,7 @@
 
 
 		public function __construct() {
+            parent::__construct();
 		}
 
         /**

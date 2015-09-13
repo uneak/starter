@@ -2,9 +2,9 @@
 
 namespace Uneak\PortoAdminBundle\Blocks\Layout;
 
-use Uneak\BlocksManagerBundle\Blocks\BlockModel;
+use Uneak\PortoAdminBundle\Blocks\Block;
 
-class MainInterface extends BlockModel
+class MainInterface extends Block
 {
 
     const LAYOUT_STYLE_DEFAULT = "fixed";
@@ -28,6 +28,7 @@ class MainInterface extends BlockModel
     protected $sidebarLeftSize = self::SIDEBAR_LEFT_SIZE_MD;
 
     public function __construct() {
+        parent::__construct();
         $this->setLeftSidebar("block_left_sidebar");
         $this->setRightSidebar("block_right_sidebar");
         $this->setHeader("block_header");

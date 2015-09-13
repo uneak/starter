@@ -1,0 +1,101 @@
+{% extends 'knp_menu.html.twig' %}
+
+{% block item %}
+    {% if item.displayed %}
+        {# building the class of the item #}
+        {%- set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
+        {%- if matcher.isCurrent(item) %}
+            {%- set classes = classes|merge([options.currentClass]) %}
+        {%- elseif matcher.isAncestor(item, options.matchingDepth) %}
+            {%- set classes = classes|merge([options.ancestorClass]) %}
+        {%- endif %}
+        {%- if item.actsLikeFirst %}
+            {%- set classes = classes|merge([options.firstClass]) %}
+        {%- endif %}
+        {%- if item.actsLikeLast %}
+            {%- set classes = classes|merge([options.lastClass]) %}
+        {%- endif %}
+
+
+        {% if item.hasChildren and options.depth is not sameas(0) %}
+            {% if options.branch_class is not empty and item.displayChildren %}
+                {%- set classes = classes|merge([options.branch_class]) %}
+            {% endif %}
+        {%- endif %}
+
+        {%- set attributes = item.attributes %}
+        {%- if classes is not empty %}
+            {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
+        {%- endif %}
+        {# displaying the item #}
+        {% import 'knp_menu.html.twig' as knp_menu %}
+        <li{{ knp_menu.attributes(attributes) }}>
+            {%- if item.uri is not empty and (not matcher.isCurrent(item) or options.currentAsLink) %}
+                {{ block('linkElement') }}
+            {%- else %}
+                {{ block('spanElement') }}
+            {%- endif %}
+            {# render the list of children#}
+            {%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
+            {%- set childrenClasses = childrenClasses|merge(['menu_level_' ~ item.level]) %}
+            {%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
+            {{ block('list') }}
+        </li>
+    {% endif %}
+{% endblock %}
+
+
+{% block list %}
+
+    {% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
+
+        {%- set classes = listAttributes['class'] is not empty ? [listAttributes['class']] : [] %}
+
+        {% if options.branch_class is not empty %}
+            {%- set classes = classes|merge([options.branch_class]) %}
+        {% endif %}
+
+        {% if options.leaf_class is not empty %}
+            {%- set classes = classes|merge([options.leaf_class]) %}
+        {%- endif %}
+
+        {%- if classes is not empty %}
+            {%- set listAttributes = listAttributes|merge({'class': classes|join(' ')}) %}
+        {%- endif %}
+
+        {% import 'knp_menu.html.twig' as knp_menu %}
+        <ul{{ knp_menu.attributes(listAttributes) }}>
+            {{ block('children') }}
+        </ul>
+    {% endif %}
+{% endblock %}
+
+
+{% block linkElement %}
+
+    {%- set linkAttributes = item.linkAttributes %}
+    {%- set classes = linkAttributes['class'] is defined ? [linkAttributes['class']] : [] %}
+    {%- set classes = classes|merge(['menu-item']) %}
+    {%- set linkAttributes = linkAttributes|merge({'class': classes|join(' ')}) %}
+
+    {% import 'knp_menu.html.twig' as knp_menu %}
+    <a href="{{ item.uri }}"{{ knp_menu.attributes(linkAttributes) }}>{{ block('label') }}</a>
+{% endblock %}
+
+
+{% block spanElement %}
+
+    {%- set labelAttributes = item.labelAttributes %}
+    {%- set classes = labelAttributes['class'] is defined ? [labelAttributes['class']] : [] %}
+    {%- set classes = classes|merge(['menu-item']) %}
+    {%- set labelAttributes = labelAttributes|merge({'class': classes|join(' ')}) %}
+
+    {% import 'knp_menu.html.twig' as knp_menu %}
+    <a{{ knp_menu.attributes(labelAttributes) }}>{{ block('label') }}</a>
+{% endblock %}
+
+{% block label %}
+    {% if item.getExtra('badge') is not null %}<span class="pull-right label label-{{ item.getExtra('badge_context', 'primary') }}">{{ item.getExtra('badge') }}</span>{% endif %}
+    {% if item.getExtra('icon') is not null %}<i class="fa fa-{{ item.getExtra('icon') }}{% if item.getExtra('context', null) is not null %} text-{{ item.getExtra('context') }}{% endif %}" aria-hidden="true"></i>{% endif %}
+    <span class="{% if item.getExtra('context', null) is not null %} text-{{ item.getExtra('context') }}{% endif %}">{% if options.allow_safe_labels and item.getExtra('safe_label', false) %}{{ item.label|raw }}{% else %}{{ item.label }}{% endif %}</span>
+{% endblock %}

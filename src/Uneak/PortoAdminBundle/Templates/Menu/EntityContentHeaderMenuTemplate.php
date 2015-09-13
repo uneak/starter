@@ -21,14 +21,11 @@
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
+            parent::buildOptions($templatesManager, $block, $options);
 
 			$root = $block->getRoot();
 			$parameters = $block->getParameters();
 			$renderer = $block->getRenderer();
-
-			$root->setChildrenAttribute('class', 'list-unstyled m-none pt-lg pb-lg');
-
-
 
 			$options['root'] = $root;
 			$options['parameters'] = array_merge($parameters, array(

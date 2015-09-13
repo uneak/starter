@@ -2,14 +2,15 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Layout;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
+    use Uneak\PortoAdminBundle\Blocks\Block;
     use Uneak\PortoAdminBundle\Blocks\Search\Search;
 
-    class Header extends BlockModel {
+    class Header extends Block {
 
         protected $templateAlias = "layout_template_header";
 
 		public function __construct() {
+            parent::__construct();
             $this->setBrand("block_brand");
             $this->setSearch(new Search());
             $this->setNotifications("block_notifications");

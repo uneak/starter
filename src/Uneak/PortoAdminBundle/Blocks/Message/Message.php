@@ -2,9 +2,9 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Message;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-	class Message extends BlockModel {
+    class Message extends Block {
         protected $templateAlias = "block_template_message";
 
 		protected $title;
@@ -12,6 +12,7 @@
 		protected $photo;
 
 		public function __construct($title, $description = null, $photo = null) {
+            parent::__construct();
 			$this->title = $title;
 			$this->description = $description;
 			$this->photo = $photo;

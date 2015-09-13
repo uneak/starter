@@ -2,9 +2,10 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Panel;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
 
-	class Panel extends BlockModel {
+    use Uneak\PortoAdminBundle\Blocks\Block;
+
+    class Panel extends Block {
 
         protected $templateAlias = "block_template_panel";
 		protected $title;
@@ -23,6 +24,7 @@
 		protected $actions = array();
 
 		public function __construct() {
+            parent::__construct();
 		}
 
 		public function addAction($icon, $title, $link) {

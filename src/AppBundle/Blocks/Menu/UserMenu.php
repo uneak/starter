@@ -2,11 +2,11 @@
 
 	namespace AppBundle\Blocks\Menu;
 
-	use Uneak\PortoAdminBundle\Blocks\Menu\UserMenu as PortoAdminUserMenu;
+	use Uneak\PortoAdminBundle\Blocks\Menu\Menu as PortoAdminMenu;
     use Uneak\RoutesManagerBundle\Helper\MenuHelper;
     use Uneak\RoutesManagerBundle\Routes\FlattenRouteManager;
 
-    class UserMenu extends PortoAdminUserMenu {
+    class UserMenu extends PortoAdminMenu {
 
         protected $menuHelper;
         protected $fRouteManager;

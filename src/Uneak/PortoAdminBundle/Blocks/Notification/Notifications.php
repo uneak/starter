@@ -2,14 +2,14 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Notification;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-	class Notifications extends BlockModel {
+    class Notifications extends Block {
         protected $templateAlias = "block_template_notifications";
 		protected $cmpt = 1000;
 
 		public function __construct() {
-
+            parent::__construct();
 		}
 
 		public function addNotification(Notification $notification) {

@@ -2,9 +2,9 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Brand;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-	class Brand extends BlockModel {
+    class Brand extends Block {
 
         protected $templateAlias = "block_template_brand";
 		protected $link;
@@ -12,6 +12,7 @@
 		protected $photo;
 
 		public function __construct($name = null, $link = null, $photo = null) {
+            parent::__construct();
 			$this->name = $name;
 			$this->link = $link;
 			$this->photo = $photo;

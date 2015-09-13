@@ -1,4 +1,4 @@
-<ul class="notifications">
+<ul class="notifications{{ classes }}">
 	{% for notification in notifications %}
 		<li>
 			{{ renderBlock(notification) }}

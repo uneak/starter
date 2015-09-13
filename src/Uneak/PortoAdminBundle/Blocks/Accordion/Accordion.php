@@ -4,8 +4,9 @@
 
 	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
     use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-    class Accordion extends BlockModel {
+    class Accordion extends Block {
 
         protected $templateAlias = "block_template_accordion";
 
@@ -14,7 +15,7 @@
         protected $tabs = array();
 
 		public function __construct() {
-
+            parent::__construct();
 		}
 
         /**

@@ -4,8 +4,9 @@
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
 	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
-	use Uneak\BlocksManagerBundle\Blocks\BlockTemplate;
-	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
+	use Uneak\PortoAdminBundle\Templates\BlockTemplate;
+    use Uneak\PortoAdminBundle\Helper\CssClasses;
+    use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
 	class EntitySidebarTemplate extends BlockTemplate {
 
@@ -23,8 +24,14 @@
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
-            $options['uniqid'] = $block->getUniqid();
-            $options['widgets'] = $block->getWidgets();
+            parent::buildOptions($templatesManager, $block, $options);
+
+            $widgets = $block->getWidgets();
+            foreach ($widgets as $widget) {
+                $widget->addClass(CssClasses::m_none);
+            }
+            $options['widgets'] = $widgets;
+
             $options['photo'] = $block->getPhoto();
 		}
 

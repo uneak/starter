@@ -2,15 +2,14 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Layout;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-	class EntityContent extends BlockModel {
+    class EntityContent extends Block {
 
         protected $templateAlias = "layout_template_entity_content";
-        protected $uniqid;
 
 		public function __construct() {
-            $this->uniqid = uniqid('comp_');
+            parent::__construct();
 
             $header = new EntityHeader();
             $this->addBlock($header, "header");

@@ -2,20 +2,25 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Layout;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
-    use Uneak\PortoAdminBundle\Blocks\Menu\EntityContentHeaderMenu;
+    use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
 
-    class EntityHeader extends BlockModel {
+    class EntityHeader extends Sidebar {
 
         protected $templateAlias = "layout_template_entity_header";
         protected $title;
-        protected $rightBlocks;
 
 
 		public function __construct() {
-            $actionsMenu = new EntityContentHeaderMenu();
-            $this->addBlock($actionsMenu, "actions_menu");
+            parent::__construct();
+            $actionsMenu = new Menu();
+            $this->addBlock(array($actionsMenu, 'block_template_entity_content_header_menu'), "actions_menu");
 		}
+
+        public function addWidget($id, $widget, $wrap = true, $priority = null) {
+            $priority = (is_null($priority)) ? $this->cmpt-- : $priority;
+            $this->addBlock($widget, $id, $priority, "widgets");
+            return $this;
+        }
 
         /**
          * @return mixed
@@ -39,24 +44,6 @@
         public function getActions()
         {
             return $this->getBlock("actions_menu");
-        }
-
-
-
-        /**
-         * @return mixed
-         */
-        public function getRightBlocks()
-        {
-            return $this->rightBlocks;
-        }
-
-        /**
-         * @param mixed $rightBlocks
-         */
-        public function setRightBlocks($rightBlocks)
-        {
-            $this->rightBlocks = $rightBlocks;
         }
 
 

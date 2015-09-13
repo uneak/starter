@@ -1,0 +1,37 @@
+{% extends 'knp_menu.html.twig' %}
+
+
+{% block list %}
+    {% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
+        {% import 'knp_menu.html.twig' as knp_menu %}
+        <ul>
+            {{ block('children') }}
+        </ul>
+    {% endif %}
+{% endblock %}
+
+
+{% block item %}
+    {% if item.displayed %}
+
+        {% import 'knp_menu.html.twig' as knp_menu %}
+
+        <li>
+
+        {#{%- if item.uri is not empty and (not matcher.isCurrent(item) or options.currentAsLink) %}#}
+        {{ block('linkElement') }}
+        {#{%- endif %}#}
+        {#{{ block('list') }}#}
+
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block linkElement %}
+        <a href="{% if item.uri is not empty %}{{ item.uri }}{% else %}#{% endif %}">{{ block('label') }}</a>
+{% endblock %}
+
+{% block label %}
+    {% if item.getExtra('icon') is not null %}<i class="fa fa-{{ item.getExtra('icon') }}" aria-hidden="true"></i>{% endif %}
+    {% if options.allow_safe_labels and item.getExtra('safe_label', false) %}{{ item.label|raw }}{% else %}{{ item.label }}{% endif %}
+{% endblock %}

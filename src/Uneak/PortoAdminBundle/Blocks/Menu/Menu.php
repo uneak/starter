@@ -3,9 +3,9 @@
 	namespace Uneak\PortoAdminBundle\Blocks\Menu;
 
 	use Knp\Menu\ItemInterface;
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
+    use Uneak\PortoAdminBundle\Blocks\Block;
 
-	class Menu extends BlockModel {
+    class Menu extends Block {
 
         protected $templateAlias = "block_template_menu";
 
@@ -14,6 +14,7 @@
 		protected $parameters;
 
 		public function __construct($root = null, array $parameters = array(), $renderer = null) {
+            parent::__construct();
 			$this->root = $root;
 			$this->renderer = $renderer;
 			$this->parameters = $parameters;
