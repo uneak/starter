@@ -13,16 +13,17 @@ class Entity extends Block
     public function __construct() {
         parent::__construct();
 
-        $toolbarMenu = new Menu();
-        $this->addBlock(array($toolbarMenu, 'block_template_entity_toolbar_menu'), "toolbar_menu");
+        $this->setToolbar(new Menu());
+        $this->setEntitySidebar(new EntitySidebar());
+        $this->setContent(new EntityContent());
 
-        $entitySideBar = new EntitySidebar();
-        $this->addBlock($entitySideBar, "entity_sidebar");
+    }
 
-//        $content = new EntityContentScroll();
-        $content = new EntityContent();
-        $this->addBlock($content, "content");
 
+    public function setToolbar($toolbar)
+    {
+        $this->removeBlock("toolbar_menu");
+        $this->addBlock(array($toolbar, 'block_template_entity_toolbar_menu'), "toolbar_menu");
     }
 
     public function getToolbar()
@@ -30,14 +31,25 @@ class Entity extends Block
         return $this->getBlock("toolbar_menu");
     }
 
+
+    public function setEntitySidebar($entitySidebar)
+    {
+        $this->removeBlock("entity_sidebar");
+        $this->addBlock($entitySidebar, "entity_sidebar");
+    }
+
     public function getEntitySidebar()
     {
         return $this->getBlock("entity_sidebar");
     }
 
-
-    public function getContent()
+    public function setContent($content)
     {
+        $this->removeBlock("content");
+        $this->addBlock($content, "content");
+    }
+
+    public function getContent() {
         return $this->getBlock("content");
     }
 

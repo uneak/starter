@@ -12,18 +12,16 @@
 		public function __construct() {
             parent::__construct();
 
-            $header = new EntityHeader();
-            $this->addBlock($header, "header");
-
-            $actionsMenu = new Menu();
-            $this->addBlock(array($actionsMenu, 'block_template_entity_content_header_menu'), "actions_menu");
-
-            $body = new PageBody();
-            $this->addBlock($body, "body");
+            $this->setHeader(new EntityHeader());
+            $this->setActions(new Menu());
+            $this->setBody(new PageBody());
 		}
 
-        public function getUniqid() {
-            return $this->uniqid;
+
+        public function setHeader($header)
+        {
+            $this->removeBlock("header");
+            $this->addBlock($header, "header");
         }
 
         public function getHeader()
@@ -32,15 +30,25 @@
         }
 
 
+        public function setBody($body)
+        {
+            $this->removeBlock("body");
+            $this->addBlock($body, "body");
+        }
+
         public function getBody()
         {
             return $this->getBlock("body");
         }
 
 
-        /**
-         * @return mixed
-         */
+        public function setActions($actions)
+        {
+            $this->removeBlock("actions_menu");
+            $this->addBlock(array($actions, 'block_template_entity_content_header_menu'), "actions_menu");
+
+        }
+
         public function getActions()
         {
             return $this->getBlock("actions_menu");

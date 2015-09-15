@@ -12,14 +12,15 @@
 
 		public function __construct() {
             parent::__construct();
-
-            $body = new PageBody();
-            $this->addBlock($body, "body");
+            $this->setBody(new PageBody());
 		}
 
-        public function getUniqid() {
-            return $this->uniqid;
+        public function setBody($body)
+        {
+            $this->removeBlock("body");
+            $this->addBlock($body, "body");
         }
+
 
         public function getBody()
         {

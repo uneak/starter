@@ -8,6 +8,8 @@ parameters:
     uneak.portoadmin.layout.page.body.class: Uneak\PortoAdminBundle\Blocks\Layout\PageBody
     uneak.portoadmin.layout.page.header.class: Uneak\PortoAdminBundle\Blocks\Layout\PageHeader
 
+    uneak.portoadmin.block.flattenroute.menu.class: Uneak\PortoAdminBundle\Blocks\Menu\FlattenRouteMenu
+
     uneak.portoadmin.block.user.class: Uneak\PortoAdminBundle\Blocks\User\User
     uneak.portoadmin.block.user.menu.class: Uneak\PortoAdminBundle\Blocks\Menu\Menu
     uneak.portoadmin.block.breadcrumb.class: Uneak\PortoAdminBundle\Blocks\Menu\Menu
@@ -15,6 +17,15 @@ parameters:
     uneak.portoadmin.block.notifications.class: Uneak\PortoAdminBundle\Blocks\Notification\Notifications
 
 services:
+
+    uneak.portoadmin.block.flattenroute.menu:
+        class: %uneak.portoadmin.block.flattenroute.menu.class%
+        arguments:
+            - @uneak.routesmanager.menu.helper
+            - @uneak.routesmanager.flattenmanager
+        tags:
+            - { name: uneak.blocksmanager.block, alias: block_flattenroute_menu, override: false }
+
 
     uneak.portoadmin.layout.main.interface:
         class: %uneak.portoadmin.layout.main.interface.class%
