@@ -24,7 +24,7 @@
 
 			$options['title'] = $block->getTitle();
 			$options['toggle'] = $block->isToggle();
-            $options['widgets'] = $block->getBlocks("widgets");
+            $options['widgets'] = $block->getBlock(":widgets");
 
 		}
 

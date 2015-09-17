@@ -8,9 +8,9 @@
 
 	namespace Uneak\MaterialDesignBundle\Blocks;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
+	use Uneak\BlocksManagerBundle\Blocks\Block;
 
-	class CardBlock extends BlockModel {
+	class CardBlock extends Block {
 
         protected $attributes = array();
         protected $title;

@@ -8,35 +8,32 @@
     class Sidebar extends Block {
 
         protected $templateAlias = "layout_template_sidebar";
-        protected $cmpt = 1000;
 
 		public function __construct() {
             parent::__construct();
 		}
 
         public function addWidget($id, $widget, $wrap = true, $priority = null) {
-            $priority = (is_null($priority)) ? $this->cmpt-- : $priority;
-
             if ($wrap) {
                 $widgetWrapper = new WidgetWrapper($id, true);
                 $widgetWrapper->addWidget($widget);
-                $this->addBlock($widgetWrapper, $id, $priority, "widgets");
+                $this->addBlock($widgetWrapper, $id.":widgets", $priority);
             } else {
-                $this->addBlock($widget, $id, $priority, "widgets");
+                $this->addBlock($widget, $id.":widgets", $priority);
             }
 
             return $this;
         }
 
         public function removeWidget($id) {
-            $this->removeBlock($id, "widgets");
+            $this->removeBlock($id.":widgets");
         }
 
         public function getWidget($id) {
-            return $this->getBlock($id, "widgets");
+            return $this->getBlock($id.":widgets");
         }
 
         public function getWidgets() {
-            return $this->getBlocks("widgets");
+            return $this->getBlock(":widgets");
         }
 	}

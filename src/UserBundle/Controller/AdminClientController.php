@@ -3,6 +3,7 @@
 	namespace UserBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\DependencyInjection\ContainerInterface;
     use Symfony\Component\HttpFoundation\Request;
     use Uneak\PortoAdminBundle\Blocks\Layout\Entity;
     use Uneak\PortoAdminBundle\Blocks\Layout\EntityContentScroll;
@@ -15,22 +16,32 @@
 
 	class AdminClientController extends Controller {
 
+        protected $blockBuilder;
+        protected $layout;
 
+
+        public function setContainer(ContainerInterface $container = null) {
+            parent::setContainer($container);
+            $this->blockBuilder = $this->get("uneak.blocksmanager.builder");
+            $this->blockBuilder->addBlock("layout", "block_main_interface");
+            $this->layout = $this->blockBuilder->getBlock("layout");
+
+//            $this->layout->setLayoutStyle(MainInterface::LAYOUT_STYLE_DEFAULT);
+//            $this->layout->setBackgroundColor(MainInterface::COLOR_DARK);
+//            $this->layout->setHeaderColor(MainInterface::COLOR_DARK);
+//            $this->layout->setSidebarLeftSize(MainInterface::SIDEBAR_LEFT_SIZE_MD);
+        }
+
+        
         public function indexAction(FlattenRoute $route, Request $request)
         {
 
-            $blockBuilder = $this->get("uneak.blocksmanager.builder");
-            $blockBuilder->addBlock("layout", "block_main_interface");
-            $mainLayout = $blockBuilder->getBlock('layout');
-            $mainLayout->setLeftSidebarCollapsed(true);
-//            $layout->setLayoutStyle(MainInterface::LAYOUT_STYLE_DEFAULT);
-//            $layout->setBackgroundColor(MainInterface::COLOR_DARK);
-//            $layout->setHeaderColor(MainInterface::COLOR_DARK);
-//            $layout->setSidebarLeftSize(MainInterface::SIDEBAR_LEFT_SIZE_MD);
+            $this->layout->setLeftSidebarCollapsed(true);
 
-            $layoutLeftSideBar = $blockBuilder->getBlock('layout/left_sidebar');
-            $layoutContentBody = $blockBuilder->getBlock('layout/content/body');
-            $layoutContentHeaderBreadcrumb = $blockBuilder->getBlock('layout/content/header/breadcrumb');
+
+            $layoutLeftSideBar = $this->layout->getLeftSideBar();
+            $layoutContentBody = $this->layout->getContent()->getBody();
+            $layoutContentHeaderBreadcrumb = $this->layout->getContent()->getHeader()->getBreadcrumb();
             $layoutContentHeaderBreadcrumb->setFlattenRoute($route);
 
             $entityLayout = new Entity();
@@ -42,7 +53,7 @@
 
             $blockManager = $this->get("uneak.blocksmanager.blocks");
             $menu = $blockManager->getBlock("block_flattenroute_menu")->setFlattenRoute($route);
-            $entitySidebar->addWidget("menu", $menu, false, 9999);
+            $entitySidebar->addWidget("menu", $menu, false, 999999);
             $entityLayoutContentHeader->setTitle($route->getMetaData('_label'));
 
 
@@ -63,25 +74,22 @@
 //            $layoutLeftSideBar->addWidget("status", $widgetStatus);
 
 
-            return $blockBuilder->render("layout");
+            return $this->blockBuilder->render("layout");
         }
 
 
         public function newAction(FlattenRoute $route, Request $request)
         {
 
-            $blockBuilder = $this->get("uneak.blocksmanager.builder");
-            $blockBuilder->addBlock("layout", "block_main_interface");
-            $mainLayout = $blockBuilder->getBlock('layout');
-            $mainLayout->setLeftSidebarCollapsed(true);
+            $this->layout->setLeftSidebarCollapsed(true);
 //            $layout->setLayoutStyle(MainInterface::LAYOUT_STYLE_DEFAULT);
 //            $layout->setBackgroundColor(MainInterface::COLOR_DARK);
 //            $layout->setHeaderColor(MainInterface::COLOR_DARK);
 //            $layout->setSidebarLeftSize(MainInterface::SIDEBAR_LEFT_SIZE_MD);
 
-            $layoutLeftSideBar = $blockBuilder->getBlock('layout/left_sidebar');
-            $layoutContentBody = $blockBuilder->getBlock('layout/content/body');
-            $layoutContentHeaderBreadcrumb = $blockBuilder->getBlock('layout/content/header/breadcrumb');
+            $layoutLeftSideBar = $this->layout->getLeftSideBar();
+            $layoutContentBody = $this->layout->getContent()->getBody();
+            $layoutContentHeaderBreadcrumb = $this->layout->getContent()->getHeader()->getBreadcrumb();
             $layoutContentHeaderBreadcrumb->setFlattenRoute($route);
 
             $entityLayout = new Entity();
@@ -105,7 +113,7 @@
 
 
 
-            return $blockBuilder->render("layout");
+            return $this->blockBuilder->render("layout");
         }
 
 

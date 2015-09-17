@@ -2,7 +2,7 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Tabs;
 
-    use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
+    use Uneak\BlocksManagerBundle\Blocks\BlockInterface;
     use Uneak\PortoAdminBundle\Blocks\Block;
 
     class Tabs extends Block {
@@ -21,7 +21,7 @@
             parent::__construct();
 		}
 
-        public function addTab($icon, $title, BlockModelInterface $block)
+        public function addTab($icon, $title, BlockInterface $block)
         {
             $id = count($this->tabs);
             $this->tabs[$id] = array(

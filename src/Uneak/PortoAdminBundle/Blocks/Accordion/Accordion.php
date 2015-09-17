@@ -2,8 +2,8 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Accordion;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
-    use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
+	use Uneak\BlocksManagerBundle\Blocks\Block;
+    use Uneak\BlocksManagerBundle\Blocks\BlockInterface;
     use Uneak\PortoAdminBundle\Blocks\Block;
 
     class Accordion extends Block {
@@ -51,7 +51,7 @@
         }
 
 
-        public function addTab($icon, $title, $context, BlockModelInterface $block)
+        public function addTab($icon, $title, $context, BlockInterface $block)
         {
             $id = count($this->tabs);
             $this->tabs[$id] = array(

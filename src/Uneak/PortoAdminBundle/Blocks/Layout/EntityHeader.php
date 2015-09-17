@@ -14,8 +14,7 @@
 		}
 
         public function addWidget($id, $widget, $wrap = true, $priority = null) {
-            $priority = (is_null($priority)) ? $this->cmpt-- : $priority;
-            $this->addBlock($widget, $id, $priority, "widgets");
+            $this->addBlock($widget, $id.":widgets", $priority);
             return $this;
         }
 

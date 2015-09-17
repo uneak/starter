@@ -19,7 +19,7 @@
             parent::buildOptions($templatesManager, $block, $options);
 
 			$options['options'] = $this->_getJsArray($block->getOptions());
-			$options['items'] = $block->getBlocks("items");
+			$options['items'] = $block->getBlock(":items");
 
 		}
 

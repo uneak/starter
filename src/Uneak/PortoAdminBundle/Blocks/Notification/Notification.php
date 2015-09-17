@@ -2,17 +2,15 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Notification;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
-	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
-    use Uneak\PortoAdminBundle\Blocks\Block;
+	use Uneak\BlocksManagerBundle\Blocks\BlockInterface;
+    use Uneak\PortoAdminBundle\Blocks\Block as PortoAdminBlock;
 
-    class Notification extends Block {
+    class Notification extends PortoAdminBlock {
         protected $templateAlias = "block_template_notification";
 
 		protected $title;
 		protected $icon;
 		protected $badge;
-		protected $cmpt = 1000;
 
 
 		public function __construct($title, $icon, $badge = null) {
@@ -77,8 +75,8 @@
 		}
 
 
-		public function add(BlockModelInterface $block) {
-			$this->addBlock($block, null, $this->cmpt--, "notification_item");
+		public function add(BlockInterface $block) {
+			$this->addBlock($block, ":notification_item");
 		}
 
 

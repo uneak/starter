@@ -3,7 +3,7 @@
 	namespace Uneak\PortoAdminBundle\Templates\Notification;
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
-	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
+	use Uneak\BlocksManagerBundle\Blocks\BlockInterface;
 	use Uneak\PortoAdminBundle\Templates\BlockTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
@@ -25,7 +25,7 @@
 			$options['icon'] = $block->getIcon();
 			$options['badge'] = $block->getBadge();
 
-			$options['items'] = $block->getBlocks("notification_item");
+			$options['items'] = $block->getBlock(":notification_item");
 
 		}
 

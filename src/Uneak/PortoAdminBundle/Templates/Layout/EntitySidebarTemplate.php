@@ -3,7 +3,7 @@
 	namespace Uneak\PortoAdminBundle\Templates\Layout;
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
-	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
+	use Uneak\BlocksManagerBundle\Blocks\BlockInterface;
 	use Uneak\PortoAdminBundle\Templates\BlockTemplate;
     use Uneak\PortoAdminBundle\Helper\CssClasses;
     use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;

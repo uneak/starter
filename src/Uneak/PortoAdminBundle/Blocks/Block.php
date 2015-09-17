@@ -2,10 +2,9 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks;
 
-	use Uneak\BlocksManagerBundle\Blocks\BlockModel;
-    use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
+	use Uneak\BlocksManagerBundle\Blocks\Block as BlocksManagerBlock;
 
-    class Block extends BlockModel {
+    class Block extends BlocksManagerBlock {
 
         protected $classes = array();
         protected $uniqid;

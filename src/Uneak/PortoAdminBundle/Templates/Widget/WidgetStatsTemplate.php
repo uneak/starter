@@ -3,7 +3,7 @@
 	namespace Uneak\PortoAdminBundle\Templates\Widget;
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
-	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
+	use Uneak\BlocksManagerBundle\Blocks\BlockInterface;
 	use Uneak\PortoAdminBundle\Templates\BlockTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
@@ -21,7 +21,7 @@
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
             parent::buildOptions($templatesManager, $block, $options);
-            $options['progressBars'] = $block->getBlocks("progressBars");
+            $options['progressBars'] = $block->getBlock(":progressBars");
 
 		}
 

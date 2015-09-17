@@ -3,7 +3,7 @@
 	namespace Uneak\PortoAdminBundle\Templates\Menu;
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
-	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
+	use Uneak\BlocksManagerBundle\Blocks\BlockInterface;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
 	class MainMenuTemplate extends MenuTemplate {

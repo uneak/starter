@@ -8,7 +8,6 @@
     class WidgetStats extends Block {
 
         protected $templateAlias = "block_template_widget_stats";
-        protected $cmpt = 1000;
 
         public function __construct() {
             parent::__construct();
@@ -16,7 +15,7 @@
 
         public function addProgress(ProgressBar $progressBar) {
             $progressBar->setTemplateAlias("block_template_widget_stats_progress");
-            $this->addBlock($progressBar, null, $this->cmpt--, "progressBars");
+            $this->addBlock($progressBar, ":progressBars");
 
         }
 

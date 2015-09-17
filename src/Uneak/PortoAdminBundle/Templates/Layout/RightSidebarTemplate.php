@@ -3,7 +3,7 @@
 	namespace Uneak\PortoAdminBundle\Templates\Layout;
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
-	use Uneak\BlocksManagerBundle\Blocks\BlockModelInterface;
+	use Uneak\BlocksManagerBundle\Blocks\BlockInterface;
 	use Uneak\PortoAdminBundle\Templates\BlockTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
@@ -17,7 +17,7 @@
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
             parent::buildOptions($templatesManager, $block, $options);
-            $options['widgets'] = $block->getBlocks("right_sidebar");
+            $options['widgets'] = $block->getBlock(":right_sidebar");
 		}
 
 		public function getRenderTemplate() {

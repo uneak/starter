@@ -7,7 +7,6 @@
     class WidgetWrapper extends Block {
 
         protected $templateAlias = "block_template_widget_wrapper";
-        protected $cmpt = 1000;
         protected $title;
 		protected $toggle = true;
 
@@ -24,7 +23,7 @@
         }
 
         public function addWidget($widget) {
-            $this->addBlock($widget, null, $this->cmpt--, "widgets");
+            $this->addBlock($widget, ":widgets");
         }
 
         /**
