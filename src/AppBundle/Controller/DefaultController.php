@@ -61,6 +61,6 @@
 			$blockManager->addBlock($cardBlock, 'card3');
 
 
-			return $this->render(':Home:home.html.twig');
+			return $this->render(':home:home.html.twig');
 		}
 	}

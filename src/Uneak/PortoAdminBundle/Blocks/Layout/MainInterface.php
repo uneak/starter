@@ -117,54 +117,54 @@ class MainInterface extends Block
 
 
     public function getLeftSidebar() {
-        return $this->getBlock("left_sidebar");
+        return $this->getBlock("left_sidebar:layout");
     }
 
 
     public function setLeftSidebar($leftSidebar)
     {
         $this->leftSidebar = $leftSidebar;
-        $this->removeBlock("left_sidebar");
-        $this->addBlock($leftSidebar, "left_sidebar");
+        $this->removeBlock("left_sidebar:layout");
+        $this->addBlock($leftSidebar, "left_sidebar:layout");
     }
 
 
     public function getRightSidebar()
     {
-        return $this->getBlock("right_sidebar");
+        return $this->getBlock("right_sidebar:layout");
     }
 
 
     public function setRightSidebar($rightSidebar)
     {
-        $this->removeBlock("right_sidebar");
-        $this->addBlock($rightSidebar, "right_sidebar");
+        $this->removeBlock("right_sidebar:layout");
+        $this->addBlock($rightSidebar, "right_sidebar:layout");
     }
 
 
     public function getHeader()
     {
-        return $this->getBlock("header");
+        return $this->getBlock("header:layout");
     }
 
 
     public function setHeader($header)
     {
-        $this->removeBlock("header");
-        $this->addBlock($header, "header");
+        $this->removeBlock("header:layout");
+        $this->addBlock($header, "header:layout");
     }
 
 
     public function getContent()
     {
-        return $this->getBlock("content");
+        return $this->getBlock("content:layout");
     }
 
 
     public function setContent($content)
     {
-        $this->removeBlock("content");
-        $this->addBlock($content, "content");
+        $this->removeBlock("content:layout");
+        $this->addBlock($content, "content:layout");
     }
 
 

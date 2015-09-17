@@ -17,7 +17,7 @@
 
 			foreach ($assets as $id => $asset) {
 				$definition->addMethodCall(
-					'set', array($id, $asset, false)
+					'setAsset', array($id, $asset, false)
 				);
 			}
 		}

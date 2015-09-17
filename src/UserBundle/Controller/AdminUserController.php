@@ -5,56 +5,59 @@
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\DependencyInjection\ContainerInterface;
     use Symfony\Component\HttpFoundation\Request;
+
+    use Uneak\PortoAdminBundle\Blocks\Content\Content;
     use Uneak\PortoAdminBundle\Blocks\Layout\Entity;
     use Uneak\PortoAdminBundle\Blocks\Layout\EntityContentScroll;
     use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
     use Uneak\PortoAdminBundle\Blocks\Progress\ProgressBar;
+    use Uneak\PortoAdminBundle\Blocks\Tabs\Tabs;
     use Uneak\PortoAdminBundle\Blocks\Widget\WidgetStats;
     use Uneak\PortoAdminBundle\Blocks\Widget\WidgetStatus;
+    use Uneak\PortoAdminBundle\Controller\LayoutController;
+    use Uneak\PortoAdminBundle\Controller\LayoutEntityController;
     use Uneak\RoutesManagerBundle\Routes\FlattenRoute;
     use Doctrine\ORM\Query\Expr;
 
-	class AdminClientController extends Controller {
+	class AdminUserController extends LayoutEntityController {
 
-        protected $blockBuilder;
-        protected $layout;
-
-
-        public function setContainer(ContainerInterface $container = null) {
-            parent::setContainer($container);
-            $this->blockBuilder = $this->get("uneak.blocksmanager.builder");
-            $this->blockBuilder->addBlock("layout", "block_main_interface");
-            $this->layout = $this->blockBuilder->getBlock("layout");
-
-//            $this->layout->setLayoutStyle(MainInterface::LAYOUT_STYLE_DEFAULT);
-//            $this->layout->setBackgroundColor(MainInterface::COLOR_DARK);
-//            $this->layout->setHeaderColor(MainInterface::COLOR_DARK);
-//            $this->layout->setSidebarLeftSize(MainInterface::SIDEBAR_LEFT_SIZE_MD);
-        }
-
-        
         public function indexAction(FlattenRoute $route, Request $request)
         {
-
-            $this->layout->setLeftSidebarCollapsed(true);
-
-
-            $layoutLeftSideBar = $this->layout->getLeftSideBar();
-            $layoutContentBody = $this->layout->getContent()->getBody();
-            $layoutContentHeaderBreadcrumb = $this->layout->getContent()->getHeader()->getBreadcrumb();
-            $layoutContentHeaderBreadcrumb->setFlattenRoute($route);
-
-            $entityLayout = new Entity();
-            $layoutContentBody->addBlock($entityLayout);
-            $entitySidebar = $entityLayout->getEntitySidebar();
-            $entityLayoutContent = $entityLayout->getContent();
-            $entityLayoutContentHeader = $entityLayoutContent->getHeader();
+            $content = $this->entityLayout->getContent()->getBody();
 
 
-            $blockManager = $this->get("uneak.blocksmanager.blocks");
-            $menu = $blockManager->getBlock("block_flattenroute_menu")->setFlattenRoute($route);
-            $entitySidebar->addWidget("menu", $menu, false, 999999);
-            $entityLayoutContentHeader->setTitle($route->getMetaData('_label'));
+            $tabs = new Tabs();
+            $tabs->setContext("primary");
+            $tabs->setRight(false);
+            $tabs->setBottom(false);
+            $tabs->setJustified(false);
+            $tabs->setVertical(false);
+
+            $tabs->addTab('user', 'Utilisateur', new Content("<img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
+            $tabs->addTab(null, 'Deux', new Content("Hello<br/><img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
+            $tabs->addTab('user', 'Trois', new Content("<img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"));
+
+
+//            $content->addBlock(new Content("<img src='http://dev.starter.com/uploads/cache/porto_admin_brand_photo/bundles/uneakportoadmin/images/volkswagen_logo.jpg' />"), 'tab');
+            $content->addBlock($tabs, 'tab');
+
+//            $layoutLeftSideBar = $this->layout->getLeftSideBar();
+//            $layoutContentBody = $this->layout->getContent()->getBody();
+
+
+//            $layoutContentHeaderBreadcrumb = $this->layout->getContent()->getHeader()->getBreadcrumb();
+//            $layoutContentHeaderBreadcrumb->setFlattenRoute($route);
+//
+//
+//            $entitySidebar = $this->entityLayout->getEntitySidebar();
+//            $entityLayoutContent = $this->entityLayout->getContent();
+//            $entityLayoutContentHeader = $entityLayoutContent->getHeader();
+//
+//
+//            $blockManager = $this->get("uneak.blocksmanager.blocks");
+//            $menu = $blockManager->getBlock("block_flattenroute_menu")->setFlattenRoute($route);
+//            $entitySidebar->addWidget("menu", $menu, false, 999999);
+//            $entityLayoutContentHeader->setTitle($route->getMetaData('_label'));
 
 
 //            $widgetStats = new WidgetStats();
@@ -74,7 +77,9 @@
 //            $layoutLeftSideBar->addWidget("status", $widgetStatus);
 
 
-            return $this->blockBuilder->render("layout");
+//            return $this->blockBuilder->render("layout");
+
+
         }
 
 
@@ -113,7 +118,7 @@
 
 
 
-            return $this->blockBuilder->render("layout");
+//            return $this->blockBuilder->render("layout");
         }
 
 

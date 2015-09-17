@@ -8,20 +8,26 @@
 {% endblock %}
 
 {% block title %}{% endblock %}
-{% block icon %}{{ asset('bundles/uneakcore/images/favicon.ico') }}{% endblock %}
-
-{% block metas %}
-    {{ parent() }}
-    <meta property="og:title" content="{% block og_title %}{% endblock %}" />
-    <meta property="og:type" content="{% block og_type %}{% endblock %}" />
-    <meta property="og:url" content="{% block og_url %}{% endblock %}" />
-    <meta property="og:image" content="{% block og_image %}{% endblock %}" />
-{% endblock %}
-
+{% block icon %}{{ asset('bundles/app/images/favicon.ico') }}{% endblock %}
 {% block meta_viewport %}width=device-width, initial-scale=1.0{% endblock %}
 {% block meta_keywords %}{% endblock %}
 {% block meta_description %}{% endblock %}
-{% block meta_author %}uneak.fr{% endblock %}
+{% block meta_author %}uneak{% endblock %}
+
+{% block metas %}
+    {{ parent() }}
+    <meta property="og:title" content="{% block og_title %}{{ block("title") }}{% endblock %}" />
+    <meta property="og:site_name" content="{% block og_site_name %}{% endblock %}"/>
+    <meta property="og:type" content="{% block og_type %}{% endblock %}" />
+    <meta property="og:description" content="{% block og_description %}{{ block("meta_description") }}{% endblock %}" />
+    <meta property="og:url" content="{% block og_url %}{% endblock %}" />
+    <meta property="og:image" content="{% block og_image %}{% endblock %}" />
+    <meta property="fb:app_id" content="{% block fb_app_id %}{% endblock %}" />
+    <meta property="og:locale" content="{% block og_locale %}fr_FR{% endblock %}" />
+    <meta property="article:author" content="{% block article_author %}{{ block("meta_author") }}{% endblock %}" />
+    <meta property="article:publisher" content="{% block article_publisher %}{% endblock %}" />
+{% endblock %}
+
 
 {% block content %}{% endblock %}
 

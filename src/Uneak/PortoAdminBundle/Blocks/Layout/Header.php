@@ -20,46 +20,46 @@
 
         public function getBrand()
         {
-            return $this->getBlock("brand");
+            return $this->getBlock("brand:layout");
         }
 
         public function setBrand($brand)
         {
-            $this->removeBlock("brand");
-            $this->addBlock($brand, "brand");
+            $this->removeBlock("brand:layout");
+            $this->addBlock($brand, "brand:layout");
         }
 
         public function getSearch()
         {
-            return $this->getBlock("search");
+            return $this->getBlock("search:layout");
         }
 
         public function setSearch($search)
         {
-            $this->removeBlock("search");
-            $this->addBlock($search, "search");
+            $this->removeBlock("search:layout");
+            $this->addBlock($search, "search:layout");
         }
 
         public function getNotifications()
         {
-            return $this->getBlock("notifications");
+            return $this->getBlock("notifications:layout");
         }
 
         public function setNotifications($notifications)
         {
-            $this->removeBlock("notifications");
-            $this->addBlock($notifications, "notifications");
+            $this->removeBlock("notifications:layout");
+            $this->addBlock($notifications, "notifications:layout");
         }
 
         public function getUser()
         {
-            return $this->getBlock("user");
+            return $this->getBlock("user:layout");
         }
 
         public function setUser($user)
         {
-            $this->removeBlock("user");
-            $this->addBlock($user, "user");
+            $this->removeBlock("user:layout");
+            $this->addBlock($user, "user:layout");
         }
 
 

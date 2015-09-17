@@ -7,7 +7,7 @@ services:
         class: %uneak.admin.user.admin.class%
         arguments: [ user ]
         calls:
-            - [ setController, [ UserBundle\Controller\AdminClientController ] ]
+            - [ setController, [ UserBundle\Controller\AdminUserController ] ]
         tags:
             -  { name: uneak.routesmanager.route }
 

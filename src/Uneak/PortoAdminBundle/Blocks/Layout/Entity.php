@@ -22,35 +22,35 @@ class Entity extends Block
 
     public function setToolbar($toolbar)
     {
-        $this->removeBlock("toolbar_menu");
-        $this->addBlock(array($toolbar, 'block_template_entity_toolbar_menu'), "toolbar_menu");
+        $this->removeBlock("toolbar_menu:layout");
+        $this->addBlock(array($toolbar, 'block_template_entity_toolbar_menu'), "toolbar_menu:layout");
     }
 
     public function getToolbar()
     {
-        return $this->getBlock("toolbar_menu");
+        return $this->getBlock("toolbar_menu:layout");
     }
 
 
     public function setEntitySidebar($entitySidebar)
     {
-        $this->removeBlock("entity_sidebar");
-        $this->addBlock($entitySidebar, "entity_sidebar");
+        $this->removeBlock("entity_sidebar:layout");
+        $this->addBlock($entitySidebar, "entity_sidebar:layout");
     }
 
     public function getEntitySidebar()
     {
-        return $this->getBlock("entity_sidebar");
+        return $this->getBlock("entity_sidebar:layout");
     }
 
     public function setContent($content)
     {
-        $this->removeBlock("content");
-        $this->addBlock($content, "content");
+        $this->removeBlock("content:layout");
+        $this->addBlock($content, "content:layout");
     }
 
     public function getContent() {
-        return $this->getBlock("content");
+        return $this->getBlock("content:layout");
     }
 
 

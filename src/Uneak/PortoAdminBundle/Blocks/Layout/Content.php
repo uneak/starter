@@ -17,27 +17,27 @@
 
         public function getHeader()
         {
-            return $this->getBlock("header");
+            return $this->getBlock("header:layout");
         }
 
         public function setHeader($header)
         {
-            $this->removeBlock("header");
-            $this->addBlock($header, "header");
+            $this->removeBlock("header:layout");
+            $this->addBlock($header, "header:layout");
             return $this;
         }
 
 
         public function getBody()
         {
-            return $this->getBlock("body");
+            return $this->getBlock("body:layout");
         }
 
 
         public function setBody($body)
         {
-            $this->removeBlock("body");
-            $this->addBlock($body, "body");
+            $this->removeBlock("body:layout");
+            $this->addBlock($body, "body:layout");
         }
 
 

@@ -2,7 +2,6 @@
 
 	namespace Uneak\PortoAdminBundle\Blocks\Accordion;
 
-	use Uneak\BlocksManagerBundle\Blocks\Block;
     use Uneak\BlocksManagerBundle\Blocks\BlockInterface;
     use Uneak\PortoAdminBundle\Blocks\Block;
 

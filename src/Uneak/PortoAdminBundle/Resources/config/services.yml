@@ -1,6 +1,7 @@
 
 parameters:
     knp_menu.voter.uri.class: Uneak\PortoAdminBundle\Menu\Matcher\Voter\UriVoter
+    uneak.portoadmin.layout.controller.listener.class: Uneak\PortoAdminBundle\EventListener\LayoutControllerListener
 
 
 services:
@@ -8,3 +9,14 @@ services:
         class: %knp_menu.voter.uri.class%
         tags:
             - { name: knp_menu.voter, request: true }
+
+
+    uneak.portoadmin.layout.controller.listener:
+        class: %uneak.portoadmin.layout.controller.listener.class%
+        arguments:
+            - @router
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+            - { name: kernel.event_listener, event: kernel.view, method: onKernelView }
+
+

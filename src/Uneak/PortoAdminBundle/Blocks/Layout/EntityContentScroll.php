@@ -17,14 +17,14 @@
 
         public function setBody($body)
         {
-            $this->removeBlock("body");
-            $this->addBlock($body, "body");
+            $this->removeBlock("body:layout");
+            $this->addBlock($body, "body:layout");
         }
 
 
         public function getBody()
         {
-            return $this->getBlock("body");
+            return $this->getBlock("body:layout");
         }
 
         /**

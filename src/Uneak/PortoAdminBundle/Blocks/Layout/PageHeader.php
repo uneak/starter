@@ -18,13 +18,13 @@
 
         public function getBreadcrumb()
         {
-            return $this->getBlock("breadcrumb");
+            return $this->getBlock("breadcrumb:layout");
         }
 
         public function setBreadcrumb($breadcrumb)
         {
-            $this->removeBlock("breadcrumb");
-            $this->addBlock($breadcrumb, "breadcrumb");
+            $this->removeBlock("breadcrumb:layout");
+            $this->addBlock($breadcrumb, "breadcrumb:layout");
         }
 
 
