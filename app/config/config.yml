@@ -13,6 +13,12 @@ parameters:
 
 uneak_assets_manager:
 
+
+    porto_admin_uielements_tabs_css:
+        type: externalcss
+        config:
+            href: "css/porto_admin/ui-elements/tabs.css"
+
     porto_admin_entity_scroll_css:
         type: externalcss
         config:
@@ -137,6 +143,13 @@ assetic:
         #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
 
     assets:
+
+        porto_admin_uielements_tabs__css:
+            inputs:
+                - %kernel.root_dir%/Resources/sass/porto_admin/modules/ui-elements/tabs.scss
+            filters:
+                - sass
+            output: css/porto_admin/ui-elements/tabs.css
 
         porto_admin_entity__css:
             inputs:

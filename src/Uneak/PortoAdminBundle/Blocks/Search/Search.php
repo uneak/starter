@@ -8,6 +8,7 @@
         protected $templateAlias = "block_template_search";
 
 		protected $link;
+		protected $inputName;
 
 		public function __construct($link = null) {
             parent::__construct();
@@ -27,6 +28,21 @@
 		public function setLink($link) {
 			$this->link = $link;
 		}
+
+		/**
+		 * @return mixed
+		 */
+		public function getInputName() {
+			return $this->inputName;
+		}
+
+		/**
+		 * @param mixed $inputName
+		 */
+		public function setInputName($inputName) {
+			$this->inputName = $inputName;
+		}
+
 
 
 

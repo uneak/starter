@@ -104,43 +104,6 @@
     position: static !important;
   }
 
-  li {
-    border: {
-      bottom: 1px solid lighten($color-light-grey, 3%);
-    }
-    height: 50px;
-    line-height: 50px;
-    padding: 0 40px;
-    position: relative;
-
-    @media only screen and (max-width: 767px) {
-      height: 75px;
-      padding: 0 20px;
-    }
-
-    a {
-      color: #777;
-    }
-
-    &:hover {
-      background: #FAFAFA;
-    }
-
-    &.unread {
-      a {
-        color: #555;
-        font-weight: 500;
-      }
-    }
-
-    &.active {
-      background: $color-primary;
-      a {
-        color: $color-primary-inverse;
-      }
-    }
-  }
-
 }
 
 /* Entity Mail List - Unstyle nano for non fixed layouts and responsive */

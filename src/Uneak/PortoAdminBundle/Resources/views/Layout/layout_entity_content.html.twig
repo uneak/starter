@@ -1,7 +1,21 @@
-{{ renderBlock(header) }}
+<header class="entity-header">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="entity-title text-weight-light m-none">{{ title }}</h1>
+        </div>
+        <div class="col-sm-6">
+            <div class="entity-header-widgets">
+                {% for widget in widgets %}
+                    {{ renderBlock(widget) }}
+                    {% if not loop.last %}<span class="separator"></span>{% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</header>
 
 {% if actions.root %}
-    <div class="menu-actions">
+    <div class="menu-actions pt-lg pb-lg">
         {{ renderBlock(actions) }}
     </div>
 {% endif %}

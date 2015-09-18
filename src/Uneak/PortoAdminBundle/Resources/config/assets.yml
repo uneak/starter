@@ -13,18 +13,21 @@ porto_admin_theme_css:
     config:
         href: "bundles/uneakportoadmin/css/theme.css"
         dependencies: [ "bootstrap_css", "porto_admin_fonts_css", "font_awesome_css" ]
+        category: "AssetExternalCss_theme"
 
 porto_admin_skins_default_css:
     type: externalcss
     config:
         href: "bundles/uneakportoadmin/css/skins/default.css"
         dependencies: [ "porto_admin_theme_css" ]
+        category: "AssetExternalCss_theme"
 
 porto_admin_theme_custom_css:
     type: externalcss
     config:
         href: "bundles/uneakportoadmin/css/theme-custom.css"
         dependencies: [ "porto_admin_skins_default_css" ]
+        category: "AssetExternalCss_theme"
 
 #porto_admin_theme_admin_extension_css:
 #    type: externalcss
@@ -105,6 +108,26 @@ owl_carousel_theme_css:
     config:
         href: "vendor/owl-carousel/owl-carousel/owl.theme.css"
         dependencies: [ "owl_carousel_css" ]
+
+datatable_bs3_css:
+    type: externalcss
+    config:
+        href: "vendor/datatables-bs3/BS3/assets/css/datatables.css"
+
+datatable_js:
+    type: externaljs
+    config:
+        src: "vendor/datatables/media/js/jquery.dataTables.js"
+        dependencies: [ "jquery_js" ]
+
+datatable_bs3_js:
+    type: externaljs
+    config:
+        src: "vendor/datatables-bs3/BS3/assets/js/datatables.js"
+        dependencies: [ "datatable_bs3_css", "datatable_js" ]
+
+
+
 
 
 #

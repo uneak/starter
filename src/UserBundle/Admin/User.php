@@ -47,7 +47,7 @@
 				->setPath('new')
 				->setAction('new')
 				->setMetaData('_icon', 'plus-circle')
-				->setMetaData('_label', 'New');
+				->setMetaData('_label', 'Créer');
 			$this->addChild($newRoute);
 
 

@@ -1,6 +1,6 @@
 <?php
 
-	namespace Uneak\PortoAdminBundle\Blocks\Tabs;
+	namespace Uneak\PortoAdminBundle\Blocks\UIElements;
 
     use Uneak\BlocksManagerBundle\Blocks\BlockInterface;
     use Uneak\PortoAdminBundle\Blocks\Block;

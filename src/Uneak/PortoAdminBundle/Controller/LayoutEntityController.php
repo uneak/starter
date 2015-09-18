@@ -4,27 +4,32 @@
 
     use Symfony\Component\DependencyInjection\ContainerInterface;
     use Uneak\PortoAdminBundle\Blocks\Layout\Entity;
+    use Uneak\PortoAdminBundle\Blocks\Layout\EntityContent;
     use Uneak\RoutesManagerBundle\Routes\FlattenRoute;
 
 
     class LayoutEntityController extends LayoutController {
 
         protected $entityLayout;
+        protected $entityLayoutContent;
+        protected $entityLayoutContentBody;
+        protected $entityLayoutSidebar;
+        protected $entityLayoutToolbar;
+        protected $entityLayoutContentActions;
 
         public function setRoute(FlattenRoute $route) {
 
-            $layoutContentHeaderBreadcrumb = $this->layout->getContent()->getHeader()->getBreadcrumb();
-            $layoutContentHeaderBreadcrumb->setFlattenRoute($route);
+            $crudRoute = $route->getCRUD();
+
+//            $this->breadcrumb->setFlattenRoute($route);
 
             $blockManager = $this->get("uneak.blocksmanager.blocks");
             $menu = $blockManager->getBlock("block_flattenroute_menu")->setFlattenRoute($route);
+            $this->entityLayoutSidebar->addWidget("menu", $menu, false, 999999);
 
-            $entitySidebar = $this->entityLayout->getEntitySidebar();
-            $entitySidebar->addWidget("menu", $menu, false, 999999);
-
-            $entityLayoutContentHeader = $this->entityLayout->getContent()->getHeader();
-            $entityLayoutContentHeader->setTitle($route->getMetaData('_label'));
-
+//            $this->entityLayoutContent->setTemplateType(EntityContent::TEMPLATE_TYPE_SCROLL);
+            $this->entityLayoutContent->setTitle($crudRoute->getMetaData('_label'));
+            $this->entityLayoutContent->setSubtitle($route->getMetaData('_label'));
 
         }
 
@@ -33,9 +38,22 @@
             parent::setContainer($container);
             $this->layout->setLeftSidebarCollapsed(true);
 
-            $layoutContentBody = $this->layout->getContent()->getBody();
+            $this->layoutHeader = $this->layout->getHeader();
+            $this->layoutContent = $this->layout->getContent();
+            $this->layoutContentBody = $this->layoutContent->getBody();
+            $this->layoutContentHeader = $this->layoutContent->getHeader();
+            $this->layoutLeftSidebar = $this->layout->getLeftSidebar();
+            $this->layoutRightSidebar = $this->layout->getRightSidebar();
+
             $this->entityLayout = new Entity();
-            $layoutContentBody->addBlock($this->entityLayout);
+            $this->entityLayoutContent = $this->entityLayout->getContent();
+            $this->entityLayoutContentBody = $this->entityLayoutContent->getBody();
+            $this->entityLayoutContentActions = $this->entityLayoutContent->getActions();
+            $this->entityLayoutSidebar = $this->entityLayout->getEntitySidebar();
+            $this->entityLayoutToolbar = $this->entityLayout->getToolbar();
+
+
+            $this->layoutContentBody->addBlock($this->entityLayout);
 
         }
 

@@ -18,6 +18,8 @@ knp_entity_toolbar_menu_template: "UneakPortoAdminBundle:KnpMenu:entity_toolbar_
 block_notification_template: "UneakPortoAdminBundle:Block:notification.html.twig"
 block_notifications_template: "UneakPortoAdminBundle:Block:notifications.html.twig"
 
+block_form_template: "UneakPortoAdminBundle:Block:Form/form.html.twig"
+
 
 block_progress_bar_notification_template: "UneakPortoAdminBundle:Block:progress_bar_notification.html.twig"
 block_message_notification_template: "UneakPortoAdminBundle:Block:message_notification.html.twig"
@@ -41,6 +43,7 @@ block_accordion_template: "UneakPortoAdminBundle:Block:accordion.html.twig"
 block_counter_template: "UneakPortoAdminBundle:Block:counter.html.twig"
 block_teaser_template: "UneakPortoAdminBundle:Block:teaser.html.twig"
 block_user_badge_template: "UneakPortoAdminBundle:Block:user_badge.html.twig"
+block_datatable_template: "UneakPortoAdminBundle:Block:datatable.html.twig"
 
 
 # LAYOUT
@@ -53,7 +56,6 @@ layout_page_body_template: "UneakPortoAdminBundle:Layout:layout_page_body.html.t
 layout_page_header_template: "UneakPortoAdminBundle:Layout:layout_page_header.html.twig"
 layout_entity_template: "UneakPortoAdminBundle:Layout:layout_entity.html.twig"
 layout_entity_sidebar_template: "UneakPortoAdminBundle:Layout:layout_entity_sidebar.html.twig"
-layout_entity_header_template: "UneakPortoAdminBundle:Layout:layout_entity_header.html.twig"
 layout_entity_content_template: "UneakPortoAdminBundle:Layout:layout_entity_content.html.twig"
 layout_entity_content_scroll_template: "UneakPortoAdminBundle:Layout:layout_entity_content_scroll.html.twig"
 
@@ -62,4 +64,5 @@ layout_entity_content_scroll_template: "UneakPortoAdminBundle:Layout:layout_enti
 porto_admin_scrollable_script_template: "UneakPortoAdminBundle:Script:script_scrollable.html.twig"
 porto_admin_sidebar_widget_wrapper_script_template: "UneakPortoAdminBundle:Script:script_widget_wrapper.html.twig"
 porto_admin_sidebar_toggle_script_template: "UneakPortoAdminBundle:Script:script_sidebar_toggle.html.twig"
+porto_admin_datatable_script_template: "UneakPortoAdminBundle:Script:script_datatable.html.twig"
 

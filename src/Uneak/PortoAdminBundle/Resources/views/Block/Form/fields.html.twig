@@ -1,0 +1,105 @@
+{% block menuitem_selector_row -%}
+	<div class="form-group">
+		{{- form_label(form) -}}
+		{{- form_errors(form) -}}
+		{{- form_widget(form) -}}
+	</div>
+{%- endblock menuitem_selector_row %}
+
+{% block menuitem_selector_widget -%}
+
+	<div id="{{ container }}" class="menuitem-selector-container clearfix">
+		<span class="menuitem-selector-form-field">
+			{% set type = type|default('hidden') %}
+			{{- block('form_widget_simple') -}}
+		</span>
+		<ul id="{{ menu }}" class="nav navbar-nav navbar-default" style="border: 1px solid #ccc;">
+			{% for menu in menus %}
+				{% if (menu.list) %}
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">{% if (menu.selected is null) %}...{% else %}{{ menu.list[menu.selected] }}{% endif %} <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							{% for key, value in menu.list %}
+								<li{% if (menu.selected == key) %} class="active"{% endif %}><a class="menu-item-selector-item" href="#" data-name="{{ key }}">{{ value }}</a></li>
+								{% endfor %}
+						</ul>
+					</li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+	</div>
+
+	{% autoescape false %}
+
+		<script type="text/javascript">
+
+			$(document).on("ready", function() {
+
+				function refresh_menuitem_selector_{{ id }}(id) {
+
+					$.ajax({
+						type: "POST",
+						url: "{{ path('uneak_admin_menuitem_selectors') }}",
+						data: {"id": id},
+						dataType: 'json'
+					}).done(function(json) {
+						$(".menu-item-selector-item").unbind();
+						$("#{{ container }} .menuitem-search-btn").unbind();
+
+						var menu = $('#{{ menu }}');
+
+						menu.empty();
+						var element = "";
+
+						json.forEach(function(el_menu) {
+
+							element += "<li class='dropdown sonata-actions'>";
+							element += "<a href='#' class='dropdown-toggle' data-toggle='dropdown'>";
+							if (!el_menu.selected) {
+								element += "...";
+							} else {
+								element += el_menu.list[el_menu.selected];
+							}
+							element += " <span class='caret'></span>";
+							element += "</a>";
+
+
+							element += "<ul class='dropdown-menu' role='menu'>";
+
+							for (var key in el_menu.list) {
+								if (el_menu.selected == key) {
+									element += "<li class='active'>";
+								} else {
+									element += "<li>";
+								}
+								element += "<a class='menu-item-selector-item' href='#' data-id='" + key + "'>" + el_menu.list[key] + "</a>";
+								element += "</li>";
+							}
+
+							element += "</ul>";
+							element += "</li>";
+
+						});
+						menu.html(element);
+
+
+						$('.menu-item-selector-item').on("click", function(e) {
+							e.preventDefault();
+							var id = $(this).data("id");
+							$("#{{ id }}").val(id);
+							refresh_menuitem_selector_{{ id }}(id);
+						});
+
+					});
+				}
+
+				refresh_menuitem_selector_{{ id }}($('#{{ id }}').val());
+
+			});
+		</script>
+
+	{% endautoescape %}
+
+
+	{%- endblock menuitem_selector_widget -%}
+

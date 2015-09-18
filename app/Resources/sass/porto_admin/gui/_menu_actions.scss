@@ -70,3 +70,64 @@ html.dark {
   }
 
 }
+
+
+
+
+// MENU ACTIONS
+// -----------------------------------------------------------------------------
+/* menu - actions */
+.menu-bullets {
+
+  ul {
+    a.item-action {
+      background: #FFF;
+      border-radius: 100px;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+      color: #B4BBC1;
+      display: inline-block;
+      @include font-size(14);
+      height: 30px;
+      @include line-height(30);
+      position: relative;
+      width: 30px;
+      text-align: center;
+
+      @include transition-property(color);
+      @include transition-duration(.3s);
+      @include transition-timing-function(cubic-bezier(.2, .6, .25, 1));
+      @include transition-delay(.1s);
+
+      &:hover {
+        color: #57636C;
+        text-decoration: none;
+      }
+
+      @each $state in $states {
+        &.text-#{nth($state,1)} {
+          &:hover {
+            color: darken(nth($state, 2), 10%) !important;
+          }
+        }
+      }
+
+    }
+  }
+}
+
+// DARK
+// -----------------------------------------------------------------------------
+/* dark */
+html.dark {
+
+  .menu-bullets {
+    border-top-color: lighten($dark-bg, 5%);
+
+    ul {
+      a.item-action {
+        background: $dark-color-4;
+      }
+    }
+  }
+
+}

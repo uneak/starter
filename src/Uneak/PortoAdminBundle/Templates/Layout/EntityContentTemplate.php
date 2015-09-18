@@ -23,7 +23,12 @@
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
             parent::buildOptions($templatesManager, $block, $options);
-			$options['header'] = $block->getHeader();
+			$options['title'] = $block->getTitle();
+			$options['subtitle'] = $block->getSubtitle();
+
+			$widgets = $block->getWidgets();
+			$options['widgets'] = $widgets;
+
             $options['actions'] = $block->getActions();
 			$options['body'] = $block->getBody();
 		}

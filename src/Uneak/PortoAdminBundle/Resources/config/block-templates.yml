@@ -6,6 +6,8 @@ parameters:
     uneak.portoadmin.entitymenu.template.class: Uneak\PortoAdminBundle\Templates\Menu\EntityMenuTemplate
     uneak.portoadmin.entity.toolbarmenu.template.class: Uneak\PortoAdminBundle\Templates\Menu\EntityToolbarMenuTemplate
 
+    uneak.portoadmin.datatable.template.class: Uneak\PortoAdminBundle\Templates\Datatable\DatatableTemplate
+
     uneak.portoadmin.user.template.class: Uneak\PortoAdminBundle\Templates\User\UserTemplate
     uneak.portoadmin.breadcrumb.template.class: Uneak\PortoAdminBundle\Templates\Breadcrumb\BreadcrumbTemplate
 
@@ -31,7 +33,7 @@ parameters:
     uneak.portoadmin.panel.template.class: Uneak\PortoAdminBundle\Templates\Panel\PanelTemplate
     uneak.portoadmin.carousel.template.class: Uneak\PortoAdminBundle\Templates\Carousel\CarouselTemplate
     uneak.portoadmin.content.template.class: Uneak\PortoAdminBundle\Templates\Content\ContentTemplate
-    uneak.portoadmin.tabs.template.class: Uneak\PortoAdminBundle\Templates\Tabs\TabsTemplate
+    uneak.portoadmin.tabs.template.class: Uneak\PortoAdminBundle\Templates\UIElements\TabsTemplate
     uneak.portoadmin.accordion.template.class: Uneak\PortoAdminBundle\Templates\Accordion\AccordionTemplate
     uneak.portoadmin.counter.template.class: Uneak\PortoAdminBundle\Templates\Counter\CounterTemplate
     uneak.portoadmin.teaser.template.class: Uneak\PortoAdminBundle\Templates\Teaser\TeaserTemplate
@@ -48,12 +50,23 @@ parameters:
 
     uneak.portoadmin.layout.entity.template.class: Uneak\PortoAdminBundle\Templates\Layout\EntityTemplate
     uneak.portoadmin.layout.entity.sidebar.template.class: Uneak\PortoAdminBundle\Templates\Layout\EntitySidebarTemplate
-    uneak.portoadmin.layout.entity.header.template.class: Uneak\PortoAdminBundle\Templates\Layout\EntityHeaderTemplate
     uneak.portoadmin.layout.entity.content.template.class: Uneak\PortoAdminBundle\Templates\Layout\EntityContentTemplate
-
     uneak.portoadmin.layout.entity.content.scroll.template.class: Uneak\PortoAdminBundle\Templates\Layout\EntityContentScrollTemplate
 
+    uneak.portoadmin.form.template.class: Uneak\PortoAdminBundle\Templates\Form\FormTemplate
+
 services:
+
+    uneak.portoadmin.form.template:
+        class: %uneak.portoadmin.form.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_form }
+
+    uneak.portoadmin.datatable.template:
+        class: %uneak.portoadmin.datatable.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_datatable }
+
     uneak.portoadmin.menu.template:
         class: %uneak.portoadmin.menu.template.class%
         tags:
@@ -238,11 +251,6 @@ services:
         class: %uneak.portoadmin.layout.entity.sidebar.template.class%
         tags:
             - { name: uneak.blocksmanager.template, alias: layout_template_entity_sidebar }
-
-    uneak.portoadmin.layout.entity.header.template:
-        class: %uneak.portoadmin.layout.entity.header.template.class%
-        tags:
-            - { name: uneak.blocksmanager.template, alias: layout_template_entity_header }
 
     uneak.portoadmin.layout.entity.content.template:
         class: %uneak.portoadmin.layout.entity.content.template.class%

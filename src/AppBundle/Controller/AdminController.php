@@ -17,7 +17,7 @@
 	use Uneak\PortoAdminBundle\Blocks\Panel\Panel;
 	use Uneak\PortoAdminBundle\Blocks\Progress\ProgressBar;
     use Uneak\PortoAdminBundle\Blocks\Search\Search;
-    use Uneak\PortoAdminBundle\Blocks\Tabs\Tabs;
+    use Uneak\PortoAdminBundle\Blocks\UIElements\Tabs;
     use Uneak\PortoAdminBundle\Blocks\Teaser\Teaser;
     use Uneak\PortoAdminBundle\Blocks\User\UserBadge;
     use Uneak\PortoAdminBundle\Blocks\Widget\WidgetStats;

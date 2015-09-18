@@ -1,31 +1,30 @@
 <?php
 
-	namespace Uneak\PortoAdminBundle\Templates\Layout;
+	namespace Uneak\PortoAdminBundle\Templates\UIElements;
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
-	use Uneak\BlocksManagerBundle\Blocks\BlockInterface;
 	use Uneak\PortoAdminBundle\Templates\BlockTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
-	class EntityHeaderTemplate extends BlockTemplate {
+	class TabsTemplate extends BlockTemplate {
 
 		public function buildAsset(AssetsBuilderManager $builder, $parameters) {
+			$builder->add('porto_admin_uielements_tabs_css');
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
             parent::buildOptions($templatesManager, $block, $options);
-			$options['title'] = $block->getTitle();
-
-            $widgets = $block->getWidgets();
-//            foreach ($widgets as $widget) {
-//                $widget->addClass(CssClasses::m_none);
-//            }
-            $options['widgets'] = $widgets;
+			$options['context'] = $block->getContext();
+			$options['justified'] = $block->isJustified();
+			$options['bottom'] = $block->isBottom();
+			$options['right'] = $block->isRight();
+			$options['vertical'] = $block->isVertical();
+			$options['tabs'] = $block->getTabs();
 
 		}
 
 		public function getRenderTemplate() {
-			return 'layout_entity_header_template';
+			return 'block_tabs_template';
 		}
 
 	}

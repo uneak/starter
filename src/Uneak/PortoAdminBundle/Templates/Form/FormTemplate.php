@@ -1,31 +1,28 @@
 <?php
 
-	namespace Uneak\PortoAdminBundle\Templates\Layout;
+	namespace Uneak\PortoAdminBundle\Templates\Form;
 
 	use Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager;
 	use Uneak\PortoAdminBundle\Templates\BlockTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
-	class EntityContentScrollTemplate extends BlockTemplate {
+
+
+	class FormTemplate extends BlockTemplate {
 
 		public function buildAsset(AssetsBuilderManager $builder, $parameters) {
-            $builder
-                ->add('porto_admin_entity_scroll_css')
-            ;
+
 		}
 
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
             parent::buildOptions($templatesManager, $block, $options);
-			$options['title'] = $block->getTitle();
-			$options['subtitle'] = $block->getSubtitle();
 
-			$widgets = $block->getWidgets();
-			$options['widgets'] = $widgets;
-			$options['body'] = $block->getBody();
+			$options['form'] = $block->getForm();
+
 		}
 
 		public function getRenderTemplate() {
-			return 'layout_entity_content_scroll_template';
+			return 'block_form_template';
 		}
 
 	}

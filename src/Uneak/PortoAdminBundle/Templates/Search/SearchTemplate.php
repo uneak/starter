@@ -22,6 +22,7 @@
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
             parent::buildOptions($templatesManager, $block, $options);
 			$options['link'] = $block->getLink();
+			$options['input_name'] = $block->getInputName();
 
 		}
 

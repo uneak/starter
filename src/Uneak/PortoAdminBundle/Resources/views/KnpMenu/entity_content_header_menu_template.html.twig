@@ -4,7 +4,8 @@
 {% block root %}
     {% set listAttributes = item.childrenAttributes %}
     {% import 'knp_menu.html.twig' as knp_menu %}
-    <ul class="list-unstyled m-none pt-lg pb-lg">
+    <ul class="list-unstyled m-none">
+        {#pt-lg pb-lg#}
         {{ block('children') }}
     </ul>
 {% endblock %}
@@ -38,10 +39,28 @@
 {% endblock %}
 
 {% block linkElement %}
+    {% import 'knp_menu.html.twig' as knp_menu %}
+
+
     {% if item.level <= 1 %}
-        <a href="{% if item.uri is not empty %}{{ item.uri }}{% else %}#{% endif %}" class="item-action{% if item.getExtra('icon') is not null %} fa fa-{{ item.getExtra('icon') }}{% endif %}{% if item.getExtra('context') is not null %} text-{{ item.getExtra('context') }}{% endif %} dropdown-toggle" data-toggle="dropdown" alt="{{ item.label }}"></a>
+
+        {%- set classes = item.linkAttributes('class') is not empty ? [item.linkAttributes('class')] : [] %}
+        {%- set classes = classes|merge(["item-action dropdown-toggle"])  %}
+        {% if item.getExtra('icon') is not null %}
+            {%- set classes = classes|merge(["fa fa-" ~ item.getExtra('icon') ])  %}
+        {% endif %}
+        {% if item.getExtra('context') is not null %}
+            {%- set classes = classes|merge(["text-" ~ item.getExtra('context') ])  %}
+        {% endif %}
+        {%- set linkAttributes = item.linkAttributes %}
+        {%- set linkAttributes = linkAttributes|merge({'class': classes|join(' ')}) %}
+
+        {%- set linkAttributes = linkAttributes|merge({'data-toggle': 'dropdown'}) %}
+        {%- set linkAttributes = linkAttributes|merge({'alt': item.label}) %}
+
+        <a href="{% if item.uri is not empty %}{{ item.uri }}{% else %}#{% endif %}"{{ knp_menu.attributes(linkAttributes) }}></a>
     {% else %}
-        <a href="{% if item.uri is not empty %}{{ item.uri }}{% else %}#{% endif %}">{{ block('label') }}</a>
+        <a href="{% if item.uri is not empty %}{{ item.uri }}{% else %}#{% endif %}"{{ knp_menu.attributes(item.linkAttributes) }}>{{ block('label') }}</a>
     {% endif %}
 {% endblock %}
 
