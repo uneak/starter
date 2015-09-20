@@ -7,7 +7,7 @@
 	use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 	use Symfony\Component\Validator\Constraints\Collection;
 
-	class UserType extends AbstractType {
+	class UserNewType extends AbstractType {
 		/**
 		 * @param FormBuilderInterface $builder
 		 * @param array                $options
@@ -44,6 +44,13 @@
 
                 ))
 
+                ->add('plain_password', 'repeated', array(
+                    'type' => 'password',
+                    'invalid_message' => 'Les mots de passe doivent correspondre',
+                    'options' => array('required' => true),
+                    'first_options'  => array('label' => 'Mot de passe'),
+                    'second_options' => array('label' => 'Mot de passe (validation)'),
+                ))
 
                 ->add('enabled', null, array(
 					'label' => "Activé",

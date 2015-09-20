@@ -1,0 +1,66 @@
+{% extends 'knp_menu.html.twig' %}
+
+
+{% block root %}
+    {% set listAttributes = item.childrenAttributes %}
+    {% import 'knp_menu.html.twig' as knp_menu %}
+    <ul class="list-unstyled m-none">
+        {#pt-lg pb-lg#}
+        {{ block('children') }}
+    </ul>
+{% endblock %}
+
+
+{% block list %}
+    {% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
+        {% import 'knp_menu.html.twig' as knp_menu %}
+        <ul class="dropdown-menu" role="menu">
+            {{ block('children') }}
+        </ul>
+    {% endif %}
+{% endblock %}
+
+
+{% block item %}
+    {% if item.displayed %}
+
+        {% import 'knp_menu.html.twig' as knp_menu %}
+
+        <li class="ib{% if not item.actsLikeLast %} mr-sm{% endif %}">
+
+            {#{%- if item.uri is not empty and (not matcher.isCurrent(item) or options.currentAsLink) %}#}
+                {{ block('linkElement') }}
+            {#{%- endif %}#}
+            {{ block('list') }}
+
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block linkElement %}
+    {% import 'knp_menu.html.twig' as knp_menu %}
+
+
+
+        {%- set classes = item.linkAttributes('class') is not empty ? [item.linkAttributes('class')] : [] %}
+        {%- set classes = classes|merge(["item-action"])  %}
+        {% if item.getExtra('icon') is not null %}
+            {%- set classes = classes|merge(["fa fa-" ~ item.getExtra('icon') ])  %}
+        {% endif %}
+        {% if item.getExtra('context') is not null %}
+            {%- set classes = classes|merge(["text-" ~ item.getExtra('context') ])  %}
+        {% endif %}
+        {%- set linkAttributes = item.linkAttributes %}
+        {%- set linkAttributes = linkAttributes|merge({'class': classes|join(' ')}) %}
+
+        {%- set linkAttributes = linkAttributes|merge({'alt': item.label}) %}
+
+        <a href="{% if item.uri is not empty %}{{ item.uri }}{% else %}#{% endif %}"{{ knp_menu.attributes(linkAttributes) }}></a>
+
+{% endblock %}
+
+{% block label %}
+    {% if item.getExtra('badge') is not null %}<span class="pull-right label label-{{ item.getExtra('badge_context', 'primary') }}">{{ item.getExtra('badge') }}</span>{% endif %}
+    {% if item.getExtra('icon') is not null %}<i class="fa fa-{{ item.getExtra('icon') }}{% if item.getExtra('context') is not null %} text-{{ item.getExtra('context') }}{% endif %}" aria-hidden="true"></i>{% endif %}
+    <span class="{% if item.getExtra('context') is not null %} text-{{ item.getExtra('context') }}{% endif %}">{% if options.allow_safe_labels and item.getExtra('safe_label', false) %}{{ item.label|raw }}{% else %}{{ item.label }}{% endif %}</span>
+{% endblock %}

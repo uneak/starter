@@ -7,7 +7,10 @@
     use Gedmo\Timestampable\Traits\TimestampableEntity;
     use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 	use Symfony\Component\HttpFoundation\File\File;
-	use Vich\UploaderBundle\Mapping\Annotation as Vich;
+    use Symfony\Component\Validator\Constraints\Email;
+    use Symfony\Component\Validator\Constraints\Length;
+    use Symfony\Component\Validator\Constraints\NotBlank;
+    use Vich\UploaderBundle\Mapping\Annotation as Vich;
 	use Gedmo\Mapping\Annotation as Gedmo;
 
 
@@ -37,15 +40,45 @@
          */
         use TimestampableEntity;
 
+        /**
+         * @ORM\Column(name="gender", type="string", length=64, nullable=true)
+         */
+        protected $gender;
+
 		/**
 		 * @ORM\Column(name="firstName", type="string", length=64)
+         * @Length(
+         *      min = "2",
+         *      max = "64",
+         *      minMessage = "Votre prénom doit faire au moins {{ limit }} caractères",
+         *      maxMessage = "Votre prénom ne peut pas être plus long que {{ limit }} caractères"
+         * )
+         * @NotBlank()
 		 */
 		protected $firstName;
 
 		/**
 		 * @ORM\Column(name="lastName", type="string", length=64)
+         * @Length(
+         *      min = "2",
+         *      max = "64",
+         *      minMessage = "Votre nom doit faire au moins {{ limit }} caractères",
+         *      maxMessage = "Votre nom ne peut pas être plus long que {{ limit }} caractères"
+         * )
+         * @NotBlank()
 		 */
 		protected $lastName;
+
+
+        /**
+         * @Email(
+         *     message = "'{{ value }}' n'est pas un email valide.",
+         *     checkMX = false
+         * )
+         * @NotBlank()
+         */
+        protected $email;
+
 
         /**
          * @ORM\ManyToMany(targetEntity="UserBundle\Entity\Group")
@@ -82,8 +115,18 @@
 		}
 
 
+        public function getGender() {
+            return $this->gender;
+        }
 
-		/**
+        public function setGender($gender) {
+            $this->gender = $gender;
+            return $this;
+        }
+
+
+
+        /**
 		 * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
 		 * of 'UploadedFile' is injected into this setter to trigger the  update. If this
 		 * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter

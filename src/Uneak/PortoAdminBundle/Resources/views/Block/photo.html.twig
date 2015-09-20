@@ -1,0 +1,5 @@
+{% if photo %}
+<div style="text-align: center;">
+    <img src="{{ asset(photo) | imagine_filter(filter) }}" alt="" class="img-circle" />
+</div>
+{% endif %}

@@ -2,7 +2,7 @@
 	<a href="#" data-toggle="dropdown">
 		<figure class="profile-picture">
             {% if user.image %}
-                {% set userImage = user.image %}
+                {% set userImage = vich_uploader_asset(user, 'imageFile') %}
             {% else %}
                 {% set userImage = "bundles/uneakportoadmin/images/default_avatar.jpg" %}
             {% endif %}

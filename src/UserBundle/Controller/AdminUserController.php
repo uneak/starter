@@ -15,6 +15,7 @@
     use Uneak\PortoAdminBundle\Blocks\Layout\EntityContentScroll;
     use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
     use Uneak\PortoAdminBundle\Blocks\Panel\Panel;
+    use Uneak\PortoAdminBundle\Blocks\Photo\Photo;
     use Uneak\PortoAdminBundle\Blocks\Progress\ProgressBar;
     use Uneak\PortoAdminBundle\Blocks\Search\Search;
     use Uneak\PortoAdminBundle\Blocks\UIElements\Tabs;
@@ -22,6 +23,7 @@
     use Uneak\PortoAdminBundle\Blocks\Widget\WidgetStatus;
     use Uneak\PortoAdminBundle\Controller\LayoutController;
     use Uneak\PortoAdminBundle\Controller\LayoutEntityController;
+    use Uneak\RoutesManagerBundle\Routes\FlattenEntityRoute;
     use Uneak\RoutesManagerBundle\Routes\FlattenRoute;
     use Doctrine\ORM\Query\Expr;
     use UserBundle\Entity\User;
@@ -32,7 +34,6 @@
         public function indexAction(FlattenRoute $route, Request $request)
         {
             $this->entityLayoutContent->setTemplateType(EntityContent::TEMPLATE_TYPE_FIXED);
-
 
             $search = new Search();
             $search->setInputName("datatable_search");
@@ -61,7 +62,6 @@
 
             $this->entityLayoutContentActions->setRoot($root);
 
-
             $gridNested = $route->getNestedRoute();
             $datatable = new Datatable();
             $datatable->setSearchInput('#'.$search->getInputName());
@@ -70,39 +70,62 @@
 
             $this->entityLayoutContentBody->addBlock($datatable, 'datatable');
 
+        }
+
+        public function showAction(FlattenRoute $route, Request $request)
+        {
+            $entityRoute = $route;
+            while($entityRoute && !$entityRoute instanceof FlattenEntityRoute) {
+                $entityRoute = $entityRoute->getParent();
+            }
+
+            $entity = $entityRoute->getParameterSubject();
+
+
+        }
+
+
+        public function editAction(FlattenRoute $route, Request $request)
+        {
+
+            $entityRoute = $route;
+            while($entityRoute && !$entityRoute instanceof FlattenEntityRoute) {
+                $entityRoute = $entityRoute->getParent();
+            }
+
+            $entity = $entityRoute->getParameterSubject();
+            $formType = $route->getFormType();
+
+            $form = $this->createForm($formType, $entity);
+            $form->add('submit', 'submit', array('label' => 'Modifier'));
+
+            if ($request->getMethod() == 'POST') {
+
+                $form->handleRequest($request);
+                if ($form->isValid()) {
+
+                    $userManager = $this->get('fos_user.user_manager');
+                    $userManager->updateUser($entity);
+
+                    return $this->redirect($entityRoute->getChild('show')->getRoutePath());
+                } else {
+                    $this->addFlash('error', 'Votre formulaire est invalide.');
+                }
+            }
 
 
 
+            $formBlock = new Form($form);
+            $formBlock->addClass("form-horizontal");
+            $formBlock->addClass("form-bordered");
 
-
-//            $layoutLeftSideBar = $this->layout->getLeftSideBar();
-//            $layoutContentBody = $this->layout->getContent()->getBody();
-
-
-//            $entitySidebar = $this->entityLayout->getEntitySidebar();
-//            $entityLayoutContent = $this->entityLayout->getContent();
-//            $entityLayoutContentHeader = $entityLayoutContent->getHeader();
-
-
-
-//            $widgetStats = new WidgetStats();
-//            $widgetStats->addProgress(new ProgressBar("title", "25%", 25));
-//            $widgetStats->addProgress(new ProgressBar("title", "35%", 35));
-//            $widgetStats->addProgress(new ProgressBar("title", "10 ventes", 68));
-//
-//            $this->entityLayoutSidebar->addWidget("stats", $widgetStats);
-//
-//
-//            $widgetStatus = new WidgetStatus();
-//            $widgetStatus->addStatus("title 1", "#", WidgetStatus::COLOR_GREEN);
-//            $widgetStatus->addStatus("title 2", "#", WidgetStatus::COLOR_ORANGE);
-//            $widgetStatus->addStatus("title RAID", "#", WidgetStatus::COLOR_RED);
-//
-//            $entityLayout->getEntitySidebar()->addWidget("status", $widgetStatus);
-//            $layoutLeftSideBar->addWidget("status", $widgetStatus);
-
-
-//            return $this->blockBuilder->render("layout");
+            $panel = new Panel();
+            $panel->setTitle($route->getMetaData('_label'));
+            $panel->isCollapsed(false);
+            $panel->isDismiss(false);
+            $panel->isToggle(false);
+            $panel->addBlock($formBlock);
+            $this->entityLayoutContentBody->addBlock($panel, 'form');
 
 
         }
@@ -113,34 +136,32 @@
 
             $this->entityLayoutContent->setTemplateType(EntityContent::TEMPLATE_TYPE_SCROLL);
 
+            $entityClass = $route->getCRUD()->getEntity();
+            $formType = $route->getFormType();
 
+            $entity = new $entityClass();
 
-
-            $user = new User();
-
-            $form = $this->createForm(new UserType(), $user);
-            $form->add('submit', 'submit', array('label' => 'Creer'));
+            $form = $this->createForm($formType, $entity);
+            $form->add('submit', 'submit', array('label' => 'Valider'));
 
             if ($request->getMethod() == 'POST') {
 
-//                $flash = $this->get('braincrafted_bootstrap.flash');
                 $form->handleRequest($request);
                 if ($form->isValid()) {
 
                     $userManager = $this->get('fos_user.user_manager');
-                    $userManager->updateUser($user);
+                    $userManager->updateUser($entity);
 
-                    return $this->redirect($route->getChild('*/subject/show', array('user' => $user->getId()))->getRoutePath());
+                    return $this->redirect($route->getChild('*/subject/show', array($entity->getId()) )->getRoutePath());
                 } else {
-//                    $flash->error('Votre formulaire est invalide.');
+                    $this->addFlash('error', 'Votre formulaire est invalide.');
                 }
             }
 
 
-            $formManager = $this->get("uneak.formsmanager");
-
-            $formBlock = new Form($formManager->createView($form));
-
+            $formBlock = new Form($form);
+            $formBlock->addClass("form-horizontal");
+            $formBlock->addClass("form-bordered");
 
             $panel = new Panel();
             $panel->setTitle($route->getMetaData('_label'));
@@ -150,53 +171,22 @@
             $panel->addBlock($formBlock);
             $this->entityLayoutContentBody->addBlock($panel, 'form');
 
-//            $this->layout->setLeftSidebarCollapsed(true);
-//            $layout->setLayoutStyle(MainInterface::LAYOUT_STYLE_DEFAULT);
-//            $layout->setBackgroundColor(MainInterface::COLOR_DARK);
-//            $layout->setHeaderColor(MainInterface::COLOR_DARK);
-//            $layout->setSidebarLeftSize(MainInterface::SIDEBAR_LEFT_SIZE_MD);
-
-//            $layoutLeftSideBar = $this->layout->getLeftSideBar();
-//            $layoutContentBody = $this->layout->getContent()->getBody();
-//            $layoutContentHeaderBreadcrumb = $this->layout->getContent()->getHeader()->getBreadcrumb();
-//            $layoutContentHeaderBreadcrumb->setFlattenRoute($route);
-//
-//            $entityLayout = new Entity();
-//            $layoutContentBody->addBlock($entityLayout);
-//            $entitySidebar = $entityLayout->getEntitySidebar();
-//
-//            $entityLayoutContent = new EntityContentScroll();
-//            $entityLayout->setContent($entityLayoutContent);
-//
-//
-//            $menuHelper = $this->get("uneak.routesmanager.menu.helper");
-//            $fRouteManager = $this->get("uneak.routesmanager.flattenmanager");
-//
-//            $flattenCrud = $fRouteManager->getFlattenRoute('user');
-//            $menu = new Menu($menuHelper->createMenu($flattenCrud->getMetaData('_menu'), $flattenCrud));
-//            $entitySidebar->addWidget("menu", $menu, false, 9999);
-//
-//            $entityLayoutContent->setTitle($flattenCrud->getMetaData('_label'));
-//            $entityLayoutContent->setSubtitle('From <a href="#">Okler Themes</a> to <a href="#">You</a>, started on July, 05, 2014');
-
-
-
-
-//            return $this->blockBuilder->render("layout");
         }
 
 
 
 
-        public function indexGridAction( FlattenRoute $route, Request $request) {
+        public function indexGridAction(FlattenRoute $route, Request $request) {
+
+            $entityClass = $route->getCRUD()->getEntity();
 
             $gridHelper = $this->get("uneak.routesmanager.grid.helper");
             $menuHelper = $this->get("uneak.routesmanager.menu.helper");
 
             $params = $request->query->all();
-            $gridData = $gridHelper->gridFields($gridHelper->createGridQueryBuilder('UserBundle\Entity\User', $params), $params);
-            $recordsTotal = $gridHelper->gridFieldsCount($gridHelper->createGridQueryBuilder('UserBundle\Entity\User', $params));
-            $recordsFiltered = $gridHelper->gridFieldsCount($gridHelper->createGridQueryBuilder('UserBundle\Entity\User', $params));
+            $gridData = $gridHelper->gridFields($gridHelper->createGridQueryBuilder($entityClass, $params), $params);
+            $recordsTotal = $gridHelper->gridFieldsCount($gridHelper->createGridQueryBuilder($entityClass, $params));
+            $recordsFiltered = $gridHelper->gridFieldsCount($gridHelper->createGridQueryBuilder($entityClass, $params));
 
 
 
@@ -219,10 +209,10 @@
 
 
                 $menu = new Menu();
-                $menu->setTemplateAlias("block_template_entity_content_header_menu");
+                $menu->setTemplateAlias("block_template_grid_actions_menu");
 
                 $rowActions = $route->getParent()->getNestedRoute()->getRowActions();
-                $root = $menuHelper->createMenu($rowActions, $route, array('user' => $row['DT_RowId']));
+                $root = $menuHelper->createMenu($rowActions, $route, array($row['DT_RowId']));
                 $menu->setRoot($root);
 
                 $this->blockBuilder->addBlock("row_actions", $menu);

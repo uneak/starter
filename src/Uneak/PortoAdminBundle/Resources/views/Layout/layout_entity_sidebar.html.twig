@@ -21,15 +21,7 @@
 
             <div class="inner-menu-content">
 
-                <div style="text-align: center;">
-                    {% if photo %}
-                        {% set photoImage = photo %}
-                    {% else %}
-                        {% set photoImage = "bundles/uneakportoadmin/images/default_avatar.jpg" %}
-                    {% endif %}
 
-                    <img src="{{ asset(photoImage) | imagine_filter('porto_admin_entity_photo') }}" alt="" class="img-circle" />
-                </div>
 
                 {#<a href="mailbox-compose.html" class="btn btn-block btn-primary btn-md pt-sm pb-sm text-md">#}
                     {#<i class="fa fa-envelope mr-xs"></i>#}

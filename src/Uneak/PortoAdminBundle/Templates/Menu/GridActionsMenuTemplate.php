@@ -6,7 +6,7 @@
 	use Uneak\BlocksManagerBundle\Blocks\BlockInterface;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
-	class EntityMenuTemplate extends MenuTemplate {
+	class GridActionsMenuTemplate extends MenuTemplate {
 
 		public function buildAsset(AssetsBuilderManager $builder, $parameters) {
 			parent::buildAsset($builder, $parameters);
@@ -27,20 +27,15 @@
 			$parameters = $block->getParameters();
 			$renderer = $block->getRenderer();
 
-            $root->setChildrenAttribute('class', 'list-unstyled mt-none pt-none');
-
-            $options['root'] = $root;
-            $options['parameters'] = array_merge($parameters, array(
-                'template' => $templatesManager->getTemplate('knp_entity_menu_template'),
-                'ancestorClass' => 'active',
-                'currentClass' => 'active',
-            ));
-            $options['renderer'] = $renderer;
-
+			$options['root'] = $root;
+			$options['parameters'] = array_merge($parameters, array(
+				'template' => $templatesManager->getTemplate('knp_grid_actions_menu_template'),
+			));
+			$options['renderer'] = $renderer;
 		}
 
         public function getRenderTemplate() {
-            return 'block_entity_menu_template';
+            return 'block_grid_actions_menu_template';
         }
 
 	}

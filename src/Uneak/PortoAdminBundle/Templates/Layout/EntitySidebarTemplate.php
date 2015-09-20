@@ -32,7 +32,6 @@
             }
             $options['widgets'] = $widgets;
 
-            $options['photo'] = $block->getPhoto();
 		}
 
 		public function getRenderTemplate() {

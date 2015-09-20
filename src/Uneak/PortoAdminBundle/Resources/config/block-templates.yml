@@ -6,7 +6,11 @@ parameters:
     uneak.portoadmin.entitymenu.template.class: Uneak\PortoAdminBundle\Templates\Menu\EntityMenuTemplate
     uneak.portoadmin.entity.toolbarmenu.template.class: Uneak\PortoAdminBundle\Templates\Menu\EntityToolbarMenuTemplate
 
+    uneak.portoadmin.grid.actions.template.class: Uneak\PortoAdminBundle\Templates\Menu\GridActionsMenuTemplate
+
     uneak.portoadmin.datatable.template.class: Uneak\PortoAdminBundle\Templates\Datatable\DatatableTemplate
+
+    uneak.portoadmin.photo.template.class: Uneak\PortoAdminBundle\Templates\Photo\PhotoTemplate
 
     uneak.portoadmin.user.template.class: Uneak\PortoAdminBundle\Templates\User\UserTemplate
     uneak.portoadmin.breadcrumb.template.class: Uneak\PortoAdminBundle\Templates\Breadcrumb\BreadcrumbTemplate
@@ -59,6 +63,8 @@ services:
 
     uneak.portoadmin.form.template:
         class: %uneak.portoadmin.form.template.class%
+        arguments:
+            - @uneak.formsmanager
         tags:
             - { name: uneak.blocksmanager.template, alias: block_template_form }
 
@@ -71,6 +77,11 @@ services:
         class: %uneak.portoadmin.menu.template.class%
         tags:
             - { name: uneak.blocksmanager.template, alias: block_template_menu }
+
+    uneak.portoadmin.grid.actions.template:
+        class: %uneak.portoadmin.grid.actions.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_grid_actions_menu }
 
     uneak.portoadmin.entitymenu.template:
         class: %uneak.portoadmin.entitymenu.template.class%
@@ -96,6 +107,11 @@ services:
         class: %uneak.portoadmin.teaser.template.class%
         tags:
             - { name: uneak.blocksmanager.template, alias: block_template_teaser }
+
+    uneak.portoadmin.photo.template:
+        class: %uneak.portoadmin.photo.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_photo }
 
     uneak.portoadmin.counter.template:
         class: %uneak.portoadmin.counter.template.class%

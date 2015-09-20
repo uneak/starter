@@ -1,0 +1,9 @@
+parameters:
+    uneak.portoadmin.form.type.gender.class: Uneak\PortoAdminBundle\Forms\GenderType
+
+services:
+
+    uneak.portoadmin.form.type.gender:
+        class: %uneak.portoadmin.form.type.gender.class%
+        tags:
+            - { name: form.type, alias: gender }

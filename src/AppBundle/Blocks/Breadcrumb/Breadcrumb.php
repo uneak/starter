@@ -25,7 +25,7 @@
             while (null !== $flattenRoute = $flattenRoute->getParent()) {
                 if ($flattenRoute instanceof FlattenAdminRoute) {
                     $itemFlattenRoute = $flattenRoute->getChild('index');
-                    if ($itemFlattenRoute->isEnabled() && null !== $item = $this->menuHelper->createItem($itemFlattenRoute)) {
+                    if ($itemFlattenRoute && $itemFlattenRoute->isEnabled() && null !== $item = $this->menuHelper->createItem($itemFlattenRoute)) {
                         $item->setExtra('icon', $flattenRoute->getMetaData('_icon'));
                         $item->setLabel($flattenRoute->getMetaData('_label'));
                         $root->addChild($item);

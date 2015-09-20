@@ -26,5 +26,6 @@ class UneakPortoAdminExtension extends Extension
         $loader->load('services.yml');
         $loader->load('block-blocks.yml');
         $loader->load('block-templates.yml');
+        $loader->load('forms.yml');
     }
 }

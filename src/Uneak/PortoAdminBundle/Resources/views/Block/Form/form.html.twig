@@ -1,5 +1,7 @@
-{% form_theme form with ['UneakPortoAdminBundle:Block/Form:fields.html.twig'] %}
+{% form_theme form '@UneakPortoAdmin/Block/Form/porto_theme.html.twig' %}
 
-{{ form_start(form, { 'style': 'horizontal', 'label_col': 3, 'widget_col': 9, 'attr': {'class': 'tasi-form'} }) }}
+{{ form_start(form, { 'attr': {'class': classes, 'novalidate' : 'novalidate'} }) }}
 {{ form_errors(form) }}
+{#{{ form_row(form.username, { 'rounded': false, 'placeholder': true, 'icon': 'fa fa-user', 'attr': {'class': 'foo'} }) }}#}
+
 {{ form_end(form) }}

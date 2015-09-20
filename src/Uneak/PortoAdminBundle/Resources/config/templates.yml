@@ -7,6 +7,8 @@ block_breadcrumb_template: "UneakPortoAdminBundle:Block:menu.html.twig"
 block_entity_toolbar_menu_template: "UneakPortoAdminBundle:Block:menu.html.twig"
 block_entity_menu_template: "UneakPortoAdminBundle:Block:menu.html.twig"
 block_entity_content_header_menu_template: "UneakPortoAdminBundle:Block:menu.html.twig"
+block_grid_actions_menu_template: "UneakPortoAdminBundle:Block:menu.html.twig"
+
 
 knp_user_menu_template: "UneakPortoAdminBundle:KnpMenu:user_menu_template.html.twig"
 knp_main_menu_template: "UneakPortoAdminBundle:KnpMenu:main_menu_template.html.twig"
@@ -14,11 +16,14 @@ knp_entity_content_header_menu_template: "UneakPortoAdminBundle:KnpMenu:entity_c
 knp_breadcrumb_menu_template: "UneakPortoAdminBundle:KnpMenu:breadcrumb_template.html.twig"
 knp_entity_menu_template: "UneakPortoAdminBundle:KnpMenu:entity_template.html.twig"
 knp_entity_toolbar_menu_template: "UneakPortoAdminBundle:KnpMenu:entity_toolbar_template.html.twig"
+knp_grid_actions_menu_template: "UneakPortoAdminBundle:KnpMenu:grid_actions_template.html.twig"
 
 block_notification_template: "UneakPortoAdminBundle:Block:notification.html.twig"
 block_notifications_template: "UneakPortoAdminBundle:Block:notifications.html.twig"
 
 block_form_template: "UneakPortoAdminBundle:Block:Form/form.html.twig"
+
+block_photo_template: "UneakPortoAdminBundle:Block:photo.html.twig"
 
 
 block_progress_bar_notification_template: "UneakPortoAdminBundle:Block:progress_bar_notification.html.twig"
@@ -45,6 +50,9 @@ block_teaser_template: "UneakPortoAdminBundle:Block:teaser.html.twig"
 block_user_badge_template: "UneakPortoAdminBundle:Block:user_badge.html.twig"
 block_datatable_template: "UneakPortoAdminBundle:Block:datatable.html.twig"
 
+
+# FORM
+form_gender_theme_template: "UneakPortoAdminBundle:Form:gender_theme.html.twig"
 
 # LAYOUT
 layout_main_interface_template: "UneakPortoAdminBundle:Layout:layout_main_interface.html.twig"

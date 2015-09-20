@@ -8,7 +8,6 @@
     class EntitySidebar extends Sidebar {
 
         protected $templateAlias = "layout_template_entity_sidebar";
-		protected $photo;
 
         public function __construct() {
             parent::__construct();
@@ -21,20 +20,6 @@
             return parent::addWidget($id, $widget, $wrap, $priority);
         }
 
-        /**
-         * @return mixed
-         */
-        public function getPhoto()
-        {
-            return $this->photo;
-        }
 
-        /**
-         * @param mixed $photo
-         */
-        public function setPhoto($photo)
-        {
-            $this->photo = $photo;
-        }
 
 	}

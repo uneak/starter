@@ -5,6 +5,8 @@
     use Symfony\Component\DependencyInjection\ContainerInterface;
     use Uneak\PortoAdminBundle\Blocks\Layout\Entity;
     use Uneak\PortoAdminBundle\Blocks\Layout\EntityContent;
+    use Uneak\PortoAdminBundle\Blocks\Photo\Photo;
+    use Uneak\RoutesManagerBundle\Routes\FlattenEntityRoute;
     use Uneak\RoutesManagerBundle\Routes\FlattenRoute;
 
 
@@ -19,17 +21,51 @@
 
         public function setRoute(FlattenRoute $route) {
 
-            $crudRoute = $route->getCRUD();
+            $twig = new \Twig_Environment(new \Twig_Loader_Array(array()));
 
-//            $this->breadcrumb->setFlattenRoute($route);
+            $this->breadcrumb->setFlattenRoute($route);
 
             $blockManager = $this->get("uneak.blocksmanager.blocks");
             $menu = $blockManager->getBlock("block_flattenroute_menu")->setFlattenRoute($route);
             $this->entityLayoutSidebar->addWidget("menu", $menu, false, 999999);
 
-//            $this->entityLayoutContent->setTemplateType(EntityContent::TEMPLATE_TYPE_SCROLL);
-            $this->entityLayoutContent->setTitle($crudRoute->getMetaData('_label'));
-            $this->entityLayoutContent->setSubtitle($route->getMetaData('_label'));
+            $this->layoutContentHeader->setTitle($route->getMetaData('_label'));
+
+            $entityRoute = $route;
+            while($entityRoute && !$entityRoute instanceof FlattenEntityRoute) {
+                $entityRoute = $entityRoute->getParent();
+            }
+
+            if ($entityRoute) {
+                $this->entityLayoutContent->setTemplateType(EntityContent::TEMPLATE_TYPE_SCROLL);
+                $entity = $entityRoute->getParameterSubject();
+
+                $label = $twig->createTemplate($route->getMetaData('_label'))->render(array('entity' => $entity));
+                $description = $twig->createTemplate($route->getMetaData('_description'))->render(array('entity' => $entity));
+
+                $this->entityLayoutContent->setTitle($label);
+                $this->entityLayoutContent->setSubtitle($description);
+
+
+                $vichHelper = $this->get("vich_uploader.templating.helper.uploader_helper");
+                $photoFile = $vichHelper->asset($entity, $route->getMetaData('_image'));
+
+                if ($photoFile) {
+                    $photo = new Photo();
+                    $photo->setPhoto($photoFile);
+                    $this->entityLayoutSidebar->addWidget("photo", $photo, false, 9999999);
+                }
+
+
+
+
+            } else {
+
+                $this->entityLayoutContent->setTemplateType(EntityContent::TEMPLATE_TYPE_FIXED);
+                $this->entityLayoutContent->setTitle($route->getMetaData('_label'));
+                $this->entityLayoutContent->setSubtitle($route->getMetaData('_description'));
+            }
+
 
         }
 

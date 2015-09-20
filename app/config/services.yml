@@ -59,6 +59,7 @@ services:
         arguments:
             - @uneak.routesmanager.menu.helper
             - @uneak.routesmanager.flattenmanager
+            - @security.token_storage
         tags:
             - { name: uneak.blocksmanager.block, alias: block_user_menu }
 
@@ -66,6 +67,7 @@ services:
         class: %uneak.starter.block.user.class%
         arguments:
             - @security.token_storage
+            - @vich_uploader.templating.helper.uploader_helper
         tags:
             - { name: uneak.blocksmanager.block, alias: block_user }
 
