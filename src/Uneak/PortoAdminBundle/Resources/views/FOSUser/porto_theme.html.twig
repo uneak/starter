@@ -1,11 +1,10 @@
 {% use "form_div_layout.html.twig" %}
 
-{# Widgets #}
 
 
 
 {%- block form_widget_compound -%}
-    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' col-md-6')|trim}) -%}
+    {#{%- set attr = attr|merge({class: (attr.class|default('') ~ ' col-md-6')|trim}) -%}#}
     <div {{ block('widget_container_attributes') }}>
         {%- if form.parent is empty -%}
             {{ form_errors(form) }}
@@ -18,9 +17,11 @@
 
 
 
+
+
 {% block form_widget_simple -%}
     {% if type is not defined or 'file' != type %}
-        {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) -%}
+        {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control input-lg')|trim}) -%}
         {% if rounded is defined and rounded == true %}
             {%- set attr = attr|merge({class: (attr.class|default('') ~ ' input-rounded')|trim}) -%}
         {% endif %}
@@ -29,14 +30,14 @@
         {% endif %}
 
     {% endif %}
-    <div class="col-md-6">
 
         {% if icon is defined %}
             <div class="input-group input-group-icon">
-                <span class="input-group-addon">
-                    <span class="icon"><i class="{{ icon }}"></i></span>
-                </span>
                 {{- parent() -}}
+                <span class="input-group-addon">
+                    <span class="icon icon-lg"><i class="{{ icon }}"></i></span>
+                </span>
+
             </div>
         {% else %}
             {{- parent() -}}
@@ -47,7 +48,7 @@
         {% endif %}
 
         {{- form_errors(form) -}}
-    </div>
+
 {%- endblock form_widget_simple %}
 
 {% block textarea_widget -%}
@@ -185,17 +186,6 @@
     {%- endif %}
 {%- endblock radio_widget %}
 
-{# Labels #}
-
-{% block form_label -%}
-    <div class="col-md-3 text-right">
-        {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' control-label')|trim}) -%}
-        {{- parent() -}}
-        {% if required %}
-            <span title="Ce champ est obligatoire"> *</span>
-        {% endif %}
-    </div>
-{%- endblock form_label %}
 
 {% block choice_label -%}
     {# remove the checkbox-inline and radio-inline class, it's only useful for embed labels #}
@@ -233,7 +223,7 @@
 {# Rows #}
 
 {% block form_row -%}
-    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+    <div class="form-group mb-lg{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
         {{- form_label(form) -}}
         {{- form_widget(form) -}}
         {#{{- form_errors(form) -}}#}
@@ -241,7 +231,7 @@
 {%- endblock form_row %}
 
 {% block button_row -%}
-    <div class="form-group">
+    <div class="form-group mb-lg">
         {{- form_widget(form) -}}
     </div>
 {%- endblock button_row %}
@@ -267,14 +257,14 @@
 {%- endblock datetime_row %}
 
 {% block checkbox_row -%}
-    <div class="form-group{% if not valid %} has-error{% endif %}">
+    <div class="form-group mb-lg{% if not valid %} has-error{% endif %}">
         {{- form_widget(form) -}}
         {{- form_errors(form) -}}
     </div>
 {%- endblock checkbox_row %}
 
 {% block radio_row -%}
-    <div class="form-group{% if not valid %} has-error{% endif %}">
+    <div class="form-group mb-lg{% if not valid %} has-error{% endif %}">
         {{- form_widget(form) -}}
         {{- form_errors(form) -}}
     </div>

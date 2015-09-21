@@ -6,7 +6,7 @@
     use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
-    class LayoutController extends Controller {
+    class LayoutMainInterfaceController extends Controller implements LayoutControllerInterface {
 
         protected $blockBuilder;
         protected $layout;

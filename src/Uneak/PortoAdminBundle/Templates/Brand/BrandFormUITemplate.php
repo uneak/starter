@@ -7,7 +7,7 @@
 	use Uneak\PortoAdminBundle\Templates\BlockTemplate;
 	use Uneak\TemplatesManagerBundle\Templates\TemplatesManager;
 
-	class BrandTemplate extends BlockTemplate {
+	class BrandFormUITemplate extends BlockTemplate {
 
 		public function buildAsset(AssetsBuilderManager $builder, $parameters) {
 //			$builder
@@ -24,11 +24,12 @@
 			$options['link'] = $block->getLink();
 			$options['name'] = $block->getName();
 			$options['photo'] = $block->getPhoto();
-
+			$options['filter'] = 'porto_admin_brand_photo_54';
+			$options['classes'] = $options['classes'] . " pull-left";
 		}
 
 		public function getRenderTemplate() {
-			return 'block_brand_template';
+			return 'block_brand_form_ui_template';
 		}
 
 	}

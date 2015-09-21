@@ -31,7 +31,8 @@ block_message_notification_template: "UneakPortoAdminBundle:Block:message_notifi
 block_icon_message_notification_template: "UneakPortoAdminBundle:Block:icon_message_notification.html.twig"
 
 block_search_template: "UneakPortoAdminBundle:Block:search.html.twig"
-block_brand_template: "UneakPortoAdminBundle:Block:brand.html.twig"
+block_brand_main_ui_template: "UneakPortoAdminBundle:Block:brand_main_ui.html.twig"
+block_brand_form_ui_template: "UneakPortoAdminBundle:Block:brand_form_ui.html.twig"
 
 block_widget_wrapper_template: "UneakPortoAdminBundle:Block:widget_wrapper.html.twig"
 block_widget_tasks_template: "UneakPortoAdminBundle:Block:widget_tasks.html.twig"
@@ -67,6 +68,8 @@ layout_entity_sidebar_template: "UneakPortoAdminBundle:Layout:layout_entity_side
 layout_entity_content_template: "UneakPortoAdminBundle:Layout:layout_entity_content.html.twig"
 layout_entity_content_scroll_template: "UneakPortoAdminBundle:Layout:layout_entity_content_scroll.html.twig"
 
+layout_form_interface_template: "UneakPortoAdminBundle:Layout:layout_form_interface.html.twig"
+
 
 # SCRIPT
 porto_admin_scrollable_script_template: "UneakPortoAdminBundle:Script:script_scrollable.html.twig"
@@ -74,3 +77,12 @@ porto_admin_sidebar_widget_wrapper_script_template: "UneakPortoAdminBundle:Scrip
 porto_admin_sidebar_toggle_script_template: "UneakPortoAdminBundle:Script:script_sidebar_toggle.html.twig"
 porto_admin_datatable_script_template: "UneakPortoAdminBundle:Script:script_datatable.html.twig"
 
+# FOS USER
+fos_security_login: UneakPortoAdminBundle:FOSUser:Security/login.html.twig
+fos_resetting_request: UneakPortoAdminBundle:FOSUser:Resetting/request.html.twig
+fos_resetting_reset: UneakPortoAdminBundle:FOSUser:Resetting/reset.html.twig
+fos_resetting_password_already_requested: UneakPortoAdminBundle:FOSUser:Resetting/passwordAlreadyRequested.html.twig
+fos_resetting_check_email: UneakPortoAdminBundle:FOSUser:Resetting/checkEmail.html.twig
+fos_resetting_change_password_change_password: UneakPortoAdminBundle:FOSUser:ChangePassword/changePassword.html.twig
+fos_profile_show: UneakPortoAdminBundle:FOSUser:Profile/show.html.twig
+fos_profile_edit: UneakPortoAdminBundle:FOSUser:Profile/edit.html.twig

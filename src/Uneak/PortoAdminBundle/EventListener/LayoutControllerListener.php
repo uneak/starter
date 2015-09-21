@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\Routing\Router;
 use Uneak\PortoAdminBundle\Controller\LayoutController;
+use Uneak\PortoAdminBundle\Controller\LayoutControllerInterface;
 use Uneak\PortoAdminBundle\Controller\LayoutEntityController;
 use Uneak\RoutesManagerBundle\Routes\FlattenRoute;
 
@@ -40,7 +41,7 @@ class LayoutControllerListener {
 
     public function onKernelView(GetResponseForControllerResultEvent $event) {
 
-        if ($this->controller instanceof LayoutController) {
+        if ($this->controller instanceof LayoutControllerInterface) {
 
             $result = $event->getControllerResult();
             $parameters = (is_array($result)) ? $result : array();

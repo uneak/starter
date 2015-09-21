@@ -58,8 +58,9 @@ services:
         class: %uneak.starter.block.user.menu.class%
         arguments:
             - @uneak.routesmanager.menu.helper
-            - @uneak.routesmanager.flattenmanager
-            - @security.token_storage
+            - @router
+#            - @uneak.routesmanager.flattenmanager
+#            - @security.token_storage
         tags:
             - { name: uneak.blocksmanager.block, alias: block_user_menu }
 

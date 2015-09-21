@@ -24,7 +24,8 @@ parameters:
 
     uneak.portoadmin.search.template.class: Uneak\PortoAdminBundle\Templates\Search\SearchTemplate
 
-    uneak.portoadmin.brand.template.class: Uneak\PortoAdminBundle\Templates\Brand\BrandTemplate
+    uneak.portoadmin.brand.main.ui.template.class: Uneak\PortoAdminBundle\Templates\Brand\BrandMainUITemplate
+    uneak.portoadmin.brand.form.ui.template.class: Uneak\PortoAdminBundle\Templates\Brand\BrandFormUITemplate
 
     uneak.portoadmin.widget.wrapper.template.class: Uneak\PortoAdminBundle\Templates\Widget\WidgetWrapperTemplate
     uneak.portoadmin.widget.tasks.template.class: Uneak\PortoAdminBundle\Templates\Widget\WidgetTasksTemplate
@@ -57,9 +58,20 @@ parameters:
     uneak.portoadmin.layout.entity.content.template.class: Uneak\PortoAdminBundle\Templates\Layout\EntityContentTemplate
     uneak.portoadmin.layout.entity.content.scroll.template.class: Uneak\PortoAdminBundle\Templates\Layout\EntityContentScrollTemplate
 
+    uneak.portoadmin.layout.form.interface.template.class: Uneak\PortoAdminBundle\Templates\Layout\FormInterfaceTemplate
+
     uneak.portoadmin.form.template.class: Uneak\PortoAdminBundle\Templates\Form\FormTemplate
 
+    uneak.portoadmin.twig.template.class: Uneak\PortoAdminBundle\Templates\Content\TwigTemplate
+
 services:
+
+    uneak.portoadmin.twig.template:
+        class: %uneak.portoadmin.twig.template.class%
+        arguments:
+            - @service_container
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_twig }
 
     uneak.portoadmin.form.template:
         class: %uneak.portoadmin.form.template.class%
@@ -193,10 +205,16 @@ services:
         tags:
             - { name: uneak.blocksmanager.template, alias: block_template_search }
 
-    uneak.portoadmin.brand.template:
-        class: %uneak.portoadmin.brand.template.class%
+    uneak.portoadmin.brand.main.ui.template:
+        class: %uneak.portoadmin.brand.main.ui.template.class%
         tags:
-            - { name: uneak.blocksmanager.template, alias: block_template_brand }
+            - { name: uneak.blocksmanager.template, alias: block_template_brand_main_ui }
+
+    uneak.portoadmin.brand.form.ui.template:
+        class: %uneak.portoadmin.brand.form.ui.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_brand_form_ui }
+
 
     uneak.portoadmin.widget.wrapper.template:
         class: %uneak.portoadmin.widget.wrapper.template.class%
@@ -277,3 +295,8 @@ services:
         class: %uneak.portoadmin.layout.entity.content.scroll.template.class%
         tags:
             - { name: uneak.blocksmanager.template, alias: layout_template_entity_content_scroll }
+
+    uneak.portoadmin.layout.form.interface.template:
+        class: %uneak.portoadmin.layout.form.interface.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: layout_template_form_interface }

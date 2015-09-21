@@ -26,7 +26,7 @@
         public function setBrand($brand)
         {
             $this->removeBlock("brand:layout");
-            $this->addBlock($brand, "brand:layout");
+            $this->addBlock(array($brand, "block_template_brand_main_ui"), "brand:layout");
         }
 
         public function getSearch()

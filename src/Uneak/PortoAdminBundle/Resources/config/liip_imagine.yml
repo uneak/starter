@@ -7,11 +7,15 @@ porto_admin_user_avatar_35:
         upscale: { min: [35, 35] }
         thumbnail: { size: [35, 35], mode: outbound }
 
-porto_admin_brand_photo:
+porto_admin_brand_photo_35:
     quality: 100
     filters:
         relative_resize: { heighten: 35 }
 
+porto_admin_brand_photo_54:
+    quality: 100
+    filters:
+        relative_resize: { heighten: 54 }
 
 porto_admin_user_badge_cover:
     quality: 100

@@ -10,12 +10,27 @@
 		protected $link;
 		protected $name;
 		protected $photo;
+		protected $filter = 'porto_admin_brand_photo_35';
 
 		public function __construct($name = null, $link = null, $photo = null) {
             parent::__construct();
 			$this->name = $name;
 			$this->link = $link;
 			$this->photo = $photo;
+		}
+
+		/**
+		 * @return string
+		 */
+		public function getFilter() {
+			return $this->filter;
+		}
+
+		/**
+		 * @param string $filter
+		 */
+		public function setFilter($filter) {
+			$this->filter = $filter;
 		}
 
 		/**

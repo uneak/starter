@@ -13,11 +13,20 @@
 		public function __construct($user = null) {
             parent::__construct();
 			$this->user = $user;
-            $this->addBlock(array('block_user_menu', 'block_template_user_menu'), "menu");
+			$this->setMenu('block_user_menu');
 		}
 
+
+		public function setMenu($menu)
+		{
+			$this->removeBlock("menu:layout");
+			$this->addBlock(array($menu, 'block_template_user_menu'), "menu:layout");
+			return $this;
+		}
+
+
 		public function getMenu() {
-			return $this->getBlock("menu");
+			return $this->getBlock("menu:layout");
 		}
 
 		public function getUser() {
