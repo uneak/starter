@@ -1,4 +1,77 @@
+parameters:
+    uneak.user_manager.class: FOS\UserBundle\Doctrine\UserManager
+    uneak.user_provider.class: UserBundle\Security\UserProvider
+    uneak.user_provider.username.class: FOS\UserBundle\Security\UserProvider
+    uneak.user_provider.username_email.class: FOS\UserBundle\Security\EmailUserProvider
+    uneak.user_registration.form.type.class: UserBundle\Form\Type\RegistrationFormType
+    uneak.user_registration.form.handler.class: UserBundle\Form\Handler\UserRegistrationFormHandler
+
+    user_oauth.security.oauth_utils.class: UserBundle\Security\OAuthUtils
+    user_oauth.twig.extension.oauth.class: UserBundle\Twig\Extension\OAuthExtension
+    user_oauth.templating.helper.oauth.class: UserBundle\Templating\Helper\OAuthHelper
+
 services:
-#    user.example:
-#        class: UserBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    uneak.user_provider:
+        class: %uneak.user_provider.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @uneak.user_manager
+
+    uneak.user_manager:
+        class: %uneak.user_manager.class%
+        arguments:
+            - @security.encoder_factory
+            - @fos_user.util.username_canonicalizer
+            - @fos_user.util.email_canonicalizer
+            - @fos_user.entity_manager
+            - "UserBundle\Entity\User"
+
+    uneak.user_provider.username:
+        class: %uneak.user_provider.username.class%
+        arguments:
+            - @uneak.user_manager
+
+    uneak.user_provider.username_email:
+        class: %uneak.user_provider.username_email.class%
+        arguments:
+            - @uneak.user_manager
+
+    uneak.user_registration.form.type:
+        class: %uneak.user_registration.form.type.class%
+        tags:
+          - { name: form.type, alias: uneak_user_registration }
+
+
+    uneak.user_registration.form.handler:
+        class: %uneak.user_registration.form.handler.class%
+        arguments:
+            - @uneak.user_manager
+            - @fos_user.mailer
+            - @fos_user.util.token_generator
+
+
+    user_oauth.security.oauth_utils:
+        class: %user_oauth.security.oauth_utils.class%
+        arguments:
+            - @security.http_utils
+            - @security.context
+            - %user_oauth.connect%
+
+
+    user_oauth.twig.extension.oauth:
+        class: %user_oauth.twig.extension.oauth.class%
+        arguments:
+            - @user_oauth.templating.helper.oauth
+        tags:
+            - { name: twig.extension }
+
+
+    user_oauth.templating.helper.oauth:
+        class: %user_oauth.templating.helper.oauth.class%
+        arguments:
+            - @user_oauth.security.oauth_utils
+        calls:
+            - [ setRequest, [ @request= ]]
+        tags:
+            - { name: templating.helper, alias: oauth }
+

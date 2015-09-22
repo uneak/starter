@@ -12,31 +12,49 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        fos_userbundle:
-            id: fos_user.user_provider.username
+#        fos_userbundle:
+#            id: fos_user.user_provider.username
+
+        uneak_user:
+            id: uneak.user_provider.username
 
         uneak_member:
             id: uneak.member_provider.username
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
+
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        admin:
+        user:
             pattern: ^/admin
 
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             form_login:
-                provider: fos_userbundle
+                provider: uneak_user
                 csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
-                login_path:  fos_user_security_login
-                check_path:  fos_user_security_check
+                login_path:  user_security_login
+                check_path:  user_security_check
             logout:
-                path: fos_user_security_logout
-                target: fos_user_security_login
+                path: user_security_logout
+                target: user_security_login
+
+            oauth:
+                resource_owners:
+                    facebook: /admin/connect/check-facebook
+                    google: /admin/connect/check-google
+                    twitter: /admin/connect/check-twitter
+
+                check_path: /admin/connect
+                login_path: /admin/connect
+                failure_path: /admin/connect
+                use_forward: false
+
+                oauth_user_provider:
+                    service: uneak.user_provider
 
             anonymous:    true
             # activate different ways to authenticate
@@ -45,7 +63,7 @@ security:
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
 
 
-        secured_area:
+        member:
             anonymous: ~
 
             form_login:
@@ -63,9 +81,10 @@ security:
                     google: /connect/check-google
                     twitter: /connect/check-twitter
 
+                check_path: /connect
                 login_path: /connect
-                use_forward: false
                 failure_path: /connect
+                use_forward: false
 
                 oauth_user_provider:
                     service: uneak.member_provider
@@ -75,6 +94,7 @@ security:
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/connect, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
 
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

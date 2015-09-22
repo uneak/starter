@@ -1,0 +1,11 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<form action="{{ path('user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="user_profile_edit">
+    {{ form_widget(form) }}
+    <div>
+        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+    </div>
+</form>
+{% for owner in user_oauth_resource_owners() %}
+    <a href="{{ user_oauth_login_url(owner) }}">{{ owner | trans({}, 'HWIOAuthBundle') }}</a> <br />
+{% endfor %}

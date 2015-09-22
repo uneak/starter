@@ -40,7 +40,25 @@
          */
         use TimestampableEntity;
 
-        /**
+
+		/**
+		 * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
+		 */
+		protected $facebookId;
+
+
+		/**
+		 * @ORM\Column(name="google_id", type="string", length=64, nullable=true)
+		 */
+		protected $googleId;
+
+		/**
+		 * @ORM\Column(name="twitter_id", type="string", length=64, nullable=true)
+		 */
+		protected $twitterId;
+
+
+		/**
          * @ORM\Column(name="gender", type="string", length=64, nullable=true)
          */
         protected $gender;
@@ -115,7 +133,51 @@
 		}
 
 
-        public function getGender() {
+
+		/**
+		 * @return mixed
+		 */
+		public function getTwitterId() {
+			return $this->twitterId;
+		}
+
+		/**
+		 * @param mixed $twitterId
+		 */
+		public function setTwitterId($twitterId) {
+			$this->twitterId = $twitterId;
+		}
+
+		/**
+		 * @return mixed
+		 */
+		public function getGoogleId() {
+			return $this->googleId;
+		}
+
+		/**
+		 * @param mixed $googleId
+		 */
+		public function setGoogleId($googleId) {
+			$this->googleId = $googleId;
+		}
+
+		/**
+		 * @return mixed
+		 */
+		public function getFacebookId() {
+			return $this->facebookId;
+		}
+
+		/**
+		 * @param mixed $facebookId
+		 */
+		public function setFacebookId($facebookId) {
+			$this->facebookId = $facebookId;
+		}
+
+
+		public function getGender() {
             return $this->gender;
         }
 

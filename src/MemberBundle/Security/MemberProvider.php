@@ -14,7 +14,6 @@
 	use Symfony\Component\Security\Core\User\UserInterface;
 	use Symfony\Component\Security\Core\User\UserProviderInterface;
     use MemberBundle\Entity\Member;
-    use MemberBundle\Entity\User;
 
 
 	class MemberProvider implements UserProviderInterface, AccountConnectorInterface, OAuthAwareUserProviderInterface {

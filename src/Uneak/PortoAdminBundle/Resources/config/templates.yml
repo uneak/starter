@@ -78,11 +78,18 @@ porto_admin_sidebar_toggle_script_template: "UneakPortoAdminBundle:Script:script
 porto_admin_datatable_script_template: "UneakPortoAdminBundle:Script:script_datatable.html.twig"
 
 # FOS USER
-fos_security_login: UneakPortoAdminBundle:FOSUser:Security/login.html.twig
-fos_resetting_request: UneakPortoAdminBundle:FOSUser:Resetting/request.html.twig
-fos_resetting_reset: UneakPortoAdminBundle:FOSUser:Resetting/reset.html.twig
-fos_resetting_password_already_requested: UneakPortoAdminBundle:FOSUser:Resetting/passwordAlreadyRequested.html.twig
-fos_resetting_check_email: UneakPortoAdminBundle:FOSUser:Resetting/checkEmail.html.twig
-fos_resetting_change_password_change_password: UneakPortoAdminBundle:FOSUser:ChangePassword/changePassword.html.twig
-fos_profile_show: UneakPortoAdminBundle:FOSUser:Profile/show.html.twig
-fos_profile_edit: UneakPortoAdminBundle:FOSUser:Profile/edit.html.twig
+user_security_login: UneakPortoAdminBundle:FOSUser:Security/login.html.twig
+user_resetting_request: UneakPortoAdminBundle:FOSUser:Resetting/request.html.twig
+user_resetting_reset: UneakPortoAdminBundle:FOSUser:Resetting/reset.html.twig
+user_resetting_password_already_requested: UneakPortoAdminBundle:FOSUser:Resetting/passwordAlreadyRequested.html.twig
+user_resetting_check_email: UneakPortoAdminBundle:FOSUser:Resetting/checkEmail.html.twig
+user_resetting_change_password_change_password: UneakPortoAdminBundle:FOSUser:ChangePassword/changePassword.html.twig
+user_profile_show: UneakPortoAdminBundle:FOSUser:Profile/show.html.twig
+user_profile_edit: UneakPortoAdminBundle:FOSUser:Profile/edit.html.twig
+user_registration_register: UneakPortoAdminBundle:FOSUser:Registration/register.html.twig
+
+user_connect_login: UneakPortoAdminBundle:FOSUser:Connect/login.html.twig
+user_connect_registration_success: UneakPortoAdminBundle:FOSUser:Connect/registration_success.html.twig
+user_connect_registration: UneakPortoAdminBundle:FOSUser:Connect/registration.html.twig
+user_connect_connect_success: UneakPortoAdminBundle:FOSUser:Connect/connect_success.html.twig
+user_connect_connect_confirm: UneakPortoAdminBundle:FOSUser:Connect/connect_confirm.html.twig

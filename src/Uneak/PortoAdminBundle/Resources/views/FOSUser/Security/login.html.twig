@@ -4,7 +4,7 @@
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
 
-<form action="{{ path("fos_user_security_check") }}" method="post">
+<form action="{{ path("user_security_check") }}" method="post">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
     <div class="form-group mb-lg">
@@ -22,7 +22,7 @@
     <div class="form-group mb-lg">
         <div class="clearfix">
             <label for="password" class="pull-left">{{ 'security.login.password'|trans }}</label>
-            <a href="{{ path('fos_user_resetting_request') }}" class="pull-right">Lost Password?</a>
+            <a href="{{ path('user_resetting_request') }}" class="pull-right">Lost Password?</a>
         </div>
         <div class="input-group input-group-icon">
             <input type="password" id="password" name="_password" required="required" class="form-control input-lg" />
@@ -48,16 +48,17 @@
     </div>
 
 
-    {#<span class="mt-lg mb-lg line-thru text-center text-uppercase">#}
-        {#<span>or</span>#}
-    {#</span>#}
+    <span class="mt-lg mb-lg line-thru text-center text-uppercase">
+        <span>or</span>
+    </span>
 
-    {#<div class="mb-xs text-center">#}
-        {#<a class="btn btn-facebook mb-md ml-xs mr-xs">Connect with <i class="fa fa-facebook"></i></a>#}
-        {#<a class="btn btn-twitter mb-md ml-xs mr-xs">Connect with <i class="fa fa-twitter"></i></a>#}
-    {#</div>#}
+    <div class="mb-xs text-center">
+        <a href="{{ path('user_oauth_service_redirect', {service: "facebook"}) }}" class="btn btn-facebook mb-md ml-xs mr-xs pr-md pl-md"><i class="fa fa-facebook"></i> connexion</a>
+        <a href="{{ path('user_oauth_service_redirect', {service: "google"}) }}" class="btn btn-gplus mb-md ml-xs mr-xs pr-md pl-md"><i class="fa fa-google"></i> connexion</a>
+        <a href="{{ path('user_oauth_service_redirect', {service: "twitter"}) }}" class="btn btn-twitter mb-md ml-xs mr-xs pr-md pl-md"><i class="fa fa-twitter"></i> connexion</a>
+    </div>
 
-    {#<p class="text-center">Don't have an account yet? <a href="pages-signup.html">Sign Up!</a>#}
+    <p class="text-center">Don't have an account yet? <a href="{{ path('user_registration_register') }}">Sign Up!</a>
 
 </form>
 

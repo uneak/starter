@@ -285,7 +285,7 @@ swiftmailer:
 # Fos User
 fos_user:
     db_driver: orm
-    firewall_name: admin
+    firewall_name: user
     user_class: UserBundle\Entity\User
     group:
         group_class: UserBundle\Entity\Group
@@ -311,7 +311,7 @@ fos_user:
 
 # HWI Oauth
 hwi_oauth:
-    firewall_name: secured_area
+    firewall_name: user
     http_client:
         timeout:       60 # Time in seconds, after library will shutdown request, by default: 5
         verify_peer:   true # Setting allowing you to turn off SSL verification, by default: true
@@ -363,17 +363,27 @@ hwi_oauth:
                 email: email
                 profilepicture: profile_image_url
 
+
+
+# uneak-user
+user:
+    firewall_name: user
+    connect:
+        confirmation: false
+        account_connector: uneak.user_provider
+        registration_form: uneak.user_registration.form.type
+        registration_form_handler: uneak.user_registration.form.handler
+
+# uneak-user
+member:
+    firewall_name: member
     connect:
         confirmation: false
         account_connector: uneak.member_provider
         registration_form: uneak.member_registration.form.type
         registration_form_handler: uneak.member_registration.form.handler
 
-#    fosub:
-#        username_iterations: 30
-#        properties:
-#            facebook: facebook_id
-#            google: google_id
+
 
 
 

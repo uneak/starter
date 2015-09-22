@@ -8,45 +8,24 @@ app:
 
 
 # FOS User
-fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
-    prefix: /admin
-
-fos_user_group:
-    resource: "@FOSUserBundle/Resources/config/routing/group.xml"
-    prefix: /admin/group
+#fos_user:
+#    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+#    prefix: /admin
+#
+#fos_user_group:
+#    resource: "@FOSUserBundle/Resources/config/routing/group.xml"
+#    prefix: /admin/group
 
 uneak_member:
-    resource: "@MemberBundle/Resources/config/routing_member.yml"
+    resource: "@MemberBundle/Resources/config/routing.yml"
     prefix: /
 
-
-# HWI Oauth User
-hwi_oauth_connect:
-    path: /connect
-    defaults: { _controller: MemberBundle:Connect:connect }
-
-hwi_oauth_connect_service:
-    path: /connect/service/{service}
-    defaults: { _controller: MemberBundle:Connect:connectService }
-
-hwi_oauth_connect_registration:
-    path: /connect/registration/{key}
-    defaults: { _controller: MemberBundle:Connect:registration }
-
-hwi_oauth_service_redirect:
-    path: /connect/{service}
-    defaults: { _controller: MemberBundle:Connect:redirectToService }
-
-facebook_login:
-    path: /connect/check-facebook
-
-google_login:
-    pattern: /connect/check-google
+uneak_user:
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix: admin
 
 
-twitter_login:
-    pattern: /connect/check-twitte
+
 
 
 

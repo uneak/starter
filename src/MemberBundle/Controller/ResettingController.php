@@ -1,7 +1,7 @@
 <?php
 
 	/*
-	 * This file is part of the FOSUserBundle package.
+	 * This file is part of the FOSMemberBundle package.
 	 *
 	 * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
 	 *
@@ -34,7 +34,7 @@
 		 */
 		public function requestAction() {
 			$templates = $this->get("uneak.templatesmanager");
-			return $this->render($templates->get("member_resetting_request"));
+			return $this->render($templates->getTemplate("member_resetting_request"));
 		}
 
 		/**
@@ -49,13 +49,13 @@
 			$user = $this->get('uneak.member_manager')->findUserByUsernameOrEmail($username);
 
 			if (null === $user) {
-				return $this->render($templates->get("member_resetting_request"), array(
+				return $this->render($templates->getTemplate("member_resetting_request"), array(
 					'invalid_username' => $username
 				));
 			}
 
 			if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
-				return $this->render($templates->get("member_resetting_password_already_requested"));
+				return $this->render($templates->getTemplate("member_resetting_password_already_requested"));
 			}
 
 
@@ -87,7 +87,7 @@
 				return new RedirectResponse($this->generateUrl('member_resetting_request'));
 			}
 
-			return $this->render($templates->get("member_resetting_check_email"), array(
+			return $this->render($templates->getTemplate("member_resetting_check_email"), array(
 				'email' => $email,
 			));
 		}
@@ -119,7 +119,7 @@
 			}
 
 
-			return $this->render($templates->get("member_resetting_reset"), array(
+			return $this->render($templates->getTemplate("member_resetting_reset"), array(
 				'token' => $token,
 				'form'  => $form->createView(),
 			));

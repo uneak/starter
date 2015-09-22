@@ -1,7 +1,7 @@
 <?php
 
 	/*
-	 * This file is part of the FOSUserBundle package.
+	 * This file is part of the FOSMemberBundle package.
 	 *
 	 * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
 	 *
@@ -63,7 +63,7 @@
 
 
 					$url = $this->generateUrl('member_registration_confirm', array('token' => $user->getConfirmationToken()), true);
-					$rendered = $this->render($templates->get("member_registration_email_txt"), array(
+					$rendered = $this->render($templates->getTemplate("member_registration_email_txt"), array(
 						'user' => $user,
 						'confirmationUrl' =>  $url
 					));
@@ -97,7 +97,7 @@
 			}
 
 
-			return $this->render($templates->get("member_registration_register"), array(
+			return $this->render($templates->getTemplate("member_registration_register"), array(
 				'form' => $form->createView(),
 			));
 		}
@@ -116,7 +116,7 @@
 				throw new NotFoundHttpException(sprintf('The user with email "%s" does not exist', $email));
 			}
 
-			return $this->render($templates->get("member_registration_check_email"), array(
+			return $this->render($templates->getTemplate("member_registration_check_email"), array(
 				'user' => $user,
 			));
 		}
@@ -153,7 +153,7 @@
 				throw new AccessDeniedException('This user does not have access to this section.');
 			}
 
-			return $this->render($templates->get("member_registration_confirmed"), array(
+			return $this->render($templates->getTemplate("member_registration_confirmed"), array(
 				'user' => $user,
 			));
 		}

@@ -6,6 +6,6 @@
         <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
     </div>
 </form>
-{% for owner in hwi_oauth_resource_owners() %}
-    <a href="{{ hwi_oauth_login_url(owner) }}">{{ owner | trans({}, 'HWIOAuthBundle') }}</a> <br />
+{% for owner in member_oauth_resource_owners() %}
+    <a href="{{ member_oauth_login_url(owner) }}">{{ owner | trans({}, 'HWIOAuthBundle') }}</a> <br />
 {% endfor %}

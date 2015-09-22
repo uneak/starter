@@ -1,7 +1,7 @@
 <?php
 
 	/*
-	 * This file is part of the FOSUserBundle package.
+	 * This file is part of the FOSMemberBundle package.
 	 *
 	 * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
 	 *
@@ -39,7 +39,7 @@
 				throw new AccessDeniedException('This user does not have access to this section.');
 			}
 
-			return $this->render($templates->get("member_profile_show"), array(
+			return $this->render($templates->getTemplate("member_profile_show"), array(
 				'user' => $user
 			));
 		}
@@ -67,7 +67,7 @@
 				return $response;
 			}
 
-			return $this->render($templates->get("member_profile_edit"), array(
+			return $this->render($templates->getTemplate("member_profile_edit"), array(
 				'form' => $form->createView()
 			));
 		}

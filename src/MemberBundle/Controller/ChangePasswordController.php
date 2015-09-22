@@ -34,7 +34,7 @@
 
 
 
-			return $this->render($templates->get("member_changepassword_change_password"), array(
+			return $this->render($templates->getTemplate("member_changepassword_change_password"), array(
 				'form' => $form->createView()
 			));
 		}

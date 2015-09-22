@@ -38,7 +38,7 @@
 		 * @return Response
 		 */
 		public function connectAction(Request $request) {
-			$connect = $this->container->getParameter('hwi_oauth.connect');
+			$connect = $this->container->getParameter('member_oauth.connect');
 			$hasUser = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
 			$templates = $this->container->get("uneak.templatesmanager");
 
@@ -51,9 +51,9 @@
 			) {
 				$key = time();
 				$session = $request->getSession();
-				$session->set('_hwi_oauth.registration_error.' . $key, $error);
+				$session->set('_member_oauth.registration_error.' . $key, $error);
 
-				return new RedirectResponse($this->generate('hwi_oauth_connect_registration', array('key' => $key)));
+				return new RedirectResponse($this->generate('member_oauth_connect_registration', array('key' => $key)));
 			}
 
 			if ($error) {
@@ -62,7 +62,7 @@
 			}
 
 
-			return $this->container->get('templating')->renderResponse($templates->get("member_connect_login"), array(
+			return $this->container->get('templating')->renderResponse($templates->getTemplate("member_connect_login"), array(
 				'error' => $error,
 			));
 		}
@@ -81,7 +81,7 @@
 		 * @throws \Exception
 		 */
 		public function registrationAction(Request $request, $key) {
-			$connect = $this->container->getParameter('hwi_oauth.connect');
+			$connect = $this->container->getParameter('member_oauth.connect');
 			if (!$connect) {
 				throw new NotFoundHttpException();
 			}
@@ -92,8 +92,8 @@
 			}
 
 			$session = $request->getSession();
-			$error = $session->get('_hwi_oauth.registration_error.' . $key);
-			$session->remove('_hwi_oauth.registration_error.' . $key);
+			$error = $session->get('_member_oauth.registration_error.' . $key);
+			$session->remove('_member_oauth.registration_error.' . $key);
 
 			if (!($error instanceof AccountNotLinkedException) || (time() - $key > 300)) {
 				// todo: fix this
@@ -107,25 +107,28 @@
 				->getUserInformation($error->getRawToken());
 
 
-			$form = $this->container->get('form.factory')->create(new RegistrationFormType(), null, array());
+			$form = $this->container->get('form.factory')->create($this->container->get('member_oauth.registration.form'), null, array());
 
-			$formHandler = $this->container->get('hwi_oauth.registration.form.handler');
+			$formHandler = $this->container->get('member_oauth.registration.form.handler');
+
+
+
 			if ($formHandler->process($request, $form, $userInformation)) {
-				$this->container->get('hwi_oauth.account.connector')->connect($form->getData(), $userInformation);
+				$this->container->get('member_oauth.account.connector')->connect($form->getData(), $userInformation);
 
 				// Authenticate the user
 				$this->authenticateUser($request, $form->getData(), $error->getResourceOwnerName(), $error->getRawToken());
 
-				return $this->container->get('templating')->renderResponse($templates->get("member_connect_registration_success"), array(
+				return $this->container->get('templating')->renderResponse($templates->getTemplate("member_connect_registration_success"), array(
 					'userInformation' => $userInformation,
 				));
 			}
 
 			// reset the error in the session
 			$key = time();
-			$session->set('_hwi_oauth.registration_error.' . $key, $error);
+			$session->set('_member_oauth.registration_error.' . $key, $error);
 
-			return $this->container->get('templating')->renderResponse($templates->get("member_connect_registration"), array(
+			return $this->container->get('templating')->renderResponse($templates->getTemplate("member_connect_registration"), array(
 				'key'             => $key,
 				'form'            => $form->createView(),
 				'userInformation' => $userInformation,
@@ -146,7 +149,9 @@
 		 * @throws AccessDeniedException if no user is authenticated
 		 */
 		public function connectServiceAction(Request $request, $service) {
-			$connect = $this->container->getParameter('hwi_oauth.connect');
+			$templates = $this->container->get("uneak.templatesmanager");
+
+			$connect = $this->container->getParameter('member_oauth.connect');
 			if (!$connect) {
 				throw new NotFoundHttpException();
 			}
@@ -165,24 +170,24 @@
 			if ($resourceOwner->handles($request)) {
 				$accessToken = $resourceOwner->getAccessToken(
 					$request,
-					$this->container->get('hwi_oauth.security.oauth_utils')->getServiceAuthUrl($request, $resourceOwner)
+					$this->container->get('member_oauth.security.oauth_utils')->getServiceAuthUrl($request, $resourceOwner)
 				);
 
 				// save in session
-				$session->set('_hwi_oauth.connect_confirmation.' . $key, $accessToken);
+				$session->set('_member_oauth.connect_confirmation.' . $key, $accessToken);
 			} else {
-				$accessToken = $session->get('_hwi_oauth.connect_confirmation.' . $key);
+				$accessToken = $session->get('_member_oauth.connect_confirmation.' . $key);
 			}
 
 			$userInformation = $resourceOwner->getUserInformation($accessToken);
 
 			// Show confirmation page?
-			if (!$this->container->getParameter('hwi_oauth.connect.confirmation')) {
+			if (!$this->container->getParameter('member_oauth.connect.confirmation')) {
 				goto show_confirmation_page;
 			}
 
 
-			$templates = $this->container->get("uneak.templatesmanager");
+
 
 
 			// Handle the form
@@ -201,21 +206,21 @@
 					$currentToken = $this->container->get('security.token_storage')->getToken();
 					$currentUser = $currentToken->getUser();
 
-					$this->container->get('hwi_oauth.account.connector')->connect($currentUser, $userInformation);
+					$this->container->get('member_oauth.account.connector')->connect($currentUser, $userInformation);
 
 					if ($currentToken instanceof OAuthToken) {
 						// Update user token with new details
 						$this->authenticateUser($request, $currentUser, $service, $currentToken->getRawToken(), false);
 					}
 
-					return $this->container->get('templating')->renderResponse($templates->get("member_connect_connect_success"), array(
+					return $this->container->get('templating')->renderResponse($templates->getTemplate("member_connect_connect_success"), array(
 						'userInformation' => $userInformation,
 						'service'         => $service,
 					));
 				}
 			}
 
-			return $this->container->get('templating')->renderResponse($templates->get("member_connect_connect_confirm"), array(
+			return $this->container->get('templating')->renderResponse($templates->getTemplate("member_connect_connect_confirm"), array(
 				'key'             => $key,
 				'service'         => $service,
 				'form'            => $form->createView(),
@@ -230,7 +235,7 @@
 		 * @return RedirectResponse
 		 */
 		public function redirectToServiceAction(Request $request, $service) {
-			$authorizationUrl = $this->container->get('hwi_oauth.security.oauth_utils')->getAuthorizationUrl($request, $service);
+			$authorizationUrl = $this->container->get('member_oauth.security.oauth_utils')->getAuthorizationUrl($request, $service);
 
 			// Check for a return path and store it before redirect
 			if ($request->hasSession()) {
@@ -238,7 +243,7 @@
 				$session = $request->getSession();
 				$session->start();
 
-				$providerKey = $this->container->getParameter('hwi_oauth.firewall_name');
+				$providerKey = $this->container->getParameter('member_oauth.firewall_name');
 				$sessionKey = '_security.' . $providerKey . '.target_path';
 
 				$param = $this->container->getParameter('hwi_oauth.target_path_parameter');
@@ -285,7 +290,7 @@
 		 * @throws \RuntimeException if there is no resource owner with the given name.
 		 */
 		protected function getResourceOwnerByName($name) {
-			$ownerMap = $this->container->get('hwi_oauth.resource_ownermap.' . $this->container->getParameter('hwi_oauth.firewall_name'));
+			$ownerMap = $this->container->get('hwi_oauth.resource_ownermap.' . $this->container->getParameter('member_oauth.firewall_name'));
 
 			if (null === $resourceOwner = $ownerMap->getResourceOwnerByName($name)) {
 				throw new \RuntimeException(sprintf("No resource owner with name '%s'.", $name));

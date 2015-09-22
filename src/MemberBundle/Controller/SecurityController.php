@@ -1,7 +1,7 @@
 <?php
 
 	/*
-	 * This file is part of the FOSUserBundle package.
+	 * This file is part of the FOSMemberBundle package.
 	 *
 	 * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
 	 *
@@ -62,7 +62,7 @@
 		 */
 		protected function renderLogin(array $data) {
 			$templates = $this->get("uneak.templatesmanager");
-			return $this->render($templates->get("member_security_login"), $data);
+			return $this->render($templates->getTemplate("member_security_login"), $data);
 		}
 
 		public function checkAction() {
