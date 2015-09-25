@@ -188,7 +188,7 @@
 
 
 
-            $userManager = $this->get("fos_user.user_manager");
+            $userManager = $this->get("uneak.user_manager");
             $user = $userManager->findUserBy(array("username" => "admin"));
             $userBadge = new UserBadge($user);
 

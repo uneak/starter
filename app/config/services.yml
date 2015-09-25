@@ -35,6 +35,10 @@ services:
 
     uneak.starter.block.notifications:
         class: %uneak.starter.block.notifications.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @uneak.routesmanager.flattenmanager
+            - @vich_uploader.templating.helper.uploader_helper
         tags:
             - { name: uneak.blocksmanager.block, alias: block_notifications }
 
@@ -51,6 +55,7 @@ services:
         arguments:
             - @uneak.routesmanager.menu.helper
             - @uneak.routesmanager.flattenmanager
+            - @security.authorization_checker
         tags:
             - { name: uneak.blocksmanager.block, alias: block_main_menu }
 

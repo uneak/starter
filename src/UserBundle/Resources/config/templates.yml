@@ -5,14 +5,21 @@ user_connect_connect_success: UserBundle:Connect:connect_success.html.twig
 user_connect_connect_confirm: UserBundle:Connect:connect_confirm.html.twig
 
 user_security_login: UserBundle:Security:login.html.twig
+
+user_resetting_email_txt: UserBundle:Resetting:email.txt.twig
+
 user_resetting_request: UserBundle:Resetting:request.html.twig
 user_resetting_password_already_requested: UserBundle:Resetting:passwordAlreadyRequested.html.twig
 user_resetting_check_email: UserBundle:Resetting:checkEmail.html.twig
 user_resetting_reset: UserBundle:Resetting:reset.html.twig
+
 user_registration_email_txt: UserBundle:Registration:email.txt.twig
+
 user_registration_register: UserBundle:Registration:register.html.twig
 user_registration_check_email: UserBundle:Registration:checkEmail.html.twig
 user_registration_confirmed: UserBundle:Registration:confirmed.html.twig
 user_profile_show: UserBundle:Profile:show.html.twig
 user_profile_edit: UserBundle:Profile:edit.html.twig
 user_changepassword_change_password: UserBundle:ChangePassword:changePassword.html.twig
+
+user_registration_email_confirmed: UserBundle:Registration:emailConfirmed.html.twig

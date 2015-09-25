@@ -10,13 +10,30 @@
 		protected $title;
 		protected $description;
 		protected $photo;
+		protected $link = "#";
 
-		public function __construct($title, $description = null, $photo = null) {
+		public function __construct($title, $description = null, $photo = null, $link = "#") {
             parent::__construct();
 			$this->title = $title;
 			$this->description = $description;
 			$this->photo = $photo;
+			$this->link = $link;
 		}
+
+		/**
+		 * @return string
+		 */
+		public function getLink() {
+			return $this->link;
+		}
+
+		/**
+		 * @param string $link
+		 */
+		public function setLink($link) {
+			$this->link = $link;
+		}
+
 
 		/**
 		 * @return mixed

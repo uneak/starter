@@ -41,7 +41,7 @@
 				throw new AccessDeniedException('This user does not have access to this section.');
 			}
 
-			$content = new Twig('fos_profile_show', array(
+			$content = new Twig('user_profile_show', array(
 				'user' => $user
 			));
 			$this->entityLayoutContentBody->addBlock($content);
@@ -51,7 +51,6 @@
 		 * Edit the user
 		 */
 		public function editAction(Request $request) {
-			$templates = $this->get("uneak.templatesmanager");
 
 			$user = $this->getUser();
 			if (!is_object($user) || !$user instanceof UserInterface) {
@@ -59,15 +58,14 @@
 			}
 
 			$form = $this->createForm(new ProfileFormType(), $user);
+			$form->add('submit', 'submit', array('label' => 'Modifier'));
 			$form->handleRequest($request);
 
 			if ($form->isValid()) {
 				/** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
 				$userManager = $this->get('uneak.user_manager');
 				$userManager->updateUser($user);
-				$url = $this->generateUrl('user_profile_show');
-				$response = new RedirectResponse($url);
-				return $response;
+				return new RedirectResponse($this->generateUrl('user_profile_show'));
 			}
 
 

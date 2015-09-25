@@ -2,21 +2,24 @@
 
     namespace AppBundle\Blocks\Menu;
 
-	use Uneak\PortoAdminBundle\Blocks\Menu\Menu as PortoAdminMenu;
+	use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+    use Uneak\PortoAdminBundle\Blocks\Menu\Menu as PortoAdminMenu;
     use Uneak\RoutesManagerBundle\Helper\MenuHelper;
     use Uneak\RoutesManagerBundle\Routes\FlattenEntityRoute;
     use Uneak\RoutesManagerBundle\Routes\FlattenRouteManager;
-    use Uneak\RoutesManagerBundle\Routes\NestedEntityRoute;
+    use Uneak\RoutesManagerBundle\Security\Authorization\Voter\RouteVoter;
 
     class MainMenu extends PortoAdminMenu {
 
         protected $menuHelper;
         protected $fRouteManager;
+        protected $authorization;
 
-		public function __construct(MenuHelper $menuHelper, FlattenRouteManager $fRouteManager) {
+		public function __construct(MenuHelper $menuHelper, FlattenRouteManager $fRouteManager, AuthorizationChecker $authorization) {
 			parent::__construct();
             $this->menuHelper = $menuHelper;
             $this->fRouteManager = $fRouteManager;
+            $this->authorization = $authorization;
 		}
 
         public function getRoot() {
@@ -27,14 +30,16 @@
             $fRoutes = $this->fRouteManager->getFlattenRoutes();
             foreach ($fRoutes as $fRoute) {
 
-                $menu = $this->menuHelper->createItem($fRoute);
-                foreach ($fRoute->getChildren() as $fChildRoute) {
-                    if (!$fChildRoute instanceof FlattenEntityRoute) {
-                        $childMenu = $this->menuHelper->createItem($fChildRoute);
-                        $menu->addChild($childMenu);
+                if ($this->authorization->isGranted(RouteVoter::ROUTE_GRANTED, $fRoute) === true) {
+                    $menu = $this->menuHelper->createItem($fRoute);
+                    foreach ($fRoute->getChildren() as $fChildRoute) {
+                        if (!$fChildRoute instanceof FlattenEntityRoute) {
+                            $childMenu = $this->menuHelper->createItem($fChildRoute);
+                            $menu->addChild($childMenu);
+                        }
                     }
+                    $root->addChild($menu);
                 }
-                $root->addChild($menu);
             }
 
 //

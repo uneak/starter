@@ -372,7 +372,7 @@ user:
         confirmation: false
         account_connector: uneak.user_provider
         registration_form: uneak.user_registration.form.type
-        registration_form_handler: uneak.user_registration.form.handler
+#        registration_form_handler: uneak.user_registration.form.handler
 
 # uneak-user
 member:
@@ -441,7 +441,14 @@ vich_uploader:
             uri_prefix:         /uploads/user
             upload_destination: %kernel.root_dir%/../web/uploads/user
             namer: vich_uploader.namer_uniqid
-
-            inject_on_load:     false
+            inject_on_load:     true
             delete_on_update:   true
             delete_on_remove:   true
+
+#        member_image:
+#            uri_prefix:         /uploads/member
+#            upload_destination: %kernel.root_dir%/../web/uploads/member
+#            namer: vich_uploader.namer_uniqid
+#            inject_on_load:     true
+#            delete_on_update:   true
+#            delete_on_remove:   true

@@ -34,28 +34,34 @@ user_profile_edit:
 
 
 user_registration_register:
-    path: /register
-    defaults: { _controller: UserBundle:Registration:register }
+    path: /register/{key}
+    defaults: { _controller: UserBundle:Registration:register, key: null }
     requirements:
         _method: GET|POST
 
 
+
 user_registration_check_email:
-    path: /register/check-email
+    path: /register/check-email/{username}
     defaults: { _controller: UserBundle:Registration:checkEmail }
     requirements:
         _method: GET
 
+user_registration_email_confirmed:
+    path: /register/email-confirmed/{username}
+    defaults: { _controller: UserBundle:Registration:emailConfirmed }
+    requirements:
+        _method: GET
 
 user_registration_confirm:
-    path: /register/confirm/{token}
-    defaults: { _controller: UserBundle:Registration:confirm }
+    path: /register/email-confirm/{token}
+    defaults: { _controller: UserBundle:Registration:emailConfirm }
     requirements:
         _method: GET
 
 
 user_registration_confirmed:
-    path: /register/confirmed
+    path: /register/confirmed/{username}
     defaults: { _controller: UserBundle:Registration:confirmed }
     requirements:
         _method: GET
@@ -102,14 +108,24 @@ user_oauth_connect:
     defaults: { _controller: UserBundle:Connect:connect }
 
 
+user_oauth_disconnect_service:
+    path: /disconnect/service/{service}
+    defaults: { _controller: UserBundle:Connect:disconnectService }
+
+
+user_oauth_register_service:
+    path: /register/service/{service}
+    defaults: { _controller: UserBundle:Connect:registerService }
+
+
 user_oauth_connect_service:
     path: /connect/service/{service}
     defaults: { _controller: UserBundle:Connect:connectService }
 
 
-user_oauth_connect_registration:
-    path: /connect/registration/{key}
-    defaults: { _controller: UserBundle:Connect:registration }
+#user_oauth_connect_registration:
+#    path: /connect/registration/{key}
+#    defaults: { _controller: UserBundle:Connect:registration }
 
 
 user_oauth_service_redirect:

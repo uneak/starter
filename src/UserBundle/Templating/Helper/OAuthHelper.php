@@ -11,6 +11,7 @@
 
 namespace UserBundle\Templating\Helper;
 
+use Symfony\Component\HttpFoundation\RequestStack;
 use UserBundle\Security\OAuthUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Templating\Helper\Helper;
@@ -24,9 +25,9 @@ use Symfony\Component\Templating\Helper\Helper;
 class OAuthHelper extends Helper
 {
     /**
-     * @var Request
+     * @var RequestStack
      */
-    private $request;
+    private $requestStack;
 
     /**
      * @var OAuthUtils
@@ -36,18 +37,19 @@ class OAuthHelper extends Helper
     /**
      * @param OAuthUtils $oauthUtils
      */
-    public function __construct(OAuthUtils $oauthUtils)
+    public function __construct(OAuthUtils $oauthUtils, RequestStack $requestStack)
     {
         $this->oauthUtils = $oauthUtils;
+        $this->requestStack = $requestStack;
     }
 
-    /**
-     * @param null|Request $request
-     */
-    public function setRequest(Request $request = null)
-    {
-        $this->request = $request;
-    }
+//    /**
+//     * @param null|Request $request
+//     */
+//    public function setRequest(Request $request = null)
+//    {
+//        $this->request = $request;
+//    }
 
     /**
      * @return array
@@ -66,7 +68,9 @@ class OAuthHelper extends Helper
      */
     public function getLoginUrl($name)
     {
-        return $this->oauthUtils->getLoginUrl($this->request, $name);
+
+        $this->container->get("request");
+        return $this->oauthUtils->getLoginUrl($this->requestStack->getCurrentRequest(), $name);
     }
 
     /**
@@ -78,7 +82,7 @@ class OAuthHelper extends Helper
      */
     public function getAuthorizationUrl($name, $redirectUrl = null, array $extraParameters = array())
     {
-        return $this->oauthUtils->getAuthorizationUrl($this->request, $name, $redirectUrl, $extraParameters);
+        return $this->oauthUtils->getAuthorizationUrl($this->requestStack->getCurrentRequest(), $name, $redirectUrl, $extraParameters);
     }
 
     /**
@@ -88,6 +92,6 @@ class OAuthHelper extends Helper
      */
     public function getName()
     {
-        return 'hwi_oauth';
+        return 'user_oauth';
     }
 }

@@ -38,6 +38,7 @@ use Uneak\PortoAdminBundle\Controller\LayoutMainInterfaceController;
 class LayoutProfileController extends LayoutMainInterfaceController
 {
 
+    protected $entity;
     protected $entityLayout;
     protected $entityLayoutContent;
     protected $entityLayoutContentBody;
@@ -79,17 +80,17 @@ class LayoutProfileController extends LayoutMainInterfaceController
 
         $this->entityLayoutContent->setTemplateType(EntityContent::TEMPLATE_TYPE_SCROLL);
 
-        $entity = $this->getUser();
-        if (!is_object($entity) || !$entity instanceof UserInterface) {
+        $this->entity = $this->getUser();
+        if (!is_object($this->entity) || !$this->entity instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
         $this->entityLayoutContent->setTitle("Profile");
-        $this->entityLayoutContent->setSubtitle($entity->getFirstName()." ".$entity->getLastName());
+        $this->entityLayoutContent->setSubtitle($this->entity->getFirstName()." ".$this->entity->getLastName());
 
 
         $vichHelper = $this->get("vich_uploader.templating.helper.uploader_helper");
-        $photoFile = $vichHelper->asset($entity, "imageFile");
+        $photoFile = $vichHelper->asset($this->entity, "imageFile");
 
         if ($photoFile) {
             $photo = new Photo();

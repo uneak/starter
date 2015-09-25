@@ -32,7 +32,7 @@
 
             $builder
                 ->add("select3_js", "externaljs", array(
-                    "src" => "/vendor/select3/select3.js"
+                    "src" => "/vendor/select2/select2.js"
                 ))
             ;
 

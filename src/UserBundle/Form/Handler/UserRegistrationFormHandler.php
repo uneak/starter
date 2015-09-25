@@ -80,8 +80,7 @@ class UserRegistrationFormHandler implements RegistrationFormHandlerInterface
         }
 
         $user = $this->userManager->createUser();
-        $user->setEnabled(true);
-
+        $user->setEnabled(false);
         $form->setData($this->setUserInformation($user, $userInformation));
 
         if ($request->isMethod('POST')) {
@@ -149,10 +148,8 @@ class UserRegistrationFormHandler implements RegistrationFormHandlerInterface
     {
         $accessor = PropertyAccess::createPropertyAccessor();
         $accessor->setValue($user, 'username', $this->getUniqueUserName($userInformation->getNickname()));
-        $accessor->setValue($user, 'firstName', $this->getUniqueUserName($userInformation->getFirstName()));
-        $accessor->setValue($user, 'lastName', $this->getUniqueUserName($userInformation->getLastName()));
-
-//        ldd($userInformation);
+        $accessor->setValue($user, 'firstName', $userInformation->getFirstName());
+        $accessor->setValue($user, 'lastName', $userInformation->getLastName());
 
         if ($accessor->isWritable($user, 'email')) {
             $accessor->setValue($user, 'email', $userInformation->getEmail());

@@ -80,5 +80,9 @@
 		}
 
 
+		public function getNotification() {
+			return $this->getBlock(":notification_item");
+		}
+
 
 	}

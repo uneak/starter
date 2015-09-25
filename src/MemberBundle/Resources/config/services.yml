@@ -70,8 +70,7 @@ services:
         class: %member_oauth.templating.helper.oauth.class%
         arguments:
             - @member_oauth.security.oauth_utils
-        calls:
-            - [ setRequest, [ @request= ]]
+            - @request_stack
         tags:
             - { name: templating.helper, alias: oauth }
 

@@ -27,6 +27,11 @@
             $authErrorKey = Security::AUTHENTICATION_ERROR;
             $lastUsernameKey = Security::LAST_USERNAME;
 
+//			$error = $this->getErrorForRequest($request);
+//			if ($error) {
+//				// TODO: this is a potential security risk (see http://trac.symfony-project.org/ticket/9523)
+//				$error = $error->getMessage();
+//			}
 
 			// get the error if any (works with forward and redirect -- see below)
 			if ($request->attributes->has($authErrorKey)) {

@@ -44,11 +44,8 @@
 
                 ))
 
+				;
 
-                ->add('enabled', null, array(
-					'label' => "Activé",
-					'required'      => true,
-				));
 
 		}
 

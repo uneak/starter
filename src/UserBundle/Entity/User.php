@@ -25,6 +25,11 @@
 	 */
 	class User extends BaseUser {
 
+
+		const STATE_PROFILE_PENDING = "STATE_PROFILE_PENDING";
+		const STATE_PROFILE_ACCEPT = "STATE_PROFILE_ACCEPT";
+		const STATE_PROFILE_REFUSED = "STATE_PROFILE_REFUSED";
+
 		/**
 		 * @var integer
 		 *
@@ -96,6 +101,22 @@
          * @NotBlank()
          */
         protected $email;
+
+		/**
+		 * @ORM\Column(name="email_confirmed", type="boolean")
+		 */
+		protected $emailConfirmed = false;
+
+		/**
+		 * @var boolean
+		 */
+		protected $enabled = false;
+
+		/**
+		 * @ORM\Column(name="state_profile", type="string", length=64)
+		 */
+		protected $stateProfile = self::STATE_PROFILE_PENDING;
+
 
 
         /**
@@ -254,5 +275,39 @@
 			$this->firstName = $firstName;
 			return $this;
 		}
+
+		/**
+		 * @return mixed
+		 */
+		public function getEmailConfirmed() {
+			return $this->emailConfirmed;
+		}
+
+		/**
+		 * @param mixed $emailConfirm
+		 *
+		 * @return User
+		 */
+		public function setEmailConfirmed($emailConfirmed) {
+			$this->emailConfirmed = $emailConfirmed;
+			return $this;
+		}
+
+		/**
+		 * @return mixed
+		 */
+		public function getStateProfile() {
+			return $this->stateProfile;
+		}
+
+		/**
+		 * @param mixed $stateProfile
+		 */
+		public function setStateProfile($stateProfile) {
+			$this->stateProfile = $stateProfile;
+		}
+
+
+
 
 	}

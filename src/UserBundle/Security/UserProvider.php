@@ -8,6 +8,8 @@
 	use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
     use HWI\Bundle\OAuthBundle\Security\Core\Exception\AccountNotLinkedException;
     use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthAwareUserProviderInterface;
+	use Symfony\Component\HttpFoundation\File\File;
+	use Symfony\Component\HttpFoundation\File\UploadedFile;
 	use Symfony\Component\PropertyAccess\PropertyAccess;
 	use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 	use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -73,6 +75,8 @@
 			$user = null;
 
 
+			ldd($_REQUEST);
+
 			if ($resourceOwnerName == "facebook") {
                 $user = $this->userManager->findUserBy(array('facebookId' => $id));
                 if (null === $user) {
@@ -97,6 +101,58 @@
 		}
 
 
+
+
+		/**
+		 * {@inheritDoc}
+		 */
+		public function disconnect(UserInterface $user, $resourceOwnerName) {
+
+			if (!$user instanceof User) {
+				throw new UnsupportedUserException(sprintf('Expected an instance of UserBundle\Model\User, but got "%s".', get_class($user)));
+			}
+
+			if ($resourceOwnerName == "facebook") {
+				$property = "facebookId";
+
+				if (!$this->accessor->isWritable($user, $property)) {
+					throw new \RuntimeException(sprintf("Class '%s' must have defined setter method for property: '%s'.", get_class($user), $property));
+				}
+
+				$user->setFacebookId(null);
+				$this->userManager->updateUser($user);
+
+
+			} else if ($resourceOwnerName == "google") {
+				$property = "googleId";
+
+				if (!$this->accessor->isWritable($user, $property)) {
+					throw new \RuntimeException(sprintf("Class '%s' must have defined setter method for property: '%s'.", get_class($user), $property));
+				}
+
+				$user->setGoogleId(null);
+				$this->userManager->updateUser($user);
+
+
+			} else if ($resourceOwnerName == "twitter") {
+				$property = "twitterId";
+
+				if (!$this->accessor->isWritable($user, $property)) {
+					throw new \RuntimeException(sprintf("Class '%s' must have defined setter method for property: '%s'.", get_class($user), $property));
+				}
+
+				$user->setTwitterId(null);
+				$this->userManager->updateUser($user);
+
+			}
+
+
+		}
+
+
+
+
+
 		/**
 		 * {@inheritDoc}
 		 */
@@ -106,11 +162,8 @@
                 throw new UnsupportedUserException(sprintf('Expected an instance of UserBundle\Model\User, but got "%s".', get_class($user)));
             }
 
-
 			$resourceOwnerName = $response->getResourceOwner()->getName();
 			$id = $response->getUsername();
-			$realName = $response->getRealName();
-
 
 
             if ($resourceOwnerName == "facebook") {

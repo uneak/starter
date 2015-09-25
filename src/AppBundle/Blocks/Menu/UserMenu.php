@@ -43,19 +43,25 @@
             $root->addChild($factory->createItem('profile', array(
                 'label' => 'Profile',
                 'icon' => 'user',
-                'uri' => $this->router->generate('fos_user_profile_show'),
+                'uri' => $this->router->generate('user_profile_show'),
             )));
 
             $root->addChild($factory->createItem('profile_edit', array(
                 'label' => 'Edition',
                 'icon' => 'edit',
-                'uri' => $this->router->generate('fos_user_profile_edit'),
+                'uri' => $this->router->generate('user_profile_edit'),
+            )));
+
+            $root->addChild($factory->createItem('profile_social', array(
+                'label' => 'Réseaux sociaux',
+                'icon' => 'share-alt',
+                'uri' => $this->router->generate('user_oauth_connect'),
             )));
 
             $root->addChild($factory->createItem('profile_password', array(
                 'label' => 'Mot de passe',
                 'icon' => 'key',
-                'uri' => $this->router->generate('fos_user_change_password'),
+                'uri' => $this->router->generate('user_change_password'),
             )));
 
             $root->addChild($factory->createItem('bottom-separator', array(
@@ -65,7 +71,7 @@
             $root->addChild($factory->createItem('profile_logout', array(
                 'label' => 'Déconnexion',
                 'icon' => 'sign-out',
-                'uri' => $this->router->generate('fos_user_security_logout'),
+                'uri' => $this->router->generate('user_security_logout'),
             )));
 
 

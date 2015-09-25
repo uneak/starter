@@ -12,7 +12,7 @@
 	use Uneak\PortoAdminBundle\Blocks\Panel\Panel;
 	use UserBundle\Form\Type\ChangePasswordFormType;
 
-	class ChangePasswordController extends Controller {
+	class ChangePasswordController extends LayoutProfileController {
 		/**
 		 * Change user password
 		 */
@@ -25,6 +25,7 @@
 			$templates = $this->get("uneak.templatesmanager");
 
 			$form = $this->createForm(new ChangePasswordFormType(), $user);
+			$form->add('submit', 'submit', array('label' => 'Modifier'));
 			$form->handleRequest($request);
 
 			if ($form->isValid()) {

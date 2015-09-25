@@ -1,7 +1,13 @@
 {% trans_default_domain 'FOSUserBundle' %}
 {% form_theme form '@UneakPortoAdmin/FOSUser/porto_theme.html.twig' %}
-
-<form action="{{ path('user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+<form action="{{ path('user_registration_register', {'key': key}) }}" {{ form_enctype(form) }} method="POST" class="user_registration_register">
+    {% if userInformation and userInformation.profilePicture is not empty %}
+        <div class="row">
+            <div class="col-sm-12">
+                <img src="{{ userInformation.profilePicture }}" />
+            </div>
+        </div>
+    {% endif %}
     {{ form_widget(form) }}
     <div class="row">
         <div class="col-sm-12">

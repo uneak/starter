@@ -7,6 +7,7 @@
 	use Symfony\Component\HttpFoundation\Request;
 	use Uneak\MaterialDesignBundle\Blocks\CardBlock;
 	use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
+	use UserBundle\Entity\User;
 
 	class DefaultController extends Controller {
 
@@ -15,6 +16,18 @@
 		 */
 		public function testAction() {
 
+//			$metadata = $this->get('vich_uploader.metadata_reader');
+//			ld($metadata->getUploadableField('UserBundle\Entity\User', 'imageFile'));
+//
+//			$handler = $this->get('vich_uploader.upload_handler');
+//			ld($handler);
+
+
+			$factory = $this->get('vich_uploader.property_mapping_factory');
+			ld($factory->fromField(new User(), 'imageFile'));
+
+
+			die();
 		}
 
 

@@ -88,6 +88,9 @@ user_profile_show: UneakPortoAdminBundle:FOSUser:Profile/show.html.twig
 user_profile_edit: UneakPortoAdminBundle:FOSUser:Profile/edit.html.twig
 user_registration_register: UneakPortoAdminBundle:FOSUser:Registration/register.html.twig
 
+user_registration_email_confirmed: UneakPortoAdminBundle:FOSUser:Registration/emailConfirmed.html.twig
+
+
 user_connect_login: UneakPortoAdminBundle:FOSUser:Connect/login.html.twig
 user_connect_registration_success: UneakPortoAdminBundle:FOSUser:Connect/registration_success.html.twig
 user_connect_registration: UneakPortoAdminBundle:FOSUser:Connect/registration.html.twig

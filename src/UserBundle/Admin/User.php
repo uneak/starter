@@ -28,6 +28,14 @@
 				'new'    => '*/new',
 			));
 
+
+			$this->setGrantFunction(array($this, "isUserGranted"));
+
+		}
+
+		public function isUserGranted($attribute, $flattenRoute, $user = null) {
+			ldd($user->getRoles());
+			return (in_array("ROLE_SUPER_ADMIN", $user->getRoles()));
 		}
 
 
@@ -42,6 +50,7 @@
 
 				->addRowAction('show', '*/subject/show')
 				->addRowAction('edit', '*/subject/edit')
+				->addRowAction('account', '*/subject/account')
 				->addRowAction('delete', '*/subject/delete')
 
 				->addColumn(array('title' => 'Utilisateur', 'name' => 'username'))
@@ -70,6 +79,7 @@
 				->setMetaData('_menu', array(
 					'show'   => '*/subject/show',
 					'edit'   => '*/subject/edit',
+					'account'   => '*/subject/account',
 					'delete' => '*/subject/delete',
 				));
 			$this->addChild($subjectRoute);
@@ -93,6 +103,17 @@
                 ->setMetaData('_description', '{{ entity }}');
 
 			$subjectRoute->addChild($editRoute);
+
+
+			$editRoute = new NestedAdminRoute('account');
+			$editRoute
+				->setAction('account')
+				->setMetaData('_icon', 'edit')
+				->setMetaData('_label', "Etat du compte")
+				->setMetaData('_description', '{{ entity }}');
+
+			$subjectRoute->addChild($editRoute);
+
 
 
 			$deleteRoute = new NestedAdminRoute('delete');

@@ -24,6 +24,7 @@
 			$options['title'] = $block->getTitle();
 			$options['description'] = $block->getDescription();
 			$options['photo'] = $block->getPhoto();
+			$options['link'] = $block->getLink();
 
 		}
 

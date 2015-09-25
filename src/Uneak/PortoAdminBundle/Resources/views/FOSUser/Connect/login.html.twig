@@ -1,8 +1,42 @@
+{% if error is defined and error %}
+    <span>{{ error }}</span>
+{% endif %}
 
-    {% if error is defined and error %}
-        <span>{{ error }}</span>
-    {% endif %}
-    {% for owner in user_oauth_resource_owners() %}
-    <a href="{{ user_oauth_login_url(owner) }}">{{ owner | trans({}, 'HWIOAuthBundle') }}</a> <br />
-    {% endfor %}
+<div class="mb-xs">
+    <div>
+        <a href="{{ path('user_oauth_service_redirect', {service: "facebook"}) }}" class="btn btn-facebook mb-md ml-xs mr-xs pr-md pl-md"><i class="fa fa-facebook"></i> connexion</a><br />
+        {%  if user.facebookId %}
+            <ul>
+                <li>Connecté</li>
+                <li>{{ user.facebookId }}</li>
+                <li><a href="https://www.facebook.com/{{ user.facebookId }}">Voir le profil</a></li>
+                <li><a href="{{ path('user_oauth_disconnect_service', {service: "facebook"}) }}">Deconnecter le profil</a></li>
+            </ul>
+        {% endif %}
+    </div>
+<hr/>
+    <div>
+        <a href="{{ path('user_oauth_service_redirect', {service: "google"}) }}" class="btn btn-gplus mb-md ml-xs mr-xs pr-md pl-md"><i class="fa fa-google"></i> connexion</a><br />
+        {%  if user.googleId %}
+            <ul>
+                <li>Connecté</li>
+                <li>{{ user.googleId }}</li>
+                <li><a href="https://plus.google.com/{{ user.googleId }}">Voir le profil</a></li>
+                <li><a href="{{ path('user_oauth_disconnect_service', {service: "google"}) }}">Deconnecter le profil</a></li>
+            </ul>
+        {% endif %}
+    </div>
+    <hr/>
+    <div>
+        <a href="{{ path('user_oauth_service_redirect', {service: "twitter"}) }}" class="btn btn-twitter mb-md ml-xs mr-xs pr-md pl-md"><i class="fa fa-twitter"></i> connexion</a><br />
+        {%  if user.twitterId %}
+            <ul>
+                <li>Connecté</li>
+                <li>{{ user.twitterId }}</li>
+                <li><a href="https://twitter.com/intent/user?user_id={{ user.twitterId }}">Voir le profil</a></li>
+                <li><a href="{{ path('user_oauth_disconnect_service', {service: "twitter"}) }}">Deconnecter le profil</a></li>
+            </ul>
+        {% endif %}
 
+    </div>
+</div>

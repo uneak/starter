@@ -58,12 +58,16 @@
 			$user = $this->get('uneak.user_manager')->findUserByUsernameOrEmail($username);
 
 			if (null === $user) {
+
+				//TODO: renderbylayout
 				return $this->render($templates->getTemplate("user_resetting_request"), array(
 					'invalid_username' => $username
 				));
 			}
 
 			if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
+
+				//TODO: renderbylayout
 				return $this->render($templates->getTemplate("user_resetting_password_already_requested"));
 			}
 
@@ -75,7 +79,27 @@
 				$user->setConfirmationToken($tokenGenerator->generateToken());
 			}
 
-			$this->get('fos_user.mailer')->sendResettingEmailMessage($user);
+
+			// SEND EMAIL
+			$mailer = $this->get("mailer");
+			$rendered = $this->render($templates->getTemplate("user_resetting_email_txt"), array(
+				'user' => $user,
+				'confirmationUrl' =>  $this->generateUrl('user_resetting_reset', array('token' => $user->getConfirmationToken()), true)
+			));
+
+			$renderedLines = explode("\n", trim($rendered));
+			$subject = $renderedLines[0];
+			$body = implode("\n", array_slice($renderedLines, 1));
+
+			$message = \Swift_Message::newInstance()
+				->setSubject($subject)
+				->setFrom('mgaloyer@uneak.fr')
+				->setTo($user->getEmail())
+				->setBody($body);
+
+			$mailer->send($message);
+
+
 			$user->setPasswordRequestedAt(new \DateTime());
 			$this->get('uneak.user_manager')->updateUser($user);
 
@@ -113,7 +137,6 @@
 		public function resetAction(Request $request, $token) {
 			/** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
 			$userManager = $this->get('uneak.user_manager');
-			$templates = $this->get("uneak.templatesmanager");
 
 			$user = $userManager->findUserByConfirmationToken($token);
 
@@ -124,15 +147,10 @@
 			$form = $this->createForm(new ResettingFormType(), $user);
 			$form->handleRequest($request);
 
-
 			if ($form->isValid()) {
 				$userManager->updateUser($user);
-				$url = $this->generateUrl('user_profile_show');
-				$response = new RedirectResponse($url);
-
-				return $response;
+				return new RedirectResponse($this->generateUrl('user_profile_show'));
 			}
-
 
 
 			//

@@ -167,7 +167,7 @@
                 $form->handleRequest($request);
                 if ($form->isValid()) {
 
-                    $userManager = $this->get('fos_user.user_manager');
+                    $userManager = $this->get('uneak.user_manager');
                     $userManager->updateUser($this->entity);
 
                     return $this->redirect($this->entityRoute->getChild('show')->getRoutePath());
@@ -212,7 +212,7 @@
                 $form->handleRequest($request);
                 if ($form->isValid()) {
 
-                    $userManager = $this->get('fos_user.user_manager');
+                    $userManager = $this->get('uneak.user_manager');
                     $userManager->updateUser($entity);
 
                     return $this->redirect($route->getChild('*/subject/show', array($entity->getId()) )->getRoutePath());

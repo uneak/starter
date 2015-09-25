@@ -15,10 +15,13 @@
 	use FOS\UserBundle\Event\FormEvent;
 	use FOS\UserBundle\Event\GetResponseUserEvent;
 	use FOS\UserBundle\Event\FilterUserResponseEvent;
+	use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
+	use HWI\Bundle\OAuthBundle\Security\Core\Exception\AccountNotLinkedException;
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 	use Symfony\Component\HttpFoundation\Request;
 	use Symfony\Component\HttpFoundation\RedirectResponse;
 	use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+	use Symfony\Component\PropertyAccess\PropertyAccess;
 	use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 	use FOS\UserBundle\Model\UserInterface;
 	use Uneak\PortoAdminBundle\Blocks\Content\Twig;
@@ -33,41 +36,67 @@
 	 */
 	class RegistrationController extends LayoutFormInterfaceController {
 
-		public function registerAction(Request $request) {
-
+		public function registerAction(Request $request, $key = null) {
 			$userManager = $this->get('uneak.user_manager');
 			$templates = $this->get("uneak.templatesmanager");
 
+			$hasUser = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
+			if ($hasUser) {
+				throw new AccessDeniedException('Cannot register already registered account.');
+			}
 
 			$user = $userManager->createUser();
-			$user->setEnabled(true);
+			$userInformation = null;
+
+			if ($key) {
+				$session = $request->getSession();
+				$error = $session->get('_user_oauth.registration_error.' . $key);
+				$session->remove('_user_oauth.registration_error.' . $key);
+
+				$key = time();
+				$session->set('_user_oauth.registration_error.' . $key, $error);
+
+
+				if (!($error instanceof AccountNotLinkedException) || (time() - $key > 300)) {
+					// todo: fix this
+					throw new \Exception('Cannot register an account.');
+				}
+
+				$userInformation = $this->getResourceOwnerByName($error->getResourceOwnerName())->getUserInformation($error->getRawToken());
+				$this->updateUserInformation($user, $userInformation);
+			}
+
+
 			$form = $this->createForm(new RegistrationFormType(), $user);
 			$form->handleRequest($request);
 
 			if ($form->isValid()) {
 
+				$emailHaveToConfirm = true;
+				$emailConfirmed = false;
 
-				$emailConfirm = true;
-				if ($emailConfirm) {
+				if ($userInformation) {
+					$this->container->get('user_oauth.account.connector')->connect($user, $userInformation);
+					$this->updateSocialPhoto($user, $userInformation->getProfilePicture());
+					$emailConfirmed = $userInformation->getEmail() == $user->getEmail();
+					$user->setEmailConfirmed($emailConfirmed);
+				}
+
+
+				if ($emailHaveToConfirm && !$emailConfirmed) {
 
 					$tokenGenerator = $this->get("fos_user.util.token_generator");
 					$mailer = $this->get("mailer");
-					$session = $this->get("session");
 
-
-					$user->setEnabled(false);
 					if (null === $user->getConfirmationToken()) {
 						$user->setConfirmationToken($tokenGenerator->generateToken());
 					}
 
-
 					// SEND EMAIL
 
-
-					$url = $this->generateUrl('user_registration_confirm', array('token' => $user->getConfirmationToken()), true);
 					$rendered = $this->render($templates->getTemplate("user_registration_email_txt"), array(
 						'user' => $user,
-						'confirmationUrl' =>  $url
+						'confirmationUrl' =>  $this->generateUrl('user_registration_confirm', array('token' => $user->getConfirmationToken()), true)
 					));
 
 					$renderedLines = explode("\n", trim($rendered));
@@ -82,53 +111,50 @@
 
 					$mailer->send($message);
 
-					$session->set('user_send_confirmation_email/email', $user->getEmail());
+					$userManager->updateUser($user);
 
-					$url = $this->generateUrl('user_registration_check_email');
-					$response = new RedirectResponse($url);
+					$url = $this->generateUrl('user_registration_check_email', array("username" => $user->getUsername()));
+					return new RedirectResponse($url);
 
 				} else {
 
-					$url = $this->generateUrl('user_registration_confirmed');
-					$response = new RedirectResponse($url);
+					$userManager->updateUser($user);
+
+					$url = $this->generateUrl('user_registration_confirmed', array("username" => $user->getUsername()));
+					return new RedirectResponse($url);
 				}
 
 
-				$userManager->updateUser($user);
-				return $response;
+
 			}
 
 
-			//
-			//
+
 			$this->layout->setIcon("user");
 			$this->layout->setTitle("Register");
 			$content = new Twig('user_registration_register', array(
 				'form' => $form->createView(),
+				'userInformation' => $userInformation,
+				'key' => $key
 			));
 			$this->layout->setContent($content);
 
 
-
-//			return $this->render($templates->getTemplate("user_registration_register"), array(
-//				'form' => $form->createView(),
-//			));
 		}
+
+
+
 
 		/**
 		 * Tell the user to check his email provider
 		 */
-		public function checkEmailAction() {
-			$templates = $this->get("uneak.templatesmanager");
-
-			$email = $this->get('session')->get('user_send_confirmation_email/email');
-			$this->get('session')->remove('user_send_confirmation_email/email');
-			$user = $this->get('uneak.user_manager')->findUserByEmail($email);
+		public function checkEmailAction($username) {
+			$userManager = $this->get('uneak.user_manager');
+			$user = $userManager->findUserByUsername($username);
 
 			if (null === $user) {
-				throw new NotFoundHttpException(sprintf('The user with email "%s" does not exist', $email));
+				throw new NotFoundHttpException(sprintf('The user with username "%s" does not exist', $username));
 			}
-
 
 			//
 			//
@@ -139,15 +165,14 @@
 			));
 			$this->layout->setContent($content);
 
-
 		}
+
 
 		/**
 		 * Receive the confirmation token from user email provider, login the user
 		 */
-		public function confirmAction(Request $request, $token) {
+		public function emailConfirmAction(Request $request, $token) {
 			$userManager = $this->get('uneak.user_manager');
-
 			$user = $userManager->findUserByConfirmationToken($token);
 
 			if (null === $user) {
@@ -155,35 +180,103 @@
 			}
 
 			$user->setConfirmationToken(null);
-			$user->setEnabled(true);
+			$user->setEmailConfirmed(true);
 			$userManager->updateUser($user);
-			$url = $this->generateUrl('user_registration_confirmed');
-			$response = new RedirectResponse($url);
 
-			return $response;
+			return new RedirectResponse($this->generateUrl('user_registration_email_confirmed', array("username" => $user->getUsername())));
 		}
+
 
 		/**
 		 * Tell the user his account is now confirmed
 		 */
-		public function confirmedAction() {
-			$templates = $this->get("uneak.templatesmanager");
+		public function emailConfirmedAction($username) {
+			$userManager = $this->get('uneak.user_manager');
+			$user = $userManager->findUserByUsername($username);
 
-			$user = $this->getUser();
-			if (!is_object($user) || !$user instanceof UserInterface) {
-				throw new AccessDeniedException('This user does not have access to this section.');
-			}
+			$this->layout->setIcon("user");
+			$this->layout->setTitle("Register");
+			$content = new Twig('user_registration_email_confirmed', array(
+				'user' => $user,
+			));
+			$this->layout->setContent($content);
+
+		}
 
 
-			//
-			//
+
+		/**
+		 * Tell the user his account is now confirmed
+		 */
+		public function confirmedAction($username) {
+			$userManager = $this->get('uneak.user_manager');
+			$user = $userManager->findUserByUsername($username);
+
 			$this->layout->setIcon("user");
 			$this->layout->setTitle("Register");
 			$content = new Twig('user_registration_confirmed', array(
 				'user' => $user,
 			));
 			$this->layout->setContent($content);
+		}
 
 
+
+
+
+		/**
+		 * Get a resource owner by name.
+		 *
+		 * @param string $name
+		 *
+		 * @return ResourceOwnerInterface
+		 *
+		 * @throws \RuntimeException if there is no resource owner with the given name.
+		 */
+		protected function getResourceOwnerByName($name) {
+			$ownerMap = $this->container->get('hwi_oauth.resource_ownermap.' . $this->container->getParameter('user_oauth.firewall_name'));
+
+			if (null === $resourceOwner = $ownerMap->getResourceOwnerByName($name)) {
+				throw new \RuntimeException(sprintf("No resource owner with name '%s'.", $name));
+			}
+
+			return $resourceOwner;
+		}
+
+		protected function updateSocialPhoto(UserInterface $user, $photoPath) {
+
+			$propertyMapping = $this->get('vich_uploader.property_mapping_factory');
+
+			$mapping = $propertyMapping->fromField($user, 'imageFile');
+			$destDir = $mapping->getUploadDestination();
+			$extension = pathinfo(parse_url($photoPath, PHP_URL_PATH), PATHINFO_EXTENSION);
+			$destName = uniqid().".".$extension;
+
+			$destPath = $destDir."/".$destName;
+			$file = fopen($photoPath, "rb");
+			if ($file) {
+				$newfile = fopen($destPath, "wb");
+				if ($newfile) {
+					while(!feof($file)) {
+						fwrite($newfile, fread($file, 1024 * 8 ), 1024 * 8 );
+					}
+					fclose($newfile);
+				}
+				fclose($file);
+			}
+
+			$user->setImage($destName);
+		}
+
+		protected function updateUserInformation(UserInterface $user, UserResponseInterface $userInformation)
+		{
+			$accessor = PropertyAccess::createPropertyAccessor();
+			$accessor->setValue($user, 'username', $userInformation->getNickname());
+			$accessor->setValue($user, 'firstName', $userInformation->getFirstName());
+			$accessor->setValue($user, 'lastName', $userInformation->getLastName());
+
+			if ($accessor->isWritable($user, 'email')) {
+				$accessor->setValue($user, 'email', $userInformation->getEmail());
+			}
 		}
 	}

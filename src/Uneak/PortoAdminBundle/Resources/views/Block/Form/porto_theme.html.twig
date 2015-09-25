@@ -130,7 +130,28 @@
 
 {% block choice_widget_collapsed -%}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
-    {{- parent() -}}
+
+    <div class="col-md-6">
+
+        {% if icon is defined %}
+            <div class="input-group input-group-icon">
+                <span class="input-group-addon">
+                    <span class="icon"><i class="{{ icon }}"></i></span>
+                </span>
+                {{- parent() -}}
+            </div>
+        {% else %}
+            {{- parent() -}}
+        {% endif %}
+
+        {% if help is defined %}
+            <p class="help">{{ help }}</p>
+        {% endif %}
+
+        {{- form_errors(form) -}}
+    </div>
+
+
 {%- endblock %}
 
 {% block choice_widget_expanded -%}

@@ -4,7 +4,7 @@ parameters:
     uneak.user_provider.username.class: FOS\UserBundle\Security\UserProvider
     uneak.user_provider.username_email.class: FOS\UserBundle\Security\EmailUserProvider
     uneak.user_registration.form.type.class: UserBundle\Form\Type\RegistrationFormType
-    uneak.user_registration.form.handler.class: UserBundle\Form\Handler\UserRegistrationFormHandler
+#    uneak.user_registration.form.handler.class: UserBundle\Form\Handler\UserRegistrationFormHandler
 
     user_oauth.security.oauth_utils.class: UserBundle\Security\OAuthUtils
     user_oauth.twig.extension.oauth.class: UserBundle\Twig\Extension\OAuthExtension
@@ -42,12 +42,12 @@ services:
           - { name: form.type, alias: uneak_user_registration }
 
 
-    uneak.user_registration.form.handler:
-        class: %uneak.user_registration.form.handler.class%
-        arguments:
-            - @uneak.user_manager
-            - @fos_user.mailer
-            - @fos_user.util.token_generator
+#    uneak.user_registration.form.handler:
+#        class: %uneak.user_registration.form.handler.class%
+#        arguments:
+#            - @uneak.user_manager
+#            - @fos_user.mailer
+#            - @fos_user.util.token_generator
 
 
     user_oauth.security.oauth_utils:
@@ -70,8 +70,7 @@ services:
         class: %user_oauth.templating.helper.oauth.class%
         arguments:
             - @user_oauth.security.oauth_utils
-        calls:
-            - [ setRequest, [ @request= ]]
+            - @request_stack
         tags:
             - { name: templating.helper, alias: oauth }
 

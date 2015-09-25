@@ -9,8 +9,12 @@
 <div class="header-right">
     {{ renderBlock(search) }}
     <span class="separator"></span>
-    {{ renderBlock(notifications) }}
-    <span class="separator"></span>
+
+    {%  if notifications.notifications | length %}
+        {{ renderBlock(notifications) }}
+        <span class="separator"></span>
+    {% endif %}
+
     {{ renderBlock(user) }}
 </div>
 <!-- end: search & user box -->

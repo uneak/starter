@@ -3,5 +3,8 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block user_content %}
-    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+    <p>
+        {{ user.username }} email confirmé,
+        recevrez mail quand admin ok
+    </p>
 {% endblock user_content %}

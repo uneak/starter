@@ -25,7 +25,7 @@
 			$options['icon'] = $block->getIcon();
 			$options['badge'] = $block->getBadge();
 
-			$options['items'] = $block->getBlock(":notification_item");
+			$options['items'] = $block->getNotification();
 
 		}
 
