@@ -15,6 +15,10 @@ services:
         class: %uneak.portoadmin.layout.controller.listener.class%
         arguments:
             - @router
+            - @uneak.blocksmanager.builder
+            - @uneak.blocksmanager.blocks
+            - @vich_uploader.templating.helper.uploader_helper
+
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
             - { name: kernel.event_listener, event: kernel.view, method: onKernelView }

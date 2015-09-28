@@ -8,7 +8,9 @@
 
     class LayoutMainInterfaceController extends Controller implements LayoutControllerInterface {
 
+
         protected $blockBuilder;
+
         protected $layout;
         protected $layoutHeader;
         protected $layoutContent;
@@ -18,26 +20,67 @@
         protected $layoutRightSidebar;
         protected $breadcrumb;
 
+        /**
+         * @param mixed $blockBuilder
+         */
+        public function setBlockBuilder($blockBuilder) {
+            $this->blockBuilder = $blockBuilder;
+        }
 
-        public function setContainer(ContainerInterface $container = null) {
-            parent::setContainer($container);
-            $this->blockBuilder = $this->get("uneak.blocksmanager.builder");
-            $this->blockBuilder->addBlock("layout", "block_main_interface");
-            $this->layout = $this->blockBuilder->getBlock("layout");
+        /**
+         * @param mixed $layout
+         */
+        public function setLayout($layout) {
+            $this->layout = $layout;
+        }
 
-            $this->layoutHeader = $this->layout->getHeader();
-            $this->layoutContent = $this->layout->getContent();
-            $this->layoutContentBody = $this->layoutContent->getBody();
-            $this->layoutContentHeader = $this->layoutContent->getHeader();
-            $this->breadcrumb = $this->layoutContentHeader->getBreadcrumb();
+        /**
+         * @param mixed $layoutHeader
+         */
+        public function setLayoutHeader($layoutHeader) {
+            $this->layoutHeader = $layoutHeader;
+        }
 
-            $this->layoutLeftSidebar = $this->layout->getLeftSidebar();
-            $this->layoutRightSidebar = $this->layout->getRightSidebar();
+        /**
+         * @param mixed $layoutContent
+         */
+        public function setLayoutContent($layoutContent) {
+            $this->layoutContent = $layoutContent;
+        }
 
-//            $this->layout->setLayoutStyle(MainInterface::LAYOUT_STYLE_DEFAULT);
-//            $this->layout->setBackgroundColor(MainInterface::COLOR_DARK);
-//            $this->layout->setHeaderColor(MainInterface::COLOR_DARK);
-//            $this->layout->setSidebarLeftSize(MainInterface::SIDEBAR_LEFT_SIZE_MD);
+        /**
+         * @param mixed $layoutContentBody
+         */
+        public function setLayoutContentBody($layoutContentBody) {
+            $this->layoutContentBody = $layoutContentBody;
+        }
+
+        /**
+         * @param mixed $layoutContentHeader
+         */
+        public function setLayoutContentHeader($layoutContentHeader) {
+            $this->layoutContentHeader = $layoutContentHeader;
+        }
+
+        /**
+         * @param mixed $layoutLeftSidebar
+         */
+        public function setLayoutLeftSidebar($layoutLeftSidebar) {
+            $this->layoutLeftSidebar = $layoutLeftSidebar;
+        }
+
+        /**
+         * @param mixed $layoutRightSidebar
+         */
+        public function setLayoutRightSidebar($layoutRightSidebar) {
+            $this->layoutRightSidebar = $layoutRightSidebar;
+        }
+
+        /**
+         * @param mixed $breadcrumb
+         */
+        public function setBreadcrumb($breadcrumb) {
+            $this->breadcrumb = $breadcrumb;
         }
 
 

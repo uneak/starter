@@ -114,6 +114,11 @@ datatable_bs3_css:
     config:
         href: "vendor/datatables-bs3/BS3/assets/css/datatables.css"
 
+datatable_fontawsome_css:
+    type: externalcss
+    config:
+        href: "bundles/uneakportoadmin/css/datatable-fontawsome.css"
+
 datatable_js:
     type: externaljs
     config:
@@ -124,7 +129,7 @@ datatable_bs3_js:
     type: externaljs
     config:
         src: "vendor/datatables-bs3/BS3/assets/js/datatables.js"
-        dependencies: [ "datatable_bs3_css", "datatable_js" ]
+        dependencies: [ "datatable_bs3_css", "datatable_fontawsome_css", "datatable_js" ]
 
 
 

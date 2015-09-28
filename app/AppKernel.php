@@ -33,6 +33,7 @@
 				new Uneak\RoutesManagerBundle\UneakRoutesManagerBundle(),
                 new Uneak\OAuthClientBundle\UneakOAuthClientBundle(),
                 new Uneak\OAuthFacebookServiceBundle\UneakOAuthFacebookServiceBundle(),
+                new Uneak\OAuthGoogleServiceBundle\UneakOAuthGoogleServiceBundle(),
 				// UNEAK SKIN
 				new Uneak\MaterialDesignBundle\UneakMaterialDesignBundle(),
 				new Uneak\PortoAdminBundle\UneakPortoAdminBundle(),

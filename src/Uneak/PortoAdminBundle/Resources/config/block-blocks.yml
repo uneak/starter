@@ -20,6 +20,7 @@ services:
 
     uneak.portoadmin.block.flattenroute.menu:
         class: %uneak.portoadmin.block.flattenroute.menu.class%
+        scope: prototype
         arguments:
             - @uneak.routesmanager.menu.helper
             - @uneak.routesmanager.flattenmanager
@@ -29,60 +30,72 @@ services:
 
     uneak.portoadmin.layout.main.interface:
         class: %uneak.portoadmin.layout.main.interface.class%
+        scope: prototype
         tags:
             - { name: uneak.blocksmanager.block, alias: block_main_interface, override: false }
 
     uneak.portoadmin.layout.content:
         class: %uneak.portoadmin.layout.content.class%
+        scope: prototype
         tags:
             - { name: uneak.blocksmanager.block, alias: block_content, override: false }
 
     uneak.portoadmin.layout.header:
         class: %uneak.portoadmin.layout.header.class%
+        scope: prototype
         tags:
             - { name: uneak.blocksmanager.block, alias: block_header, override: false }
 
     uneak.portoadmin.layout.left.sidebar:
         class: %uneak.portoadmin.layout.left.sidebar.class%
+        scope: prototype
         tags:
             - { name: uneak.blocksmanager.block, alias: block_left_sidebar, override: false }
 
     uneak.portoadmin.layout.right.sidebar:
         class: %uneak.portoadmin.layout.right.sidebar.class%
+        scope: prototype
         tags:
             - { name: uneak.blocksmanager.block, alias: block_right_sidebar, override: false }
 
     uneak.portoadmin.layout.page.body:
         class: %uneak.portoadmin.layout.page.body.class%
+        scope: prototype
         tags:
             - { name: uneak.blocksmanager.block, alias: block_page_body, override: false }
 
     uneak.portoadmin.layout.page.header:
         class: %uneak.portoadmin.layout.page.header.class%
+        scope: prototype
         tags:
             - { name: uneak.blocksmanager.block, alias: block_page_header, override: false }
 
     uneak.portoadmin.block.user:
         class: %uneak.portoadmin.block.user.class%
+        scope: prototype
         tags:
             - { name: uneak.blocksmanager.block, alias: block_user, override: false }
 
     uneak.portoadmin.block.user.menu:
         class: %uneak.portoadmin.block.user.menu.class%
+        scope: prototype
         tags:
             - { name: uneak.blocksmanager.block, alias: block_user_menu, override: false }
 
     uneak.portoadmin.block.brand:
         class: %uneak.portoadmin.block.brand.class%
+        scope: prototype
         tags:
             - { name: uneak.blocksmanager.block, alias: block_brand, override: false }
 
     uneak.portoadmin.block.breadcrumb:
         class: %uneak.portoadmin.block.breadcrumb.class%
+        scope: prototype
         tags:
             - { name: uneak.blocksmanager.block, alias: block_breadcrumb, override: false }
 
     uneak.portoadmin.block.notifications:
         class: %uneak.portoadmin.block.notifications.class%
+        scope: prototype
         tags:
             - { name: uneak.blocksmanager.block, alias: block_notifications, override: false }

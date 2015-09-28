@@ -11,14 +11,11 @@
 
 	namespace UserBundle\Controller;
 
+	use Symfony\Component\PropertyAccess\PropertyAccess;
 	use Uneak\PortoAdminBundle\Blocks\Content\Twig;
 	use Uneak\PortoAdminBundle\Blocks\Form\Form;
 	use Uneak\PortoAdminBundle\Blocks\Panel\Panel;
 	use UserBundle\Form\Type\ProfileFormType;
-	use FOS\UserBundle\FOSUserEvents;
-	use FOS\UserBundle\Event\FormEvent;
-	use FOS\UserBundle\Event\FilterUserResponseEvent;
-	use FOS\UserBundle\Event\GetResponseUserEvent;
 	use FOS\UserBundle\Model\UserInterface;
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 	use Symfony\Component\HttpFoundation\Request;
@@ -57,7 +54,7 @@
             $this->entityLayoutContent->setTitle("Réseaux sociaux");
 
             $content = new Twig('user_connect_login', array(
-                'user' => $this->entity,
+                'user' => $user,
             ));
 
             $panel = new Panel();
@@ -67,9 +64,24 @@
             $panel->isToggle(false);
             $panel->addBlock($content);
             $this->entityLayoutContentBody->addBlock($panel, 'social');
-
-
         }
+
+
+		public function disconnectServiceAction($service) {
+			$user = $this->getUser();
+			if (!is_object($user) || !$user instanceof UserInterface) {
+				throw new AccessDeniedException('This user does not have access to this section.');
+			}
+
+			$accessor = PropertyAccess::createPropertyAccessor();
+			$accessor->setValue($user, $service."Id", null);
+
+			$userManager = $this->get('uneak.user_manager');
+			$userManager->updateUser($user);
+
+			return new RedirectResponse($this->generateUrl('user_profile_connect'));
+		}
+
 
 
 

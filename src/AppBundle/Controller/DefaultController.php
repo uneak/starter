@@ -11,7 +11,8 @@
     use Uneak\OAuthClientBundle\Server\FacebookServer;
     use Uneak\OAuthClientBundle\OAuth\Credentials;
     use Uneak\OAuthClientBundle\OAuth\Server;
-    use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
+	use Uneak\PortoAdminBundle\Blocks\Layout\Header;
+	use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
 	use UserBundle\Entity\User;
 
 	class DefaultController extends Controller {
@@ -21,10 +22,49 @@
 		 */
 		public function testAction() {
 
+			$blockBuilder = $this->get("uneak.blocksmanager.builder");
+			$blockBuilder->addBlock("header", "block_main_interface");
+			$header = $blockBuilder->getBlock("header");
+
+			$debug = $blockBuilder->debug();
+
+			$header->getHeader()->setBrand("block_content");
+
+			$debug .= $blockBuilder->debug();
+
+			$blockBuilder->getBlock("header");
+
+			$debug .= $blockBuilder->debug();
 
 
+			$assetsManager = $this->get("uneak.assetsbuildermanager");
+			$assetsManager->getAssets();
 
-			die();
+			$debug .= $blockBuilder->debug();
+
+			$header->getHeader()->getBrand()->setTemplateAlias("MARC");
+
+			$debug .= $blockBuilder->debug();
+
+			$assetsManager->getAssets();
+
+			$debug .= $blockBuilder->debug();
+
+			return $this->render($debug);
+
+//			$this->blockBuilder->addBlock("layout", "block_main_interface");
+//			$this->layout = $this->blockBuilder->getBlock("layout");
+//
+//			$this->layoutHeader = $this->layout->getHeader();
+//			$this->layoutContent = $this->layout->getContent();
+//			$this->layoutContentBody = $this->layoutContent->getBody();
+//			$this->layoutContentHeader = $this->layoutContent->getHeader();
+//			$this->breadcrumb = $this->layoutContentHeader->getBreadcrumb();
+//
+//			$this->layoutLeftSidebar = $this->layout->getLeftSidebar();
+//			$this->layoutRightSidebar = $this->layout->getRightSidebar();
+
+
 		}
 
 

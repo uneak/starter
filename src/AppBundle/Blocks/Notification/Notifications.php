@@ -3,6 +3,7 @@
     namespace AppBundle\Blocks\Notification;
 
     use Doctrine\ORM\EntityManager;
+    use Uneak\BlocksManagerBundle\Blocks\BlocksManager;
     use Uneak\PortoAdminBundle\Blocks\Message\IconMessage;
     use Uneak\PortoAdminBundle\Blocks\Message\Message;
     use Uneak\PortoAdminBundle\Blocks\Notification\Notification;
@@ -22,11 +23,9 @@
             $this->em = $em;
             $this->flattenRouteManager = $flattenRouteManager;
             $this->uploaderHelper = $uploaderHelper;
-		}
 
 
-        public function getNotifications() {
-
+            //
             $pendingAccounts = $this->em->getRepository("UserBundle:User")->findPendingAccount();
 
             if (count($pendingAccounts)) {
@@ -48,13 +47,19 @@
 
 
                 $this->addNotification($notificationTask);
-
             }
 
+		}
 
 
-            return parent::getNotifications();
+
+
+        public function getNotifications() {
+            return $this->getBlock(":notifications");
         }
+
+
+
 
 
 	}

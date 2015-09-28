@@ -54,8 +54,8 @@
 
     <div class="mb-xs text-center">
         <a href="{{ path('oauth_authentication_code_request', {service: "facebook", action: "admin.login"}) }}" class="btn btn-facebook mb-md ml-xs mr-xs pr-md pl-md"><i class="fa fa-facebook"></i> connexion</a>
-        <a href="{{ path('user_oauth_service_redirect', {service: "google"}) }}" class="btn btn-gplus mb-md ml-xs mr-xs pr-md pl-md"><i class="fa fa-google"></i> connexion</a>
-        <a href="{{ path('user_oauth_service_redirect', {service: "twitter"}) }}" class="btn btn-twitter mb-md ml-xs mr-xs pr-md pl-md"><i class="fa fa-twitter"></i> connexion</a>
+        <a href="{{ path('oauth_authentication_code_request', {service: "google", action: "admin.login"}) }}" class="btn btn-gplus mb-md ml-xs mr-xs pr-md pl-md"><i class="fa fa-google"></i> connexion</a>
+        <a href="{{ path('oauth_authentication_code_request', {service: "twitter", action: "admin.login"}) }}" class="btn btn-twitter mb-md ml-xs mr-xs pr-md pl-md"><i class="fa fa-twitter"></i> connexion</a>
     </div>
 
     <p class="text-center">Don't have an account yet? <a href="{{ path('user_registration_register') }}">Sign Up!</a>

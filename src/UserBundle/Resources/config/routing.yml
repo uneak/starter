@@ -31,7 +31,11 @@ user_profile_connect:
     requirements:
         _method: GET
 
-
+user_profile_disconnect:
+    path: /profile/social/disconnect/{service}
+    defaults: { _controller: UserBundle:Profile:disconnectService }
+    requirements:
+        _method: GET
 
 user_profile_edit:
     path: /profile/edit
@@ -108,45 +112,3 @@ user_change_password:
     requirements:
         _method: GET|POST
 
-
-
-user_oauth_connect:
-    path: /connect
-    defaults: { _controller: UserBundle:Connect:connect }
-
-
-user_oauth_disconnect_service:
-    path: /disconnect/service/{service}
-    defaults: { _controller: UserBundle:Connect:disconnectService }
-
-
-user_oauth_register_service:
-    path: /register/service/{service}
-    defaults: { _controller: UserBundle:Connect:registerService }
-
-
-user_oauth_connect_service:
-    path: /connect/service/{service}
-    defaults: { _controller: UserBundle:Connect:connectService }
-
-
-#user_oauth_connect_registration:
-#    path: /connect/registration/{key}
-#    defaults: { _controller: UserBundle:Connect:registration }
-
-
-user_oauth_service_redirect:
-    path: /connect/{service}
-    defaults: { _controller: UserBundle:Connect:redirectToService }
-
-
-user_facebook_login:
-    path: /connect/check-facebook
-
-
-user_google_login:
-    pattern: /connect/check-google
-
-
-user_twitter_login:
-    pattern: /connect/check-twitter

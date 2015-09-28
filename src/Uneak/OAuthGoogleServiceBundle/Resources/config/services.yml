@@ -1,0 +1,51 @@
+parameters:
+    uneak.oauth.google.credential.class: Uneak\OAuthClientBundle\OAuth\Credentials
+    uneak.oauth.google.server.class: Uneak\OAuthGoogleServiceBundle\Services\GoogleServer
+    uneak.oauth.google.service.class: Uneak\OAuthGoogleServiceBundle\Services\GoogleService
+    uneak.oauth.google.authentication.class: Uneak\OAuthGoogleServiceBundle\Services\GoogleAuthentication
+    uneak.oauth.google.api.class: Uneak\OAuthGoogleServiceBundle\Services\GoogleAPI
+
+
+    google.api.url: "https://www.googleapis.com/oauth2/v1"
+    google.auth.endpoint: "https://accounts.google.com/o/oauth2/auth"
+    google.token.endpoint: "https://accounts.google.com/o/oauth2/token"
+    google.revoke.token.endpoint: "https://accounts.google.com/o/oauth2/revoke"
+    google.client.id: "214715913175-lrvi6it9ohi11ce13g6e2gsar3114p3d.apps.googleusercontent.com"
+    google.client.secret: "qWirg4dtgSQayvEML9dv07Ky"
+
+
+
+
+services:
+
+    uneak.oauth.google.authentication:
+        class: %uneak.oauth.google.authentication.class%
+        arguments:
+            - @uneak.oauth.google.credential
+            - @uneak.oauth.google.server
+
+    uneak.oauth.google.api:
+        class: %uneak.oauth.google.api.class%
+        arguments:
+            - @uneak.oauth.google.service
+            - %google.api.url%
+
+    uneak.oauth.google.credential:
+        class: %uneak.oauth.google.credential.class%
+        arguments:
+            - { clientId: %google.client.id%, clientSecret: %google.client.secret% }
+
+    uneak.oauth.google.server:
+        class: %uneak.oauth.google.server.class%
+        arguments:
+            - { authEndpoint: %google.auth.endpoint%, tokenEndpoint: %google.token.endpoint%, revokeTokenEndpoint: %google.revoke.token.endpoint% }
+
+    uneak.oauth.google.service:
+        class: %uneak.oauth.google.service.class%
+        arguments:
+            - @uneak.oauth.google.credential
+            - @uneak.oauth.google.server
+            - @uneak.oauth.google.authentication
+            - %google.api.url%
+        tags:
+            - { name: uneak.oauth.service, alias: google }

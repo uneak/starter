@@ -40,7 +40,10 @@ class OAuthAutenticationListener {
 
     public function onAutenticationRequest(OAuthAutenticationRequestEvent $event) {
 
+
+
         $service = $this->servicesManager->getService($event->getServiceAlias());
+
         $redirectUrl = $this->router->generate('oauth_authentication_code_response', array('service' => $event->getServiceAlias()), Router::ABSOLUTE_URL);
         $authentication = $service->getAuthentication()->getUrl($redirectUrl);
 

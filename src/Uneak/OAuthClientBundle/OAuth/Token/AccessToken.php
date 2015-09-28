@@ -19,6 +19,7 @@
 
 		public function configureOptions(OptionsResolver $resolver) {
 			$resolver->setDefined("user");
+			$resolver->setDefined("id_token");
 			$resolver->setDefined("expires");
 			$resolver->setDefaults(array(
 				'access_token'    => null,
@@ -48,6 +49,11 @@
 
 				return $expires;
 			});
+
+			$resolver->setNormalizer('token_type', function ($options, $value) {
+				return strtolower($value);
+			});
+
 			$resolver->setAllowedValues('token_type', array(
 				self::ACCESS_TOKEN_URI,
 				self::ACCESS_TOKEN_BEARER,
