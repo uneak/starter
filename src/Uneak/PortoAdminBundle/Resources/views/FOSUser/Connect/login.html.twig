@@ -4,7 +4,7 @@
 
 <div class="mb-xs">
     <div>
-        <a href="{{ path('user_oauth_service_redirect', {service: "facebook"}) }}" class="btn btn-facebook mb-md ml-xs mr-xs pr-md pl-md"><i class="fa fa-facebook"></i> connexion</a><br />
+        <a href="{{ path('oauth_authentication_code_request', {service: "facebook", action: "admin.connect"}) }}" class="btn btn-facebook mb-md ml-xs mr-xs pr-md pl-md"><i class="fa fa-facebook"></i> connexion</a><br />
         {%  if user.facebookId %}
             <ul>
                 <li>Connecté</li>

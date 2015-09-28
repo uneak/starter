@@ -6,7 +6,12 @@
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 	use Symfony\Component\HttpFoundation\Request;
 	use Uneak\MaterialDesignBundle\Blocks\CardBlock;
-	use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
+    use Uneak\OAuthClientBundle\OAuth\Authentication;
+    use Uneak\OAuthClientBundle\OAuth\ServerFactory;
+    use Uneak\OAuthClientBundle\Server\FacebookServer;
+    use Uneak\OAuthClientBundle\OAuth\Credentials;
+    use Uneak\OAuthClientBundle\OAuth\Server;
+    use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
 	use UserBundle\Entity\User;
 
 	class DefaultController extends Controller {
@@ -16,15 +21,7 @@
 		 */
 		public function testAction() {
 
-//			$metadata = $this->get('vich_uploader.metadata_reader');
-//			ld($metadata->getUploadableField('UserBundle\Entity\User', 'imageFile'));
-//
-//			$handler = $this->get('vich_uploader.upload_handler');
-//			ld($handler);
 
-
-			$factory = $this->get('vich_uploader.property_mapping_factory');
-			ld($factory->fromField(new User(), 'imageFile'));
 
 
 			die();

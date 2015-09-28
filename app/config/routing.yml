@@ -1,6 +1,19 @@
+uneak_o_auth_facebook_service:
+    resource: "@UneakOAuthFacebookServiceBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+
+
+
+oauth:
+    resource: "@UneakOAuthClientBundle/Controller/"
+    type:     annotation
+    prefix: /
+
 
 
 

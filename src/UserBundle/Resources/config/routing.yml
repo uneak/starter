@@ -25,6 +25,13 @@ user_profile_show:
     requirements:
         _method: GET
 
+user_profile_connect:
+    path: /profile/social
+    defaults: { _controller: UserBundle:Profile:connect }
+    requirements:
+        _method: GET
+
+
 
 user_profile_edit:
     path: /profile/edit

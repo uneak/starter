@@ -51,7 +51,6 @@
 
 			$error = $this->getErrorForRequest($request);
 
-			ldd("Trop tard");
 			// if connecting is enabled and there is no user, redirect to the registration form
 			if ($connect && !$hasUser && $error instanceof AccountNotLinkedException) {
 				$key = time();

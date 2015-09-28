@@ -6,9 +6,7 @@ parameters:
     uneak.member_registration.form.type.class: MemberBundle\Form\Type\RegistrationFormType
     uneak.member_registration.form.handler.class: MemberBundle\Form\Handler\MemberRegistrationFormHandler
 
-    member_oauth.security.oauth_utils.class: MemberBundle\Security\OAuthUtils
-    member_oauth.twig.extension.oauth.class: MemberBundle\Twig\Extension\OAuthExtension
-    member_oauth.templating.helper.oauth.class: MemberBundle\Templating\Helper\OAuthHelper
+
 
 services:
     uneak.member_provider:
@@ -50,27 +48,4 @@ services:
             - @fos_user.util.token_generator
 
 
-    member_oauth.security.oauth_utils:
-        class: %member_oauth.security.oauth_utils.class%
-        arguments:
-            - @security.http_utils
-            - @security.context
-            - %member_oauth.connect%
-
-
-    member_oauth.twig.extension.oauth:
-        class: %member_oauth.twig.extension.oauth.class%
-        arguments:
-            - @member_oauth.templating.helper.oauth
-        tags:
-            - { name: twig.extension }
-
-
-    member_oauth.templating.helper.oauth:
-        class: %member_oauth.templating.helper.oauth.class%
-        arguments:
-            - @member_oauth.security.oauth_utils
-            - @request_stack
-        tags:
-            - { name: templating.helper, alias: oauth }
 

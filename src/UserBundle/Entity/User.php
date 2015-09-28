@@ -18,7 +18,7 @@
 	 * User
 	 *
 	 * @ORM\Table(name="AdminUser")
-	 * @UniqueEntity("username")
+	 * @UniqueEntity(fields={"username", "email"})
 	 * @ORM\Entity(repositoryClass="UserBundle\Entity\UserRepository")
 	 * @Vich\Uploadable
 	 *
@@ -94,6 +94,7 @@
 
 
         /**
+         *
          * @Email(
          *     message = "'{{ value }}' n'est pas un email valide.",
          *     checkMX = false

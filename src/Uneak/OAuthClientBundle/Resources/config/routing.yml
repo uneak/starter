@@ -1,0 +1,3 @@
+uneak_oauth_client_resquest:
+    path:     /authentication/request
+    defaults: { _controller: UneakOauthClientBundle:Default:authentication }

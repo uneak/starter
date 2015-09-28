@@ -34,7 +34,6 @@
 		}
 
 		public function isUserGranted($attribute, $flattenRoute, $user = null) {
-			ldd($user->getRoles());
 			return (in_array("ROLE_SUPER_ADMIN", $user->getRoles()));
 		}
 

@@ -47,6 +47,32 @@
 			$this->entityLayoutContentBody->addBlock($content);
 		}
 
+
+        public function connectAction() {
+            $user = $this->getUser();
+            if (!is_object($user) || !$user instanceof UserInterface) {
+                throw new AccessDeniedException('This user does not have access to this section.');
+            }
+
+            $this->entityLayoutContent->setTitle("Réseaux sociaux");
+
+            $content = new Twig('user_connect_login', array(
+                'user' => $this->entity,
+            ));
+
+            $panel = new Panel();
+            $panel->setTitle("Edition");
+            $panel->isCollapsed(false);
+            $panel->isDismiss(false);
+            $panel->isToggle(false);
+            $panel->addBlock($content);
+            $this->entityLayoutContentBody->addBlock($panel, 'social');
+
+
+        }
+
+
+
 		/**
 		 * Edit the user
 		 */

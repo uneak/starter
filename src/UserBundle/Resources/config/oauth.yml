@@ -1,0 +1,18 @@
+parameters:
+    uneak.oauth.autentication.register.action.listener.class: UserBundle\EventListener\OAuthAutenticationRegisterListener
+
+
+services:
+
+    uneak.oauth.autentication.register.action.listener:
+        class: %uneak.oauth.autentication.register.action.listener.class%
+        arguments:
+            - @router
+            - @session
+            - @uneak.user_manager
+            - @security.token_storage
+            - @security.authorization_checker
+        tags:
+            - { name: kernel.event_listener, event: oauth.autentication.action.admin.register, method: onAutenticationRegister }
+            - { name: kernel.event_listener, event: oauth.autentication.action.admin.login, method: onAutenticationLogin }
+            - { name: kernel.event_listener, event: oauth.autentication.action.admin.connect, method: onAutenticationConnect }

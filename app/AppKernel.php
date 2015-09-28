@@ -25,21 +25,21 @@
                 new Vich\UploaderBundle\VichUploaderBundle(),
 				// USER,
 				new FOS\UserBundle\FOSUserBundle(),
-				new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
 				// UNEAK,
 				new Uneak\TemplatesManagerBundle\UneakTemplatesManagerBundle(),
 				new Uneak\AssetsManagerBundle\UneakAssetsManagerBundle(),
 				new Uneak\FormsManagerBundle\UneakFormsManagerBundle(),
 				new Uneak\BlocksManagerBundle\UneakBlocksManagerBundle(),
 				new Uneak\RoutesManagerBundle\UneakRoutesManagerBundle(),
+                new Uneak\OAuthClientBundle\UneakOAuthClientBundle(),
+                new Uneak\OAuthFacebookServiceBundle\UneakOAuthFacebookServiceBundle(),
 				// UNEAK SKIN
 				new Uneak\MaterialDesignBundle\UneakMaterialDesignBundle(),
 				new Uneak\PortoAdminBundle\UneakPortoAdminBundle(),
 				// OWN,
 				new AppBundle\AppBundle(),
             	new MemberBundle\MemberBundle(),
-                new UserBundle\UserBundle(),
-
+                new UserBundle\UserBundle()
 			);
 
 			if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -55,7 +55,7 @@
             $root->addChild($factory->createItem('profile_social', array(
                 'label' => 'Réseaux sociaux',
                 'icon' => 'share-alt',
-                'uri' => $this->router->generate('user_oauth_connect'),
+                'uri' => $this->router->generate('user_profile_connect'),
             )));
 
             $root->addChild($factory->createItem('profile_password', array(

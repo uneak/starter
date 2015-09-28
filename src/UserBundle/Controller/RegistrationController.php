@@ -11,13 +11,7 @@
 
 	namespace UserBundle\Controller;
 
-	use FOS\UserBundle\FOSUserEvents;
-	use FOS\UserBundle\Event\FormEvent;
-	use FOS\UserBundle\Event\GetResponseUserEvent;
-	use FOS\UserBundle\Event\FilterUserResponseEvent;
 	use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
-	use HWI\Bundle\OAuthBundle\Security\Core\Exception\AccountNotLinkedException;
-	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 	use Symfony\Component\HttpFoundation\Request;
 	use Symfony\Component\HttpFoundation\RedirectResponse;
 	use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -40,30 +34,45 @@
 			$userManager = $this->get('uneak.user_manager');
 			$templates = $this->get("uneak.templatesmanager");
 
-			$hasUser = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
-			if ($hasUser) {
-				throw new AccessDeniedException('Cannot register already registered account.');
-			}
+//			$hasUser = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
+//			if ($hasUser) {
+//				throw new AccessDeniedException('Cannot register already registered account.');
+//			}
 
 			$user = $userManager->createUser();
-			$userInformation = null;
+            $userInformations = null;
 
 			if ($key) {
-				$session = $request->getSession();
-				$error = $session->get('_user_oauth.registration_error.' . $key);
-				$session->remove('_user_oauth.registration_error.' . $key);
+				$session = $this->get('session');
+                $userInformations = $session->get('authentication_user_informations_' . $key);
+				$session->remove('authentication_user_informations_' . $key);
 
 				$key = time();
-				$session->set('_user_oauth.registration_error.' . $key, $error);
+				$session->set('authentication_user_informations_' . $key, $userInformations);
 
+                $association = array(
+                    'facebookId' => 'id',
+                    'firstName' => 'firstName',
+                    'lastName' => 'lastName',
+                    'username' => 'username',
+                    'email' => 'email',
+//                'picture' => 'picture.data.url'
+                );
 
-				if (!($error instanceof AccountNotLinkedException) || (time() - $key > 300)) {
-					// todo: fix this
-					throw new \Exception('Cannot register an account.');
-				}
+                $accessor = PropertyAccess::createPropertyAccessor();
+                foreach ($association as $internal => $external) {
 
-				$userInformation = $this->getResourceOwnerByName($error->getResourceOwnerName())->getUserInformation($error->getRawToken());
-				$this->updateUserInformation($user, $userInformation);
+                    if ($accessor->isWritable($user, $internal)) {
+                        $externalPath = explode('.', $external);
+                        $value = $userInformations;
+                        for($i=0; $i < count($externalPath); $i++) {
+                            $value = $value[$externalPath[$i]];
+                        }
+                        $accessor->setValue($user, $internal, $value);
+                    }
+
+                }
+
 			}
 
 
@@ -75,10 +84,9 @@
 				$emailHaveToConfirm = true;
 				$emailConfirmed = false;
 
-				if ($userInformation) {
-					$this->container->get('user_oauth.account.connector')->connect($user, $userInformation);
-					$this->updateSocialPhoto($user, $userInformation->getProfilePicture());
-					$emailConfirmed = $userInformation->getEmail() == $user->getEmail();
+				if ($userInformations) {
+					$this->updateSocialPhoto($user, $userInformations['picture']);
+					$emailConfirmed = $userInformations['email'] == $user->getEmail();
 					$user->setEmailConfirmed($emailConfirmed);
 				}
 
@@ -134,7 +142,7 @@
 			$this->layout->setTitle("Register");
 			$content = new Twig('user_registration_register', array(
 				'form' => $form->createView(),
-				'userInformation' => $userInformation,
+				'userInformations' => $userInformations,
 				'key' => $key
 			));
 			$this->layout->setContent($content);

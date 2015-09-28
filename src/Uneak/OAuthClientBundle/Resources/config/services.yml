@@ -1,0 +1,22 @@
+parameters:
+    uneak.oauth.servicesmanager.class: Uneak\OAuthClientBundle\OAuth\ServicesManager
+    uneak.oauth.autentication.controller.listener.class: Uneak\OAuthClientBundle\EventListener\OAuthAutenticationListener
+
+
+services:
+
+    uneak.oauth.servicesmanager:
+        class: %uneak.oauth.servicesmanager.class%
+        calls:
+            - [ setContainer, [ @service_container ] ]
+
+    uneak.oauth.autentication.controller.listener:
+        class: %uneak.oauth.autentication.controller.listener.class%
+        arguments:
+            - @session
+            - @uneak.oauth.servicesmanager
+            - @request_stack
+            - @router
+        tags:
+            - { name: kernel.event_listener, event: oauth.autentication.request, method: onAutenticationRequest }
+            - { name: kernel.event_listener, event: oauth.autentication.response, method: onAutenticationResponse }

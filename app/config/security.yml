@@ -43,20 +43,6 @@ security:
                 path: user_security_logout
                 target: user_security_login
 
-            oauth:
-                resource_owners:
-                    facebook: /admin/connect/check-facebook
-                    google: /admin/connect/check-google
-                    twitter: /admin/connect/check-twitter
-
-                check_path: /admin/connect
-                login_path: /admin/login
-                failure_path: /admin/connect
-                default_target_path: user_profile_show
-                use_forward: false
-
-                oauth_user_provider:
-                    service: uneak.user_provider
 
             anonymous:    true
             # activate different ways to authenticate
@@ -77,19 +63,7 @@ security:
                 path: member_security_logout
                 target: member_security_login
 
-            oauth:
-                resource_owners:
-                    facebook: /connect/check-facebook
-                    google: /connect/check-google
-                    twitter: /connect/check-twitter
 
-                check_path: /connect
-                login_path: /login
-                failure_path: /connect
-                use_forward: false
-
-                oauth_user_provider:
-                    service: uneak.member_provider
 
 
     access_control:
