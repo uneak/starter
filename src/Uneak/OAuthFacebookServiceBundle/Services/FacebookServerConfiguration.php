@@ -3,9 +3,9 @@
     namespace Uneak\OAuthFacebookServiceBundle\Services;
 
 	use Symfony\Component\OptionsResolver\OptionsResolver;
-    use Uneak\OAuthClientBundle\OAuth\Server;
+    use Uneak\OAuthClientBundle\OAuth\Configuration\ServerConfiguration;
 
-    class FacebookServer extends Server {
+    class FacebookServerConfiguration extends ServerConfiguration {
 
         public function configureOptions(OptionsResolver $resolver) {
             parent::configureOptions($resolver);
@@ -22,7 +22,4 @@
             return $this->getOption('revokeTokenEndpoint');
         }
 
-        public function getName() {
-            return "facebook";
-        }
 	}

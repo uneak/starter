@@ -3,10 +3,10 @@
 	namespace Uneak\OAuthClientBundle\OAuth\Token;
 
 	use Symfony\Component\OptionsResolver\OptionsResolver;
-    use Uneak\OAuthClientBundle\OAuth\Configuration;
-    use Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest;
+	use Uneak\OAuthClientBundle\OAuth\Configuration\Configuration;
+	use Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest;
 
-	class AccessToken extends Configuration implements TokenInterface {
+	class AccessToken extends Configuration implements AccessTokenInterface {
 
 		const ACCESS_TOKEN_URI = "uri";
 		const ACCESS_TOKEN_BEARER = "bearer";
@@ -18,8 +18,7 @@
 		}
 
 		public function configureOptions(OptionsResolver $resolver) {
-			$resolver->setDefined("user");
-			$resolver->setDefined("id_token");
+			parent::configureOptions($resolver);
 			$resolver->setDefined("expires");
 			$resolver->setDefaults(array(
 				'access_token'    => null,
@@ -34,7 +33,7 @@
 			$resolver->setRequired(array('access_token', 'token_type'));
 			$resolver->setAllowedTypes('access_token', 'string');
 			$resolver->setAllowedTypes('token_type', 'string');
-			$resolver->setAllowedTypes('expires_in', array('null', 'string'));
+			$resolver->setAllowedTypes('expires_in', array('null', 'string', 'integer'));
 			$resolver->setNormalizer('expires_in', function ($options, $value) {
 				$now = time();
 				$expires = null;
@@ -51,15 +50,18 @@
 			});
 
 			$resolver->setNormalizer('token_type', function ($options, $value) {
-				return strtolower($value);
+				$type = strtolower($value);
+				if (!in_array($type, array(
+					self::ACCESS_TOKEN_URI,
+					self::ACCESS_TOKEN_BEARER,
+					self::ACCESS_TOKEN_OAUTH,
+					self::ACCESS_TOKEN_MAC
+				))) {
+					throw new \Exception("Unknow Token type ".$type);
+				}
+				return $type;
 			});
 
-			$resolver->setAllowedValues('token_type', array(
-				self::ACCESS_TOKEN_URI,
-				self::ACCESS_TOKEN_BEARER,
-				self::ACCESS_TOKEN_OAUTH,
-				self::ACCESS_TOKEN_MAC
-			));
 		}
 
 		public function hasExpired() {

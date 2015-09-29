@@ -1,12 +1,10 @@
 parameters:
-    uneak.oauth.facebook.credential.class: Uneak\OAuthClientBundle\OAuth\Credentials
-    uneak.oauth.facebook.server.class: Uneak\OAuthFacebookServiceBundle\Services\FacebookServer
+    uneak.oauth.facebook.credential.class: Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfiguration
+    uneak.oauth.facebook.server.class: Uneak\OAuthFacebookServiceBundle\Services\FacebookServerConfiguration
     uneak.oauth.facebook.service.class: Uneak\OAuthFacebookServiceBundle\Services\FacebookService
-    uneak.oauth.facebook.authentication.class: Uneak\OAuthClientBundle\OAuth\Authentication
-    uneak.oauth.facebook.api.class: Uneak\OAuthFacebookServiceBundle\Services\FacebookAPI
+    uneak.oauth.facebook.authentication.class: Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfiguration
 
 
-    facebook.api.url: "https://graph.facebook.com"
     facebook.auth.endpoint: "https://www.facebook.com/v2.0/dialog/oauth"
     facebook.token.endpoint: "https://graph.facebook.com/v2.0/oauth/access_token"
     facebook.revoke.token.endpoint: "https://graph.facebook.com/v2.0/me/permissions"
@@ -18,15 +16,9 @@ services:
 
     uneak.oauth.facebook.authentication:
         class: %uneak.oauth.facebook.authentication.class%
-        arguments:
-            - @uneak.oauth.facebook.credential
-            - @uneak.oauth.facebook.server
+#        arguments:
+#            - { clientId: %facebook.client.id%, clientSecret: %facebook.client.secret% }
 
-    uneak.oauth.facebook.api:
-        class: %uneak.oauth.facebook.api.class%
-        arguments:
-            - @uneak.oauth.facebook.service
-            - %facebook.api.url%
 
     uneak.oauth.facebook.credential:
         class: %uneak.oauth.facebook.credential.class%
@@ -44,6 +36,5 @@ services:
             - @uneak.oauth.facebook.credential
             - @uneak.oauth.facebook.server
             - @uneak.oauth.facebook.authentication
-            - %facebook.api.url%
         tags:
             - { name: uneak.oauth.service, alias: facebook }

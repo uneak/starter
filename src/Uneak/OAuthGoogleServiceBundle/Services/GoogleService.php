@@ -3,54 +3,24 @@
 namespace Uneak\OAuthGoogleServiceBundle\Services;
 
 
-    use Symfony\Component\PropertyAccess\PropertyAccess;
-    use Uneak\OAuthClientBundle\OAuth\Authentication;
-    use Uneak\OAuthClientBundle\OAuth\Credentials;
-    use Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest;
-    use Uneak\OAuthClientBundle\OAuth\Server;
-    use Uneak\OAuthClientBundle\OAuth\Service;
-    use Uneak\OAuthClientBundle\OAuth\Token\AccessToken;
-    use Uneak\OAuthClientBundle\OAuth\Token\TokenResponse;
 
+
+
+    use Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfigurationInterface;
+    use Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfigurationInterface;
+    use Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest;
+    use Uneak\OAuthClientBundle\OAuth\Service;
+    use Uneak\OAuthClientBundle\OAuth\Token\TokenResponse;
 
     class GoogleService extends Service {
 
-        public function __construct(Credentials $credentials, Server $server, Authentication $authentication = null, $apiUrl = null ) {
-            parent::__construct($credentials, $server, $authentication, $apiUrl);
-            $this->api = new GoogleAPI($this, $apiUrl);
+        public function __construct(CredentialsConfigurationInterface $credentials, GoogleServerConfiguration $server, AuthenticationConfigurationInterface $authentication) {
+            parent::__construct($credentials, $server, $authentication);
+            $this->api = new GoogleAPI($this);
         }
 
-        /**
-         * @return GoogleAPI
-         */
-        public function api() {
-            return $this->api;
-        }
-
-
-        public function getUserInformations() {
-
-            $data = $this->api->me();
-
-            $array = array(
-                'id' => 'id',
-                'firstName' => 'first_name',
-                'lastName' => 'last_name',
-                'username' => 'name',
-                'email' => 'email',
-                'picture' => 'picture.data.url'
-            );
-
-            foreach ($array as $internal => $external) {
-                $externalPath = explode('.', $external);
-                $value = $data;
-                for($i=0; $i < count($externalPath); $i++) {
-                    $value = $value[$externalPath[$i]];
-                }
-                $array[$internal] = $value;
-            }
-
-            return $array;
+        public function getUser() {
+            return new GoogleUser($this->api()->userInformation());
         }
 
         protected function buildResponseToken(CurlRequest $request) {
@@ -63,7 +33,7 @@ namespace Uneak\OAuthGoogleServiceBundle\Services;
             $token = null;
 
             if (is_array($result)) {
-                $token = new AccessToken($result);
+                $token = new GoogleAccessToken($result);
             }
 
             return new TokenResponse($code, $token, $type, $message);

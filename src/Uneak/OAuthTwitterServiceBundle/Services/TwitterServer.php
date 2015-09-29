@@ -1,18 +1,18 @@
 <?php
 
-    namespace Uneak\OAuthGoogleServiceBundle\Services;
+    namespace Uneak\OAuthTwitterServiceBundle\Services;
 
 	use Symfony\Component\OptionsResolver\OptionsResolver;
     use Uneak\OAuthClientBundle\OAuth\Server;
 
-    class GoogleServer extends Server {
+    class TwitterServer extends Server {
 
         public function configureOptions(OptionsResolver $resolver) {
             parent::configureOptions($resolver);
             $resolver->setDefaults(array(
-                'authEndpoint'    => "https://www.google.com/v2.0/dialog/oauth",
-                'tokenEndpoint'    => "https://graph.google.com/v2.0/oauth/access_token",
-                'revokeTokenEndpoint'    => "https://graph.google.com/v2.0/me/permissions",
+                'authEndpoint'    => "https://api.twitter.com/oauth/authorize",
+                'tokenEndpoint'    => "https://graph.twitter.com/v2.0/oauth/access_token",
+                'revokeTokenEndpoint'    => "https://graph.twitter.com/v2.0/me/permissions",
             ));
 
             $resolver->setAllowedTypes('revokeTokenEndpoint', 'string');
@@ -23,6 +23,6 @@
         }
 
         public function getName() {
-            return "google";
+            return "twitter";
         }
 	}

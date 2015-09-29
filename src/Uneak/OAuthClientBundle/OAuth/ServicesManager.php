@@ -21,6 +21,11 @@
             return $this->services;
         }
 
+		/**
+         * @param $id
+         *
+         * @return ServiceInterface
+         */
         public function getService($id) {
             if (!isset($this->services[$id])) {
                 // TODO: execption

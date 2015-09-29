@@ -4,6 +4,7 @@ namespace Uneak\OAuthClientBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use Uneak\OAuthClientBundle\OAuth\Service;
+use Uneak\OAuthClientBundle\OAuth\ServiceInterface;
 
 class OAuthAutenticationResponseEvent extends Event {
 
@@ -21,7 +22,7 @@ class OAuthAutenticationResponseEvent extends Event {
     }
 
     /**
-     * @return Service
+     * @return ServiceInterface
      */
     public function getService()
     {
@@ -29,7 +30,7 @@ class OAuthAutenticationResponseEvent extends Event {
     }
 
     /**
-     * @param Service $service
+     * @param ServiceInterface $service
      */
     public function setService($service)
     {

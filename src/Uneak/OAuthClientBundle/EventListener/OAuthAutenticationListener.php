@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Router;
 use Uneak\OAuthClientBundle\Event\OAuthAutenticationRequestEvent;
 use Uneak\OAuthClientBundle\Event\OAuthAutenticationResponseEvent;
-use Uneak\OAuthClientBundle\OAuth\Authentication;
 use Uneak\OAuthClientBundle\OAuth\Grant\AuthorizationCode;
 use Uneak\OAuthClientBundle\OAuth\ServicesManager;
 
@@ -17,7 +16,6 @@ class OAuthAutenticationListener {
      * @var Session
      */
     protected $session;
-
     /**
      * @var RequestStack
      */
@@ -31,6 +29,7 @@ class OAuthAutenticationListener {
      */
     private $router;
 
+
     public function __construct(Session $session, ServicesManager $servicesManager, RequestStack $requestStack, Router $router) {
         $this->session = $session;
         $this->requestStack = $requestStack;
@@ -40,18 +39,15 @@ class OAuthAutenticationListener {
 
     public function onAutenticationRequest(OAuthAutenticationRequestEvent $event) {
 
-
-
         $service = $this->servicesManager->getService($event->getServiceAlias());
 
         $redirectUrl = $this->router->generate('oauth_authentication_code_response', array('service' => $event->getServiceAlias()), Router::ABSOLUTE_URL);
-        $authentication = $service->getAuthentication()->getUrl($redirectUrl);
-
-        $state = $service->getAuthentication()->getState();
+        $service->getAuthenticationConfiguration()->setOption('redirect_uri', $redirectUrl);
+        $state = $service->getAuthenticationConfiguration()->getState();
         $this->session->set('authentication_state', $state);
         $this->session->set('authentication_action', $event->getAction());
 
-        $event->setAuthentication($authentication);
+        $event->setAuthentication($service->authenticationUrl());
 
     }
 
@@ -78,11 +74,14 @@ class OAuthAutenticationListener {
             ldd("invalid state");
         }
 
+
         $service = $this->servicesManager->getService($event->getServiceAlias());
         $redirectUrl = $this->router->generate('oauth_authentication_code_response', array('service' => $event->getServiceAlias()), Router::ABSOLUTE_URL);
-        $authentication = $service->getAuthentication()->getUrl($redirectUrl);
+        $service->getAuthenticationConfiguration()->setOption('redirect_uri', $redirectUrl);
+        $tokenResponse = $service->requestToken(new AuthorizationCode($code));
 
-        $service->requestToken(new AuthorizationCode($code));
+
+
 
         $event->setAction($action);
         $event->setService($service);

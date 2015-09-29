@@ -2,18 +2,22 @@
 
 	namespace Uneak\OAuthFacebookServiceBundle\Services;
 
-    use Uneak\OAuthClientBundle\OAuth\API;
     use Uneak\OAuthClientBundle\OAuth\APIException;
     use Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest;
     use Uneak\OAuthClientBundle\OAuth\Curl\CurlResponse;
+    use Uneak\OAuthClientBundle\OAuth\ServiceAPI;
 
 
-    class FacebookAPI extends API {
+    class FacebookAPI extends ServiceAPI {
 
-        public function __construct(FacebookService $facebookService, $apiUrl) {
-            parent::__construct($facebookService, $apiUrl);
+        public function __construct(FacebookService $facebookService) {
+            parent::__construct($facebookService);
+            $this->apiUrl = "https://graph.facebook.com";
         }
 
+        public function userInformation() {
+            return $this->me();
+        }
 
         public function me(array $fields = array('id', 'name', 'first_name', 'last_name', 'email', 'birthday', 'picture.type(large)')) {
             return $this->call('me', array(
@@ -44,6 +48,7 @@
             }
             return $result;
         }
+
 
 
     }

@@ -1,21 +1,27 @@
 <?php
 
-namespace Uneak\OAuthGoogleServiceBundle\Services;
+	namespace Uneak\OAuthGoogleServiceBundle\Services;
 
-    use Uneak\OAuthClientBundle\OAuth\User;
+	use Uneak\OAuthClientBundle\OAuth\ServiceUser;
 
-    class GoogleUser extends User {
+	class GoogleUser extends ServiceUser {
 
-        public function __construct($data) {
-            parent::__construct($data, array(
-                'id' => 'id',
-                'firstName' => 'first_name',
-                'lastName' => 'last_name',
-                'userName' => 'name',
-                'email' => 'email',
-                'picture' => 'picture.data.url'
-            ));
-        }
+		protected function resolve() {
+			$options = $this->adapter($this->getData(), array(
+				'id'         => 'id',
+				'first_name' => 'given_name',
+				'last_name'  => 'family_name',
+				'link'       => 'link',
+				'username'   => 'name',
+				'email'      => 'email',
+				'picture'    => 'picture',
+				'gender'     => 'gender',
+				'locale'     => 'locale'
+			));
+
+			$this->options = $this->resolver->resolve($options);
+			$this->resolved = true;
+		}
 
 
 	}

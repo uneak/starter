@@ -3,13 +3,14 @@
 namespace Uneak\OAuthClientBundle\OAuth\Grant;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Uneak\OAuthClientBundle\OAuth\Authentication;
-use Uneak\OAuthClientBundle\OAuth\Credentials;
-use Uneak\OAuthClientBundle\OAuth\Server;
+use Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfigurationInterface;
+use Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfigurationInterface;
+use Uneak\OAuthClientBundle\OAuth\Configuration\ServerConfigurationInterface;
+
 
 interface GrantInterface {
 
-	public function buildRequestOptions(Credentials $credentials, Server $server, Authentication $authentication, $authType, array &$options);
+	public function buildRequestOptions(CredentialsConfigurationInterface $credentials, ServerConfigurationInterface $server, AuthenticationConfigurationInterface $authentication, $authType, array &$options);
 	public function getName();
 
 }

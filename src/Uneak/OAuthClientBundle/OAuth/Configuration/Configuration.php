@@ -1,6 +1,6 @@
 <?php
 
-	namespace Uneak\OAuthClientBundle\OAuth;
+	namespace Uneak\OAuthClientBundle\OAuth\Configuration;
 
 	use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,11 +17,20 @@
         }
 
         public function configureOptions(OptionsResolver $resolver) {
+            $resolver->setDefaults(array(
+                'service'   => 'default',
+            ));
+            $resolver->setRequired("service");
+        }
+
+        public function setOption($key, $value) {
+            $this->options[$key] = $value;
+            $this->resolved = false;
         }
 
         public function getOption($key) {
             if (!$this->resolved) {
-                $this->_resolve();
+                $this->resolve();
             }
             return $this->options[$key];
         }
@@ -29,7 +38,7 @@
         public function getOptions()
         {
             if (!$this->resolved) {
-                $this->_resolve();
+                $this->resolve();
             }
             return $this->options;
         }
@@ -40,10 +49,13 @@
             $this->resolved = false;
         }
 
-        private function _resolve() {
+        protected function resolve() {
             $this->options = $this->resolver->resolve($this->options);
             $this->resolved = true;
         }
 
+        public function getService() {
+            return $this->getOption('service');
+        }
 
 	}

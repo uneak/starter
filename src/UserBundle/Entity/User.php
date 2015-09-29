@@ -46,22 +46,6 @@
         use TimestampableEntity;
 
 
-		/**
-		 * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
-		 */
-		protected $facebookId;
-
-
-		/**
-		 * @ORM\Column(name="google_id", type="string", length=64, nullable=true)
-		 */
-		protected $googleId;
-
-		/**
-		 * @ORM\Column(name="twitter_id", type="string", length=64, nullable=true)
-		 */
-		protected $twitterId;
-
 
 		/**
          * @ORM\Column(name="gender", type="string", length=64, nullable=true)
@@ -119,7 +103,12 @@
 		protected $stateProfile = self::STATE_PROFILE_PENDING;
 
 
-
+		/**
+		 * @ORM\OneToMany(targetEntity="Uneak\OAuthClientBundle\Entity\OAuthUser", mappedBy="user", cascade={"persist", "remove"})
+		 */
+		protected $oAuthUsers;
+		
+		
         /**
          * @ORM\ManyToMany(targetEntity="UserBundle\Entity\Group")
          * @ORM\JoinTable(name="AdminUserGroup",
@@ -147,56 +136,66 @@
 
 		public function __construct() {
 			parent::__construct();
-			// your own logic
+			$this->oAuthUsers = new \Doctrine\Common\Collections\ArrayCollection();
 		}
 
+
+
+
+		/**
+		 * Add oAuthUsers
+		 *
+		 * @param \Uneak\OAuthClientBundle\Entity\OAuthUser $oAuthUser
+		 *
+		 * @return User
+		 */
+		public function addOAuthUser(\Uneak\OAuthClientBundle\Entity\OAuthUser $oAuthUser) {
+			$oAuthUser->setAgence($this);
+			$this->oAuthUsers[] = $oAuthUser;
+			return $this;
+		}
+
+		/**
+		 * Remove oAuthUsers
+		 *
+		 * @param \Uneak\OAuthClientBundle\Entity\OAuthUser $oAuthUser
+		 */
+		public function removeOAuthUser(\Uneak\OAuthClientBundle\Entity\OAuthUser $oAuthUser) {
+			$oAuthUser->setAgence(null);
+			$this->oAuthUsers->removeElement($oAuthUser);
+		}
+
+		/**
+		 * Get oAuthUsers
+		 *
+		 * @return \Doctrine\Common\Collections\Collection
+		 */
+		public function getOAuthUsers() {
+			return $this->oAuthUsers;
+		}
+
+		/**
+		 * Set oAuthUsers
+		 * @param \Doctrine\Common\Collections\ArrayCollection
+		 *
+		 * @return User
+		 */
+		public function setOAuthUsers(\Doctrine\Common\Collections\ArrayCollection $oAuthUsers) {
+			foreach ($oAuthUsers as $oAuthUser) {
+				$oAuthUser->setAgence($this);
+			}
+			$this->$oAuthUsers = $oAuthUsers;
+			return $this;
+		}
+
+		
+		
+		
+		
 		public function __toString() {
 			return $this->firstName . " " . $this->lastName;
 		}
 
-
-
-		/**
-		 * @return mixed
-		 */
-		public function getTwitterId() {
-			return $this->twitterId;
-		}
-
-		/**
-		 * @param mixed $twitterId
-		 */
-		public function setTwitterId($twitterId) {
-			$this->twitterId = $twitterId;
-		}
-
-		/**
-		 * @return mixed
-		 */
-		public function getGoogleId() {
-			return $this->googleId;
-		}
-
-		/**
-		 * @param mixed $googleId
-		 */
-		public function setGoogleId($googleId) {
-			$this->googleId = $googleId;
-		}
-
-		/**
-		 * @return mixed
-		 */
-		public function getFacebookId() {
-			return $this->facebookId;
-		}
-
-		/**
-		 * @param mixed $facebookId
-		 */
-		public function setFacebookId($facebookId) {
-			$this->facebookId = $facebookId;
-		}
 
 
 		public function getGender() {

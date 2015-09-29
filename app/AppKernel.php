@@ -34,6 +34,7 @@
                 new Uneak\OAuthClientBundle\UneakOAuthClientBundle(),
                 new Uneak\OAuthFacebookServiceBundle\UneakOAuthFacebookServiceBundle(),
                 new Uneak\OAuthGoogleServiceBundle\UneakOAuthGoogleServiceBundle(),
+                new Uneak\OAuthTwitterServiceBundle\UneakOAuthTwitterServiceBundle(),
 				// UNEAK SKIN
 				new Uneak\MaterialDesignBundle\UneakMaterialDesignBundle(),
 				new Uneak\PortoAdminBundle\UneakPortoAdminBundle(),

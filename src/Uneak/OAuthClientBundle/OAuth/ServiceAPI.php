@@ -5,18 +5,22 @@
 
     use Uneak\OAuthClientBundle\OAuth\Curl\CurlResponse;
 
-    class API {
+    abstract class ServiceAPI {
 
         protected $apiUrl;
         /**
-         * @var Service
+         * @var ServiceInterface
          */
         private $service;
 
-        public function __construct(Service $service, $apiUrl) {
-            $this->apiUrl = $apiUrl;
+        public function __construct(ServiceInterface $service) {
+            $this->apiUrl = "";
             $this->service = $service;
         }
+
+
+        abstract public function userInformation();
+
 
         public function call($function, $parameters) {
             $response = $this->service->fetch(array_merge(array(

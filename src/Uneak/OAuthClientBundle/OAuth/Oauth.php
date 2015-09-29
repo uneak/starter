@@ -2,12 +2,15 @@
 
 namespace Uneak\OAuthClientBundle\OAuth;
 
+use Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfigurationInterface;
+use Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfigurationInterface;
+use Uneak\OAuthClientBundle\OAuth\Configuration\ServerConfigurationInterface;
 use Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest;
 use Uneak\OAuthClientBundle\OAuth\Grant\GrantInterface;
 use Uneak\OAuthClientBundle\OAuth\Token\AccessToken;
 use Uneak\OAuthClientBundle\OAuth\Token\TokenResponse;
 
-class Token {
+class OAuth {
 
 	const AUTH_TYPE_URI = 0;
 	const AUTH_TYPE_AUTHORIZATION_BASIC = 1;
@@ -49,10 +52,16 @@ class Token {
 	}
 
 
-	public static function request(Credentials $credentials, Server $server, Authentication $authentication, GrantInterface $grant, $authType = Token::AUTH_TYPE_URI) {
+	public static function requestToken(CredentialsConfigurationInterface $credentialsConfiguration, ServerConfigurationInterface $serverConfiguration, AuthenticationConfigurationInterface $authenticationConfiguration, GrantInterface $grant, $authType = OAuth::AUTH_TYPE_URI) {
 		$options = array();
-		$grant->buildRequestOptions($credentials, $server, $authentication, $authType, $options);
+		$grant->buildRequestOptions($credentialsConfiguration, $serverConfiguration, $authenticationConfiguration, $authType, $options);
 		return new CurlRequest($options);
+	}
+
+
+	public static function authenticationUrl(CredentialsConfigurationInterface $credentialsConfiguration, ServerConfigurationInterface $serverConfiguration, AuthenticationConfigurationInterface $authenticationConfiguration) {
+		return $authenticationConfiguration->getRedirectUri($credentialsConfiguration, $serverConfiguration);
+
 	}
 
 }

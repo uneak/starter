@@ -1,0 +1,51 @@
+parameters:
+    uneak.oauth.twitter.credential.class: Uneak\OAuthClientBundle\OAuth\Credentials
+    uneak.oauth.twitter.server.class: Uneak\OAuthTwitterServiceBundle\Services\TwitterServer
+    uneak.oauth.twitter.service.class: Uneak\OAuthTwitterServiceBundle\Services\TwitterService
+    uneak.oauth.twitter.authentication.class: Uneak\OAuthTwitterServiceBundle\Services\TwitterAuthentication
+    uneak.oauth.twitter.api.class: Uneak\OAuthTwitterServiceBundle\Services\TwitterAPI
+
+
+    twitter.api.url: "https://api.twitter.com"
+    twitter.auth.endpoint: "https://api.twitter.com/oauth/authorize"
+    twitter.token.endpoint: "https://api.twitter.com/oauth/request_token"
+    twitter.revoke.token.endpoint: "https://accounts.twitter.com/o/oauth2/revoke"
+    twitter.client.id: "214715913175-lrvi6it9ohi11ce13g6e2gsar3114p3d.apps.twitterusercontent.com"
+    twitter.client.secret: "qWirg4dtgSQayvEML9dv07Ky"
+
+
+
+
+services:
+
+    uneak.oauth.twitter.authentication:
+        class: %uneak.oauth.twitter.authentication.class%
+        arguments:
+            - @uneak.oauth.twitter.credential
+            - @uneak.oauth.twitter.server
+
+    uneak.oauth.twitter.api:
+        class: %uneak.oauth.twitter.api.class%
+        arguments:
+            - @uneak.oauth.twitter.service
+            - %twitter.api.url%
+
+    uneak.oauth.twitter.credential:
+        class: %uneak.oauth.twitter.credential.class%
+        arguments:
+            - { clientId: %twitter.client.id%, clientSecret: %twitter.client.secret% }
+
+    uneak.oauth.twitter.server:
+        class: %uneak.oauth.twitter.server.class%
+        arguments:
+            - { authEndpoint: %twitter.auth.endpoint%, tokenEndpoint: %twitter.token.endpoint%, revokeTokenEndpoint: %twitter.revoke.token.endpoint% }
+
+    uneak.oauth.twitter.service:
+        class: %uneak.oauth.twitter.service.class%
+        arguments:
+            - @uneak.oauth.twitter.credential
+            - @uneak.oauth.twitter.server
+            - @uneak.oauth.twitter.authentication
+            - %twitter.api.url%
+        tags:
+            - { name: uneak.oauth.service, alias: twitter }
