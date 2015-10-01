@@ -14,12 +14,8 @@ namespace Uneak\OAuthFacebookServiceBundle\Services;
 
         public function __construct(CredentialsConfigurationInterface $credentials, FacebookServerConfiguration $server, AuthenticationConfigurationInterface $authentication) {
             parent::__construct($credentials, $server, $authentication);
-            $this->api = new FacebookAPI($this);
         }
 
-        public function getUser() {
-            return new FacebookUser($this->api()->userInformation());
-        }
 
         protected function buildResponseToken(CurlRequest $request) {
             $response = $request->getResponse();

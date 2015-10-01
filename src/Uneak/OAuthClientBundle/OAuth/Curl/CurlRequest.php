@@ -95,6 +95,8 @@
 				$curl_options[CURLOPT_HTTPHEADER] = $header;
 			}
 
+
+
 			$ch = curl_init();
 			curl_setopt_array($ch, $curl_options);
 
@@ -113,7 +115,7 @@
 				curl_setopt_array($ch, $this->options['curl_extras']);
 			}
 
-
+			ld($this->options);
 
 			$result = curl_exec($ch);
 			$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);

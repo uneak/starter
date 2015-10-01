@@ -53,8 +53,14 @@
 
             $this->entityLayoutContent->setTitle("Réseaux sociaux");
 
-            $content = new Twig('user_connect_login', array(
+			$userOAuthUser = array();
+			foreach ($user->getOAuthUsers() as $oAuthUser) {
+				$userOAuthUser[$oAuthUser->getService()] = $oAuthUser;
+			}
+
+			$content = new Twig('user_connect_login', array(
                 'user' => $user,
+				'oAuthUser' => $userOAuthUser,
             ));
 
             $panel = new Panel();

@@ -8,14 +8,10 @@
 
     class GoogleAPI extends ServiceAPI {
 
-        public function __construct(GoogleService $googleService) {
-            parent::__construct($googleService);
-            $this->apiUrl = "https://www.googleapis.com/oauth2/v1";
+        public function __construct($apiUrl) {
+            parent::__construct($apiUrl);
         }
 
-        public function userInformation() {
-            $this->userinfo();
-        }
 
         public function userinfo() {
             return $this->call('userinfo', array(

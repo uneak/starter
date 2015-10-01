@@ -3,14 +3,14 @@
     namespace Uneak\OAuthTwitterServiceBundle\Services;
 
 	use Symfony\Component\OptionsResolver\OptionsResolver;
-    use Uneak\OAuthClientBundle\OAuth\Server;
+    use Uneak\OAuthClientBundle\OAuth\Configuration\ServerConfiguration;
 
-    class TwitterServer extends Server {
+    class TwitterServerConfiguration extends ServerConfiguration {
 
         public function configureOptions(OptionsResolver $resolver) {
             parent::configureOptions($resolver);
             $resolver->setDefaults(array(
-                'authEndpoint'    => "https://api.twitter.com/oauth/authorize",
+                'authEndpoint'    => "https://www.twitter.com/v2.0/dialog/oauth",
                 'tokenEndpoint'    => "https://graph.twitter.com/v2.0/oauth/access_token",
                 'revokeTokenEndpoint'    => "https://graph.twitter.com/v2.0/me/permissions",
             ));
@@ -22,7 +22,4 @@
             return $this->getOption('revokeTokenEndpoint');
         }
 
-        public function getName() {
-            return "twitter";
-        }
 	}

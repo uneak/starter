@@ -7,6 +7,7 @@ services:
     uneak.oauth.autentication.register.action.listener:
         class: %uneak.oauth.autentication.register.action.listener.class%
         arguments:
+            - @uneak.oauth.servicesmanager
             - @router
             - @session
             - @uneak.user_manager

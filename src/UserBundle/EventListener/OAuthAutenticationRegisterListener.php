@@ -13,8 +13,9 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Uneak\OAuthClientBundle\Entity\OAuthUser;
 use Uneak\OAuthClientBundle\Event\OAuthAutenticationActionEvent;
-use Uneak\OAuthFacebookServiceBundle\Services\FacebookAPI;
+use Uneak\OAuthClientBundle\OAuth\ServicesManager;
 
 class OAuthAutenticationRegisterListener {
 
@@ -42,39 +43,52 @@ class OAuthAutenticationRegisterListener {
      * @var \Doctrine\ORM\EntityManager
      */
     private $em;
+    /**
+     * @var \Uneak\OAuthClientBundle\OAuth\ServicesManager
+     */
+    private $servicesManager;
 
-    public function __construct(Router $router, Session $session, UserManagerInterface $userManager, TokenStorageInterface $tokenStorage, AuthorizationCheckerInterface $authorizationChecker, EntityManager $em) {
+    public function __construct(ServicesManager $servicesManager, Router $router, Session $session, UserManagerInterface $userManager, TokenStorageInterface $tokenStorage, AuthorizationCheckerInterface $authorizationChecker, EntityManager $em) {
         $this->router = $router;
         $this->session = $session;
         $this->userManager = $userManager;
         $this->tokenStorage = $tokenStorage;
         $this->authorizationChecker = $authorizationChecker;
         $this->em = $em;
+        $this->servicesManager = $servicesManager;
     }
 
     public function onAutenticationRegister(OAuthAutenticationActionEvent $event) {
 
-        $userInformations = $event->getService()->getUserInformations();
+        $serviceUser = $this->servicesManager->getUser($event->getAccessToken());
 
         $key = time();
-        $this->session->set('authentication_user_informations_' . $key, $userInformations);
+        $this->session->set('authentication_service_user_' . $key, $serviceUser->getOptions());
         $redirectUrl = $this->router->generate('user_registration_register', array('key' => $key));
         $event->setResponse(new RedirectResponse($redirectUrl));
     }
 
     public function onAutenticationConnect(OAuthAutenticationActionEvent $event) {
 
-        $userInformations = $event->getService()->getUserInformations();
+        $serviceUser = $this->servicesManager->getUser($event->getAccessToken());
         $user = $this->tokenStorage->getToken()->getUser();
 
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        $accessor = PropertyAccess::createPropertyAccessor();
-        $accessor->setValue($user, $event->getServiceAlias()."Id", $userInformations['id']);
+        $oAuthUser = $this->em->getRepository("UserBundle:User")->findOAuthUser($event->getServiceAlias(), $serviceUser->getId());
+        if (!$oAuthUser) {
+            $oAuthUser = new OAuthUser();
+            $oAuthUser->setService($serviceUser->getService());
+            $oAuthUser->setId($serviceUser->getId());
+            $this->em->persist($oAuthUser);
+        }
+        $oAuthUser->setData($serviceUser->getOptions());
+        $oAuthUser->setToken($event->getAccessToken()->getOptions());
+        $oAuthUser->setUser($user);
 
-        $this->userManager->updateUser($user);
+        $this->em->flush();
 
         $redirectUrl = $this->router->generate('user_profile_connect');
         $event->setResponse(new RedirectResponse($redirectUrl));
@@ -83,30 +97,13 @@ class OAuthAutenticationRegisterListener {
 
     public function onAutenticationLogin(OAuthAutenticationActionEvent $event) {
 
-
-
-        $oAuthUser = $this->em->getRepository("UneakOAuthClientBundle:OAuthUser")->findOAuthUser($event->getServiceAlias(), $userData->getId());
-        if (!$oAuthUser) {
-            $oAuthUser = new OAuthUser();
-            $oAuthUser->setService($event->getServiceAlias());
-            $oAuthUser->setId($event->getServiceAlias());
-            $this->em->persist($oAuthUser);
-        }
-        $oAuthUser->setData($userData->getOptions());
-        $oAuthUser->setToken($tokenResponse->getToken()->getOptions());
-
-        $this->em->flush();
-
-
-
-        $serviceUser = $event->getService()->getUser();
-
-        $user = $this->userManager->findUserBy(array($event->getServiceAlias().'Id' => $serviceUser->getId()));
+        $serviceUser = $this->servicesManager->getUser($event->getAccessToken());
+        $user = $this->userManager->findOAuthUser($serviceUser->getService(), $serviceUser->getId());
 
         if (null === $user) {
 
             $key = time();
-            $this->session->set('authentication_user_informations_' . $key, $userInformations);
+            $this->session->set('authentication_service_user_' . $key, $serviceUser->getOptions());
             $redirectUrl = $this->router->generate('user_registration_register', array('key' => $key));
             $event->setResponse(new RedirectResponse($redirectUrl));
 

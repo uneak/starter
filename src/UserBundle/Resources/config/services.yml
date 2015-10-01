@@ -1,5 +1,5 @@
 parameters:
-    uneak.user_manager.class: FOS\UserBundle\Doctrine\UserManager
+    uneak.user_manager.class: UserBundle\Doctrine\UserManager
     uneak.user_provider.class: UserBundle\Security\UserProvider
     uneak.user_provider.username.class: FOS\UserBundle\Security\UserProvider
     uneak.user_provider.username_email.class: FOS\UserBundle\Security\EmailUserProvider

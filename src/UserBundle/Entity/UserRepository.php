@@ -14,6 +14,29 @@
 	 */
 	class UserRepository extends EntityRepository {
 
+		public function findOAuthUser($service, $id) {
+			$qb = $this->getOAuthUserQuery($service, $id);
+			$query = $qb->getQuery();
+			return $query->getOneOrNullResult();
+		}
+
+		public function getOAuthUserQuery($service, $id) {
+			$qb = $this->_em->createQueryBuilder();
+			$qb->select(array('user'))
+				->from('UserBundle:User', 'user')
+				->innerJoin('user.oAuthUsers', 'oauth_users')
+				->where($qb->expr()->andX(
+					$qb->expr()->eq('oauth_users.id', ':id'),
+					$qb->expr()->eq('oauth_users.service', ':service')
+				))
+				->setParameter('id', $id)
+				->setParameter('service', $service)
+			;
+			return $qb;
+		}
+
+
+
 		public function findPendingAccount() {
 			$qb = $this->getPendingAccountQuery();
 			$query = $qb->getQuery();

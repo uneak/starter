@@ -16,7 +16,6 @@
 		/**
 		 * @Route("/authentication/code/request/{service}/{action}", name="oauth_authentication_code_request")
 		 */
-
 		public function authenticationCodeRequestAction($service, $action) {
 			$event = new OAuthAutenticationRequestEvent($service, $action);
 			$this->get('event_dispatcher')->dispatch('oauth.autentication.request', $event);
@@ -28,11 +27,11 @@
 		/**
 		 * @Route("/authentication/code/response/{service}", name="oauth_authentication_code_response")
 		 */
-
-		public function authenticationCodeResponseAction($service, Request $request) {
+		public function authenticationCodeResponseAction($service) {
 			$event = new OAuthAutenticationResponseEvent($service);
 			$this->get('event_dispatcher')->dispatch('oauth.autentication.response', $event);
-			$event = new OAuthAutenticationActionEvent($event->getService(), $event->getServiceAlias(), $event->getAction());
+			$event = new OAuthAutenticationActionEvent($event->getService(), $event->getAccessToken(), $event->getServiceAlias(), $event->getAction());
+			$this->get('event_dispatcher')->dispatch('oauth.autentication.action', $event);
 			$this->get('event_dispatcher')->dispatch('oauth.autentication.action.' . $event->getAction(), $event);
 
 			return $event->getResponse();

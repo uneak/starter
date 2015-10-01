@@ -4,6 +4,11 @@ parameters:
     uneak.oauth.facebook.service.class: Uneak\OAuthFacebookServiceBundle\Services\FacebookService
     uneak.oauth.facebook.authentication.class: Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfiguration
 
+    uneak.oauth.facebook.api.class: Uneak\OAuthFacebookServiceBundle\Services\FacebookAPI
+    uneak.oauth.facebook.user.class: Uneak\OAuthFacebookServiceBundle\Services\FacebookUser
+
+
+    facebook.api.url: "https://graph.facebook.com"
 
     facebook.auth.endpoint: "https://www.facebook.com/v2.0/dialog/oauth"
     facebook.token.endpoint: "https://graph.facebook.com/v2.0/oauth/access_token"
@@ -38,3 +43,15 @@ services:
             - @uneak.oauth.facebook.authentication
         tags:
             - { name: uneak.oauth.service, alias: facebook }
+
+    uneak.oauth.facebook.api:
+        class: %uneak.oauth.facebook.api.class%
+        arguments:
+            - %facebook.api.url%
+        tags:
+            - { name: uneak.oauth.api, alias: facebook }
+
+    uneak.oauth.facebook.user:
+        class: %uneak.oauth.facebook.user.class%
+        tags:
+            - { name: uneak.oauth.user, alias: facebook }

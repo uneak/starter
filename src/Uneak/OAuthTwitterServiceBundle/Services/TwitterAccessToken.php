@@ -12,11 +12,8 @@
 		public function configureOptions(OptionsResolver $resolver) {
 			parent::configureOptions($resolver);
 			$resolver->setDefaults(array(
-				'id_token'        => null,
+				'service'  => 'twitter',
 			));
-
-			$resolver->setAllowedTypes('id_token', 'string');
 		}
-
 
 	}

@@ -16,11 +16,6 @@ namespace Uneak\OAuthGoogleServiceBundle\Services;
 
         public function __construct(CredentialsConfigurationInterface $credentials, GoogleServerConfiguration $server, AuthenticationConfigurationInterface $authentication) {
             parent::__construct($credentials, $server, $authentication);
-            $this->api = new GoogleAPI($this);
-        }
-
-        public function getUser() {
-            return new GoogleUser($this->api()->userInformation());
         }
 
         protected function buildResponseToken(CurlRequest $request) {
@@ -28,12 +23,18 @@ namespace Uneak\OAuthGoogleServiceBundle\Services;
             $result = $response->getResult();
 
             $code = $response->getCode();
-            $message = "Success";
-            $type = "OAuthSuccess";
+            $message = "Error";
+            $type = "OAuthError";
             $token = null;
 
             if (is_array($result)) {
-                $token = new GoogleAccessToken($result);
+                if (isset($result['error'])) {
+                    $message = $result['error'];
+                } else {
+                    $token = new GoogleAccessToken($result);
+                    $type = "OAuthSuccess";
+                    $message = "Success";
+                }
             }
 
             return new TokenResponse($code, $token, $type, $message);

@@ -12,7 +12,8 @@
 		public function configureOptions(OptionsResolver $resolver) {
 			parent::configureOptions($resolver);
 			$resolver->setDefaults(array(
-				'id_token'        => null,
+				'service'  => 'google',
+				'id_token' => null,
 			));
 
 			$resolver->setAllowedTypes('id_token', 'string');

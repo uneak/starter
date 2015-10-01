@@ -10,13 +10,8 @@
 
     class FacebookAPI extends ServiceAPI {
 
-        public function __construct(FacebookService $facebookService) {
-            parent::__construct($facebookService);
-            $this->apiUrl = "https://graph.facebook.com";
-        }
-
-        public function userInformation() {
-            return $this->me();
+        public function __construct($apiUrl) {
+            parent::__construct($apiUrl);
         }
 
         public function me(array $fields = array('id', 'name', 'first_name', 'last_name', 'email', 'birthday', 'picture.type(large)')) {
@@ -27,7 +22,6 @@
                 'http_method' => CurlRequest::HTTP_METHOD_GET
             ));
         }
-
 
 
         public function meFeed($message) {

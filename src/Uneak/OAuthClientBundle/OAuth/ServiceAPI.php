@@ -2,28 +2,18 @@
 
 	namespace Uneak\OAuthClientBundle\OAuth;
 
-
     use Uneak\OAuthClientBundle\OAuth\Curl\CurlResponse;
 
-    abstract class ServiceAPI {
+    abstract class ServiceAPI extends AccessTokenCaller {
 
         protected $apiUrl;
-        /**
-         * @var ServiceInterface
-         */
-        private $service;
 
-        public function __construct(ServiceInterface $service) {
-            $this->apiUrl = "";
-            $this->service = $service;
+        public function __construct($apiUrl) {
+            $this->apiUrl = $apiUrl;
         }
 
-
-        abstract public function userInformation();
-
-
         public function call($function, $parameters) {
-            $response = $this->service->fetch(array_merge(array(
+            $response = $this->fetch(array_merge(array(
                 'url' => $this->apiUrl.'/'.$function,
             ), $parameters));
             return $this->_checkResponse($response);

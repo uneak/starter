@@ -11,7 +11,7 @@
 	 * User
 	 *
 	 * @ORM\Table(name="OAuthUser")
-	 * @ORM\Entity(repositoryClass="Uneak\OAuthClientBundle\Entity\OauthUserRepository")
+	 * @ORM\Entity(repositoryClass="Uneak\OAuthClientBundle\Entity\OAuthUserRepository")
 	 *
 	 */
 	class OAuthUser {

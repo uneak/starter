@@ -29,10 +29,7 @@
 		 * @var \Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfigurationInterface
 		 */
 		protected $authenticationConfiguration;
-		/**
-		 * @var ServiceAPI
-		 */
-		protected $api;
+
 
 		public function __construct(CredentialsConfigurationInterface $credentialsConfiguration, ServerConfigurationInterface $serverConfiguration, AuthenticationConfigurationInterface $authenticationConfiguration) {
 			$this->credentialsConfiguration = $credentialsConfiguration;
@@ -40,39 +37,11 @@
 			$this->authenticationConfiguration = $authenticationConfiguration;
 		}
 
-
-		/**
-		 * @return ServiceAPI
-		 */
-		public function api() {
-			return $this->api;
-		}
-		/**
-		 * @return ServiceUserInterface
-		 */
-		public function getUser() {
-			return null;
-		}
 		/**
 		 * @return string
 		 */
 		public function authenticationUrl() {
 			return OAuth::authenticationUrl($this->credentialsConfiguration, $this->serverConfiguration, $this->authenticationConfiguration);
-		}
-
-		/**
-		 * @param array $options
-		 *
-		 * @return null|\Uneak\OAuthClientBundle\OAuth\Curl\CurlResponse
-		 * @throws \Uneak\OAuthClientBundle\OAuth\Exception
-		 */
-		public function fetch(array $options) {
-			if (!$this->getTokenResponse()) {
-				// todo: exeption
-				return null;
-			}
-
-			return OAuth::fetch($this->getTokenResponse(), $options);
 		}
 
 		/**

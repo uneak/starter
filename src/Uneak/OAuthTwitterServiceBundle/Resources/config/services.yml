@@ -1,51 +1,73 @@
 parameters:
-    uneak.oauth.twitter.credential.class: Uneak\OAuthClientBundle\OAuth\Credentials
-    uneak.oauth.twitter.server.class: Uneak\OAuthTwitterServiceBundle\Services\TwitterServer
+    uneak.oauth.twitter.credential.class: Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfiguration
+    uneak.oauth.twitter.server.class: Uneak\OAuthTwitterServiceBundle\Services\TwitterServerConfiguration
     uneak.oauth.twitter.service.class: Uneak\OAuthTwitterServiceBundle\Services\TwitterService
-    uneak.oauth.twitter.authentication.class: Uneak\OAuthTwitterServiceBundle\Services\TwitterAuthentication
+    uneak.oauth.twitter.authentication.class: Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfiguration
+
     uneak.oauth.twitter.api.class: Uneak\OAuthTwitterServiceBundle\Services\TwitterAPI
+    uneak.oauth.twitter.user.class: Uneak\OAuthTwitterServiceBundle\Services\TwitterUser
 
 
-    twitter.api.url: "https://api.twitter.com"
-    twitter.auth.endpoint: "https://api.twitter.com/oauth/authorize"
-    twitter.token.endpoint: "https://api.twitter.com/oauth/request_token"
-    twitter.revoke.token.endpoint: "https://accounts.twitter.com/o/oauth2/revoke"
-    twitter.client.id: "214715913175-lrvi6it9ohi11ce13g6e2gsar3114p3d.apps.twitterusercontent.com"
-    twitter.client.secret: "qWirg4dtgSQayvEML9dv07Ky"
+#            'authorization_url' => '',
+#            'request_token_url' => '',
+#            'access_token_url'  => '',
+#            'infos_url'         => 'https://api.twitter.com/1.1/account/verify_credentials.json',
 
 
+
+    twitter.api.url: "https://api.twitter.com/1.1"
+
+
+    twitter.request.token: "https://api.twitter.com/oauth/request_token"
+    twitter.access.token: "https://api.twitter.com/oauth/access_token"
+    twitter.authorization: "https://api.twitter.com/oauth/authenticate"
+
+
+
+
+    twitter.auth.endpoint: "https://api.twitter.com/oauth/authenticate"
+#    twitter.token.endpoint: "https://graph.twitter.com/v2.0/oauth/access_token"
+#    twitter.revoke.token.endpoint: "https://graph.twitter.com/v2.0/me/permissions"
+
+    twitter.client.id: "wWw1hP1RbJgjC6LyS9QmY3aKv"
+    twitter.client.secret: "7DXjAi9KGq7SbXvuFjWF4qVAJARUE7mNzodub2Q0VMWbmafDkz"
 
 
 services:
 
-    uneak.oauth.twitter.authentication:
-        class: %uneak.oauth.twitter.authentication.class%
-        arguments:
-            - @uneak.oauth.twitter.credential
-            - @uneak.oauth.twitter.server
-
-    uneak.oauth.twitter.api:
-        class: %uneak.oauth.twitter.api.class%
-        arguments:
-            - @uneak.oauth.twitter.service
-            - %twitter.api.url%
-
-    uneak.oauth.twitter.credential:
-        class: %uneak.oauth.twitter.credential.class%
-        arguments:
-            - { clientId: %twitter.client.id%, clientSecret: %twitter.client.secret% }
-
-    uneak.oauth.twitter.server:
-        class: %uneak.oauth.twitter.server.class%
-        arguments:
-            - { authEndpoint: %twitter.auth.endpoint%, tokenEndpoint: %twitter.token.endpoint%, revokeTokenEndpoint: %twitter.revoke.token.endpoint% }
-
-    uneak.oauth.twitter.service:
-        class: %uneak.oauth.twitter.service.class%
-        arguments:
-            - @uneak.oauth.twitter.credential
-            - @uneak.oauth.twitter.server
-            - @uneak.oauth.twitter.authentication
-            - %twitter.api.url%
-        tags:
-            - { name: uneak.oauth.service, alias: twitter }
+#    uneak.oauth.twitter.authentication:
+#        class: %uneak.oauth.twitter.authentication.class%
+##        arguments:
+##            - { redirect_uri: %twitter.auth.redirect_uri% }
+#
+#
+#    uneak.oauth.twitter.credential:
+#        class: %uneak.oauth.twitter.credential.class%
+#        arguments:
+#            - { clientId: %twitter.client.id%, clientSecret: %twitter.client.secret% }
+#
+#    uneak.oauth.twitter.server:
+#        class: %uneak.oauth.twitter.server.class%
+#        arguments:
+#            - { authEndpoint: %twitter.auth.endpoint%, tokenEndpoint: %twitter.token.endpoint%, revokeTokenEndpoint: %twitter.revoke.token.endpoint% }
+#
+#    uneak.oauth.twitter.service:
+#        class: %uneak.oauth.twitter.service.class%
+#        arguments:
+#            - @uneak.oauth.twitter.credential
+#            - @uneak.oauth.twitter.server
+#            - @uneak.oauth.twitter.authentication
+#        tags:
+#            - { name: uneak.oauth.service, alias: twitter }
+#
+#    uneak.oauth.twitter.api:
+#        class: %uneak.oauth.twitter.api.class%
+#        arguments:
+#            - %twitter.api.url%
+#        tags:
+#            - { name: uneak.oauth.api, alias: twitter }
+#
+#    uneak.oauth.twitter.user:
+#        class: %uneak.oauth.twitter.user.class%
+#        tags:
+#            - { name: uneak.oauth.user, alias: twitter }

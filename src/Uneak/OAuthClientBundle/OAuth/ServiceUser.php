@@ -4,6 +4,7 @@
 
 	use Symfony\Component\OptionsResolver\OptionsResolver;
 	use Uneak\OAuthClientBundle\OAuth\Configuration\Configuration;
+	use Uneak\OAuthClientBundle\OAuth\Token\AccessTokenInterface;
 
 	class ServiceUser extends Configuration implements ServiceUserInterface {
 
@@ -15,6 +16,7 @@
 		}
 
 		public function configureOptions(OptionsResolver $resolver) {
+			parent::configureOptions($resolver);
 			$resolver->setDefaults(array(
 				'id'         => null,
 				'first_name' => null,
@@ -60,6 +62,13 @@
 			$this->resolved = false;
 		}
 
+
+		/**
+		 * @param \Uneak\OAuthClientBundle\OAuth\Token\AccessTokenInterface $accessToken
+		 */
+		public function setTokenData(AccessTokenInterface $accessToken) {
+
+		}
 
 		protected function resolve() {
 			$options = $this->adapter($this->getData(), array(

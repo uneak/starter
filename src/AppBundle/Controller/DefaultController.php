@@ -7,8 +7,14 @@
 	use Symfony\Component\HttpFoundation\Request;
 	use Uneak\MaterialDesignBundle\Blocks\CardBlock;
     use Uneak\OAuthClientBundle\OAuth\Authentication;
-    use Uneak\OAuthClientBundle\OAuth\ServerFactory;
-    use Uneak\OAuthClientBundle\Server\FacebookServer;
+	use Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfiguration;
+	use Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfiguration;
+	use Uneak\OAuthClientBundle\OAuth\Configuration\ServerOAuth1Configuration;
+	use Uneak\OAuthClientBundle\OAuth\OAuth1;
+	use Uneak\OAuthClientBundle\OAuth\ServerFactory;
+	use Uneak\OAuthClientBundle\OAuth\Signature\HmacSha1Signature;
+	use Uneak\OAuthClientBundle\OAuth\Signature\PlainTextSignature;
+	use Uneak\OAuthClientBundle\Server\FacebookServer;
     use Uneak\OAuthClientBundle\OAuth\Credentials;
     use Uneak\OAuthClientBundle\OAuth\Server;
 	use Uneak\PortoAdminBundle\Blocks\Layout\Header;
@@ -22,48 +28,25 @@
 		 */
 		public function testAction() {
 
-			$blockBuilder = $this->get("uneak.blocksmanager.builder");
-			$blockBuilder->addBlock("header", "block_main_interface");
-			$header = $blockBuilder->getBlock("header");
+			$credentials = new CredentialsConfiguration(array(
+				'clientId'        => "wWw1hP1RbJgjC6LyS9QmY3aKv",
+				'clientSecret'    => "7DXjAi9KGq7SbXvuFjWF4qVAJARUE7mNzodub2Q0VMWbmafDkz",
+			));
 
-			$debug = $blockBuilder->debug();
+			$server = new ServerOAuth1Configuration(array(
+				'request_token_url'  => "https://api.twitter.com/oauth/request_token",
+				'access_token_url' => "https://api.twitter.com/oauth/access_token",
+				'authorize_url' => "https://api.twitter.com/oauth/authorize",
+			));
 
-			$header->getHeader()->setBrand("block_content");
-
-			$debug .= $blockBuilder->debug();
-
-			$blockBuilder->getBlock("header");
-
-			$debug .= $blockBuilder->debug();
+			$auth = new AuthenticationConfiguration(array(
+				'redirect_uri'  => "http://dev.starter.com/app_dev.php/authentication/code/response/twitter",
+			));
 
 
-			$assetsManager = $this->get("uneak.assetsbuildermanager");
-			$assetsManager->getAssets();
+			$requestToken = OAuth1::getRequestToken($credentials, $server, $auth, new HmacSha1Signature());
 
-			$debug .= $blockBuilder->debug();
-
-			$header->getHeader()->getBrand()->setTemplateAlias("MARC");
-
-			$debug .= $blockBuilder->debug();
-
-			$assetsManager->getAssets();
-
-			$debug .= $blockBuilder->debug();
-
-			return $this->render($debug);
-
-//			$this->blockBuilder->addBlock("layout", "block_main_interface");
-//			$this->layout = $this->blockBuilder->getBlock("layout");
-//
-//			$this->layoutHeader = $this->layout->getHeader();
-//			$this->layoutContent = $this->layout->getContent();
-//			$this->layoutContentBody = $this->layoutContent->getBody();
-//			$this->layoutContentHeader = $this->layoutContent->getHeader();
-//			$this->breadcrumb = $this->layoutContentHeader->getBreadcrumb();
-//
-//			$this->layoutLeftSidebar = $this->layout->getLeftSidebar();
-//			$this->layoutRightSidebar = $this->layout->getRightSidebar();
-
+			ldd($requestToken);
 
 		}
 

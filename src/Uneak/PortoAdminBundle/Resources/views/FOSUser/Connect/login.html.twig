@@ -5,23 +5,23 @@
 <div class="mb-xs">
     <div>
         <a href="{{ path('oauth_authentication_code_request', {service: "facebook", action: "admin.connect"}) }}" class="btn btn-facebook mb-md ml-xs mr-xs pr-md pl-md"><i class="fa fa-facebook"></i> connexion</a><br />
-        {%  if user.facebookId %}
+        {%  if oAuthUser.facebook is defined %}
             <ul>
                 <li>Connecté</li>
-                <li>{{ user.facebookId }}</li>
-                <li><a href="https://www.facebook.com/{{ user.facebookId }}">Voir le profil</a></li>
-                <li><a href="{{ path('user_profile_disconnect', {service: "facebook"}) }}">Deconnecter le profil</a></li>
+                <li>{{ oAuthUser.facebook.id }}</li>
+                <li><a href="https://www.facebook.com/{{ oAuthUser.facebook.id }}">Voir le profil</a></li>
+                <li><a href="{% if oAuthUser.google.data.link is defined %}{{ oAuthUser.google.data.link }}{% else %}{{ path('user_profile_disconnect', {service: "facebook"}) }}{% endif %}">Deconnecter le profil</a></li>
             </ul>
         {% endif %}
     </div>
 <hr/>
     <div>
         <a href="{{ path('oauth_authentication_code_request', {service: "google", action: "admin.connect"}) }}" class="btn btn-gplus mb-md ml-xs mr-xs pr-md pl-md"><i class="fa fa-google"></i> connexion</a><br />
-        {%  if user.googleId %}
+        {%  if oAuthUser.google is defined %}
             <ul>
                 <li>Connecté</li>
-                <li>{{ user.googleId }}</li>
-                <li><a href="https://plus.google.com/{{ user.googleId }}">Voir le profil</a></li>
+                <li>{{ oAuthUser.google.id }}</li>
+                <li><a href="{% if oAuthUser.google.data.link is defined %}{{ oAuthUser.google.data.link }}{% else %}https://plus.google.com/{{ oAuthUser.google.id }}{% endif %}">Voir le profil</a></li>
                 <li><a href="{{ path('user_profile_disconnect', {service: "google"}) }}">Deconnecter le profil</a></li>
             </ul>
         {% endif %}
@@ -29,12 +29,12 @@
     <hr/>
     <div>
         <a href="{{ path('oauth_authentication_code_request', {service: "twitter", action: "admin.connect"}) }}" class="btn btn-twitter mb-md ml-xs mr-xs pr-md pl-md"><i class="fa fa-twitter"></i> connexion</a><br />
-        {%  if user.twitterId %}
+        {%  if oAuthUser.twitter is defined %}
             <ul>
                 <li>Connecté</li>
-                <li>{{ user.twitterId }}</li>
-                <li><a href="https://twitter.com/intent/user?user_id={{ user.twitterId }}">Voir le profil</a></li>
-                <li><a href="{{ path('user_profile_disconnect', {service: "twitter"}) }}">Deconnecter le profil</a></li>
+                <li>{{ oAuthUser.twitter.id }}</li>
+                <li><a href="https://twitter.com/intent/user?user_id={{ oAuthUser.twitter.id }}">Voir le profil</a></li>
+                <li><a href="{% if oAuthUser.google.data.link is defined %}{{ oAuthUser.google.data.link }}{% else %}{{ path('user_profile_disconnect', {service: "twitter"}) }}{% endif %}">Deconnecter le profil</a></li>
             </ul>
         {% endif %}
 

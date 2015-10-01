@@ -11,7 +11,9 @@
 
 		public function configureOptions(OptionsResolver $resolver) {
 			parent::configureOptions($resolver);
+			$resolver->setDefaults(array(
+				'service'  => 'facebook',
+			));
 		}
-
 
 	}

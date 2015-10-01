@@ -2,7 +2,6 @@
 
 	namespace Uneak\OAuthClientBundle\OAuth;
 
-	use Uneak\OAuthClientBundle\OAuth\Curl\CurlResponse;
     use Uneak\OAuthClientBundle\OAuth\Grant\GrantInterface;
     use Uneak\OAuthClientBundle\OAuth\Token\TokenResponse;
     use Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfigurationInterface;
@@ -12,18 +11,6 @@
     interface ServiceInterface {
 
         public function authenticationUrl();
-        /**
-         * @return CurlResponse
-         */
-        public function fetch(array $options);
-        /**
-         * @return ServiceUserInterface
-         */
-        public function getUser();
-        /**
-         * @return ServiceAPI
-         */
-        public function api();
         /**
          * @return TokenResponse
          */

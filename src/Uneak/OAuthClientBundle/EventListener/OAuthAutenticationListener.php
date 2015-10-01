@@ -40,7 +40,6 @@ class OAuthAutenticationListener {
     public function onAutenticationRequest(OAuthAutenticationRequestEvent $event) {
 
         $service = $this->servicesManager->getService($event->getServiceAlias());
-
         $redirectUrl = $this->router->generate('oauth_authentication_code_response', array('service' => $event->getServiceAlias()), Router::ABSOLUTE_URL);
         $service->getAuthenticationConfiguration()->setOption('redirect_uri', $redirectUrl);
         $state = $service->getAuthenticationConfiguration()->getState();
@@ -74,15 +73,17 @@ class OAuthAutenticationListener {
             ldd("invalid state");
         }
 
-
         $service = $this->servicesManager->getService($event->getServiceAlias());
         $redirectUrl = $this->router->generate('oauth_authentication_code_response', array('service' => $event->getServiceAlias()), Router::ABSOLUTE_URL);
         $service->getAuthenticationConfiguration()->setOption('redirect_uri', $redirectUrl);
+
         $tokenResponse = $service->requestToken(new AuthorizationCode($code));
 
+        if (!$tokenResponse->getToken()) {
+            throw new \Exception($tokenResponse->getMessage(), $tokenResponse->getCode());
+        }
 
-
-
+        $event->setAccessToken($tokenResponse->getToken());
         $event->setAction($action);
         $event->setService($service);
     }

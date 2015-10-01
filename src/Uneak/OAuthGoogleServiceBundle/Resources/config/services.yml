@@ -4,7 +4,12 @@ parameters:
     uneak.oauth.google.service.class: Uneak\OAuthGoogleServiceBundle\Services\GoogleService
     uneak.oauth.google.authentication.class: Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfiguration
 
+    uneak.oauth.google.api.class: Uneak\OAuthGoogleServiceBundle\Services\GoogleAPI
+    uneak.oauth.google.user.class: Uneak\OAuthGoogleServiceBundle\Services\GoogleUser
 
+
+    google.api.url: "https://www.googleapis.com/oauth2/v1"
+    
     google.auth.endpoint: "https://accounts.google.com/o/oauth2/auth"
     google.token.endpoint: "https://accounts.google.com/o/oauth2/token"
     google.revoke.token.endpoint: "https://accounts.google.com/o/oauth2/revoke"
@@ -40,3 +45,15 @@ services:
             - @uneak.oauth.google.authentication
         tags:
             - { name: uneak.oauth.service, alias: google }
+
+    uneak.oauth.google.api:
+        class: %uneak.oauth.google.api.class%
+        arguments:
+            - %google.api.url%
+        tags:
+            - { name: uneak.oauth.api, alias: google }
+         
+    uneak.oauth.google.user:
+        class: %uneak.oauth.google.user.class%
+        tags:
+            - { name: uneak.oauth.user, alias: google }

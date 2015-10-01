@@ -18,6 +18,7 @@
 	use Symfony\Component\PropertyAccess\PropertyAccess;
 	use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 	use FOS\UserBundle\Model\UserInterface;
+	use Uneak\OAuthClientBundle\Entity\OAuthUser;
 	use Uneak\PortoAdminBundle\Blocks\Content\Twig;
 	use Uneak\PortoAdminBundle\Controller\LayoutFormInterfaceController;
 	use UserBundle\Form\Type\RegistrationFormType;
@@ -33,45 +34,38 @@
 		public function registerAction(Request $request, $key = null) {
 			$userManager = $this->get('uneak.user_manager');
 			$templates = $this->get("uneak.templatesmanager");
+			$serviceManager = $this->get("uneak.oauth.servicesmanager");
 
-//			$hasUser = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
-//			if ($hasUser) {
-//				throw new AccessDeniedException('Cannot register already registered account.');
-//			}
+			//			$hasUser = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
+			//			if ($hasUser) {
+			//				throw new AccessDeniedException('Cannot register already registered account.');
+			//			}
 
 			$user = $userManager->createUser();
-            $userInformations = null;
+			$serviceUser = null;
 
 			if ($key) {
 				$session = $this->get('session');
-                $userInformations = $session->get('authentication_user_informations_' . $key);
-				$session->remove('authentication_user_informations_' . $key);
+				$serviceUser = $serviceManager->getUser($session->get('authentication_service_user_' . $key));
+				$session->remove('authentication_service_user_' . $key);
 
 				$key = time();
-				$session->set('authentication_user_informations_' . $key, $userInformations);
+				$session->set('authentication_service_user_' . $key, $serviceUser->getOptions());
 
-                $association = array(
-                    'facebookId' => 'id',
-                    'firstName' => 'firstName',
-                    'lastName' => 'lastName',
-                    'username' => 'username',
-                    'email' => 'email',
-//                'picture' => 'picture.data.url'
-                );
+				$path = array(
+					//user			//serviceUser
+					'firstName' => 'firstName',
+					'lastName'  => 'lastName',
+					'username'  => 'username',
+					'email'     => 'email',
+				);
 
-                $accessor = PropertyAccess::createPropertyAccessor();
-                foreach ($association as $internal => $external) {
-
-                    if ($accessor->isWritable($user, $internal)) {
-                        $externalPath = explode('.', $external);
-                        $value = $userInformations;
-                        for($i=0; $i < count($externalPath); $i++) {
-                            $value = $value[$externalPath[$i]];
-                        }
-                        $accessor->setValue($user, $internal, $value);
-                    }
-
-                }
+				$accessor = PropertyAccess::createPropertyAccessor();
+				foreach ($path as $internal => $external) {
+					if ($accessor->isWritable($user, $internal)) {
+						$accessor->setValue($user, $internal, $accessor->getValue($serviceUser, $external));
+					}
+				}
 
 			}
 
@@ -84,12 +78,11 @@
 				$emailHaveToConfirm = true;
 				$emailConfirmed = false;
 
-				if ($userInformations) {
-					$this->updateSocialPhoto($user, $userInformations['picture']);
-					$emailConfirmed = $userInformations['email'] == $user->getEmail();
+				if ($serviceUser) {
+					$this->updateSocialPhoto($user, $serviceUser->getPicture());
+					$emailConfirmed = $serviceUser->getEmail() == $user->getEmail();
 					$user->setEmailConfirmed($emailConfirmed);
 				}
-
 
 				if ($emailHaveToConfirm && !$emailConfirmed) {
 
@@ -103,8 +96,8 @@
 					// SEND EMAIL
 
 					$rendered = $this->render($templates->getTemplate("user_registration_email_txt"), array(
-						'user' => $user,
-						'confirmationUrl' =>  $this->generateUrl('user_registration_confirm', array('token' => $user->getConfirmationToken()), true)
+						'user'            => $user,
+						'confirmationUrl' => $this->generateUrl('user_registration_confirm', array('token' => $user->getConfirmationToken()), true)
 					));
 
 					$renderedLines = explode("\n", trim($rendered));
@@ -119,38 +112,40 @@
 
 					$mailer->send($message);
 
-					$userManager->updateUser($user);
-
 					$url = $this->generateUrl('user_registration_check_email', array("username" => $user->getUsername()));
-					return new RedirectResponse($url);
-
 				} else {
-
-					$userManager->updateUser($user);
-
 					$url = $this->generateUrl('user_registration_confirmed', array("username" => $user->getUsername()));
-					return new RedirectResponse($url);
 				}
 
+				$userManager->updateUser($user);
 
+				if ($serviceUser) {
+					$em = $this->getDoctrine()->getManager();
+					$oAuthUser = new OAuthUser();
+					$oAuthUser->setId($serviceUser->getId());
+					$oAuthUser->setService($serviceUser->getService());
+					$oAuthUser->setData($serviceUser->getOptions());
+					$oAuthUser->setUser($user);
+					$em->persist($oAuthUser);
+					$em->flush();
+				}
+
+				return new RedirectResponse($url);
 
 			}
-
 
 
 			$this->layout->setIcon("user");
 			$this->layout->setTitle("Register");
 			$content = new Twig('user_registration_register', array(
-				'form' => $form->createView(),
-				'userInformations' => $userInformations,
-				'key' => $key
+				'form'             => $form->createView(),
+				'serviceUser' => $serviceUser,
+				'key'              => $key
 			));
 			$this->layout->setContent($content);
 
 
 		}
-
-
 
 
 		/**
@@ -212,7 +207,6 @@
 		}
 
 
-
 		/**
 		 * Tell the user his account is now confirmed
 		 */
@@ -227,9 +221,6 @@
 			));
 			$this->layout->setContent($content);
 		}
-
-
-
 
 
 		/**
@@ -258,15 +249,15 @@
 			$mapping = $propertyMapping->fromField($user, 'imageFile');
 			$destDir = $mapping->getUploadDestination();
 			$extension = pathinfo(parse_url($photoPath, PHP_URL_PATH), PATHINFO_EXTENSION);
-			$destName = uniqid().".".$extension;
+			$destName = uniqid() . "." . $extension;
 
-			$destPath = $destDir."/".$destName;
+			$destPath = $destDir . "/" . $destName;
 			$file = fopen($photoPath, "rb");
 			if ($file) {
 				$newfile = fopen($destPath, "wb");
 				if ($newfile) {
-					while(!feof($file)) {
-						fwrite($newfile, fread($file, 1024 * 8 ), 1024 * 8 );
+					while (!feof($file)) {
+						fwrite($newfile, fread($file, 1024 * 8), 1024 * 8);
 					}
 					fclose($newfile);
 				}
@@ -276,8 +267,7 @@
 			$user->setImage($destName);
 		}
 
-		protected function updateUserInformation(UserInterface $user, UserResponseInterface $userInformation)
-		{
+		protected function updateUserInformation(UserInterface $user, UserResponseInterface $userInformation) {
 			$accessor = PropertyAccess::createPropertyAccessor();
 			$accessor->setValue($user, 'username', $userInformation->getNickname());
 			$accessor->setValue($user, 'firstName', $userInformation->getFirstName());
