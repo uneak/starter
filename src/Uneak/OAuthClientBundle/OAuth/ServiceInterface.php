@@ -10,15 +10,6 @@
 
     interface ServiceInterface {
 
-        public function authenticationUrl();
-        /**
-         * @return TokenResponse
-         */
-        public function requestToken(GrantInterface $grant, $authType = OAuth::AUTH_TYPE_URI);
-        /**
-         * @return TokenResponse
-         */
-        public function getTokenResponse();
         /**
          * @return CredentialsConfigurationInterface
          */

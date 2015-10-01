@@ -11,7 +11,7 @@ class OAuthAutenticationResponseEvent extends Event {
     protected $serviceAlias;
     protected $service;
     protected $action;
-    protected $accessToken;
+    protected $token;
 
     public function __construct($serviceAlias) {
         $this->serviceAlias = $serviceAlias;
@@ -57,15 +57,15 @@ class OAuthAutenticationResponseEvent extends Event {
     /**
      * @return mixed
      */
-    public function getAccessToken() {
-        return $this->accessToken;
+    public function getToken() {
+        return $this->token;
     }
 
     /**
-     * @param mixed $accessToken
+     * @param mixed $token
      */
-    public function setAccessToken($accessToken) {
-        $this->accessToken = $accessToken;
+    public function setToken($token) {
+        $this->token = $token;
     }
 
 

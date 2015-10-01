@@ -4,7 +4,7 @@
 
 	use Symfony\Component\OptionsResolver\OptionsResolver;
 
-	class ServerConfiguration extends Configuration implements ServerConfigurationInterface {
+	class ServerOAuth2Configuration extends Configuration implements ServerOAuth2ConfigurationInterface {
 
 
 		public function __construct(array $options = array()) {
@@ -14,6 +14,8 @@
 		public function configureOptions(OptionsResolver $resolver) {
 			parent::configureOptions($resolver);
 			$resolver->setDefaults(array(
+				'service_type'  => 'oauth2',
+				'authEndpoint'  => null,
 				'authEndpoint'  => null,
 				'tokenEndpoint' => null,
 			));

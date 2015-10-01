@@ -6,6 +6,7 @@ use Symfony\Component\EventDispatcher\Event;
 use Uneak\OAuthClientBundle\OAuth\Service;
 use Uneak\OAuthClientBundle\OAuth\ServiceInterface;
 use Uneak\OAuthClientBundle\OAuth\Token\AccessTokenInterface;
+use Uneak\OAuthClientBundle\OAuth\Token\TokenInterface;
 
 class OAuthAutenticationActionEvent extends Event {
 
@@ -13,22 +14,22 @@ class OAuthAutenticationActionEvent extends Event {
     protected $service;
     protected $serviceAlias;
     protected $action;
-    protected $accessToken;
+    protected $token;
     protected $response = null;
 
-    public function __construct(ServiceInterface $service, AccessTokenInterface $accessToken, $serviceAlias, $action) {
+    public function __construct(ServiceInterface $service, TokenInterface $token, $serviceAlias, $action) {
         $this->service = $service;
         $this->serviceAlias = $serviceAlias;
         $this->action = $action;
-        $this->accessToken = $accessToken;
+        $this->token = $token;
     }
 
     /**
-     * @return AccessTokenInterface
+     * @return TokenInterface
      */
-    public function getAccessToken()
+    public function getToken()
     {
-        return $this->accessToken;
+        return $this->token;
     }
 
     /**

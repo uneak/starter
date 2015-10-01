@@ -7,7 +7,6 @@
 
 	interface ServiceUserInterface extends ConfigurationInterface {
 
-		public function getService();
 		public function getId();
 		public function getFirstName();
 		public function getLastName();

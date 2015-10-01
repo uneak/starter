@@ -30,7 +30,7 @@
 		public function authenticationCodeResponseAction($service) {
 			$event = new OAuthAutenticationResponseEvent($service);
 			$this->get('event_dispatcher')->dispatch('oauth.autentication.response', $event);
-			$event = new OAuthAutenticationActionEvent($event->getService(), $event->getAccessToken(), $event->getServiceAlias(), $event->getAction());
+			$event = new OAuthAutenticationActionEvent($event->getService(), $event->getToken(), $event->getServiceAlias(), $event->getAction());
 			$this->get('event_dispatcher')->dispatch('oauth.autentication.action', $event);
 			$this->get('event_dispatcher')->dispatch('oauth.autentication.action.' . $event->getAction(), $event);
 

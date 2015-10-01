@@ -8,6 +8,8 @@ use Symfony\Component\Routing\Router;
 use Uneak\OAuthClientBundle\Event\OAuthAutenticationRequestEvent;
 use Uneak\OAuthClientBundle\Event\OAuthAutenticationResponseEvent;
 use Uneak\OAuthClientBundle\OAuth\Grant\AuthorizationCode;
+use Uneak\OAuthClientBundle\OAuth\ServiceOAuth1;
+use Uneak\OAuthClientBundle\OAuth\ServiceOAuth2;
 use Uneak\OAuthClientBundle\OAuth\ServicesManager;
 
 class OAuthAutenticationListener {
@@ -40,50 +42,100 @@ class OAuthAutenticationListener {
     public function onAutenticationRequest(OAuthAutenticationRequestEvent $event) {
 
         $service = $this->servicesManager->getService($event->getServiceAlias());
-        $redirectUrl = $this->router->generate('oauth_authentication_code_response', array('service' => $event->getServiceAlias()), Router::ABSOLUTE_URL);
-        $service->getAuthenticationConfiguration()->setOption('redirect_uri', $redirectUrl);
-        $state = $service->getAuthenticationConfiguration()->getState();
-        $this->session->set('authentication_state', $state);
+
+        if ($service instanceof ServiceOAuth2) {
+            $redirectUrl = $this->router->generate('oauth_authentication_code_response', array('service' => $event->getServiceAlias()), Router::ABSOLUTE_URL);
+            $service->getAuthenticationConfiguration()->setOption('redirect_uri', $redirectUrl);
+
+            $state = $service->getAuthenticationConfiguration()->getState();
+            $this->session->set('authentication_state', $state);
+
+            $event->setAuthentication($service->getAuthenticationUrl());
+        }
+
+        if ($service instanceof ServiceOAuth1) {
+            $oauthToken = $service->getRequestToken();
+            $this->session->set('oauth_token', $oauthToken->getToken()->getRequestToken());
+            $event->setAuthentication($service->getAuthenticationUrl($oauthToken));
+        }
+
         $this->session->set('authentication_action', $event->getAction());
 
-        $event->setAuthentication($service->authenticationUrl());
+
 
     }
 
 
     public function onAutenticationResponse(OAuthAutenticationResponseEvent $event) {
 
-        $state = $this->session->get('authentication_state');
-        $this->session->remove('authentication_state');
+        $service = $this->servicesManager->getService($event->getServiceAlias());
+        $request = $this->requestStack->getCurrentRequest();
+        $token = null;
 
         $action = $this->session->get('authentication_action');
         $this->session->remove('authentication_action');
 
-        $request = $this->requestStack->getCurrentRequest();
-        $stateResponse = $request->query->get('state');
-        $code = $request->query->get('code');
 
-        if (!$code) {
-            // exeption
-            ldd("no code");
+        if ($service instanceof ServiceOAuth2) {
+            $state = $this->session->get('authentication_state');
+            $this->session->remove('authentication_state');
+            $stateResponse = $request->query->get('state');
+
+            if ($state != $stateResponse) {
+                // exeption
+                ldd("invalid state");
+            }
+
+            $code = $request->query->get('code');
+            if (!$code) {
+                // exeption
+                ldd("no code");
+            }
+
+            $redirectUrl = $this->router->generate('oauth_authentication_code_response', array('service' => $event->getServiceAlias()), Router::ABSOLUTE_URL);
+            $service->getAuthenticationConfiguration()->setOption('redirect_uri', $redirectUrl);
+
+            $tokenResponse = $service->requestToken(new AuthorizationCode($code));
+
+            if (!$tokenResponse->getToken()) {
+                throw new \Exception($tokenResponse->getMessage(), $tokenResponse->getCode());
+            }
+
+            $token = $tokenResponse->getToken();
         }
 
-        if ($state != $stateResponse) {
-            // exeption
-            ldd("invalid state");
+
+        if ($service instanceof ServiceOAuth1) {
+
+            $oauthToken = $request->query->get('oauth_token');
+            $oauthVerifier = $request->query->get('oauth_verifier');
+            $authOAuthToken = $this->session->get('oauth_token');
+            $this->session->remove('oauth_token');
+
+            if ($authOAuthToken != $oauthToken) {
+                // exeption
+                ldd("invalid token correspondance : Temporary identifier passed back by server does not match that of stored temporary credentials.
+                Potential man-in-the-middle.");
+            }
+
+
+            $tokenResponse = $service->getOauthToken($oauthToken, $oauthVerifier);
+
+            if (!$tokenResponse->getToken()) {
+                throw new \Exception($tokenResponse->getMessage(), $tokenResponse->getCode());
+            }
+
+            $token = $tokenResponse->getToken();
+
         }
 
-        $service = $this->servicesManager->getService($event->getServiceAlias());
-        $redirectUrl = $this->router->generate('oauth_authentication_code_response', array('service' => $event->getServiceAlias()), Router::ABSOLUTE_URL);
-        $service->getAuthenticationConfiguration()->setOption('redirect_uri', $redirectUrl);
 
-        $tokenResponse = $service->requestToken(new AuthorizationCode($code));
 
-        if (!$tokenResponse->getToken()) {
-            throw new \Exception($tokenResponse->getMessage(), $tokenResponse->getCode());
-        }
 
-        $event->setAccessToken($tokenResponse->getToken());
+
+
+
+        $event->setToken($token);
         $event->setAction($action);
         $event->setService($service);
     }

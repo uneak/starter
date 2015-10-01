@@ -10,7 +10,7 @@
 		protected $message;
 		protected $type;
 
-		public function __construct($code, AccessTokenInterface $token = null, $type = null, $message = null) {
+		public function __construct($code, TokenInterface $token = null, $type = null, $message = null) {
 			$this->code = $code;
             $this->token = $token;
             $this->type = $type;
@@ -18,14 +18,14 @@
 		}
 
 		/**
-		 * @return AccessTokenInterface|null
+		 * @return TokenInterface|null
 		 */
 		public function getToken() {
 			return $this->token;
 		}
 
 		/**
-		 * @param AccessTokenInterface $token
+		 * @param TokenInterface $token
 		 */
 		public function setToken($token) {
 			$this->token = $token;

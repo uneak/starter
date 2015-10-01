@@ -19,8 +19,13 @@
         public function configureOptions(OptionsResolver $resolver) {
             $resolver->setDefaults(array(
                 'service'   => 'default',
+                'service_type'  => 'oauth',
             ));
             $resolver->setRequired("service");
+            $resolver->setRequired("service_type");
+
+            $resolver->setAllowedTypes('service', 'string');
+            $resolver->setAllowedTypes('service_type', 'string');
         }
 
         public function setOption($key, $value) {
@@ -58,4 +63,7 @@
             return $this->getOption('service');
         }
 
+        public function getServiceType() {
+            return $this->getOption('service_type');
+        }
 	}

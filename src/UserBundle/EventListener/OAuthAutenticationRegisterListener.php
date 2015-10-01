@@ -60,7 +60,7 @@ class OAuthAutenticationRegisterListener {
 
     public function onAutenticationRegister(OAuthAutenticationActionEvent $event) {
 
-        $serviceUser = $this->servicesManager->getUser($event->getAccessToken());
+        $serviceUser = $this->servicesManager->getUser($event->getToken());
 
         $key = time();
         $this->session->set('authentication_service_user_' . $key, $serviceUser->getOptions());
@@ -70,7 +70,7 @@ class OAuthAutenticationRegisterListener {
 
     public function onAutenticationConnect(OAuthAutenticationActionEvent $event) {
 
-        $serviceUser = $this->servicesManager->getUser($event->getAccessToken());
+        $serviceUser = $this->servicesManager->getUser($event->getToken());
         $user = $this->tokenStorage->getToken()->getUser();
 
         if (!is_object($user) || !$user instanceof UserInterface) {
@@ -85,7 +85,7 @@ class OAuthAutenticationRegisterListener {
             $this->em->persist($oAuthUser);
         }
         $oAuthUser->setData($serviceUser->getOptions());
-        $oAuthUser->setToken($event->getAccessToken()->getOptions());
+        $oAuthUser->setToken($event->getToken()->getOptions());
         $oAuthUser->setUser($user);
 
         $this->em->flush();
@@ -97,7 +97,7 @@ class OAuthAutenticationRegisterListener {
 
     public function onAutenticationLogin(OAuthAutenticationActionEvent $event) {
 
-        $serviceUser = $this->servicesManager->getUser($event->getAccessToken());
+        $serviceUser = $this->servicesManager->getUser($event->getToken());
         $user = $this->userManager->findOAuthUser($serviceUser->getService(), $serviceUser->getId());
 
         if (null === $user) {

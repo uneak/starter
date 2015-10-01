@@ -3,9 +3,7 @@
 	namespace Uneak\OAuthClientBundle\OAuth\Token;
 
 
-    use Uneak\OAuthClientBundle\OAuth\Configuration\ConfigurationInterface;
-
-    interface AccessTokenInterface extends ConfigurationInterface {
+    interface AccessTokenInterface extends TokenInterface {
         public function hasExpired();
         public function getExpiresTime();
         public function generateMACSignature(array $options);

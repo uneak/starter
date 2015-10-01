@@ -12,6 +12,7 @@
         public function getOptions();
         public function setOptions(array $options);
 		public function getService();
+		public function getServiceType();
 	}
 
 

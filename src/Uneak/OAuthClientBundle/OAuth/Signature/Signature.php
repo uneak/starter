@@ -1,65 +1,74 @@
 <?php
 
-namespace Uneak\OAuthClientBundle\OAuth\Signature;
+	namespace Uneak\OAuthClientBundle\OAuth\Signature;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfigurationInterface;
-use Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfigurationInterface;
-use Uneak\OAuthClientBundle\OAuth\Configuration\ServerConfigurationInterface;
-use Uneak\OAuthClientBundle\OAuth\Configuration\ServerOAuth1ConfigurationInterface;
-use Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest;
-use Uneak\OAuthClientBundle\OAuth\Exception;
-use Uneak\OAuthClientBundle\OAuth\OAuth;
-
-
-class Signature implements SignatureInterface {
-
-	const SIGNATURE_METHOD_HMAC      = 'HMAC-SHA1';
-	const SIGNATURE_METHOD_RSA       = 'RSA-SHA1';
-	const SIGNATURE_METHOD_PLAINTEXT = 'PLAINTEXT';
+	use Symfony\Component\OptionsResolver\OptionsResolver;
+	use Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfigurationInterface;
+	use Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationOAuth1ConfigurationInterface;
+	use Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfigurationInterface;
+	use Uneak\OAuthClientBundle\OAuth\Configuration\ServerConfigurationInterface;
+	use Uneak\OAuthClientBundle\OAuth\Configuration\ServerOAuth1ConfigurationInterface;
+	use Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest;
+	use Uneak\OAuthClientBundle\OAuth\Exception;
+	use Uneak\OAuthClientBundle\OAuth\OAuth;
 
 
-	public function buildRequestOptions(CredentialsConfigurationInterface $credentialsConfiguration, ServerOAuth1ConfigurationInterface $serverConfiguration, AuthenticationConfigurationInterface $authenticationConfiguration, array &$options) {
-
-		$options['http_method'] = CurlRequest::HTTP_METHOD_POST;
-		$options['_oauth']['oauth_callback'] = $authenticationConfiguration->getOption('redirect_uri');
-		$options['_oauth']['oauth_signature_method'] = $this->getName();
-		$options['_oauth']['oauth_consumer_key'] = $credentialsConfiguration->getClientId();
-		$options['_oauth']['oauth_timestamp'] = "1443658445"; //time();
-		$options['_oauth']['oauth_nonce'] = "6b96dc81629118ea1f78445603a205c2";//md5(microtime(true).uniqid('', true));
-		$options['_oauth']['oauth_version'] = '1.0';
+	class Signature implements SignatureInterface {
 
 
-		// URL
-		$url = parse_url($serverConfiguration->getRequestTokenUrl());
-		if (isset($url['query'])) {
-			parse_str($url['query'], $queryParams);
-			$options['_oauth'] += $queryParams;
+		public function buildRequestOptions(CredentialsConfigurationInterface $credentialsConfiguration, ServerOAuth1ConfigurationInterface $serverConfiguration, AuthenticationOAuth1ConfigurationInterface $authenticationConfiguration, array &$options) {
+
+			$url = parse_url($options['url']);
+			if (isset($url['query'])) {
+				$extraParameters = array();
+				parse_str($url['query'], $extraParameters);
+				$options['oauth_parameters'] = array_merge($options['oauth_parameters'], $extraParameters);
+			}
+
+			$port = isset($url['port']) ? $url['port'] : null;
+			if (('https' === $url['scheme'] && 443 === $port) || ('http' === $url['scheme'] && 80 === $port)) {
+				$port = null;
+			}
+
+			$options['url'] = sprintf('%s://%s%s%s', $url['scheme'], $url['host'], ($port ? ':' . $port : ''), isset($url['path']) ? $url['path'] : '');
+
+
+			uksort($options['oauth_parameters'], 'strcmp');
+
 		}
-		$explicitPort = isset($url['port']) ? $url['port'] : null;
-		if (('https' === $url['scheme'] && 443 === $explicitPort) || ('http' === $url['scheme'] && 80 === $explicitPort)) {
-			$explicitPort = null;
+
+
+
+		protected function _getBaseString($http_method, $url, array $parameters) {
+
+			$basePairs = array();
+			foreach ($parameters as $key => $value) {
+				$basePairs[] = $this->_urlencode_rfc3986($key).'='.$this->_urlencode_rfc3986($value);
+			}
+
+			return implode('&', array(
+				strtoupper($http_method),
+				$this->_urlencode_rfc3986($url),
+				$this->_urlencode_rfc3986(implode('&', $basePairs)),
+			));
 		}
-		$options['url'] = sprintf('%s://%s%s%s', $url['scheme'], $url['host'], ($explicitPort ? ':'.$explicitPort : ''), isset($url['path']) ? $url['path'] : '');
-		//
 
 
-		uksort($options['_oauth'], 'strcmp');
 
-		$parts = array(
-			strtoupper($options['http_method']),
-			rawurlencode($options['url']),
-			rawurlencode(str_replace(array('%7E', '+'), array('~', '%20'), http_build_query($options['_oauth'], '', '&'))),
-		);
 
-		$options['_base_string'] = implode('&', $parts);
+		protected function _urlencode_rfc3986($input) {
+			if (is_array($input)) {
+				return array_map(array($this, '_urlencode_rfc3986'), $input);
+			} else if (is_scalar($input)) {
+				return str_replace('+', ' ', str_replace('%7E', '~', rawurlencode($input)));
+			} else {
+				return '';
+			}
+		}
 
+
+		public function getName() {
+			return 'signature';
+		}
 
 	}
-
-
-	public function getName() {
-		return 'signature';
-	}
-
-}

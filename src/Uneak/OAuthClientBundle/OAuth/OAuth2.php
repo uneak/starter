@@ -10,7 +10,7 @@ use Uneak\OAuthClientBundle\OAuth\Grant\GrantInterface;
 use Uneak\OAuthClientBundle\OAuth\Token\AccessToken;
 use Uneak\OAuthClientBundle\OAuth\Token\AccessTokenInterface;
 
-class OAuth {
+class OAuth2 {
 
 	const AUTH_TYPE_URI = 0;
 	const AUTH_TYPE_AUTHORIZATION_BASIC = 1;

@@ -113,11 +113,24 @@
 
 			if (!empty($this->options['curl_extras'])) {
 				curl_setopt_array($ch, $this->options['curl_extras']);
+
+				if (isset($this->options['curl_extras'][CURLOPT_VERBOSE]) && $this->options['curl_extras'][CURLOPT_VERBOSE] == true) {
+					$verbose = fopen('php://temp', 'w+');
+					curl_setopt($ch, CURLOPT_STDERR, $verbose);
+				}
 			}
 
-			ld($this->options);
+
 
 			$result = curl_exec($ch);
+
+			if (isset($verbose)) {
+				rewind($verbose);
+				$verboseLog = stream_get_contents($verbose);
+				echo "Verbose information:\n<pre>", htmlspecialchars($verboseLog), "</pre>\n";
+			}
+
+
 			$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 			$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 

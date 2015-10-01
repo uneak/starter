@@ -5,7 +5,7 @@
 	use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
-	class AuthenticationConfiguration extends Configuration implements AuthenticationConfigurationInterface {
+	class AuthenticationOAuth2Configuration extends Configuration implements AuthenticationOauth2ConfigurationInterface {
 
 		protected $state;
 		protected $scope;
@@ -18,6 +18,7 @@
 		public function configureOptions(OptionsResolver $resolver) {
 			parent::configureOptions($resolver);
 			$resolver->setDefaults(array(
+				'service_type'  => 'oauth2',
 				'response_type'   => 'code',
 				'approval_prompt' => 'auto',
 				'scope'           => null,
@@ -40,8 +41,13 @@
 			return $this->getOption('state');
 		}
 
+		public function getRedirectUri() {
+			return $this->getOption('redirect_uri');
+		}
 
-		public function getRedirectUriArray(CredentialsConfigurationInterface $credentialsConfiguration, ServerConfigurationInterface $serverConfiguration) {
+
+
+		public function getAuthenticationPathArray(CredentialsConfigurationInterface $credentialsConfiguration, ServerConfigurationInterface $serverConfiguration) {
 			return array(
 				'url'        => $serverConfiguration->getAuthEndpoint(),
 				'parameters' => array(
@@ -56,8 +62,8 @@
 		}
 
 
-		public function getRedirectUri(CredentialsConfigurationInterface $credentialsConfiguration, ServerConfigurationInterface $serverConfiguration) {
-			$array = $this->getRedirectUriArray($credentialsConfiguration, $serverConfiguration);
+		public function getAuthenticationPath(CredentialsConfigurationInterface $credentialsConfiguration, ServerConfigurationInterface $serverConfiguration) {
+			$array = $this->getAuthenticationPathArray($credentialsConfiguration, $serverConfiguration);
 			return $array['url'] . '?' . http_build_query($array['parameters'], null, '&');
 		}
 
