@@ -5,6 +5,7 @@
 	use Symfony\Component\OptionsResolver\OptionsResolver;
 	use Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest;
 	use Uneak\OAuthClientBundle\OAuth\OAuth;
+	use Uneak\OAuthClientBundle\OAuth\OAuth2;
 	use Uneak\OAuthClientBundle\OAuth\ServiceUser;
 	use Uneak\OAuthClientBundle\OAuth\Token\AccessTokenInterface;
 
@@ -25,7 +26,7 @@
 		public function setTokenData(AccessTokenInterface $accessToken) {
 			$fields = array('id', 'name', 'first_name', 'last_name', 'email', 'birthday', 'picture.type(large)');
 
-			$response = OAuth::fetch($accessToken, array(
+			$response = OAuth2::fetch($accessToken, array(
 				'url' => 'https://graph.facebook.com/me',
 				'parameters' => array(
 					'fields' => join(',', $fields)

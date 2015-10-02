@@ -55,8 +55,12 @@
 			}
 
 			if (is_array($result)) {
-				if (isset($result['error'])) {
-					$message = $result['error'];
+				if (isset($result['errors'])) {
+					$messageArray = array();
+					foreach ($result['errors'] as $error) {
+						$messageArray[] = "error " . $error['code'] . ":" . $error['message'];
+					}
+					$message = join(" / ", $messageArray);
 				} else {
 					$token = new RequestToken($result);
 					$type = "OAuthSuccess";

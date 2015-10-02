@@ -21,7 +21,12 @@ class HmacSha1Signature extends Signature {
 		$baseString = $this->_getBaseString($options['http_method'], $options['url'], $options['oauth_parameters']);
 
 		//
+
 		$secret = $this->_urlencode_rfc3986($credentialsConfiguration->getClientSecret())."&";
+		if (isset($options['oauth_parameters']['oauth_token_secret'])) {
+			$secret .= $this->_urlencode_rfc3986($options['oauth_parameters']['oauth_token_secret']);
+		}
+
 		$signature = hash_hmac('sha1', $baseString, $secret, true);
 		$options['oauth_parameters']['oauth_signature'] = $this->_urlencode_rfc3986(base64_encode($signature));
 		//

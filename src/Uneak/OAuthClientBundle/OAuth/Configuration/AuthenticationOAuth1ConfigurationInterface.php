@@ -13,4 +13,5 @@
 		 * @return SignatureInterface
 		 */
 		public function getSignature();
+		public function getRedirectUri();
 	}

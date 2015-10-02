@@ -33,7 +33,7 @@
 		 * @return \Uneak\OAuthClientBundle\OAuth\Curl\CurlResponse
 		 */
 		public function fetch(array $options) {
-			return OAuth::fetch($this->getAccessToken(), $options);
+			return OAuth2::fetch($this->getAccessToken(), $options);
 		}
 
 

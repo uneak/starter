@@ -12,11 +12,6 @@
 
 	class ServiceOAuth2 extends Service implements ServiceOAuth2Interface {
 
-		/**
-		 * @var TokenResponse
-		 */
-		protected $tokenResponse = null;
-
 
 
 		public function __construct(CredentialsConfigurationInterface $credentialsConfiguration, ServerOAuth2ConfigurationInterface $serverConfiguration, AuthenticationOAuth2ConfigurationInterface $authenticationConfiguration) {
@@ -38,8 +33,7 @@
 		 */
 		public function requestToken(GrantInterface $grant, $authType = OAuth2::AUTH_TYPE_URI) {
 			$request = OAuth2::requestToken($this->credentialsConfiguration, $this->serverConfiguration, $this->authenticationConfiguration, $grant, $authType);
-			$this->tokenResponse = $this->buildResponseToken($request);
-			return $this->tokenResponse;
+			return $this->buildResponseToken($request);
 		}
 
 		/**
@@ -67,12 +61,6 @@
 
 
 
-		/**
-		 * @return \Uneak\OAuthClientBundle\OAuth\Token\TokenResponse
-		 */
-		public function getTokenResponse() {
-			return $this->tokenResponse;
-		}
 
 		/**
 		 * @return CredentialsConfigurationInterface

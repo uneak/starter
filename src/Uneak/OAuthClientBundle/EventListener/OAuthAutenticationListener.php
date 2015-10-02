@@ -7,7 +7,9 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Router;
 use Uneak\OAuthClientBundle\Event\OAuthAutenticationRequestEvent;
 use Uneak\OAuthClientBundle\Event\OAuthAutenticationResponseEvent;
+use Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest;
 use Uneak\OAuthClientBundle\OAuth\Grant\AuthorizationCode;
+use Uneak\OAuthClientBundle\OAuth\OAuth1;
 use Uneak\OAuthClientBundle\OAuth\ServiceOAuth1;
 use Uneak\OAuthClientBundle\OAuth\ServiceOAuth2;
 use Uneak\OAuthClientBundle\OAuth\ServicesManager;
@@ -54,6 +56,9 @@ class OAuthAutenticationListener {
         }
 
         if ($service instanceof ServiceOAuth1) {
+            $redirectUrl = $this->router->generate('oauth_authentication_code_response', array('service' => $event->getServiceAlias()), Router::ABSOLUTE_URL);
+            $service->getAuthenticationConfiguration()->setOption('redirect_uri', $redirectUrl);
+
             $oauthToken = $service->getRequestToken();
             $this->session->set('oauth_token', $oauthToken->getToken()->getRequestToken());
             $event->setAuthentication($service->getAuthenticationUrl($oauthToken));
@@ -127,6 +132,19 @@ class OAuthAutenticationListener {
 
             $token = $tokenResponse->getToken();
 
+
+            $options = array(
+                'url' => 'https://api.twitter.com/1.1/account/verify_credentials.json',
+                'http_method' => CurlRequest::HTTP_METHOD_GET,
+//                'curl_extras' => array(CURLOPT_VERBOSE => true),
+                'parameters' => array(
+                    'include_email' => true,
+                )
+            );
+
+
+            $result = OAuth1::fetch($service->getCredentialsConfiguration(), $service->getServerConfiguration(), $service->getAuthenticationConfiguration(), $token, $options);
+            ldd($result);
         }
 
 

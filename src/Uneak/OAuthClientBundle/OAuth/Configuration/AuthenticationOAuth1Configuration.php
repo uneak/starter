@@ -24,9 +24,12 @@
 			$resolver->setDefaults(array(
 				'service_type'  => 'oauth2',
 				'authorize_url' => null,
+				'redirect_uri'  => null,
 			));
 
 			$resolver->setRequired('authorize_url');
+			$resolver->setRequired('redirect_uri');
+			$resolver->setAllowedTypes('redirect_uri', 'string');
 			$resolver->setAllowedTypes('authorize_url', 'string');
 		}
 
@@ -35,6 +38,9 @@
 			return $this->getOption('authorize_url');
 		}
 
+		public function getRedirectUri() {
+			return $this->getOption('redirect_uri');
+		}
 
 		public function getSignature() {
 			return $this->signature;
@@ -54,7 +60,6 @@
 
 			return $array['url'] . '?' . http_build_query($array['parameters'], null, '&');
 		}
-
 
 
 	}
