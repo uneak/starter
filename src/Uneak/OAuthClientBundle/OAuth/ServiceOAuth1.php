@@ -9,6 +9,7 @@
 	use Uneak\OAuthClientBundle\OAuth\Curl\CurlResponse;
 	use Uneak\OAuthClientBundle\OAuth\Token\OAuthToken;
 	use Uneak\OAuthClientBundle\OAuth\Token\RequestToken;
+	use Uneak\OAuthClientBundle\OAuth\Token\TokenInterface;
 	use Uneak\OAuthClientBundle\OAuth\Token\TokenResponse;
 
 
@@ -28,6 +29,9 @@
 		}
 
 
+		public function fetch(TokenInterface $token, array $options) {
+			return OAuth1::fetch($this->getCredentialsConfiguration(), $this->getServerConfiguration(), $this->getAuthenticationConfiguration(), $token, $options);
+		}
 
 		public function getRequestToken() {
 			$response = OAuth1::getRequestToken($this->credentialsConfiguration, $this->getServerConfiguration(), $this->getAuthenticationConfiguration());

@@ -7,6 +7,7 @@
 	use Uneak\OAuthClientBundle\OAuth\OAuth;
 	use Uneak\OAuthClientBundle\OAuth\ServiceUser;
 	use Uneak\OAuthClientBundle\OAuth\Token\AccessTokenInterface;
+	use Uneak\OAuthClientBundle\OAuth\Token\TokenInterface;
 
 	class GoogleUser extends ServiceUser {
 
@@ -19,23 +20,20 @@
 		}
 
 
-		/**
-		 * @param \Uneak\OAuthClientBundle\OAuth\Token\AccessTokenInterface $accessToken
-		 */
-		public function setTokenData(AccessTokenInterface $accessToken) {
-			$response = OAuth::fetch($accessToken, array(
+
+		public function setTokenData(TokenInterface $token) {
+			$options = array(
 				'url' => 'https://www.googleapis.com/oauth2/v1/userinfo',
-				'parameters' => array(),
-				'http_method' => CurlRequest::HTTP_METHOD_GET
-			));
+				'http_method' => CurlRequest::HTTP_METHOD_GET,
+			);
+
+			$response = $this->service->fetch($token, $options);
 
 			$this->setData($response->getResult());
 		}
 
-
-
-		protected function resolve() {
-			$options = $this->adapter($this->getData(), array(
+		public function setData(array $data) {
+			$this->options = $this->adapter($data, array(
 				'id'         => 'id',
 				'first_name' => 'given_name',
 				'last_name'  => 'family_name',
@@ -46,10 +44,6 @@
 				'gender'     => 'gender',
 				'locale'     => 'locale'
 			));
-
-			$this->options = $this->resolver->resolve($options);
-			$this->resolved = true;
 		}
-
 
 	}

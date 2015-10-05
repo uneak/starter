@@ -62,5 +62,7 @@ services:
 
     uneak.oauth.twitter.user:
         class: %uneak.oauth.twitter.user.class%
+        arguments:
+            - @uneak.oauth.twitter.service
         tags:
             - { name: uneak.oauth.user, alias: twitter }

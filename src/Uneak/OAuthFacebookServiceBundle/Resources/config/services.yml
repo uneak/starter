@@ -2,7 +2,7 @@ parameters:
     uneak.oauth.facebook.credential.class: Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfiguration
     uneak.oauth.facebook.server.class: Uneak\OAuthFacebookServiceBundle\Services\FacebookServerConfiguration
     uneak.oauth.facebook.service.class: Uneak\OAuthFacebookServiceBundle\Services\FacebookService
-    uneak.oauth.facebook.authentication.class: Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfiguration
+    uneak.oauth.facebook.authentication.class: Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationOAuth2Configuration
 
     uneak.oauth.facebook.api.class: Uneak\OAuthFacebookServiceBundle\Services\FacebookAPI
     uneak.oauth.facebook.user.class: Uneak\OAuthFacebookServiceBundle\Services\FacebookUser
@@ -53,5 +53,7 @@ services:
 
     uneak.oauth.facebook.user:
         class: %uneak.oauth.facebook.user.class%
+        arguments:
+            - @uneak.oauth.facebook.service
         tags:
             - { name: uneak.oauth.user, alias: facebook }

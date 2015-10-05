@@ -4,6 +4,7 @@
 
 
     use Uneak\OAuthClientBundle\OAuth\Configuration\ConfigurationInterface;
+	use Uneak\OAuthClientBundle\OAuth\Token\TokenInterface;
 
 	interface ServiceUserInterface extends ConfigurationInterface {
 
@@ -17,6 +18,6 @@
 		public function getGender();
 		public function getLocale();
 
-		public function getData();
 		public function setData(array $data);
+		public function setTokenData(TokenInterface $token);
 	}

@@ -6,20 +6,19 @@ namespace Uneak\OAuthGoogleServiceBundle\Services;
 
 
 
-    use Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfigurationInterface;
+    use Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationOAuth2ConfigurationInterface;
     use Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfigurationInterface;
-    use Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest;
-    use Uneak\OAuthClientBundle\OAuth\Service;
+    use Uneak\OAuthClientBundle\OAuth\Curl\CurlResponse;
+    use Uneak\OAuthClientBundle\OAuth\ServiceOAuth2;
     use Uneak\OAuthClientBundle\OAuth\Token\TokenResponse;
 
-    class GoogleService extends Service {
+    class GoogleService extends ServiceOAuth2 {
 
-        public function __construct(CredentialsConfigurationInterface $credentials, GoogleServerConfiguration $server, AuthenticationConfigurationInterface $authentication) {
+        public function __construct(CredentialsConfigurationInterface $credentials, GoogleServerConfiguration $server, AuthenticationOAuth2ConfigurationInterface $authentication) {
             parent::__construct($credentials, $server, $authentication);
         }
 
-        protected function buildResponseToken(CurlRequest $request) {
-            $response = $request->getResponse();
+        protected function buildAccessToken(CurlResponse $response) {
             $result = $response->getResult();
 
             $code = $response->getCode();

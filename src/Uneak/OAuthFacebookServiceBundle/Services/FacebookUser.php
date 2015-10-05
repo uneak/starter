@@ -4,10 +4,9 @@
 
 	use Symfony\Component\OptionsResolver\OptionsResolver;
 	use Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest;
-	use Uneak\OAuthClientBundle\OAuth\OAuth;
-	use Uneak\OAuthClientBundle\OAuth\OAuth2;
 	use Uneak\OAuthClientBundle\OAuth\ServiceUser;
 	use Uneak\OAuthClientBundle\OAuth\Token\AccessTokenInterface;
+	use Uneak\OAuthClientBundle\OAuth\Token\TokenInterface;
 
 	class FacebookUser extends ServiceUser {
 
@@ -19,41 +18,33 @@
 			));
 		}
 
+		public function setTokenData(TokenInterface $token) {
 
-		/**
-		 * @param \Uneak\OAuthClientBundle\OAuth\Token\AccessTokenInterface $accessToken
-		 */
-		public function setTokenData(AccessTokenInterface $accessToken) {
 			$fields = array('id', 'name', 'first_name', 'last_name', 'email', 'birthday', 'picture.type(large)');
 
-			$response = OAuth2::fetch($accessToken, array(
+			$options = array(
 				'url' => 'https://graph.facebook.com/me',
 				'parameters' => array(
 					'fields' => join(',', $fields)
 				),
 				'http_method' => CurlRequest::HTTP_METHOD_GET
-			));
+			);
+
+			$response = $this->service->fetch($token, $options);
 
 			$this->setData($response->getResult());
 		}
 
-
-		protected function resolve() {
-			if ($this->getData()) {
-				$options = $this->adapter($this->getData(), array(
-					'id'         => 'id',
-					'first_name' => 'first_name',
-					'last_name'  => 'last_name',
-					'username'   => 'name',
-					'email'      => 'email',
-					'picture'    => 'picture.data.url'
-				));
-			} else {
-				$options = $this->options;
-			}
-
-			$this->options = $this->resolver->resolve($options);
-			$this->resolved = true;
+		public function setData(array $data) {
+			$this->options = $this->adapter($data, array(
+				'id'         => 'id',
+				'first_name' => 'first_name',
+				'last_name'  => 'last_name',
+				'username'   => 'name',
+				'email'      => 'email',
+				'picture'    => 'picture.data.url'
+			));
 		}
+
 
 	}

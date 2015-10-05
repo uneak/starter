@@ -15,7 +15,6 @@ class OAuth1 {
 
 
 
-
 	public static function getRequestToken(CredentialsConfigurationInterface $credentialsConfiguration, ServerOAuth1ConfigurationInterface $serverConfiguration, AuthenticationOAuth1ConfigurationInterface $authenticationConfiguration) {
 		$options = array();
 

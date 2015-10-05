@@ -4,8 +4,9 @@
 
 	use Symfony\Component\OptionsResolver\OptionsResolver;
     use Uneak\OAuthClientBundle\OAuth\Configuration\ServerConfiguration;
+    use Uneak\OAuthClientBundle\OAuth\Configuration\ServerOAuth2Configuration;
 
-    class GoogleServerConfiguration extends ServerConfiguration {
+    class GoogleServerConfiguration extends ServerOAuth2Configuration {
 
         public function configureOptions(OptionsResolver $resolver) {
             parent::configureOptions($resolver);

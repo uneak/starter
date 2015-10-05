@@ -6,8 +6,9 @@
 	use Uneak\OAuthClientBundle\OAuth\Configuration;
 	use Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest;
 	use Uneak\OAuthClientBundle\OAuth\Token\AccessToken;
+	use Uneak\OAuthClientBundle\OAuth\Token\OAuthToken;
 
-	class TwitterAccessToken extends AccessToken {
+	class TwitterOAuthToken extends OAuthToken {
 
 		public function configureOptions(OptionsResolver $resolver) {
 			parent::configureOptions($resolver);

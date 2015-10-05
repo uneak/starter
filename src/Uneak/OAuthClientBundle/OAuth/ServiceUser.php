@@ -5,14 +5,15 @@
 	use Symfony\Component\OptionsResolver\OptionsResolver;
 	use Uneak\OAuthClientBundle\OAuth\Configuration\Configuration;
 	use Uneak\OAuthClientBundle\OAuth\Token\AccessTokenInterface;
+	use Uneak\OAuthClientBundle\OAuth\Token\TokenInterface;
 
 	class ServiceUser extends Configuration implements ServiceUserInterface {
 
-		protected $data;
+		protected $service;
 
-		public function __construct(array $options = array()) {
-			$this->data = $options;
-			parent::__construct();
+		public function __construct(ServiceInterface $service, array $options = array()) {
+			$this->service = $service;
+			parent::__construct($options);
 		}
 
 		public function configureOptions(OptionsResolver $resolver) {
@@ -48,30 +49,10 @@
 		}
 
 		/**
-		 * @return array
-		 */
-		public function getData() {
-			return $this->data;
-		}
-
-		/**
 		 * @param array $data
 		 */
 		public function setData(array $data) {
-			$this->data = $data;
-			$this->resolved = false;
-		}
-
-
-		/**
-		 * @param \Uneak\OAuthClientBundle\OAuth\Token\AccessTokenInterface $accessToken
-		 */
-		public function setTokenData(AccessTokenInterface $accessToken) {
-
-		}
-
-		protected function resolve() {
-			$options = $this->adapter($this->getData(), array(
+			$this->options = $this->adapter($data, array(
 				'id'         => 'id',
 				'first_name' => 'first_name',
 				'last_name'  => 'last_name',
@@ -82,8 +63,16 @@
 				'gender'     => 'gender',
 				'locale'     => 'locale',
 			));
+		}
 
-			$this->options = $this->resolver->resolve($options);
+
+
+		public function setTokenData(TokenInterface $token) {
+
+		}
+
+		protected function resolve() {
+			$this->options = $this->resolver->resolve($this->options);
 			$this->resolved = true;
 		}
 

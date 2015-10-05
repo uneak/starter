@@ -53,14 +53,11 @@
 
             $this->entityLayoutContent->setTitle("Réseaux sociaux");
 
-			$userOAuthUser = array();
-			foreach ($user->getOAuthUsers() as $oAuthUser) {
-				$userOAuthUser[$oAuthUser->getService()] = $oAuthUser;
-			}
+			$oAuthUser = $this->getDoctrine()->getRepository("UneakOAuthClientBundle:OAuthUser")->findOAuthUser($user);
 
 			$content = new Twig('user_connect_login', array(
                 'user' => $user,
-				'oAuthUser' => $userOAuthUser,
+				'oAuthUser' => $oAuthUser,
             ));
 
             $panel = new Panel();
@@ -79,11 +76,10 @@
 				throw new AccessDeniedException('This user does not have access to this section.');
 			}
 
-			$accessor = PropertyAccess::createPropertyAccessor();
-			$accessor->setValue($user, $service."Id", null);
-
-			$userManager = $this->get('uneak.user_manager');
-			$userManager->updateUser($user);
+			$em = $this->getDoctrine()->getManager();
+			$oAuthUser = $em->getRepository("UneakOAuthClientBundle:OAuthUser")->findOAuthUser($user, $service);
+			$em->remove($oAuthUser);
+			$em->flush();
 
 			return new RedirectResponse($this->generateUrl('user_profile_connect'));
 		}

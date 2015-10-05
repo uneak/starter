@@ -33,8 +33,8 @@
             <ul>
                 <li>Connecté</li>
                 <li>{{ oAuthUser.twitter.id }}</li>
-                <li><a href="https://twitter.com/intent/user?user_id={{ oAuthUser.twitter.id }}">Voir le profil</a></li>
-                <li><a href="{% if oAuthUser.google.data.link is defined %}{{ oAuthUser.google.data.link }}{% else %}{{ path('user_profile_disconnect', {service: "twitter"}) }}{% endif %}">Deconnecter le profil</a></li>
+                <li><a href="{% if oAuthUser.google.data.link is defined %}{{ oAuthUser.google.data.link }}{% else %}https://twitter.com/intent/user?user_id={{ oAuthUser.twitter.id }}{% endif %}">Voir le profil</a></li>
+                <li><a href="{{ path('user_profile_disconnect', {service: "twitter"}) }}">Deconnecter le profil</a></li>
             </ul>
         {% endif %}
 

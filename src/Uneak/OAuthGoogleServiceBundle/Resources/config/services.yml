@@ -2,7 +2,7 @@ parameters:
     uneak.oauth.google.credential.class: Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfiguration
     uneak.oauth.google.server.class: Uneak\OAuthGoogleServiceBundle\Services\GoogleServerConfiguration
     uneak.oauth.google.service.class: Uneak\OAuthGoogleServiceBundle\Services\GoogleService
-    uneak.oauth.google.authentication.class: Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfiguration
+    uneak.oauth.google.authentication.class: Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationOAuth2Configuration
 
     uneak.oauth.google.api.class: Uneak\OAuthGoogleServiceBundle\Services\GoogleAPI
     uneak.oauth.google.user.class: Uneak\OAuthGoogleServiceBundle\Services\GoogleUser
@@ -55,5 +55,7 @@ services:
          
     uneak.oauth.google.user:
         class: %uneak.oauth.google.user.class%
+        arguments:
+            - @uneak.oauth.google.service
         tags:
             - { name: uneak.oauth.user, alias: google }

@@ -4,6 +4,7 @@
 
     use Symfony\Component\DependencyInjection\ContainerAware;
     use Uneak\OAuthClientBundle\OAuth\Token\AccessTokenInterface;
+    use Uneak\OAuthClientBundle\OAuth\Token\TokenInterface;
 
     class ServicesManager extends ContainerAware {
 
@@ -113,12 +114,12 @@
         }
 
 		/**
-         * @param AccessTokenInterface $accessToken
+         * @param AccessTokenInterface $token
          *
          * @return ServiceAPI
          */
-        public function getAPI(AccessTokenInterface $accessToken) {
-            $id = $accessToken->getService();
+        public function getAPI(TokenInterface $token) {
+            $id = $token->getService();
             if (!isset($this->apis[$id])) {
                 // TODO: execption
                 return null;
@@ -127,7 +128,7 @@
                 $this->apis[$id] = $this->container->get($this->apis[$id]);
             }
 
-            $this->apis[$id]->setAccessToken($accessToken);
+            $this->apis[$id]->setAccessToken($token);
             return $this->apis[$id];
         }
 
@@ -137,7 +138,7 @@
          * @return ServiceUserInterface
          */
         public function getUser($user) {
-            if ($user instanceof AccessTokenInterface) {
+            if ($user instanceof TokenInterface) {
                 $id = $user->getService();
             } else if (is_array($user)) {
                 $id = $user['service'];
@@ -153,7 +154,7 @@
                 $this->users[$id] = $this->container->get($this->users[$id]);
             }
 
-            if ($user instanceof AccessTokenInterface) {
+            if ($user instanceof TokenInterface) {
                 $this->users[$id]->setTokenData($user);
             } else if (is_array($user)) {
                 $this->users[$id]->setOptions($user);

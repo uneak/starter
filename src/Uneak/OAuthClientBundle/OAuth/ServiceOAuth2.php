@@ -5,9 +5,10 @@
 	use Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationOAuth2ConfigurationInterface;
 	use Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfigurationInterface;
 	use Uneak\OAuthClientBundle\OAuth\Configuration\ServerOAuth2ConfigurationInterface;
-	use Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest;
+	use Uneak\OAuthClientBundle\OAuth\Curl\CurlResponse;
 	use Uneak\OAuthClientBundle\OAuth\Grant\GrantInterface;
 	use Uneak\OAuthClientBundle\OAuth\Token\AccessToken;
+	use Uneak\OAuthClientBundle\OAuth\Token\TokenInterface;
 	use Uneak\OAuthClientBundle\OAuth\Token\TokenResponse;
 
 	class ServiceOAuth2 extends Service implements ServiceOAuth2Interface {
@@ -21,9 +22,15 @@
 		/**
 		 * @return string
 		 */
-		public function authenticationUrl() {
-			return OAuth2::authenticationUrl($this->credentialsConfiguration, $this->serverConfiguration, $this->authenticationConfiguration);
+		public function getAuthenticationUrl() {
+			return OAuth2::getAuthenticationUrl($this->credentialsConfiguration, $this->serverConfiguration, $this->authenticationConfiguration);
 		}
+
+
+		public function fetch(TokenInterface $token, array $options) {
+			return OAuth2::fetch($token, $options);
+		}
+
 
 		/**
 		 * @param \Uneak\OAuthClientBundle\OAuth\Grant\GrantInterface $grant
@@ -31,19 +38,17 @@
 		 *
 		 * @return \Uneak\OAuthClientBundle\OAuth\Token\TokenResponse
 		 */
-		public function requestToken(GrantInterface $grant, $authType = OAuth2::AUTH_TYPE_URI) {
-			$request = OAuth2::requestToken($this->credentialsConfiguration, $this->serverConfiguration, $this->authenticationConfiguration, $grant, $authType);
-			return $this->buildResponseToken($request);
+		public function getAccessToken(GrantInterface $grant) {
+			$request = OAuth2::getAccessToken($this->credentialsConfiguration, $this->serverConfiguration, $this->authenticationConfiguration, $grant);
+			return $this->buildAccessToken($request);
 		}
 
 		/**
-		 * @param \Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest $request
 		 *
 		 * @return \Uneak\OAuthClientBundle\OAuth\Token\TokenResponse
 		 * @throws \Uneak\OAuthClientBundle\OAuth\Exception
 		 */
-		protected function buildResponseToken(CurlRequest $request) {
-			$response = $request->getResponse();
+		protected function buildAccessToken(CurlResponse $response) {
 			$result = $response->getResult();
 			$token = array();
 			if (is_string($result)) {

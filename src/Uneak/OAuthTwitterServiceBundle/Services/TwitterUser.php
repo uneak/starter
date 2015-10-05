@@ -5,8 +5,10 @@
 	use Symfony\Component\OptionsResolver\OptionsResolver;
 	use Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest;
 	use Uneak\OAuthClientBundle\OAuth\OAuth;
+	use Uneak\OAuthClientBundle\OAuth\ServiceInterface;
 	use Uneak\OAuthClientBundle\OAuth\ServiceUser;
 	use Uneak\OAuthClientBundle\OAuth\Token\AccessTokenInterface;
+	use Uneak\OAuthClientBundle\OAuth\Token\TokenInterface;
 
 	class TwitterUser extends ServiceUser {
 
@@ -19,10 +21,7 @@
 		}
 
 
-		/**
-		 * @param \Uneak\OAuthClientBundle\OAuth\Token\AccessTokenInterface $accessToken
-		 */
-		public function setTokenData(AccessTokenInterface $accessToken) {
+		public function setTokenData(TokenInterface $token) {
 			$options = array(
 				'url' => 'https://api.twitter.com/1.1/account/verify_credentials.json',
 				'http_method' => CurlRequest::HTTP_METHOD_GET,
@@ -32,29 +31,20 @@
 				)
 			);
 
-			$result = OAuth1::fetch($service->getCredentialsConfiguration(), $service->getServerConfiguration(), $service->getAuthenticationConfiguration(), $token, $options);
-			ldd($result);
-
-
-
+			$response = $this->service->fetch($token, $options);
 			$this->setData($response->getResult());
 		}
 
 
-		protected function resolve() {
-			if ($this->getData()) {
-				$options = $this->adapter($this->getData(), array(
-					'id'       => 'id_str',
-					'username' => 'screen_name',
-					'picture'  => 'profile_image_url',
-					'locale'   => 'lang',
-				));
-			} else {
-				$options = $this->options;
-			}
-
-			$this->options = $this->resolver->resolve($options);
-			$this->resolved = true;
+		public function setData(array $data) {
+			$this->options = $this->adapter($data, array(
+				'id'       => 'id_str',
+				'username' => 'screen_name',
+				'picture'  => 'profile_image_url',
+				'locale'   => 'lang',
+			));
 		}
+
+
 
 	}

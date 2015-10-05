@@ -13,6 +13,39 @@
 	 */
 	class OAuthUserRepository extends EntityRepository {
 
+		public function findOAuthUser($user, $service = null) {
+			$qb = $this->getOAuthUserQuery($user, $service);
+			$query = $qb->getQuery();
 
+			$oauthUser = null;
+			if ($service) {
+				$oauthUser = $query->getOneOrNullResult();
+
+			} else {
+				$oauthUser = array();
+				$results = $query->getResult();
+				foreach ($results as $result) {
+					$oauthUser[$result->getService()] = $result;
+				}
+			}
+
+			return $oauthUser;
+		}
+
+		public function getOAuthUserQuery($user, $service = null) {
+			$qb = $this->_em->createQueryBuilder();
+			$qb->select(array('oauth_user'));
+			$qb->from('UneakOAuthClientBundle:OAuthUser', 'oauth_user');
+
+			$qb->andWhere($qb->expr()->eq('oauth_user.user', ':user'));
+			$qb->setParameter('user', $user);
+
+			if ($service) {
+				$qb->andWhere($qb->expr()->eq('oauth_user.service', ':service'));
+				$qb->setParameter('service', $service);
+			}
+
+			return $qb;
+		}
 
 	}

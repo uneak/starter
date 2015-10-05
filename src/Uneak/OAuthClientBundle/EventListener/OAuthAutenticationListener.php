@@ -66,8 +66,6 @@ class OAuthAutenticationListener {
 
         $this->session->set('authentication_action', $event->getAction());
 
-
-
     }
 
 
@@ -82,13 +80,14 @@ class OAuthAutenticationListener {
 
 
         if ($service instanceof ServiceOAuth2) {
+
             $state = $this->session->get('authentication_state');
             $this->session->remove('authentication_state');
             $stateResponse = $request->query->get('state');
 
             if ($state != $stateResponse) {
                 // exeption
-                ldd("invalid state");
+                ldd("invalid state ".$state." != ".$stateResponse);
             }
 
             $code = $request->query->get('code');
@@ -100,7 +99,7 @@ class OAuthAutenticationListener {
             $redirectUrl = $this->router->generate('oauth_authentication_code_response', array('service' => $event->getServiceAlias()), Router::ABSOLUTE_URL);
             $service->getAuthenticationConfiguration()->setOption('redirect_uri', $redirectUrl);
 
-            $tokenResponse = $service->requestToken(new AuthorizationCode($code));
+            $tokenResponse = $service->getAccessToken(new AuthorizationCode($code));
 
             if (!$tokenResponse->getToken()) {
                 throw new \Exception($tokenResponse->getMessage(), $tokenResponse->getCode());
@@ -132,19 +131,6 @@ class OAuthAutenticationListener {
 
             $token = $tokenResponse->getToken();
 
-
-            $options = array(
-                'url' => 'https://api.twitter.com/1.1/account/verify_credentials.json',
-                'http_method' => CurlRequest::HTTP_METHOD_GET,
-//                'curl_extras' => array(CURLOPT_VERBOSE => true),
-                'parameters' => array(
-                    'include_email' => true,
-                )
-            );
-
-
-            $result = OAuth1::fetch($service->getCredentialsConfiguration(), $service->getServerConfiguration(), $service->getAuthenticationConfiguration(), $token, $options);
-            ldd($result);
         }
 
 

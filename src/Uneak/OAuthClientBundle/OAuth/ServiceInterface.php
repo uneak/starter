@@ -3,6 +3,7 @@
 	namespace Uneak\OAuthClientBundle\OAuth;
 
     use Uneak\OAuthClientBundle\OAuth\Grant\GrantInterface;
+    use Uneak\OAuthClientBundle\OAuth\Token\TokenInterface;
     use Uneak\OAuthClientBundle\OAuth\Token\TokenResponse;
     use Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfigurationInterface;
     use Uneak\OAuthClientBundle\OAuth\Configuration\ServerConfigurationInterface;
@@ -23,6 +24,8 @@
          */
         public function getAuthenticationConfiguration();
 
+
+        public function fetch(TokenInterface $token, array $options);
 
 	}
 

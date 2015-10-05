@@ -3,11 +3,9 @@
 namespace Uneak\OAuthTwitterServiceBundle\Services;
 
 
-    use Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfigurationInterface;
     use Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationOAuth1ConfigurationInterface;
     use Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfigurationInterface;
-    use Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest;
-    use Uneak\OAuthClientBundle\OAuth\Service;
+    use Uneak\OAuthClientBundle\OAuth\Curl\CurlResponse;
     use Uneak\OAuthClientBundle\OAuth\ServiceOAuth1;
     use Uneak\OAuthClientBundle\OAuth\Token\TokenResponse;
 
@@ -19,24 +17,56 @@ namespace Uneak\OAuthTwitterServiceBundle\Services;
         }
 
 
-        protected function buildResponseToken(CurlRequest $request) {
-            $response = $request->getResponse();
+        protected function buildRequestToken(CurlResponse $response) {
             $result = $response->getResult();
 
             $code = $response->getCode();
-            $message = "Success";
-            $type = "OAuthSuccess";
+            $message = "Error";
+            $type = "OAuthError";
             $token = null;
 
-            if (is_array($result)) {
-                $code = $result['error']['code'];
-                $message = $result['error']['message'];
-                $type = $result['error']['type'];
+            if (is_string($result)) {
+                parse_str($result, $result);
+            }
 
-            } else {
-                $tokenArray = array();
-                parse_str($result, $tokenArray);
-                $token = new TwitterAccessToken($tokenArray);
+            if (is_array($result)) {
+                if (isset($result['errors'])) {
+                    $messageArray = array();
+                    foreach ($result['errors'] as $error) {
+                        $messageArray[] = "error " . $error['code'] . ":" . $error['message'];
+                    }
+                    $message = join(" / ", $messageArray);
+                } else {
+                    $token = new TwitterRequestToken($result);
+                    $type = "OAuthSuccess";
+                    $message = "Success";
+                }
+            }
+
+            return new TokenResponse($code, $token, $type, $message);
+        }
+
+
+        protected function buildOAuthToken(CurlResponse $response) {
+            $result = $response->getResult();
+
+            $code = $response->getCode();
+            $message = "Error";
+            $type = "OAuthError";
+            $token = null;
+
+            if (is_string($result)) {
+                parse_str($result, $result);
+            }
+
+            if (is_array($result)) {
+                if (isset($result['error'])) {
+                    $message = $result['error'];
+                } else {
+                    $token = new TwitterOAuthToken($result);
+                    $type = "OAuthSuccess";
+                    $message = "Success";
+                }
             }
 
             return new TokenResponse($code, $token, $type, $message);

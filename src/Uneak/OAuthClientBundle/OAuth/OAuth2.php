@@ -3,19 +3,16 @@
 namespace Uneak\OAuthClientBundle\OAuth;
 
 use Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfigurationInterface;
+use Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationOAuth2ConfigurationInterface;
 use Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfigurationInterface;
 use Uneak\OAuthClientBundle\OAuth\Configuration\ServerConfigurationInterface;
+use Uneak\OAuthClientBundle\OAuth\Configuration\ServerOAuth2ConfigurationInterface;
 use Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest;
 use Uneak\OAuthClientBundle\OAuth\Grant\GrantInterface;
 use Uneak\OAuthClientBundle\OAuth\Token\AccessToken;
 use Uneak\OAuthClientBundle\OAuth\Token\AccessTokenInterface;
 
 class OAuth2 {
-
-	const AUTH_TYPE_URI = 0;
-	const AUTH_TYPE_AUTHORIZATION_BASIC = 1;
-	const AUTH_TYPE_FORM = 2;
-
 
 	/**
 	 * @param \Uneak\OAuthClientBundle\OAuth\Token\AccessTokenInterface $accessToken
@@ -61,12 +58,13 @@ class OAuth2 {
 	 * @param \Uneak\OAuthClientBundle\OAuth\Grant\GrantInterface                               $grant
 	 * @param int                                                                               $authType
 	 *
-	 * @return \Uneak\OAuthClientBundle\OAuth\Curl\CurlRequest
+	 * @return \Uneak\OAuthClientBundle\OAuth\Curl\CurlResponse
 	 */
-	public static function requestToken(CredentialsConfigurationInterface $credentialsConfiguration, ServerConfigurationInterface $serverConfiguration, AuthenticationConfigurationInterface $authenticationConfiguration, GrantInterface $grant, $authType = OAuth::AUTH_TYPE_URI) {
+	public static function getAccessToken(CredentialsConfigurationInterface $credentialsConfiguration, ServerOAuth2ConfigurationInterface $serverConfiguration, AuthenticationOAuth2ConfigurationInterface $authenticationConfiguration, GrantInterface $grant) {
 		$options = array();
-		$grant->buildRequestOptions($credentialsConfiguration, $serverConfiguration, $authenticationConfiguration, $authType, $options);
-		return new CurlRequest($options);
+		$grant->buildRequestOptions($credentialsConfiguration, $serverConfiguration, $authenticationConfiguration, $options);
+		$request = new CurlRequest($options);
+		return $request->getResponse();
 	}
 
 
@@ -77,8 +75,8 @@ class OAuth2 {
 	 *
 	 * @return string
 	 */
-	public static function authenticationUrl(CredentialsConfigurationInterface $credentialsConfiguration, ServerConfigurationInterface $serverConfiguration, AuthenticationConfigurationInterface $authenticationConfiguration) {
-		return $authenticationConfiguration->getRedirectUri($credentialsConfiguration, $serverConfiguration);
+	public static function getAuthenticationUrl(CredentialsConfigurationInterface $credentialsConfiguration, ServerOAuth2ConfigurationInterface $serverConfiguration, AuthenticationOAuth2ConfigurationInterface $authenticationConfiguration) {
+		return $authenticationConfiguration->getAuthenticationPath($credentialsConfiguration, $serverConfiguration);
 
 	}
 

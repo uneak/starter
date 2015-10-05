@@ -6,6 +6,7 @@
 	use Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfigurationInterface;
 	use Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfigurationInterface;
 	use Uneak\OAuthClientBundle\OAuth\Configuration\ServerConfigurationInterface;
+	use Uneak\OAuthClientBundle\OAuth\Token\TokenInterface;
 
 	class Service implements ServiceInterface {
 
@@ -27,6 +28,10 @@
 			$this->credentialsConfiguration = $credentialsConfiguration;
 			$this->serverConfiguration = $serverConfiguration;
 			$this->authenticationConfiguration = $authenticationConfiguration;
+		}
+
+		public function fetch(TokenInterface $token, array $options) {
+			// abstract
 		}
 
 

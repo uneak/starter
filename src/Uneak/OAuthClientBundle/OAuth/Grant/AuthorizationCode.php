@@ -3,9 +3,9 @@
 namespace Uneak\OAuthClientBundle\OAuth\Grant;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationConfigurationInterface;
+use Uneak\OAuthClientBundle\OAuth\Configuration\AuthenticationOAuth2ConfigurationInterface;
 use Uneak\OAuthClientBundle\OAuth\Configuration\CredentialsConfigurationInterface;
-use Uneak\OAuthClientBundle\OAuth\Configuration\ServerConfigurationInterface;
+use Uneak\OAuthClientBundle\OAuth\Configuration\ServerOAuth2ConfigurationInterface;
 
 
 class AuthorizationCode extends Grant {
@@ -16,8 +16,8 @@ class AuthorizationCode extends Grant {
 		$this->code = $code;
 	}
 
-	public function buildRequestOptions(CredentialsConfigurationInterface $credentialsConfiguration, ServerConfigurationInterface $serverConfiguration, AuthenticationConfigurationInterface $authenticationConfiguration, $authType, array &$options) {
-		parent::buildRequestOptions($credentialsConfiguration, $serverConfiguration, $authenticationConfiguration, $authType, $options);
+	public function buildRequestOptions(CredentialsConfigurationInterface $credentialsConfiguration, ServerOAuth2ConfigurationInterface $serverConfiguration, AuthenticationOAuth2ConfigurationInterface $authenticationConfiguration, array &$options) {
+		parent::buildRequestOptions($credentialsConfiguration, $serverConfiguration, $authenticationConfiguration, $options);
 		$options['parameters']['grant_type'] = $this->getName();
 		$options['parameters']['redirect_uri'] = $authenticationConfiguration->getOption('redirect_uri');
 		$options['parameters']['code'] = $this->code;
