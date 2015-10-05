@@ -1,0 +1,4 @@
+api_campaign:
+    type:     rest
+    resource: UserBundle\Controller\UserApiController
+    name_prefix: api_user_

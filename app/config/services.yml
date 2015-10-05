@@ -22,8 +22,15 @@ parameters:
     uneak.starter.block.breadcrumb.class: AppBundle\Blocks\Breadcrumb\Breadcrumb
     uneak.starter.block.notifications.class: AppBundle\Blocks\Notification\Notifications
 
+    uneak.vich_uploader_naming.directory_namer.class: AppBundle\VichUploader\Naming\DirectoryNamer
+
 
 services:
+
+    uneak.entity.directory_namer:
+        class: %uneak.vich_uploader_naming.directory_namer.class%
+        arguments:
+            - @doctrine.orm.entity_manager
 
     uneak.starter.block.breadcrumb:
         class: %uneak.starter.block.breadcrumb.class%

@@ -27,8 +27,10 @@
         "liip/imagine-bundle": "1.0.*@dev",
         "sp/bower-bundle": "~0.12@dev",
         "knplabs/knp-menu-bundle": "~2",
-        "league/oauth1-client": "~1.0",
-        "hwi/oauth-bundle": "dev-master"
+        "jms/serializer-bundle": "dev-master",
+        "friendsofsymfony/oauth-server-bundle": "dev-master",
+        "friendsofsymfony/rest-bundle": "dev-master",
+        "nelmio/api-doc-bundle": "dev-master"
 
     },
     "require-dev": {

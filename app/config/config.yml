@@ -308,8 +308,41 @@ fos_user:
 
 
 
+# Fos Oauth
+fos_oauth_server:
+    db_driver: orm
+    client_class: OAuthServerBundle\Entity\Client
+    access_token_class: OAuthServerBundle\Entity\AccessToken
+    refresh_token_class: OAuthServerBundle\Entity\RefreshToken
+    auth_code_class: OAuthServerBundle\Entity\AuthCode
+
+    service:
+        user_provider: uneak.user_provider
+        options:
+            supported_scopes: user
+            access_token_lifetime: 3600
+            refresh_token_lifetime: 1209600
+            auth_code_lifetime: 30
 
 
+# Fos Rest
+fos_rest:
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener: true
+    view:
+        view_response_listener: 'force'
+        formats:
+            xml: true
+            json : true
+        templating_formats:
+            html: true
+        force_redirects:
+            html: true
+        failed_validation: HTTP_BAD_REQUEST
+        default_engine: twig
+    routing_loader:
+        default_format: json
 
 
 
@@ -364,18 +397,12 @@ vich_uploader:
 
     mappings:
 
-        user_image:
-            uri_prefix:         /uploads/user
-            upload_destination: %kernel.root_dir%/../web/uploads/user
+        entity_image:
+            uri_prefix:         /uploads
+            upload_destination: %kernel.root_dir%/../web/uploads
             namer: vich_uploader.namer_uniqid
-            inject_on_load:     true
+            directory_namer: uneak.entity.directory_namer
+
+            inject_on_load:     false
             delete_on_update:   true
             delete_on_remove:   true
-
-#        member_image:
-#            uri_prefix:         /uploads/member
-#            upload_destination: %kernel.root_dir%/../web/uploads/member
-#            namer: vich_uploader.namer_uniqid
-#            inject_on_load:     true
-#            delete_on_update:   true
-#            delete_on_remove:   true

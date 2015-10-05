@@ -12,8 +12,6 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-#        fos_userbundle:
-#            id: fos_user.user_provider.username
 
         uneak_user:
             id: uneak.user_provider.username
@@ -27,6 +25,25 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        oauth_token:
+            pattern:    ^/oauth/v2/token
+            security:   false
+
+        oauth_authorize:
+            pattern:    ^/oauth/v2/auth
+            form_login:
+                provider: uneak_user
+                check_path: /oauth/v2/auth/login_check
+                login_path: /oauth/v2/auth/login
+#                use_referer: true
+            anonymous: true
+
+        api:
+            pattern:    ^/api
+            fos_oauth:  true
+            stateless:  true
+            anonymous:  true # can be omitted as its default value
 
         user:
 #            pattern: ^/admin
@@ -72,5 +89,10 @@ security:
         - { path: ^/admin/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+
+        - { path: ^/oauth/v2/auth/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/api, roles: [ IS_AUTHENTICATED_FULLY ] }
+        - { path: ^/api, roles: [ IS_AUTHENTICATED_ANONYMOUSLY ] }
+
 
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

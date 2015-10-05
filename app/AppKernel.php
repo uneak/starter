@@ -35,13 +35,19 @@
                 new Uneak\OAuthFacebookServiceBundle\UneakOAuthFacebookServiceBundle(),
                 new Uneak\OAuthGoogleServiceBundle\UneakOAuthGoogleServiceBundle(),
                 new Uneak\OAuthTwitterServiceBundle\UneakOAuthTwitterServiceBundle(),
+				// OAUTH
+				new JMS\SerializerBundle\JMSSerializerBundle(),
+				new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
+				new FOS\RestBundle\FOSRestBundle(),
+				new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
 				// UNEAK SKIN
 				new Uneak\MaterialDesignBundle\UneakMaterialDesignBundle(),
 				new Uneak\PortoAdminBundle\UneakPortoAdminBundle(),
 				// OWN,
 				new AppBundle\AppBundle(),
             	new MemberBundle\MemberBundle(),
-                new UserBundle\UserBundle()
+                new UserBundle\UserBundle(),
+            new OAuthServerBundle\OAuthServerBundle(),
 			);
 
 			if (in_array($this->getEnvironment(), array('dev', 'test'))) {
