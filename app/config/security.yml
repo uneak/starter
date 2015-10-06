@@ -85,14 +85,18 @@ security:
 
     access_control:
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/connect, role: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/admin/connect, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
 
         - { path: ^/oauth/v2/auth/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/api/doc, role: ROLE_ADMIN }
+
 #        - { path: ^/api, roles: [ IS_AUTHENTICATED_FULLY ] }
         - { path: ^/api, roles: [ IS_AUTHENTICATED_ANONYMOUSLY ] }
+
+
 
 
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

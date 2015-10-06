@@ -3,8 +3,44 @@ parameters:
     knp_menu.voter.uri.class: Uneak\PortoAdminBundle\Menu\Matcher\Voter\UriVoter
     uneak.portoadmin.layout.controller.listener.class: Uneak\PortoAdminBundle\EventListener\LayoutControllerListener
 
+    uneak.crud.handler.class: Uneak\PortoAdminBundle\Handler\CrudHandler
+
+    uneak.admin.page.layout.class: Uneak\PortoAdminBundle\LayoutBuilder\AdminPageLayoutBuilder
+    uneak.admin.page.entity.layout.class: Uneak\PortoAdminBundle\LayoutBuilder\AdminPageEntityLayoutBuilder
+
+    uneak.admin.crud.handler.class: Uneak\PortoAdminBundle\Handler\CrudHandler
+
 
 services:
+
+    uneak.admin.crud.handler:
+        class: %uneak.admin.crud.handler.class%
+        arguments:
+            - @form.factory
+            - @uneak.blocksmanager.builder
+            - @uneak.routesmanager.grid.helper
+            - @uneak.routesmanager.menu.helper
+
+    uneak.admin.page.layout:
+        class: %uneak.admin.page.layout.class%
+
+    uneak.admin.page.entity.layout:
+        class: %uneak.admin.page.entity.layout.class%
+        arguments:
+            - @uneak.blocksmanager.blocks
+            - @uneak.routesmanager.menu.helper
+            - @form.factory
+            - @vich_uploader.templating.helper.uploader_helper
+
+    uneak.crud.handler:
+        class: %uneak.crud.handler.class%
+        arguments:
+            - @uneak.blocksmanager.builder
+            - @uneak.blocksmanager.blocks
+            - @uneak.routesmanager.menu.helper
+            - @form.factory
+            - @vich_uploader.templating.helper.uploader_helper
+
     knp_menu.voter.uri:
         class: %knp_menu.voter.uri.class%
         tags:

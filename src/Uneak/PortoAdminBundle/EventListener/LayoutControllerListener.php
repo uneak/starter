@@ -117,9 +117,7 @@ class LayoutControllerListener {
                     $menu = new Menu($this->blocksManager->getBlock("block_user_menu")->getRoot());
                     $entityLayoutSidebar->addWidget("menu", $menu, false, 999999);
 
-
                     $layoutContentHeader->setTitle("Profile");
-
 
                     $entityLayoutContent->setTemplateType(EntityContent::TEMPLATE_TYPE_SCROLL);
 
