@@ -11,17 +11,16 @@
 
 	namespace UserBundle\Controller;
 
-	use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
-	use Symfony\Component\HttpFoundation\Request;
+	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\Request;
 	use Symfony\Component\HttpFoundation\RedirectResponse;
 	use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-	use Symfony\Component\PropertyAccess\PropertyAccess;
-	use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+    use Symfony\Component\PropertyAccess\PropertyAccess;
 	use FOS\UserBundle\Model\UserInterface;
 	use Uneak\OAuthClientBundle\Entity\OAuthUser;
 	use Uneak\PortoAdminBundle\Blocks\Content\Twig;
-	use Uneak\PortoAdminBundle\Controller\LayoutFormInterfaceController;
-	use UserBundle\Form\Type\RegistrationFormType;
+    use Uneak\PortoAdminBundle\Blocks\Layout\FormInterface;
+    use UserBundle\Form\Type\RegistrationFormType;
 
 	/**
 	 * Controller managing the registration
@@ -29,7 +28,7 @@
 	 * @author Thibault Duplessis <thibault.duplessis@gmail.com>
 	 * @author Christophe Coevoet <stof@notk.org>
 	 */
-	class RegistrationController extends LayoutFormInterfaceController {
+	class RegistrationController extends Controller {
 
 		public function registerAction(Request $request, $key = null) {
 			$userManager = $this->get('uneak.user_manager');
@@ -135,14 +134,25 @@
 			}
 
 
-			$this->layout->setIcon("user");
-			$this->layout->setTitle("Register");
-			$content = new Twig('user_registration_register', array(
-				'form'             => $form->createView(),
-				'serviceUser' => $serviceUser,
-				'key'              => $key
-			));
-			$this->layout->setContent($content);
+
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
+            $blockBuilder->addBlock("layout", new FormInterface());
+
+            $layout = $this->get("uneak.admin.form.layout");
+            $layout->setLayout($blockBuilder->getBlock("layout"));
+
+            $layout->getLayout()->setIcon("user");
+            $layout->getLayout()->setTitle("Register");
+
+            $layout->getLayoutContent()->addBlock(new Twig('user_registration_register', array(
+                'form'             => $form->createView(),
+                'serviceUser' => $serviceUser,
+                'key'              => $key
+            )));
+
+            return $blockBuilder->render("layout");
+
+
 
 
 		}
@@ -159,14 +169,23 @@
 				throw new NotFoundHttpException(sprintf('The user with username "%s" does not exist', $username));
 			}
 
-			//
-			//
-			$this->layout->setIcon("user");
-			$this->layout->setTitle("Register");
-			$content = new Twig('user_registration_check_email', array(
-				'user' => $user,
-			));
-			$this->layout->setContent($content);
+
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
+            $blockBuilder->addBlock("layout", new FormInterface());
+
+            $layout = $this->get("uneak.admin.form.layout");
+            $layout->setLayout($blockBuilder->getBlock("layout"));
+
+            $layout->getLayout()->setIcon("user");
+            $layout->getLayout()->setTitle("Register");
+
+            $layout->getLayoutContent()->addBlock(new Twig('user_registration_check_email', array(
+                'user' => $user,
+            )));
+
+            return $blockBuilder->render("layout");
+
+
 
 		}
 
@@ -197,12 +216,23 @@
 			$userManager = $this->get('uneak.user_manager');
 			$user = $userManager->findUserByUsername($username);
 
-			$this->layout->setIcon("user");
-			$this->layout->setTitle("Register");
-			$content = new Twig('user_registration_email_confirmed', array(
-				'user' => $user,
-			));
-			$this->layout->setContent($content);
+
+
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
+            $blockBuilder->addBlock("layout", new FormInterface());
+
+            $layout = $this->get("uneak.admin.form.layout");
+            $layout->setLayout($blockBuilder->getBlock("layout"));
+
+            $layout->getLayout()->setIcon("user");
+            $layout->getLayout()->setTitle("Register");
+
+            $layout->getLayoutContent()->addBlock(new Twig('user_registration_email_confirmed', array(
+                'user' => $user,
+            )));
+
+            return $blockBuilder->render("layout");
+
 
 		}
 
@@ -214,12 +244,23 @@
 			$userManager = $this->get('uneak.user_manager');
 			$user = $userManager->findUserByUsername($username);
 
-			$this->layout->setIcon("user");
-			$this->layout->setTitle("Register");
-			$content = new Twig('user_registration_confirmed', array(
-				'user' => $user,
-			));
-			$this->layout->setContent($content);
+
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
+            $blockBuilder->addBlock("layout", new FormInterface());
+
+            $layout = $this->get("uneak.admin.form.layout");
+            $layout->setLayout($blockBuilder->getBlock("layout"));
+
+            $layout->getLayout()->setIcon("user");
+            $layout->getLayout()->setTitle("Register");
+
+            $layout->getLayoutContent()->addBlock(new Twig('user_registration_confirmed', array(
+                'user' => $user,
+            )));
+
+            return $blockBuilder->render("layout");
+
+
 		}
 
 
@@ -267,14 +308,4 @@
 			$user->setImage($destName);
 		}
 
-		protected function updateUserInformation(UserInterface $user, UserResponseInterface $userInformation) {
-			$accessor = PropertyAccess::createPropertyAccessor();
-			$accessor->setValue($user, 'username', $userInformation->getNickname());
-			$accessor->setValue($user, 'firstName', $userInformation->getFirstName());
-			$accessor->setValue($user, 'lastName', $userInformation->getLastName());
-
-			if ($accessor->isWritable($user, 'email')) {
-				$accessor->setValue($user, 'email', $userInformation->getEmail());
-			}
-		}
 	}

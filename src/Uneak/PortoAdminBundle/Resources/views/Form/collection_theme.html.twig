@@ -1,0 +1,50 @@
+
+{% block collection_widget %}
+    {% spaceless %}
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
+        {% endif %}
+        {{ block('form_widget') }}
+    {% endspaceless %}
+{% endblock collection_widget %}
+
+{% block uneak_collection_widget %}
+    {% spaceless %}
+        {% if prototype is defined %}
+            {% set prototype_vars = {} %}
+            {% if style is defined %}
+                {% set prototype_vars = prototype_vars|merge({'style': style}) %}
+            {% endif %}
+
+            {% set prototype_html = form_widget(prototype, prototype_vars) %}
+            {% if form.vars.allow_delete %}
+                {% set prototype_html = '<div class="input-group">' ~ prototype_html ~ '<div class="input-group-btn"><button class="btn btn-danger" data-removefield="collection" data-field="__id__">' ~ form.vars.delete_button_text|trans({}, translation_domain)|raw ~ '</button></div></div>' %}
+            {% endif %}
+
+            {% set attr = attr|merge({'data-prototype': prototype_html }) %}
+            {% set attr = attr|merge({'data-prototype-name': prototype_name }) %}
+        {% endif %}
+        <div {{ block('widget_container_attributes') }}>
+            <ul class="bc-collection list-unstyled">
+                {% for field in form %}
+                    <li class="mb-xs">
+                            {% if form.vars.allow_delete %}
+                                    <div class="input-group">
+                            {% endif %}
+                            {{ form_widget(field) }}
+                            {% if form.vars.allow_delete %}
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-danger" data-removefield="collection" data-field="{{ field.vars.id }}">{{ form.vars.delete_button_text|trans({}, translation_domain)|raw }}</button>
+                                        </div>
+                                    </div>
+                            {% endif %}
+                        {{ form_errors(field) }}
+
+                {% endfor %}
+            </ul>
+            {% if form.vars.allow_add %}
+                <a href="#" class="btn btn-primary" data-addfield="collection" data-collection="{{ form.vars.id }}" data-prototype-name="{{ prototype_name }}">{{ form.vars.add_button_text|trans({}, translation_domain)|raw }}</a>
+            {% endif %}
+        </div>
+    {% endspaceless %}
+{% endblock uneak_collection_widget %}

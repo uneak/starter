@@ -6,6 +6,7 @@
 	use Uneak\RoutesManagerBundle\Routes\NestedCRUDRoute;
 	use Uneak\RoutesManagerBundle\Routes\NestedEntityRoute;
 	use Uneak\RoutesManagerBundle\Routes\NestedGridRoute;
+    use UserBundle\Form\UserAccountType;
     use UserBundle\Form\UserNewType;
     use UserBundle\Form\UserType;
 
@@ -109,7 +110,9 @@
 				->setAction('account')
 				->setMetaData('_icon', 'edit')
 				->setMetaData('_label', "Etat du compte")
-				->setMetaData('_description', '{{ entity }}');
+				->setMetaData('_description', '{{ entity }}')
+                ->setFormType(new UserAccountType());
+
 
 			$subjectRoute->addChild($editRoute);
 

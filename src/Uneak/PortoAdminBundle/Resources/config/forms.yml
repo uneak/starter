@@ -1,7 +1,13 @@
 parameters:
     uneak.portoadmin.form.type.gender.class: Uneak\PortoAdminBundle\Forms\GenderType
+    uneak.form.type.collection.class: Uneak\PortoAdminBundle\Forms\CollectionType
 
 services:
+
+    uneak.form.type.collection:
+        class: %uneak.form.type.collection.class%
+        tags:
+            - { name: form.type, alias: uneak_collection }
 
     uneak.portoadmin.form.type.gender:
         class: %uneak.portoadmin.form.type.gender.class%

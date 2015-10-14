@@ -3,7 +3,9 @@
 namespace AppBundle\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 trait DesignationableEntity
 {
@@ -11,6 +13,7 @@ trait DesignationableEntity
 
     /**
      * @ORM\Column(name="label", type="string", length=128)
+     * @NotNull()
      */
     protected $label;
 
@@ -21,7 +24,7 @@ trait DesignationableEntity
     protected $slug;
 
     /**
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     protected $description;
 

@@ -72,7 +72,7 @@ class MemberRegistrationFormHandler implements RegistrationFormHandlerInterface
             $processed = $formHandler->process();
 
             // if the form is not posted we'll try to set some properties
-            if (!$request->isMethod('POST')) {
+            if (!$request->isMethod(Request::METHOD_POST)) {
                 $form->setData($this->setUserInformation($form->getData(), $userInformation));
             }
 
@@ -84,7 +84,7 @@ class MemberRegistrationFormHandler implements RegistrationFormHandlerInterface
 
         $form->setData($this->setUserInformation($user, $userInformation));
 
-        if ($request->isMethod('POST')) {
+        if ($request->isMethod(Request::METHOD_POST)) {
             $form->bind($request);
 
             return $form->isValid();

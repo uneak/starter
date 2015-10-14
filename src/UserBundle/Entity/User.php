@@ -79,6 +79,11 @@
 		 */
 		protected $username;
 
+//        /**
+//         * @NotBlank()
+//         */
+//        protected $plainPassword;
+
         /**
          * @Email(
          *     message = "'{{ value }}' n'est pas un email valide.",

@@ -6,7 +6,9 @@ parameters:
     uneak.crud.handler.class: Uneak\PortoAdminBundle\Handler\CrudHandler
 
     uneak.admin.page.layout.class: Uneak\PortoAdminBundle\LayoutBuilder\AdminPageLayoutBuilder
+    uneak.admin.form.layout.class: Uneak\PortoAdminBundle\LayoutBuilder\AdminFormLayoutBuilder
     uneak.admin.page.entity.layout.class: Uneak\PortoAdminBundle\LayoutBuilder\AdminPageEntityLayoutBuilder
+    uneak.admin.page.profile.layout.class: Uneak\PortoAdminBundle\LayoutBuilder\AdminPageProfileLayoutBuilder
 
     uneak.admin.crud.handler.class: Uneak\PortoAdminBundle\Handler\CrudHandler
 
@@ -21,6 +23,9 @@ services:
             - @uneak.routesmanager.grid.helper
             - @uneak.routesmanager.menu.helper
 
+    uneak.admin.form.layout:
+        class: %uneak.admin.form.layout.class%
+
     uneak.admin.page.layout:
         class: %uneak.admin.page.layout.class%
 
@@ -31,6 +36,13 @@ services:
             - @uneak.routesmanager.menu.helper
             - @form.factory
             - @vich_uploader.templating.helper.uploader_helper
+
+    uneak.admin.page.profile.layout:
+        class: %uneak.admin.page.profile.layout.class%
+        arguments:
+            - @uneak.blocksmanager.blocks
+            - @vich_uploader.templating.helper.uploader_helper
+
 
     uneak.crud.handler:
         class: %uneak.crud.handler.class%

@@ -11,7 +11,6 @@
 
 	namespace UserBundle\Controller;
 
-	use Symfony\Component\PropertyAccess\PropertyAccess;
 	use Uneak\PortoAdminBundle\Blocks\Content\Twig;
 	use Uneak\PortoAdminBundle\Blocks\Form\Form;
 	use Uneak\PortoAdminBundle\Blocks\Panel\Panel;
@@ -27,7 +26,7 @@
 	 *
 	 * @author Christophe Coevoet <stof@notk.org>
 	 */
-	class ProfileController extends LayoutProfileController {
+	class ProfileController extends Controller {
 		/**
 		 * Show the user
 		 */
@@ -38,10 +37,20 @@
 				throw new AccessDeniedException('This user does not have access to this section.');
 			}
 
-			$content = new Twig('user_profile_show', array(
-				'user' => $user
-			));
-			$this->entityLayoutContentBody->addBlock($content);
+
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
+            $blockBuilder->addBlock("layout", "block_main_interface");
+
+            $layout = $this->get("uneak.admin.page.profile.layout");
+            $layout->setLayout($blockBuilder->getBlock("layout"));
+            $layout->buildProfileLayout($user);
+
+            $layout->getSubLayoutContentBody()->addBlock(new Twig('user_profile_show', array(
+                'user' => $user
+            )));
+
+            return $blockBuilder->render("layout");
+
 		}
 
 
@@ -51,22 +60,29 @@
                 throw new AccessDeniedException('This user does not have access to this section.');
             }
 
-            $this->entityLayoutContent->setTitle("Réseaux sociaux");
 
-			$oAuthUser = $this->getDoctrine()->getRepository("UneakOAuthClientBundle:OAuthUser")->findOAuthUser($user);
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
+            $blockBuilder->addBlock("layout", "block_main_interface");
 
-			$content = new Twig('user_connect_login', array(
-                'user' => $user,
-				'oAuthUser' => $oAuthUser,
-            ));
+            $layout = $this->get("uneak.admin.page.profile.layout");
+            $layout->setLayout($blockBuilder->getBlock("layout"));
+            $layout->buildProfileLayout($user);
+
+            $layout->getSubLayoutContent()->setTitle("Réseaux sociaux");
+            $oAuthUser = $this->getDoctrine()->getRepository("UneakOAuthClientBundle:OAuthUser")->findOAuthUser($user);
 
             $panel = new Panel();
             $panel->setTitle("Edition");
             $panel->isCollapsed(false);
             $panel->isDismiss(false);
             $panel->isToggle(false);
-            $panel->addBlock($content);
-            $this->entityLayoutContentBody->addBlock($panel, 'social');
+            $panel->addBlock(new Twig('user_connect_login', array(
+                'user' => $user,
+                'oAuthUser' => $oAuthUser,
+            )));
+            $layout->getSubLayoutContentBody()->addBlock($panel, 'social');
+
+            return $blockBuilder->render("layout");
         }
 
 
@@ -109,17 +125,35 @@
 			}
 
 
-			$formBlock = new Form($form);
-			$formBlock->addClass("form-horizontal");
-			$formBlock->addClass("form-bordered");
 
-			$panel = new Panel();
-			$panel->setTitle("Edition");
-			$panel->isCollapsed(false);
-			$panel->isDismiss(false);
-			$panel->isToggle(false);
-			$panel->addBlock($formBlock);
-			$this->entityLayoutContentBody->addBlock($panel, 'form');
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
+            $blockBuilder->addBlock("layout", "block_main_interface");
+
+            $layout = $this->get("uneak.admin.page.profile.layout");
+            $layout->setLayout($blockBuilder->getBlock("layout"));
+            $layout->buildProfileLayout($user);
+
+
+
+            $formBlock = new Form($form);
+            $formBlock->addClass("form-horizontal");
+            $formBlock->addClass("form-bordered");
+
+            $panel = new Panel();
+            $panel->setTitle("Edition");
+            $panel->isCollapsed(false);
+            $panel->isDismiss(false);
+            $panel->isToggle(false);
+            $panel->addBlock($formBlock);
+            $layout->getSubLayoutContentBody()->addBlock($panel, 'form');
+
+
+            return $blockBuilder->render("layout");
+
+
+
+
+
 
 
 		}

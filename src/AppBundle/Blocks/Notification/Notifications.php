@@ -31,8 +31,9 @@
             if (count($pendingAccounts)) {
 
                 $notificationTask = new Notification("Inscriptions", "user", count($pendingAccounts));
+
                 foreach ($pendingAccounts as $pendingAccount) {
-                    $link = $this->flattenRouteManager->getFlattenRoute('user/subject/account', array('user' => $pendingAccount->getId()))->getRoutePath();
+                    $link = $this->flattenRouteManager->getFlattenRoute('users/subject/account', array('users' => $pendingAccount->getId()))->getRoutePath();
 
                     $message = new Message($pendingAccount->getFirstName()." ".$pendingAccount->getLastName(), $pendingAccount->getEmail(), $this->uploaderHelper->asset($pendingAccount, 'imageFile'), $link);
                     $notificationTask->add($message);

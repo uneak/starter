@@ -17,14 +17,7 @@
 
     class AdminPageProfileLayoutBuilder extends AdminPageSubLayoutBuilder {
 
-        /**
-         * @var \Uneak\RoutesManagerBundle\Helper\MenuHelper
-         */
-        private $menuHelper;
-        /**
-         * @var \Symfony\Component\Form\FormFactoryInterface
-         */
-        private $formFactory;
+
         /**
          * @var \Vich\UploaderBundle\Templating\Helper\UploaderHelper
          */
@@ -34,9 +27,7 @@
          */
         private $blocksManager;
 
-        public function __construct(BlocksManager $blocksManager, MenuHelper $menuHelper, FormFactoryInterface $formFactory, UploaderHelper $uploaderHelper) {
-            $this->menuHelper = $menuHelper;
-            $this->formFactory = $formFactory;
+        public function __construct(BlocksManager $blocksManager, UploaderHelper $uploaderHelper) {
             $this->uploaderHelper = $uploaderHelper;
             $this->blocksManager = $blocksManager;
         }
@@ -70,11 +61,6 @@
         }
 
 
-
-
-        public function buildIndex(FlattenRoute $route) {
-
-        }
 
 
 

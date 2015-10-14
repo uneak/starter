@@ -1,0 +1,5 @@
+api_campaign:
+    type:     rest
+    resource: OAuthServerBundle\Controller\OAuthServerApiController
+    prefix: v1
+    name_prefix: api_v1_oauth_server_

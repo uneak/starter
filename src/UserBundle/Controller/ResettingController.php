@@ -11,13 +11,9 @@
 
 	namespace UserBundle\Controller;
 
-	use FOS\UserBundle\FOSUserEvents;
-	use FOS\UserBundle\Event\FormEvent;
-	use FOS\UserBundle\Event\GetResponseUserEvent;
-	use FOS\UserBundle\Event\FilterUserResponseEvent;
 	use FOS\UserBundle\Model\UserInterface;
 	use Uneak\PortoAdminBundle\Blocks\Content\Twig;
-	use Uneak\PortoAdminBundle\Controller\LayoutFormInterfaceController;
+    use Uneak\PortoAdminBundle\Blocks\Layout\FormInterface;
 	use UserBundle\Form\Type\ResettingFormType;
 	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 	use Symfony\Component\HttpFoundation\Request;
@@ -30,18 +26,26 @@
 	 * @author Thibault Duplessis <thibault.duplessis@gmail.com>
 	 * @author Christophe Coevoet <stof@notk.org>
 	 */
-	class ResettingController extends LayoutFormInterfaceController {
+	class ResettingController extends Controller {
 		/**
 		 * Request reset user password: show form
 		 */
 		public function requestAction() {
 
-			//
-			//
-			$this->layout->setIcon("key");
-			$this->layout->setTitle("Réinitialisation du mot de passe");
-			$content = new Twig('user_resetting_request');
-			$this->layout->setContent($content);
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
+            $blockBuilder->addBlock("layout", new FormInterface());
+
+            $layout = $this->get("uneak.admin.form.layout");
+            $layout->setLayout($blockBuilder->getBlock("layout"));
+
+            $layout->getLayout()->setIcon("key");
+            $layout->getLayout()->setTitle("Réinitialisation du mot de passe");
+
+            $layout->getLayoutContent()->addBlock(new Twig('user_resetting_request'));
+
+            return $blockBuilder->render("layout");
+
+
 
 
 		}
@@ -120,14 +124,22 @@
 				return new RedirectResponse($this->generateUrl('user_resetting_request'));
 			}
 
-			//
-			//
-			$this->layout->setIcon("key");
-			$this->layout->setTitle("Réinitialisation du mot de passe");
-			$content = new Twig('user_resetting_check_email', array(
-				'email' => $email,
-			));
-			$this->layout->setContent($content);
+
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
+            $blockBuilder->addBlock("layout", new FormInterface());
+
+            $layout = $this->get("uneak.admin.form.layout");
+            $layout->setLayout($blockBuilder->getBlock("layout"));
+
+            $layout->getLayout()->setIcon("key");
+            $layout->getLayout()->setTitle("Réinitialisation du mot de passe");
+
+            $layout->getLayoutContent()->addBlock(new Twig('user_resetting_check_email', array(
+                'email' => $email,
+            )));
+
+            return $blockBuilder->render("layout");
+
 
 		}
 
@@ -153,15 +165,22 @@
 			}
 
 
-			//
-			//
-			$this->layout->setIcon("key");
-			$this->layout->setTitle("Réinitialisation du mot de passe");
-			$content = new Twig('user_resetting_reset', array(
-				'token' => $token,
-				'form' => $form->createView(),
-			));
-			$this->layout->setContent($content);
+
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
+            $blockBuilder->addBlock("layout", new FormInterface());
+
+            $layout = $this->get("uneak.admin.form.layout");
+            $layout->setLayout($blockBuilder->getBlock("layout"));
+
+            $layout->getLayout()->setIcon("key");
+            $layout->getLayout()->setTitle("Réinitialisation du mot de passe");
+
+            $layout->getLayoutContent()->addBlock(new Twig('user_resetting_reset', array(
+                'token' => $token,
+                'form' => $form->createView(),
+            )));
+
+            return $blockBuilder->render("layout");
 
 
 		}

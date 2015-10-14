@@ -6,19 +6,9 @@ parameters:
     uneak.user_registration.form.type.class: UserBundle\Form\Type\RegistrationFormType
 #    uneak.user_registration.form.handler.class: UserBundle\Form\Handler\UserRegistrationFormHandler
 
-    uneak.admin.user.crud.handler.class: UserBundle\Handler\UserCrudHandler
-
 
 services:
 
-    uneak.admin.user.crud.handler:
-        class: %uneak.admin.user.crud.handler.class%
-        arguments:
-            - @form.factory
-            - @uneak.blocksmanager.builder
-            - @uneak.routesmanager.grid.helper
-            - @uneak.routesmanager.menu.helper
-            - @uneak.user_manager
 
 
     uneak.user_provider:

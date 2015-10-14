@@ -1,5 +1,8 @@
 parameters:
     uneak.admin.user.admin.class: UserBundle\Admin\User
+    uneak.admin.user.api.handler.class: UserBundle\Handler\UserAPIHandler
+    uneak.admin.user.crud.handler.class: Uneak\PortoAdminBundle\Handler\CRUDHandler
+
 
 services:
 
@@ -8,6 +11,19 @@ services:
         arguments: [ users ]
         calls:
             - [ setController, [ UserBundle\Controller\UserAdminController ] ]
+            - [ setHandler, [ @uneak.admin.user.crud.handler ] ]
         tags:
             -  { name: uneak.routesmanager.route }
 
+    uneak.admin.user.api.handler:
+        class: %uneak.admin.user.api.handler.class%
+        arguments:
+            - @form.factory
+            - @doctrine.orm.entity_manager
+            - "UserBundle\Entity\User"
+            - @uneak.user_manager
+
+    uneak.admin.user.crud.handler:
+        class: %uneak.admin.user.crud.handler.class%
+        arguments:
+            - @uneak.admin.user.api.handler

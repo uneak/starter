@@ -2,90 +2,138 @@
 
 	namespace Uneak\PortoAdminBundle\Controller;
 
-    use Symfony\Component\DependencyInjection\ContainerInterface;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\HttpFoundation\Request;
-    use Uneak\PortoAdminBundle\Blocks\Datatable\Datatable;
-    use Uneak\PortoAdminBundle\Blocks\Form\Form;
-    use Uneak\PortoAdminBundle\Blocks\Layout\Entity;
-    use Uneak\PortoAdminBundle\Blocks\Layout\EntityContent;
     use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
-    use Uneak\PortoAdminBundle\Blocks\Panel\Panel;
-    use Uneak\PortoAdminBundle\Blocks\Photo\Photo;
-    use Uneak\PortoAdminBundle\Blocks\Search\Search;
     use Uneak\RoutesManagerBundle\Routes\FlattenEntityRoute;
     use Uneak\RoutesManagerBundle\Routes\FlattenRoute;
+    use Doctrine\ORM\Query\Expr;
 
 
-    class LayoutEntityController extends LayoutMainInterfaceController {
+    class LayoutEntityController extends Controller {
 
-        protected $entity = null;
-        protected $entityRoute = null;
-        protected $entityLayout;
-        protected $entityLayoutContent;
-        protected $entityLayoutContentBody;
-        protected $entityLayoutSidebar;
-        protected $entityLayoutToolbar;
-        protected $entityLayoutContentActions;
+        public function indexAction(FlattenRoute $route) {
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
+            $blockBuilder->addBlock("layout", "block_main_interface");
 
+            $layout = $this->get("uneak.admin.page.entity.layout");
+            $layout->setLayout($blockBuilder->getBlock("layout"));
+            $layout->buildEntityLayout($route);
+            $layout->buildGridPage($route);
 
-
-
-        /**
-         * @param null $entity
-         */
-        public function setEntity($entity) {
-            $this->entity = $entity;
+            return $blockBuilder->render("layout");
         }
 
-        /**
-         * @param null $entityRoute
-         */
-        public function setEntityRoute($entityRoute) {
-            $this->entityRoute = $entityRoute;
+        public function showAction(FlattenRoute $route) {
+
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
+            $blockBuilder->addBlock("layout", "block_main_interface");
+
+            $layout = $this->get("uneak.admin.page.entity.layout");
+            $layout->setLayout($blockBuilder->getBlock("layout"));
+            $layout->buildEntityLayout($route);
+
+            return $blockBuilder->render("layout");
+
         }
 
-        /**
-         * @param mixed $entityLayout
-         */
-        public function setEntityLayout($entityLayout) {
-            $this->entityLayout = $entityLayout;
+        public function editAction(FlattenRoute $route, Request $request) {
+            $crudHandler = $route->getHandler();
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
+
+            $blockBuilder->addBlock("layout", "block_main_interface");
+
+            $layout = $this->get("uneak.admin.page.entity.layout");
+            $layout->setLayout($blockBuilder->getBlock("layout"));
+            $layout->buildEntityLayout($route);
+
+            $form = $crudHandler->getForm($route, Request::METHOD_POST);
+            $form->add('submit', 'submit', array('label' => 'Modifier'));
+
+            $layout->buildFormPage($form, $route->getMetaData('_label'));
+
+            $entityRoute = $route;
+            while($entityRoute && !$entityRoute instanceof FlattenEntityRoute) {
+                $entityRoute = $entityRoute->getParent();
+            }
+
+            if ($request->getMethod() == Request::METHOD_POST) {
+                $form->handleRequest($request);
+                if ($form->isValid()) {
+                    $crudHandler->persistEntity($form);
+                    return $this->redirect($entityRoute->getChild('show')->getRoutePath());
+                } else {
+                    $this->addFlash('error', 'Votre formulaire est invalide.');
+                }
+            }
+
+
+            return $blockBuilder->render("layout");
         }
 
-        /**
-         * @param mixed $entityLayoutContent
-         */
-        public function setEntityLayoutContent($entityLayoutContent) {
-            $this->entityLayoutContent = $entityLayoutContent;
-        }
+        public function newAction(FlattenRoute $route, Request $request) {
+            $crudHandler = $route->getHandler();
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
 
-        /**
-         * @param mixed $entityLayoutContentBody
-         */
-        public function setEntityLayoutContentBody($entityLayoutContentBody) {
-            $this->entityLayoutContentBody = $entityLayoutContentBody;
-        }
+            $blockBuilder->addBlock("layout", "block_main_interface");
 
-        /**
-         * @param mixed $entityLayoutSidebar
-         */
-        public function setEntityLayoutSidebar($entityLayoutSidebar) {
-            $this->entityLayoutSidebar = $entityLayoutSidebar;
-        }
+            $layout = $this->get("uneak.admin.page.entity.layout");
+            $layout->setLayout($blockBuilder->getBlock("layout"));
+            $layout->buildEntityLayout($route);
 
-        /**
-         * @param mixed $entityLayoutToolbar
-         */
-        public function setEntityLayoutToolbar($entityLayoutToolbar) {
-            $this->entityLayoutToolbar = $entityLayoutToolbar;
-        }
+            $form = $crudHandler->getForm($route, Request::METHOD_POST);
+            $form->add('submit', 'submit', array('label' => 'Créer'));
 
-        /**
-         * @param mixed $entityLayoutContentActions
-         */
-        public function setEntityLayoutContentActions($entityLayoutContentActions) {
-            $this->entityLayoutContentActions = $entityLayoutContentActions;
+            $layout->buildFormPage($form, $route->getMetaData('_label'));
+
+            if ($request->getMethod() == Request::METHOD_POST) {
+                $form->handleRequest($request);
+                if ($form->isValid()) {
+                    $crudHandler->persistEntity($form);
+
+                    return $this->redirect($route->getChild('*/index')->getRoutePath());
+                } else {
+                    $this->addFlash('error', 'Votre formulaire est invalide.');
+                }
+            }
+
+
+            return $blockBuilder->render("layout");
         }
 
 
-	}
+
+        public function indexGridAction(FlattenRoute $route, Request $request) {
+
+            $crudHandler = $route->getCRUD()->getHandler();
+            $gridHelper = $this->get("uneak.routesmanager.grid.helper");
+            $menuHelper = $this->get("uneak.routesmanager.menu.helper");
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
+
+            $entityClass = $route->getCRUD()->getEntity();
+            $params = $request->query->all();
+
+            $datatableArray = $crudHandler->getDatatableArray($entityClass, $params, $gridHelper);
+
+            for($i = 0; $i < count($datatableArray['data']); $i++) {
+                $id = $datatableArray['data'][$i]['DT_RowId'];
+
+                $menu = new Menu();
+                $menu->setTemplateAlias("block_template_grid_actions_menu");
+                $rowActions = $route->getParent()->getNestedRoute()->getRowActions();
+                $root = $menuHelper->createMenu($rowActions, $route, array($id));
+                $menu->setRoot($root);
+                $blockBuilder->addBlock("row_actions", $menu);
+                $datatableArray['data'][$i]['_actions'] = $this->renderView("<div class='menu-bullets'>{{ renderBlock('row_actions') }}</div>");
+            }
+
+            return new JsonResponse($datatableArray);
+
+        }
+
+
+
+
+    }

@@ -15,7 +15,7 @@ use Vich\UploaderBundle\Mapping\Annotation\Uploadable;
  * Client
  *
  * @ORM\Table(name="OAuthServerClient")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="OAuthServerBundle\Entity\ClientRepository")
  * 
  * @Uploadable
  */
@@ -34,6 +34,10 @@ class Client extends BaseClient {
 	 */
 	protected $id;
 
+
+    public function __toString() {
+        return $this->getLabel();
+    }
 
 
 	public function __construct() {

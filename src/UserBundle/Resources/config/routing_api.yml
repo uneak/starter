@@ -2,4 +2,4 @@ api_campaign:
     type:     rest
     resource: UserBundle\Controller\UserApiController
     prefix: v1
-    name_prefix: api_user_
+    name_prefix: api_v1_user_

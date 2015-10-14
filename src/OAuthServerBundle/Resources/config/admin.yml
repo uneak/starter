@@ -1,0 +1,29 @@
+parameters:
+    uneak.admin.oauth.server.admin.class: OAuthServerBundle\Admin\OAuthServer
+    uneak.admin.oauth.server.api.handler.class: OAuthServerBundle\Handler\OauthServerAPIHandler
+    uneak.admin.oauth.server.crud.handler.class: Uneak\PortoAdminBundle\Handler\CRUDHandler
+
+services:
+
+    uneak.admin.oauth.server.admin:
+        class: %uneak.admin.oauth.server.admin.class%
+        arguments: [ oauth-server ]
+        calls:
+#            - [ setController, [ OAuthServerBundle\Controller\OAuthServerAdminController ] ]
+            - [ setController, [ Uneak\PortoAdminBundle\Controller\LayoutEntityController ] ]
+            - [ setHandler, [ @uneak.admin.oauth.server.crud.handler ] ]
+        tags:
+            -  { name: uneak.routesmanager.route }
+
+    uneak.admin.oauth.server.api.handler:
+        class: %uneak.admin.oauth.server.api.handler.class%
+        arguments:
+            - @form.factory
+            - @doctrine.orm.entity_manager
+            - "OAuthServerBundle\Entity\Client"
+            - @fos_oauth_server.client_manager
+
+    uneak.admin.oauth.server.crud.handler:
+        class: %uneak.admin.oauth.server.crud.handler.class%
+        arguments:
+            - @uneak.admin.oauth.server.api.handler

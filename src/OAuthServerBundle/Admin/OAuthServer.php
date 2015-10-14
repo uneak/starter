@@ -1,13 +1,13 @@
 <?php
 
-	namespace UserBundle\Admin;
+	namespace OAuthServerBundle\Admin;
 
-	use Uneak\RoutesManagerBundle\Routes\NestedAdminRoute;
+	use OAuthServerBundle\Form\OAuthServerCreateType;
+    use OAuthServerBundle\Form\OAuthServerType;
+    use Uneak\RoutesManagerBundle\Routes\NestedAdminRoute;
 	use Uneak\RoutesManagerBundle\Routes\NestedCRUDRoute;
 	use Uneak\RoutesManagerBundle\Routes\NestedEntityRoute;
 	use Uneak\RoutesManagerBundle\Routes\NestedGridRoute;
-    use UserBundle\Form\UserNewType;
-    use UserBundle\Form\UserType;
 
 
     class OAuthServer extends NestedCRUDRoute {
@@ -17,7 +17,7 @@
 		public function initialize() {
 			parent::initialize();
 
-            $this->setFormType(new UserType());
+            $this->setFormType(new OAuthServerType());
 
 			$this->setMetaData('_icon', 'link');
 			$this->setMetaData('_image', 'imageFile');
@@ -64,14 +64,13 @@
 				->setPath('new')
 				->setAction('new')
 				->setMetaData('_icon', 'plus-circle')
-                ->setMetaData('_label', 'Nouveau client OAuth')
-                ->setFormType(new UserNewType());
+                ->setMetaData('_label', 'Nouveau client OAuth');
 			$this->addChild($newRoute);
 
 
 			$subjectRoute = new NestedEntityRoute('subject');
 			$subjectRoute
-				->setParameterName($this->getId())
+				->setParameterName('oauthserver')
 				->setParameterPattern('\d+')
 				->setEnabled(false)
 				->setMetaData('_menu', array(

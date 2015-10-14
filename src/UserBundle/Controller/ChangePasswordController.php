@@ -12,7 +12,7 @@
 	use Uneak\PortoAdminBundle\Blocks\Panel\Panel;
 	use UserBundle\Form\Type\ChangePasswordFormType;
 
-	class ChangePasswordController extends LayoutProfileController {
+	class ChangePasswordController extends Controller {
 		/**
 		 * Change user password
 		 */
@@ -22,7 +22,6 @@
 				throw new AccessDeniedException('This user does not have access to this section.');
 			}
 
-			$templates = $this->get("uneak.templatesmanager");
 
 			$form = $this->createForm(new ChangePasswordFormType(), $user);
 			$form->add('submit', 'submit', array('label' => 'Modifier'));
@@ -36,16 +35,29 @@
 			}
 
 
-			$formBlock = new Form($form);
-			$formBlock->addClass("form-horizontal");
-			$formBlock->addClass("form-bordered");
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
+            $blockBuilder->addBlock("layout", "block_main_interface");
 
-			$panel = new Panel();
-			$panel->setTitle("Modification du mot de passe");
-			$panel->isCollapsed(false);
-			$panel->isDismiss(false);
-			$panel->isToggle(false);
-			$panel->addBlock($formBlock);
-			$this->entityLayoutContentBody->addBlock($panel, 'form');
+            $layout = $this->get("uneak.admin.page.profile.layout");
+            $layout->setLayout($blockBuilder->getBlock("layout"));
+            $layout->buildProfileLayout($user);
+
+            $formBlock = new Form($form);
+            $formBlock->addClass("form-horizontal");
+            $formBlock->addClass("form-bordered");
+
+            $panel = new Panel();
+            $panel->setTitle("Modification du mot de passe");
+            $panel->isCollapsed(false);
+            $panel->isDismiss(false);
+            $panel->isToggle(false);
+            $panel->addBlock($formBlock);
+            $layout->getSubLayoutContentBody()->addBlock($panel, 'form');
+
+            return $blockBuilder->render("layout");
+
+
+
+
 		}
 	}

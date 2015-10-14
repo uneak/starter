@@ -266,7 +266,7 @@ stof_doctrine_extensions:
         default:
             tree: false
             timestampable: true
-            sluggable: false
+            sluggable: true
             uploadable: false
 
 
@@ -327,6 +327,7 @@ fos_oauth_server:
 
 # Fos Rest
 fos_rest:
+    disable_csrf_role: IS_AUTHENTICATED_ANONYMOUSLY #ROLE_API
     param_fetcher_listener: true
     body_listener: true
     format_listener: true

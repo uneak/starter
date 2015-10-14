@@ -1039,12 +1039,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "90b31375f8b9d6639eea0c904dd3f072facf87eb"
+                "reference": "c667c8290ff3c6174e3a082f07b0aac21b2ca72a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/90b31375f8b9d6639eea0c904dd3f072facf87eb",
-                "reference": "90b31375f8b9d6639eea0c904dd3f072facf87eb",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/c667c8290ff3c6174e3a082f07b0aac21b2ca72a",
+                "reference": "c667c8290ff3c6174e3a082f07b0aac21b2ca72a",
                 "shasum": ""
             },
             "require": {
@@ -1067,7 +1067,7 @@
                 "symfony/expression-language": "~2.7|^3.0",
                 "symfony/form": "^2.7|^3.0",
                 "symfony/phpunit-bridge": "~2.7|^3.0",
-                "symfony/security": "^2.7|^3.0",
+                "symfony/security-core": "^2.7|^3.0",
                 "symfony/serializer": "^2.7|^3.0",
                 "symfony/validator": "^2.7|^3.0",
                 "symfony/yaml": "^2.7|^3.0"
@@ -1113,7 +1113,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2015-10-05 09:28:55"
+            "time": "2015-10-10 17:36:17"
         },
         {
             "name": "friendsofsymfony/user-bundle",

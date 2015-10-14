@@ -16,9 +16,9 @@
 	use Symfony\Component\Security\Core\Security;
 	use Symfony\Component\Security\Core\Exception\AuthenticationException;
 	use Uneak\PortoAdminBundle\Blocks\Content\Twig;
-	use Uneak\PortoAdminBundle\Controller\LayoutFormInterfaceController;
+    use Uneak\PortoAdminBundle\Blocks\Layout\FormInterface;
 
-	class SecurityController extends LayoutFormInterfaceController {
+    class SecurityController extends Controller {
 
 		public function loginAction(Request $request) {
 
@@ -55,18 +55,26 @@
 			$csrfToken = $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue();
 
 
-			//
-			//
-			$this->layout->setIcon("user");
-			$this->layout->setTitle("Identification");
 
-			$content = new Twig('user_security_login', array(
-				'last_username' => $lastUsername,
-				'error' => $error,
-				'csrf_token' => $csrfToken,
-			));
 
-			$this->layout->setContent($content);
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
+            $blockBuilder->addBlock("layout", new FormInterface());
+
+            $layout = $this->get("uneak.admin.form.layout");
+            $layout->setLayout($blockBuilder->getBlock("layout"));
+
+            $layout->getLayout()->setIcon("user");
+            $layout->getLayout()->setTitle("Identification");
+
+            $layout->getLayoutContent()->addBlock(new Twig('user_security_login', array(
+                'last_username' => $lastUsername,
+                'error' => $error,
+                'csrf_token' => $csrfToken,
+            )));
+
+            return $blockBuilder->render("layout");
+
+
 
 
 		}

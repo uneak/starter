@@ -196,7 +196,7 @@
 				->createBuilder('form')
 				->getForm();
 
-			if ($request->isMethod('POST')) {
+			if ($request->isMethod(Request::METHOD_POST)) {
 				$form->bind($request);
 
 				if ($form->isValid()) {

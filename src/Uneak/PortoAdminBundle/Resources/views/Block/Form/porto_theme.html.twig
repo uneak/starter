@@ -3,6 +3,9 @@
 {# Widgets #}
 
 
+
+
+
 {%- block submit_widget -%}
     {%- set attr = attr|merge({class: (attr.class|default('') ~ ' btn-primary btn')|trim}) -%}
     {%- set type = type|default('submit') -%}
@@ -18,7 +21,7 @@
 
 
 {%- block form_widget_compound -%}
-    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' col-md-6')|trim}) -%}
+    {#{%- set attr = attr|merge({class: (attr.class|default('') ~ ' col-md-6')|trim}) -%}#}
     <div {{ block('widget_container_attributes') }}>
         {%- if form.parent is empty -%}
             {{ form_errors(form) }}
@@ -40,27 +43,8 @@
         {% if placeholder is defined and placeholder == true %}
             {%- set attr = attr|merge({'placeholder': label }) -%}
         {% endif %}
-
     {% endif %}
-    <div class="col-md-6">
-
-        {% if icon is defined %}
-            <div class="input-group input-group-icon">
-                <span class="input-group-addon">
-                    <span class="icon"><i class="{{ icon }}"></i></span>
-                </span>
-                {{- parent() -}}
-            </div>
-        {% else %}
-            {{- parent() -}}
-        {% endif %}
-
-        {% if help is defined %}
-            <p class="help">{{ help }}</p>
-        {% endif %}
-
-        {{- form_errors(form) -}}
-    </div>
+    {{- parent() -}}
 {%- endblock form_widget_simple %}
 
 {% block textarea_widget -%}
@@ -143,28 +127,7 @@
 
 {% block choice_widget_collapsed -%}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
-
-    <div class="col-md-6">
-
-        {% if icon is defined %}
-            <div class="input-group input-group-icon">
-                <span class="input-group-addon">
-                    <span class="icon"><i class="{{ icon }}"></i></span>
-                </span>
-                {{- parent() -}}
-            </div>
-        {% else %}
-            {{- parent() -}}
-        {% endif %}
-
-        {% if help is defined %}
-            <p class="help">{{ help }}</p>
-        {% endif %}
-
-        {{- form_errors(form) -}}
-    </div>
-
-
+    {{- parent() -}}
 {%- endblock %}
 
 {% block choice_widget_expanded -%}
@@ -193,17 +156,16 @@
 
 {% block checkbox_widget -%}
         {{ block('form_label') }}
-        <div class="col-md-6">
-            {% set parent_label_class = parent_label_class|default('') -%}
-            {% if 'checkbox-inline' in parent_label_class %}
-                {{- form_label(form, null, { widget: parent() }) -}}
-            {% else -%}
-                <div class="checkbox">
-                    <label>{{- parent() -}}</label>
-                    {#{{- form_label(form, null, { widget: parent() }) -}}#}
-                </div>
-            {%- endif %}
-        </div>
+
+        {% set parent_label_class = parent_label_class|default('') -%}
+        {% if 'checkbox-inline' in parent_label_class %}
+            {{- form_label(form, null, { widget: parent() }) -}}
+        {% else -%}
+            <div class="checkbox">
+                <label>{{- parent() -}}</label>
+                {#{{- form_label(form, null, { widget: parent() }) -}}#}
+            </div>
+        {%- endif %}
 {%- endblock checkbox_widget %}
 
 
@@ -222,13 +184,8 @@
 {# Labels #}
 
 {% block form_label -%}
-    <div class="col-md-3 text-right">
-        {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' control-label')|trim}) -%}
-        {{- parent() -}}
-        {% if required %}
-            <span title="Ce champ est obligatoire"> *</span>
-        {% endif %}
-    </div>
+    {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' control-label')|trim}) -%}
+    {{- parent() -}}
 {%- endblock form_label %}
 
 {% block choice_label -%}
@@ -268,9 +225,32 @@
 
 {% block form_row -%}
     <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
-        {{- form_label(form) -}}
-        {{- form_widget(form) -}}
-        {#{{- form_errors(form) -}}#}
+
+        <div class="col-md-3 text-right">
+            {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' control-label')|trim}) -%}
+            {{- form_label(form) -}}
+            {% if required %}
+                <span title="Ce champ est obligatoire"> *</span>
+            {% endif %}
+        </div>
+
+        <div class="col-md-6">
+            {% if icon is defined %}
+                <div class="input-group input-group-icon">
+                <span class="input-group-addon">
+                    <span class="icon"><i class="{{ icon }}"></i></span>
+                </span>
+                    {{- form_widget(form) -}}
+                </div>
+            {% else %}
+                {{- form_widget(form) -}}
+            {% endif %}
+            {% if help is defined %}
+                <p class="help">{{ help }}</p>
+            {% endif %}
+            {{- form_errors(form) -}}
+
+        </div>
     </div>
 {%- endblock form_row %}
 

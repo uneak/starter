@@ -15,7 +15,10 @@ user_api:
     resource: "@UserBundle/Resources/config/routing_api.yml"
     prefix: /api
 
-
+oauth_server_api:
+    type: rest
+    resource: "@OAuthServerBundle/Resources/config/routing_api.yml"
+    prefix: /api
 
 
 # FOS User
