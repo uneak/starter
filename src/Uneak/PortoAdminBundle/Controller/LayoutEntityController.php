@@ -7,6 +7,7 @@
     use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\HttpFoundation\Request;
     use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
+    use Uneak\PortoAdminBundle\PNotify\PNotify;
     use Uneak\RoutesManagerBundle\Routes\FlattenEntityRoute;
     use Uneak\RoutesManagerBundle\Routes\FlattenRoute;
     use Doctrine\ORM\Query\Expr;
@@ -65,7 +66,14 @@
                     $crudHandler->persistEntity($form);
                     return $this->redirect($entityRoute->getChild('show')->getRoutePath());
                 } else {
-                    $this->addFlash('error', 'Votre formulaire est invalide.');
+                    $this->addFlash('error', new PNotify(array(
+                        'type' => 'error',
+                        'title' => 'Formulaire',
+                        'text' => 'Votre formulaire est invalide.',
+                        'shadow' => true,
+                        'stack' => 'stack-bar-bottom'
+                        //				'icon' => 'fa fa-twitter'
+                    )));
                 }
             }
 
@@ -95,7 +103,14 @@
 
                     return $this->redirect($route->getChild('*/index')->getRoutePath());
                 } else {
-                    $this->addFlash('error', 'Votre formulaire est invalide.');
+                    $this->addFlash('error', new PNotify(array(
+                        'type' => 'error',
+                        'title' => 'Formulaire',
+                        'text' => 'Votre formulaire est invalide.',
+                        'shadow' => true,
+                        'stack' => 'stack-bar-bottom'
+                        //				'icon' => 'fa fa-twitter'
+                    )));
                 }
             }
 

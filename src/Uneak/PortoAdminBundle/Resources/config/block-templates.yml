@@ -64,7 +64,17 @@ parameters:
 
     uneak.portoadmin.twig.template.class: Uneak\PortoAdminBundle\Templates\Content\TwigTemplate
 
+    uneak.portoadmin.pnotify.template.class: Uneak\PortoAdminBundle\Templates\PNotify\PNotifyTemplate
+
 services:
+
+
+    uneak.portoadmin.pnotify.template:
+        class: %uneak.portoadmin.pnotify.template.class%
+        arguments:
+            - @session
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_pnotify }
 
     uneak.portoadmin.twig.template:
         class: %uneak.portoadmin.twig.template.class%

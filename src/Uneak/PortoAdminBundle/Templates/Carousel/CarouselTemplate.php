@@ -18,24 +18,11 @@
 		public function buildOptions(TemplatesManager $templatesManager, $block, array &$options) {
             parent::buildOptions($templatesManager, $block, $options);
 
-			$options['options'] = $this->_getJsArray($block->getOptions());
+			$options['options'] = $block->getOptions();
 			$options['items'] = $block->getBlock(":items");
 
 		}
 
-        protected function _getJsArray(array $array = null) {
-            $returnArray = array();
-            foreach ($array as $key => $value) {
-                if (!is_null($value)) {
-                    $returnArray[$key] = $value;
-                }
-            }
-            $json = json_encode($returnArray);
-            $json = preg_replace_callback("/(?:\"|')##(.*?)##(?:\"|')/", function ($matches) {
-                return stripslashes($matches[1]);
-            }, $json);
-            return $json;
-        }
 
 		public function getRenderTemplate() {
 			return 'block_carousel_template';

@@ -5,7 +5,8 @@
 	use Symfony\Component\HttpFoundation\Request;
     use Uneak\PortoAdminBundle\Blocks\Panel\Panel;
     use Uneak\PortoAdminBundle\Controller\LayoutEntityController;
-    use Uneak\RoutesManagerBundle\Routes\FlattenEntityRoute;
+	use Uneak\PortoAdminBundle\PNotify\PNotify;
+	use Uneak\RoutesManagerBundle\Routes\FlattenEntityRoute;
 	use Uneak\RoutesManagerBundle\Routes\FlattenRoute;
     use UserBundle\Entity\User;
 
@@ -43,7 +44,6 @@
 
 			$layout->buildFormPage($form, $route->getMetaData('_label'));
 
-
 			if ($request->getMethod() == Request::METHOD_POST) {
 
 				$form->handleRequest($request);
@@ -58,7 +58,14 @@
 
 					return $this->redirect($entityRoute->getChild('show')->getRoutePath());
 				} else {
-					$this->addFlash('error', 'Votre formulaire est invalide.');
+					$this->addFlash('error', new PNotify(array(
+						'type' => 'error',
+						'title' => 'Formulaire',
+						'text' => 'Votre formulaire est invalide.',
+						'shadow' => true,
+						'stack' => 'stack-bar-bottom'
+						//				'icon' => 'fa fa-twitter'
+					)));
 				}
 			}
 

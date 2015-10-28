@@ -1,0 +1,32 @@
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+		var stack_topleft = {"dir1": "down", "dir2": "right", "push": "top"};
+		var stack_bottomleft = {"dir1": "rightright", "dir2": "up", "push": "top"};
+		var stack_bottomright = {"dir1": "up", "dir2": "left", "firstpos1": 15, "firstpos2": 15};
+		var stack_bar_top = {"dir1": "down", "dir2": "right", "push": "top", "spacing1": 0, "spacing2": 0};
+		var stack_bar_bottom = {"dir1": "up", "dir2": "right", "spacing1": 0, "spacing2": 0};
+
+
+		{% set messageTypes = flashbag.all() %}
+        {% for key, messageType in messageTypes %}
+			{% for message in messageType %}
+				{% if message.getOptions() is defined %}
+					new PNotify({{ jsArray(message.getOptions()) }});
+				{% else %}
+					new PNotify({
+						type: '{{ key }}',
+						title: '{{ key }}',
+						text: '{{ message }}',
+						addclass: 'stack-bar-bottom',
+						stack: stack_bar_bottom,
+						width: "70%"
+					});
+				{% endif %}
+			{% endfor %}
+        {% endfor %}
+
+    });
+
+</script>

@@ -80,6 +80,7 @@ porto_admin_sidebar_widget_wrapper_script_template: "UneakPortoAdminBundle:Scrip
 porto_admin_sidebar_toggle_script_template: "UneakPortoAdminBundle:Script:script_sidebar_toggle.html.twig"
 porto_admin_datatable_script_template: "UneakPortoAdminBundle:Script:script_datatable.html.twig"
 form_collection_script_template: "UneakPortoAdminBundle:Script:script_uneak_collection.html.twig"
+pnotify_script_template: "UneakPortoAdminBundle:Script:script_pnotify.html.twig"
 
 
 # FOS USER
@@ -101,3 +102,5 @@ user_connect_registration_success: UneakPortoAdminBundle:FOSUser:Connect/registr
 user_connect_registration: UneakPortoAdminBundle:FOSUser:Connect/registration.html.twig
 user_connect_connect_success: UneakPortoAdminBundle:FOSUser:Connect/connect_success.html.twig
 user_connect_connect_confirm: UneakPortoAdminBundle:FOSUser:Connect/connect_confirm.html.twig
+
+

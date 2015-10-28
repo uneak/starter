@@ -1,5 +1,26 @@
 #
 #
+#       PORTO PNOTIFY
+#
+#
+
+porto_admin_pnotify_css:
+    type: externalcss
+    config:
+        href: "bundles/uneakportoadmin/assets/pnotify/pnotify.custom.css"
+
+porto_admin_pnotify_js:
+    type: externaljs
+    config:
+        src: "bundles/uneakportoadmin/assets/pnotify/pnotify.custom.js"
+        dependencies: [ "porto_admin_theme_notifications_config_js" ]
+
+
+
+
+
+#
+#
 #       PORTO
 #
 #

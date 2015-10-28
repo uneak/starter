@@ -3,6 +3,7 @@
 namespace Uneak\PortoAdminBundle\Blocks\Layout;
 
 use Uneak\PortoAdminBundle\Blocks\Block;
+use Uneak\PortoAdminBundle\Blocks\PNotify\PNotify;
 
 class MainInterface extends Block
 {
@@ -33,6 +34,8 @@ class MainInterface extends Block
         $this->setRightSidebar("block_right_sidebar");
         $this->setHeader("block_header");
         $this->setContent("block_content");
+
+        $this->addBlock(new PNotify(), "pnotify:pnotify");
     }
 
     /**
