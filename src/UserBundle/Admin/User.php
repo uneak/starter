@@ -7,7 +7,8 @@
 	use Uneak\RoutesManagerBundle\Routes\NestedEntityRoute;
 	use Uneak\RoutesManagerBundle\Routes\NestedGridRoute;
     use UserBundle\Form\UserAccountType;
-    use UserBundle\Form\UserNewType;
+	use UserBundle\Form\UserDeleteType;
+	use UserBundle\Form\UserNewType;
     use UserBundle\Form\UserType;
 
     class User extends NestedCRUDRoute {
@@ -123,7 +124,8 @@
 				->setAction('delete')
 				->setMetaData('_icon', 'times')
                 ->setMetaData('_label', "Supprimer l'utilisateur")
-                ->setMetaData('_description', '{{ entity }}');
+                ->setMetaData('_description', '{{ entity }}')
+				->setFormType(new UserDeleteType());
 			$subjectRoute->addChild($deleteRoute);
 
 		}

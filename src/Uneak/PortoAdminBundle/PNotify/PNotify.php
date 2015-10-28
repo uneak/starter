@@ -176,4 +176,13 @@
 		}
 
 
+		public function __sleep() {
+			return array('options');
+		}
+
+		public function __wakeup() {
+			$this->resolver = new OptionsResolver();
+			$this->configureOptions($this->resolver);
+		}
+
 	}

@@ -155,7 +155,7 @@
 
 
 {% block checkbox_widget -%}
-        {{ block('form_label') }}
+        {#{{ block('form_label') }}#}
 
         {% set parent_label_class = parent_label_class|default('') -%}
         {% if 'checkbox-inline' in parent_label_class %}
@@ -282,8 +282,23 @@
 
 {% block checkbox_row -%}
     <div class="form-group{% if not valid %} has-error{% endif %}">
-        {{- form_widget(form) -}}
-        {{- form_errors(form) -}}
+
+        <div class="col-md-3 text-right">
+            {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' control-label')|trim}) -%}
+            {{ block('form_label') }}
+            {% if required %}
+                <span title="Ce champ est obligatoire"> *</span>
+            {% endif %}
+        </div>
+
+        <div class="col-md-6">
+            {{- form_widget(form) -}}
+            {% if help is defined %}
+                <p class="help">{{ help }}</p>
+            {% endif %}
+            {{- form_errors(form) -}}
+
+        </div>
     </div>
 {%- endblock checkbox_row %}
 

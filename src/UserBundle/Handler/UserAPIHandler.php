@@ -45,6 +45,7 @@ class UserAPIHandler extends EntityAPIHandler {
 
     public function get($id) {
         $client = $this->userManager->findUserBy(array("id" => $id));
+
         if (!$client) {
             throw new NotFoundException("User $id not found", $id);
         }

@@ -44,6 +44,10 @@ class CRUDHandler implements CRUDHandlerInterface {
         return $this->apiHandler->createEntity();
     }
 
+    public function deleteEntity(FormInterface $form, $entity) {
+        return $this->apiHandler->delete($entity->getId());
+    }
+
     public function persistEntity(FormInterface $form) {
         return $this->apiHandler->persistEntity($form);
     }

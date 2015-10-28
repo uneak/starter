@@ -64,6 +64,17 @@
                 $form->handleRequest($request);
                 if ($form->isValid()) {
                     $crudHandler->persistEntity($form);
+
+                    $this->addFlash('info', new PNotify(array(
+                        'type' => 'info',
+                        'title' => 'Formulaire',
+                        'text' => 'L\'édition a été réalisé avec succes',
+                        'shadow' => true,
+                        'stack' => 'stack-bar-bottom',
+                        'icon' => 'fa fa-'.$route->getMetaData('_icon')
+                    )));
+
+
                     return $this->redirect($entityRoute->getChild('show')->getRoutePath());
                 } else {
                     $this->addFlash('error', new PNotify(array(
@@ -101,6 +112,17 @@
                 if ($form->isValid()) {
                     $crudHandler->persistEntity($form);
 
+
+                    $this->addFlash('info', new PNotify(array(
+                        'type' => 'info',
+                        'title' => 'Formulaire',
+                        'text' => 'La création a été réalisé avec succes',
+                        'shadow' => true,
+                        'stack' => 'stack-bar-bottom',
+                        'icon' => 'fa fa-'.$route->getMetaData('_icon')
+                    )));
+
+
                     return $this->redirect($route->getChild('*/index')->getRoutePath());
                 } else {
                     $this->addFlash('error', new PNotify(array(
@@ -118,7 +140,55 @@
             return $blockBuilder->render("layout");
         }
 
+        public function deleteAction(FlattenRoute $route, Request $request) {
+            $crudHandler = $route->getHandler();
+            $blockBuilder = $this->get("uneak.blocksmanager.builder");
 
+            $blockBuilder->addBlock("layout", "block_main_interface");
+
+            $layout = $this->get("uneak.admin.page.entity.layout");
+            $layout->setLayout($blockBuilder->getBlock("layout"));
+            $layout->buildEntityLayout($route);
+
+            $form = $this->createForm($route->getFormType(), array('confirm' => false));
+            $form->add('submit', 'submit', array('label' => 'Confirmer'));
+
+            $layout->buildFormPage($form, $route->getMetaData('_label'));
+
+            $entityRoute = $route;
+            while($entityRoute && !$entityRoute instanceof FlattenEntityRoute) {
+                $entityRoute = $entityRoute->getParent();
+            }
+
+            if ($request->getMethod() == Request::METHOD_POST) {
+                $form->handleRequest($request);
+                if ($form->isValid()) {
+                    $crudHandler->deleteEntity($form, $entityRoute->getParameterSubject());
+
+                    $this->addFlash('info', new PNotify(array(
+                        'type' => 'info',
+                        'title' => 'Formulaire',
+                        'text' => 'La suppression a été réalisé avec succes',
+                        'shadow' => true,
+                        'stack' => 'stack-bar-bottom',
+                        'icon' => 'fa fa-'.$route->getMetaData('_icon')
+                    )));
+
+                    return $this->redirect($route->getChild('*/index')->getRoutePath());
+                } else {
+                    $this->addFlash('error', new PNotify(array(
+                        'type' => 'error',
+                        'title' => 'Formulaire',
+                        'text' => 'Votre formulaire est invalide.',
+                        'shadow' => true,
+                        'stack' => 'stack-bar-bottom'
+                    )));
+                }
+            }
+
+
+            return $blockBuilder->render("layout");
+        }
 
         public function indexGridAction(FlattenRoute $route, Request $request) {
 
