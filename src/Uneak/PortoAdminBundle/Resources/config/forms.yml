@@ -2,7 +2,20 @@ parameters:
     uneak.portoadmin.form.type.gender.class: Uneak\PortoAdminBundle\Forms\GenderType
     uneak.form.type.collection.class: Uneak\PortoAdminBundle\Forms\CollectionType
 
+    uneak.form.type.choice.select2.class: Uneak\PortoAdminBundle\Forms\ChoiceSelect2Type
+    uneak.form.type.entity.select2.class: Uneak\PortoAdminBundle\Forms\EntitySelect2Type
+
 services:
+
+    uneak.form.type.choice.select2:
+        class: %uneak.form.type.choice.select2.class%
+        tags:
+            - { name: form.type, alias: choice_select2 }
+
+    uneak.form.type.entity.select2:
+        class: %uneak.form.type.entity.select2.class%
+        tags:
+            - { name: form.type, alias: entity_select2 }
 
     uneak.form.type.collection:
         class: %uneak.form.type.collection.class%

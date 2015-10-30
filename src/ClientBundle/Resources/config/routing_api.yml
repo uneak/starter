@@ -1,0 +1,5 @@
+api_campaign:
+    type:     rest
+    resource: ClientBundle\Controller\ClientApiController
+    prefix: v1
+    name_prefix: api_v1_client_

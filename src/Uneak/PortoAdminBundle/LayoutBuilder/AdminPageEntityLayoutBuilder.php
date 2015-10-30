@@ -76,7 +76,7 @@
                 $this->subLayoutContent->setTitle($label);
                 $this->subLayoutContent->setSubtitle($description);
 
-                $photoFile = $this->uploaderHelper->asset($entity, $route->getMetaData('_image'));
+                $photoFile = ($route->getMetaData('_image')) ? $this->uploaderHelper->asset($entity, $route->getMetaData('_image')) : null;
 
                 if ($photoFile) {
                     $photo = new Photo();

@@ -1,0 +1,28 @@
+{% block choice_select2_widget %}
+    {{ block("select2_widget") }}
+{% endblock %}
+
+{% block entity_select2_widget %}
+    {{ block("select2_widget") }}
+{% endblock %}
+
+
+{% block select2_widget %}
+    {#{% spaceless %}#}
+    {#{% if expanded %}#}
+    {#<ul {{ block('widget_container_attributes') }}>#}
+    {#{% for child in form %}#}
+    {#<li>#}
+    {#{{ form_widget(child) }}#}
+    {#{{ form_label(child) }}#}
+    {#</li>#}
+    {#{% endfor %}#}
+    {#</ul>#}
+    {#{% else %}#}
+    {#{{ block('choice_widget') }}#}
+    {#{% endif %}#}
+    {#{% endspaceless %}#}
+
+    {#{{ block("hidden_widget") }}#}
+    {{ block(input) }}
+{% endblock %}

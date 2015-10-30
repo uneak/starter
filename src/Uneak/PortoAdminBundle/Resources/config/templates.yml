@@ -55,6 +55,7 @@ block_datatable_template: "UneakPortoAdminBundle:Block:datatable.html.twig"
 # FORM
 form_gender_theme_template: "UneakPortoAdminBundle:Form:gender_theme.html.twig"
 form_collection_theme_template: "UneakPortoAdminBundle:Form:collection_theme.html.twig"
+form_select2_theme_template: "UneakPortoAdminBundle:Form:select2_theme.html.twig"
 
 
 
@@ -81,6 +82,7 @@ porto_admin_sidebar_toggle_script_template: "UneakPortoAdminBundle:Script:script
 porto_admin_datatable_script_template: "UneakPortoAdminBundle:Script:script_datatable.html.twig"
 form_collection_script_template: "UneakPortoAdminBundle:Script:script_uneak_collection.html.twig"
 pnotify_script_template: "UneakPortoAdminBundle:Script:script_pnotify.html.twig"
+select2_script_template: "UneakPortoAdminBundle:Script:script_select2.html.twig"
 
 
 # FOS USER

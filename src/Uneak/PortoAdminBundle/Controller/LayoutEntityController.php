@@ -53,6 +53,10 @@
             $form = $crudHandler->getForm($route, Request::METHOD_POST);
             $form->add('submit', 'submit', array('label' => 'Modifier'));
 
+//            $formsManager = $this->get('uneak.formsmanager');
+//            $formView = $formsManager->createView($form);
+
+
             $layout->buildFormPage($form, $route->getMetaData('_label'));
 
             $entityRoute = $route;
@@ -110,6 +114,7 @@
             if ($request->getMethod() == Request::METHOD_POST) {
                 $form->handleRequest($request);
                 if ($form->isValid()) {
+
                     $crudHandler->persistEntity($form);
 
 

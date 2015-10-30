@@ -16,6 +16,30 @@ porto_admin_pnotify_js:
         dependencies: [ "porto_admin_theme_notifications_config_js" ]
 
 
+#
+#
+#       SELECT2
+#
+#
+select2_js:
+    type: externaljs
+    config:
+        src: "vendor/select2/select2.js"
+
+select2_css:
+    type: externalcss
+    config:
+        href: "vendor/select2/select2.css"
+
+select2_bootstrap_css:
+    type: externalcss
+    config:
+        href: "vendor/select2-bootstrap-css/select2-bootstrap.css"
+        dependencies: [ "select2_css" ]
+
+
+
+
 
 
 

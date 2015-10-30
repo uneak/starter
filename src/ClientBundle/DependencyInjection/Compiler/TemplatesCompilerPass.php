@@ -1,5 +1,5 @@
 <?php
-	namespace UserBundle\DependencyInjection\Compiler;
+	namespace ClientBundle\DependencyInjection\Compiler;
 
 	use Symfony\Component\DependencyInjection\ContainerBuilder;
 	use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -20,7 +20,8 @@
 					$definition->addMethodCall(
 						'setTemplate', array($id, $template, false)
 					);
-				}
+				}				
 			}
+
 		}
 	}

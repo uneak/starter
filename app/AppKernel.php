@@ -47,7 +47,8 @@
 				new AppBundle\AppBundle(),
             	new MemberBundle\MemberBundle(),
                 new UserBundle\UserBundle(),
-            new OAuthServerBundle\OAuthServerBundle(),
+                new ClientBundle\ClientBundle(),
+            	new OAuthServerBundle\OAuthServerBundle(),
 			);
 
 			if (in_array($this->getEnvironment(), array('dev', 'test'))) {

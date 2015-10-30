@@ -61,7 +61,6 @@
 
         public function buildAsset(AssetsBuilderManager $builder, $parameters) {
 
-            var_dump("+1");
             $builder
                 ->add("uneak_collection_script", "internaljs", array(
                     "template"   => 'form_collection_script_template',
