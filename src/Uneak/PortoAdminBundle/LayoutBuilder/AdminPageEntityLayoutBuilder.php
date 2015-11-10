@@ -4,6 +4,7 @@
 
     use Symfony\Component\Form\FormFactoryInterface;
     use Symfony\Component\Form\FormInterface;
+    use Symfony\Component\Form\FormView;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Security\Core\User\UserInterface;
     use Uneak\BlocksManagerBundle\Blocks\BlocksManager;
@@ -133,9 +134,9 @@
 
 
 
-        public function buildFormPage(FormInterface $form, $title) {
+        public function buildFormPage(FormView $formView, $title) {
 
-            $formBlock = new Form($form);
+            $formBlock = new Form($formView);
             $formBlock->addClass("form-horizontal");
             $formBlock->addClass("form-bordered");
 
@@ -147,7 +148,7 @@
             $panel->addBlock($formBlock);
             $this->subLayoutContentBody->addBlock($panel, 'form');
 
-            return $form;
+            return $formView;
         }
 
 

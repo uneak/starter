@@ -3,31 +3,32 @@
 	namespace Uneak\PortoAdminBundle\Blocks\Form;
 
 
+	use Symfony\Component\Form\FormView;
 	use Uneak\PortoAdminBundle\Blocks\Block;
 
 	class Form extends Block {
 
 		protected $templateAlias = "block_template_form";
 
-		protected $form;
+		protected $formView;
 
-		public function __construct($form) {
+		public function __construct(FormView $formView) {
 			parent::__construct();
-			$this->setForm($form);
+			$this->setFormView($formView);
 		}
 
 		/**
 		 * @return mixed
 		 */
-		public function getForm() {
-			return $this->form;
+		public function getFormView() {
+			return $this->formView;
 		}
 
 		/**
 		 * @param mixed $form
 		 */
-		public function setForm($form) {
-			$this->form = $form;
+		public function setFormView($formView) {
+			$this->formView = $formView;
 
 			return $this;
 		}

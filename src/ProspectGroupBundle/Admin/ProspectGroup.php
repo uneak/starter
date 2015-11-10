@@ -1,26 +1,27 @@
 <?php
 
-	namespace ClientBundle\Admin;
+	namespace ProspectGroupBundle\Admin;
 
-	use ClientBundle\Form\ClientUserRoleDeleteType;
-	use ClientBundle\Form\ClientUserRoleType;
+	use ProspectGroupBundle\Form\ProspectGroupDeleteType;
+	use ProspectGroupBundle\Form\ProspectGroupType;
 	use Uneak\RoutesManagerBundle\Routes\NestedAdminRoute;
 	use Uneak\RoutesManagerBundle\Routes\NestedCRUDRoute;
 	use Uneak\RoutesManagerBundle\Routes\NestedEntityRoute;
 	use Uneak\RoutesManagerBundle\Routes\NestedGridRoute;
 
-    class ClientUserRole extends NestedCRUDRoute {
+    class ProspectGroup extends NestedCRUDRoute {
 
-		protected $entity = 'ClientBundle\Entity\ClientUserRole';
+		protected $entity = 'ProspectGroupBundle\Entity\ProspectGroup';
 
 		public function initialize() {
 			parent::initialize();
 
-            $this->setFormType(new ClientUserRoleType());
+            $this->setFormType(new ProspectGroupType());
 
 			$this->setMetaData('_icon', 'briefcase');
-			$this->setMetaData('_label', 'Role Client');
-			$this->setMetaData('_description', 'Gestion des roles');
+			$this->setMetaData('_image', 'imageFile');
+			$this->setMetaData('_label', 'Groupe');
+			$this->setMetaData('_description', 'Gestion des groupes');
 
 			$this->setMetaData('_menu', array(
 				'index'  => '*/index',
@@ -28,11 +29,11 @@
 			));
 
 
-			$this->setGrantFunction(array($this, "isClientGranted"));
+			$this->setGrantFunction(array($this, "isProspectGroupGranted"));
 
 		}
 
-		public function isClientGranted($attribute, $flattenRoute, $user = null) {
+		public function isProspectGroupGranted($attribute, $flattenRoute, $user = null) {
 			return (in_array("ROLE_SUPER_ADMIN", $user->getRoles()));
 		}
 
@@ -44,12 +45,15 @@
 				->setPath('')
 				->setAction('index')
 				->setMetaData('_icon', 'list')
-				->setMetaData('_label', 'Liste des roles')
+				->setMetaData('_label', 'Liste des groups')
+
+				->addId('groups', 'id')
 
 				->addRowAction('show', '*/subject/show')
 				->addRowAction('edit', '*/subject/edit')
 				->addRowAction('delete', '*/subject/delete')
 
+				->addColumn(array('title' => 'Code', 'name' => 'slug'))
 				->addColumn(array('title' => 'Titre', 'name' => 'label'));
 
 			$this->addChild($indexRoute);
@@ -60,7 +64,8 @@
 				->setPath('new')
 				->setAction('new')
 				->setMetaData('_icon', 'plus-circle')
-                ->setMetaData('_label', 'Nouveau role')
+                ->setMetaData('_label', 'Nouveau group')
+//                ->setFormType(new ProspectGroupNewType());
 			;
 			$this->addChild($newRoute);
 
@@ -74,6 +79,7 @@
 					'show'   => '*/subject/show',
 					'edit'   => '*/subject/edit',
 					'delete' => '*/subject/delete',
+					'prospect' => '*/subject/prospects/index',
 				));
 			$this->addChild($subjectRoute);
 
@@ -82,7 +88,7 @@
 			$showRoute
 				->setAction('show')
 				->setMetaData('_icon', 'eye')
-			    ->setMetaData('_label', "Voir le role")
+			    ->setMetaData('_label', "Voir le group")
 			    ->setMetaData('_description', '{{ entity }}')
 				->setRequirement('_method', 'GET');
 			$subjectRoute->addChild($showRoute);
@@ -92,7 +98,7 @@
 			$editRoute
 				->setAction('edit')
 				->setMetaData('_icon', 'edit')
-                ->setMetaData('_label', "Editer le role")
+                ->setMetaData('_label', "Editer le group")
                 ->setMetaData('_description', '{{ entity }}');
 
 			$subjectRoute->addChild($editRoute);
@@ -101,9 +107,9 @@
 			$deleteRoute
 				->setAction('delete')
 				->setMetaData('_icon', 'times')
-                ->setMetaData('_label', "Supprimer le role")
+                ->setMetaData('_label', "Supprimer le group")
                 ->setMetaData('_description', '{{ entity }}')
-				->setFormType(new ClientUserRoleDeleteType());
+				->setFormType(new ProspectGroupDeleteType());
 			$subjectRoute->addChild($deleteRoute);
 
 		}

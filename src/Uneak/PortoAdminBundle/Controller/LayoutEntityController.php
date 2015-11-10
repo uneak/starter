@@ -24,7 +24,7 @@
             $layout->buildEntityLayout($route);
             $layout->buildGridPage($route);
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
         }
 
         public function showAction(FlattenRoute $route) {
@@ -36,7 +36,7 @@
             $layout->setLayout($blockBuilder->getBlock("layout"));
             $layout->buildEntityLayout($route);
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
 
         }
 
@@ -53,11 +53,10 @@
             $form = $crudHandler->getForm($route, Request::METHOD_POST);
             $form->add('submit', 'submit', array('label' => 'Modifier'));
 
-//            $formsManager = $this->get('uneak.formsmanager');
-//            $formView = $formsManager->createView($form);
+            $formsManager = $this->get('uneak.formsmanager');
+            $formView = $formsManager->createView($form);
 
-
-            $layout->buildFormPage($form, $route->getMetaData('_label'));
+            $layout->buildFormPage($formView, $route->getMetaData('_label'));
 
             $entityRoute = $route;
             while($entityRoute && !$entityRoute instanceof FlattenEntityRoute) {
@@ -93,7 +92,7 @@
             }
 
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
         }
 
         public function newAction(FlattenRoute $route, Request $request) {
@@ -109,7 +108,10 @@
             $form = $crudHandler->getForm($route, Request::METHOD_POST);
             $form->add('submit', 'submit', array('label' => 'Créer'));
 
-            $layout->buildFormPage($form, $route->getMetaData('_label'));
+            $formsManager = $this->get('uneak.formsmanager');
+            $formView = $formsManager->createView($form);
+
+            $layout->buildFormPage($formView, $route->getMetaData('_label'));
 
             if ($request->getMethod() == Request::METHOD_POST) {
                 $form->handleRequest($request);
@@ -142,7 +144,7 @@
             }
 
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
         }
 
         public function deleteAction(FlattenRoute $route, Request $request) {
@@ -158,7 +160,10 @@
             $form = $this->createForm($route->getFormType(), array('confirm' => false));
             $form->add('submit', 'submit', array('label' => 'Confirmer'));
 
-            $layout->buildFormPage($form, $route->getMetaData('_label'));
+            $formsManager = $this->get('uneak.formsmanager');
+            $formView = $formsManager->createView($form);
+
+            $layout->buildFormPage($formView, $route->getMetaData('_label'));
 
             $entityRoute = $route;
             while($entityRoute && !$entityRoute instanceof FlattenEntityRoute) {
@@ -192,7 +197,7 @@
             }
 
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
         }
 
         public function indexGridAction(FlattenRoute $route, Request $request) {
@@ -201,24 +206,12 @@
             $gridHelper = $this->get("uneak.routesmanager.grid.helper");
             $menuHelper = $this->get("uneak.routesmanager.menu.helper");
             $blockBuilder = $this->get("uneak.blocksmanager.builder");
-
-            $entityClass = $route->getCRUD()->getEntity();
             $params = $request->query->all();
 
-            $datatableArray = $crudHandler->getDatatableArray($entityClass, $params, $gridHelper);
+            $datatableArray = $crudHandler->getDatatableArray($route, $params, $gridHelper);
+            $crudHandler->addDatatableArrayActions($datatableArray, $route, $menuHelper, $blockBuilder);
 
-            for($i = 0; $i < count($datatableArray['data']); $i++) {
-                $id = $datatableArray['data'][$i]['DT_RowId'];
-
-                $menu = new Menu();
-                $menu->setTemplateAlias("block_template_grid_actions_menu");
-                $rowActions = $route->getParent()->getNestedRoute()->getRowActions();
-                $root = $menuHelper->createMenu($rowActions, $route, array($id));
-                $menu->setRoot($root);
-                $blockBuilder->addBlock("row_actions", $menu);
-                $datatableArray['data'][$i]['_actions'] = $this->renderView("<div class='menu-bullets'>{{ renderBlock('row_actions') }}</div>");
-            }
-
+            unset($datatableArray['id']);
             return new JsonResponse($datatableArray);
 
         }

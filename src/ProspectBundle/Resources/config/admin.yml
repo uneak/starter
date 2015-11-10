@@ -1,0 +1,28 @@
+parameters:
+    uneak.admin.prospect.admin.class: ProspectBundle\Admin\Prospect
+    uneak.admin.prospect.api.handler.class: ProspectBundle\Handler\ProspectAPIHandler
+    uneak.admin.prospect.crud.handler.class: ProspectBundle\Handler\ProspectCRUDHandler
+
+services:
+
+    uneak.admin.prospect.admin:
+        class: %uneak.admin.prospect.admin.class%
+        arguments: [ prospects ]
+        calls:
+            - [ setController, [ ProspectBundle\Controller\ProspectAdminController ] ]
+            - [ setHandler, [ @uneak.admin.prospect.crud.handler ] ]
+            - [ setParentPath, [ "groups.subject" ] ]
+        tags:
+            -  { name: uneak.routesmanager.route }
+
+    uneak.admin.prospect.api.handler:
+        class: %uneak.admin.prospect.api.handler.class%
+        arguments:
+            - @form.factory
+            - @doctrine.orm.entity_manager
+            - 'ProspectBundle\Entity\Prospect'
+
+    uneak.admin.prospect.crud.handler:
+        class: %uneak.admin.prospect.crud.handler.class%
+        arguments:
+            - @uneak.admin.prospect.api.handler

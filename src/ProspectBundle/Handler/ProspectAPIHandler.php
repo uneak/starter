@@ -1,17 +1,16 @@
 <?php
 
-namespace ClientBundle\Handler;
+namespace ProspectBundle\Handler;
 
 
-use ClientBundle\Entity\Client;
-use ClientBundle\Entity\ClientUserRole;
+use ProspectBundle\Entity\Prospect;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Uneak\PortoAdminBundle\Exception\NotFoundException;
 use Uneak\PortoAdminBundle\Handler\EntityAPIHandler;
 
-class ClientUserRoleAPIHandler extends EntityAPIHandler {
+class ProspectAPIHandler extends EntityAPIHandler {
 
     /**
      * @var EntityManager
@@ -28,7 +27,7 @@ class ClientUserRoleAPIHandler extends EntityAPIHandler {
     }
 
     public function createEntity() {
-        return new ClientUserRole();
+        return new Prospect();
     }
 
 
@@ -36,13 +35,27 @@ class ClientUserRoleAPIHandler extends EntityAPIHandler {
         $entity = $form->getData();
         $this->em->persist($entity);
         $this->em->flush();
+
+        if (!$entity->getSlug()) {
+            $string = $entity->getId() . $entity->getGroup()->getId();
+            $data = base64_encode($string);
+            $no_of_eq = substr_count($data, "=");
+            $data = str_replace("=", "", $data);
+            $data = $data . $no_of_eq;
+            $data = str_replace(array('+', '/'), array('-', '_'), $data);
+
+            $entity->setSlug($data);
+            $this->em->flush();
+        }
+
+
         return $entity;
     }
 
     public function get($id) {
-        $entity = $this->em->getRepository('ClientBundle:ClientUserRole')->findOneBy(array('id' => $id));
+        $entity = $this->em->getRepository('ProspectBundle:Prospect')->findOneBySlug($id);
         if (!$entity) {
-            throw new NotFoundException("Client role $id not found", $id);
+            throw new NotFoundException("Prospect $id not found", $id);
         }
         return $entity;
     }

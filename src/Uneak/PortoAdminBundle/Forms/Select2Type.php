@@ -115,7 +115,8 @@
 
 				->add("script_select2", 'internaljs', array(
 					"template"     => "select2_script_template",
-					"parameters" => array('item' => $parameters)
+					"parameters" => array('item' => $parameters),
+					"dependencies" => array("select2_js"),
 				));
 
 			if (isset($parameters->vars["options"]["language"])) {

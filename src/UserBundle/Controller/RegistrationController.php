@@ -150,7 +150,7 @@
                 'key'              => $key
             )));
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
 
 
 
@@ -183,7 +183,7 @@
                 'user' => $user,
             )));
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
 
 
 
@@ -231,7 +231,7 @@
                 'user' => $user,
             )));
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
 
 
 		}
@@ -258,7 +258,7 @@
                 'user' => $user,
             )));
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
 
 
 		}

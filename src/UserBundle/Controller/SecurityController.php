@@ -72,7 +72,7 @@
                 'csrf_token' => $csrfToken,
             )));
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
 
 
 

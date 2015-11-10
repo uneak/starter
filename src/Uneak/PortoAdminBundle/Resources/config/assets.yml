@@ -25,6 +25,7 @@ select2_js:
     type: externaljs
     config:
         src: "vendor/select2/select2.js"
+        dependencies: [ "jquery_js" ]
 
 select2_css:
     type: externalcss

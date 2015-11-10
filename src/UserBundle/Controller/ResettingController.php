@@ -43,7 +43,7 @@
 
             $layout->getLayoutContent()->addBlock(new Twig('user_resetting_request'));
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
 
 
 
@@ -138,7 +138,7 @@
                 'email' => $email,
             )));
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
 
 
 		}
@@ -180,7 +180,7 @@
                 'form' => $form->createView(),
             )));
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
 
 
 		}

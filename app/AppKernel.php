@@ -48,6 +48,9 @@
             	new MemberBundle\MemberBundle(),
                 new UserBundle\UserBundle(),
                 new ClientBundle\ClientBundle(),
+                new CampaignBundle\CampaignBundle(),
+                new ProspectGroupBundle\ProspectGroupBundle(),
+                new ProspectBundle\ProspectBundle(),
             	new OAuthServerBundle\OAuthServerBundle(),
 			);
 

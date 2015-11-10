@@ -41,7 +41,7 @@
 		protected $user;
 
 		/**
-		 * @ORM\ManyToOne(targetEntity="\ClientBundle\Entity\ClientUserRole", cascade={"persist"})
+		 * @ORM\ManyToOne(targetEntity="\ClientBundle\Entity\ClientRole", cascade={"persist"})
 		 * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=false)
 		 * @NotNull()
 		 */

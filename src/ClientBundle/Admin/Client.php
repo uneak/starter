@@ -51,7 +51,8 @@
 				->addRowAction('edit', '*/subject/edit')
 				->addRowAction('delete', '*/subject/delete')
 
-				->addColumn(array('title' => 'Id', 'name' => 'id'))
+				->addId('clients', 'id')
+
 				->addColumn(array('title' => 'Code', 'name' => 'slug'))
 				->addColumn(array('title' => 'Titre', 'name' => 'label'));
 
@@ -78,6 +79,8 @@
 					'show'   => '*/subject/show',
 					'edit'   => '*/subject/edit',
 					'delete' => '*/subject/delete',
+					'campaigns_index' => '*/subject/campaigns/index',
+					'groups_index' => '*/subject/groups/index',
 				));
 			$this->addChild($subjectRoute);
 

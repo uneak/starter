@@ -42,7 +42,10 @@
 			$infoPanel->isToggle(false);
 			$layout->getSubLayoutContentBody()->addBlock($infoPanel, 'info');
 
-			$layout->buildFormPage($form, $route->getMetaData('_label'));
+			$formsManager = $this->get('uneak.formsmanager');
+			$formView = $formsManager->createView($form);
+
+			$layout->buildFormPage($formView, $route->getMetaData('_label'));
 
 			if ($request->getMethod() == Request::METHOD_POST) {
 
@@ -70,7 +73,7 @@
 			}
 
 
-			return $blockBuilder->render("layout");
+			return $blockBuilder->renderResponse("layout");
 
 
 		}

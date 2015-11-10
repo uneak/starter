@@ -1,6 +1,6 @@
 <?php
 
-	namespace ClientBundle\Form;
+	namespace ProspectGroupBundle\Form;
 
 	use Symfony\Component\Form\AbstractType;
 	use Symfony\Component\Form\FormBuilderInterface;
@@ -10,7 +10,7 @@
 	use Symfony\Component\Validator\Constraints\IsTrue;
 	use Symfony\Component\Validator\Constraints\IsTrueValidator;
 
-	class ClientUserRoleDeleteType extends AbstractType {
+	class ProspectGroupDeleteType extends AbstractType {
 		/**
 		 * @param FormBuilderInterface $builder
 		 * @param array                $options
@@ -31,6 +31,6 @@
 		 * @return string
 		 */
 		public function getName() {
-			return 'clientbundle_delete_user';
+			return 'groupbundle_delete_user';
 		}
 	}

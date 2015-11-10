@@ -49,7 +49,7 @@
                 'user' => $user
             )));
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
 
 		}
 
@@ -82,7 +82,7 @@
             )));
             $layout->getSubLayoutContentBody()->addBlock($panel, 'social');
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
         }
 
 
@@ -148,7 +148,7 @@
             $layout->getSubLayoutContentBody()->addBlock($panel, 'form');
 
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
 
 
 

@@ -4,7 +4,7 @@
 
     use Uneak\PortoAdminBundle\Controller\LayoutEntityController;
 
-    class ClientUserRoleAdminController extends LayoutEntityController {
+    class ClientRoleAdminController extends LayoutEntityController {
 
 
 

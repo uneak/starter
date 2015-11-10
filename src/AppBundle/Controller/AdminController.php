@@ -240,7 +240,7 @@
 
 
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
 //			return $this->render('{{ renderBlock("layout") }}');
 
 

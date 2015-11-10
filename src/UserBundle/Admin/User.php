@@ -54,6 +54,8 @@
 				->addRowAction('account', '*/subject/account')
 				->addRowAction('delete', '*/subject/delete')
 
+				->addId('users', 'id')
+
 				->addColumn(array('title' => 'Utilisateur', 'name' => 'username'))
 				->addColumn(array('title' => 'Prénom', 'name' => 'firstName'))
 				->addColumn(array('title' => 'Nom', 'name' => 'lastName'))

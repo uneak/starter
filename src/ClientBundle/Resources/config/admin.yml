@@ -3,9 +3,9 @@ parameters:
     uneak.admin.client.api.handler.class: ClientBundle\Handler\ClientAPIHandler
     uneak.admin.client.crud.handler.class: Uneak\PortoAdminBundle\Handler\CRUDHandler
 
-    uneak.admin.client.user.role.admin.class: ClientBundle\Admin\ClientUserRole
-    uneak.admin.client.user.role.api.handler.class: ClientBundle\Handler\ClientUserRoleAPIHandler
-    uneak.admin.client.user.role.crud.handler.class: Uneak\PortoAdminBundle\Handler\CRUDHandler
+    uneak.admin.client.role.admin.class: ClientBundle\Admin\ClientRole
+    uneak.admin.client.role.api.handler.class: ClientBundle\Handler\ClientRoleAPIHandler
+    uneak.admin.client.role.crud.handler.class: Uneak\PortoAdminBundle\Handler\CRUDHandler
 
 services:
 
@@ -33,23 +33,23 @@ services:
 
 
 
-    uneak.admin.client.user.role.admin:
-        class: %uneak.admin.client.user.role.admin.class%
+    uneak.admin.client.role.admin:
+        class: %uneak.admin.client.role.admin.class%
         arguments: [ clientroles ]
         calls:
-            - [ setController, [ ClientBundle\Controller\ClientUserRoleAdminController ] ]
-            - [ setHandler, [ @uneak.admin.client.user.role.crud.handler ] ]
+            - [ setController, [ ClientBundle\Controller\ClientRoleAdminController ] ]
+            - [ setHandler, [ @uneak.admin.client.role.crud.handler ] ]
         tags:
             -  { name: uneak.routesmanager.route }
 
-    uneak.admin.client.user.role.api.handler:
-        class: %uneak.admin.client.user.role.api.handler.class%
+    uneak.admin.client.role.api.handler:
+        class: %uneak.admin.client.role.api.handler.class%
         arguments:
             - @form.factory
             - @doctrine.orm.entity_manager
             - "ClientBundle\Entity\Client"
 
-    uneak.admin.client.user.role.crud.handler:
-        class: %uneak.admin.client.user.role.crud.handler.class%
+    uneak.admin.client.role.crud.handler:
+        class: %uneak.admin.client.role.crud.handler.class%
         arguments:
-            - @uneak.admin.client.user.role.api.handler
+            - @uneak.admin.client.role.api.handler

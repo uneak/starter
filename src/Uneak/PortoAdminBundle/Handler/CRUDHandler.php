@@ -6,8 +6,10 @@ namespace Uneak\PortoAdminBundle\Handler;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Uneak\BlocksManagerBundle\Blocks\BlockBuilder;
+use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
 use Uneak\PortoAdminBundle\LayoutBuilder\AdminPageSubLayoutBuilder;
 use Uneak\RoutesManagerBundle\Helper\GridHelper;
+use Uneak\RoutesManagerBundle\Helper\MenuHelper;
 use Uneak\RoutesManagerBundle\Routes\FlattenEntityRoute;
 use Uneak\RoutesManagerBundle\Routes\FlattenRoute;
 
@@ -34,7 +36,7 @@ class CRUDHandler implements CRUDHandlerInterface {
         while($entityRoute && !$entityRoute instanceof FlattenEntityRoute) {
             $entityRoute = $entityRoute->getParent();
         }
-        $entity = ($entityRoute) ? $entityRoute->getParameterSubject() : null;
+        $entity = ($entityRoute) ? $entityRoute->getParameterSubject() : $this->createEntity();
         $formType = $route->getFormType();
 
         return $this->apiHandler->getForm($formType, $entity, $method);
@@ -60,37 +62,75 @@ class CRUDHandler implements CRUDHandlerInterface {
         return $this->apiHandler->processForm($form, $parameters);
     }
 
-    public function getDatatableArray($entityClass, array $params, GridHelper $gridHelper) {
+    public function getDatatableArray(FlattenRoute $route, array $params, GridHelper $gridHelper) {
 
-        $gridData = $gridHelper->gridFields($gridHelper->createGridQueryBuilder($entityClass, $params), $params);
+        $nestedGridRoute = $route->getParent()->getNestedRoute();
+        $ids = $nestedGridRoute->getIds();
+        $entityClass = $route->getCRUD()->getEntity();
+
+        $gridData = $gridHelper->gridFields($gridHelper->createGridQueryBuilder($entityClass, $params), $params, $ids);
         $recordsTotal = $gridHelper->gridFieldsCount($gridHelper->createGridQueryBuilder($entityClass, $params));
         $recordsFiltered = $gridHelper->gridFieldsCount($gridHelper->createGridQueryBuilder($entityClass, $params));
 
+        $gridDataArray = $this->getGridDataArray($gridData, $ids, $params['columns']);
+
+        return array_merge($gridDataArray, array(
+            'draw'            => $params["draw"],
+            'recordsTotal'    => $recordsTotal,
+            'recordsFiltered' => $recordsFiltered,
+        ));
+    }
+
+
+    public function getGridDataArray($gridData, array $ids, array $columns) {
+
         $data = array();
+        $id = array();
         foreach ($gridData as $object) {
             $row = array();
-            foreach ($params['columns'] as $columns) {
-                if ($columns['name'] && substr($columns['name'], 0, 1) != '_') {
-                    $value = $object[str_replace(".", "_", $columns['name'])];
+            foreach ($ids as $key => $path) {
+                $row[$key] = $object['idkey_' . $key];
+            }
+            array_push($id, $row);
+            $row = array();
+            foreach ($columns as $column) {
+                if ($column['name'] && substr($column['name'], 0, 1) != '_') {
+                    $value = $object[str_replace(".", "_", $column['name'])];
                     if ($value instanceof \DateTime) {
                         $value = $value->format('d/m/Y H:m:s');
                     }
-                    $row[$columns['data']] = $value;
+                    $row[$column['data']] = $value;
                 } else {
-                    $row[$columns['data']] = "";
+                    $row[$column['data']] = "";
                 }
             }
-            $row['DT_RowId'] = $object['DT_RowId'];
-
             array_push($data, $row);
         }
 
         return array(
-            'draw'            => $params["draw"],
-            'recordsTotal'    => $recordsTotal,
-            'recordsFiltered' => $recordsFiltered,
             'data'            => $data,
+            'id'              => $id,
         );
+
     }
+
+
+    public function addDatatableArrayActions(array &$datatableArray, FlattenRoute $route, MenuHelper $menuHelper, BlockBuilder $blockBuilder) {
+
+        $nestedGridRoute = $route->getParent()->getNestedRoute();
+        $rowActions = $nestedGridRoute->getRowActions();
+
+        for($i = 0; $i < count($datatableArray['data']); $i++) {
+            $menu = new Menu();
+            $menu->setTemplateAlias("block_template_grid_actions_menu");
+            $root = $menuHelper->createMenu($rowActions, $route, $datatableArray['id'][$i]);
+            $menu->setRoot($root);
+            $blockBuilder->addBlock("row_actions", $menu);
+            $datatableArray['data'][$i]['_actions'] = "<div class='menu-bullets'>".$blockBuilder->render('row_actions')."</div>";
+        }
+
+    }
+
+
 
 }

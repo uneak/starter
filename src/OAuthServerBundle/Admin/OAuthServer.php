@@ -48,6 +48,9 @@
 				->setMetaData('_icon', 'list')
 				->setMetaData('_label', 'Liste des clients OAuth')
 
+
+				->addId('oauthserver', 'id')
+
 				->addRowAction('show', '*/subject/show')
 				->addRowAction('edit', '*/subject/edit')
 				->addRowAction('delete', '*/subject/delete')

@@ -1,0 +1,28 @@
+parameters:
+    uneak.admin.campaign.admin.class: CampaignBundle\Admin\Campaign
+    uneak.admin.campaign.api.handler.class: CampaignBundle\Handler\CampaignAPIHandler
+    uneak.admin.campaign.crud.handler.class: CampaignBundle\Handler\CampaignCRUDHandler
+
+services:
+
+    uneak.admin.campaign.admin:
+        class: %uneak.admin.campaign.admin.class%
+        arguments: [ campaigns ]
+        calls:
+            - [ setController, [ CampaignBundle\Controller\CampaignAdminController ] ]
+            - [ setHandler, [ @uneak.admin.campaign.crud.handler ] ]
+            - [ setParentPath, [ "clients.subject" ] ]
+        tags:
+            -  { name: uneak.routesmanager.route }
+
+    uneak.admin.campaign.api.handler:
+        class: %uneak.admin.campaign.api.handler.class%
+        arguments:
+            - @form.factory
+            - @doctrine.orm.entity_manager
+            - "CampaignBundle\Entity\Campaign"
+
+    uneak.admin.campaign.crud.handler:
+        class: %uneak.admin.campaign.crud.handler.class%
+        arguments:
+            - @uneak.admin.campaign.api.handler

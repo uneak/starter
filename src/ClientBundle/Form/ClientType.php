@@ -26,7 +26,6 @@
 					)
 				)
 
-
 				->add('description', null, array(
 						'label' => 'Description',
 						'required' => false,
@@ -40,6 +39,18 @@
 						'download_link' => true, // not mandatory, default is true
 					)
 				)
+
+				->add('client_users', 'uneak_collection', array(
+					'type' => new ClientUserType(),
+					'required' => false,
+					'label' => "Utilisateurs",
+					'allow_add' => true,
+					'allow_delete' => true,
+					'add_button_text' => 'Ajouter',
+					'delete_button_text' => 'Supprimer',
+					'by_reference' => false,
+				))
+
 
 				;
 

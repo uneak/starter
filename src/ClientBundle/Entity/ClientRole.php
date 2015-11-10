@@ -9,14 +9,14 @@
 
 
 	/**
-	 * ClientUserRole
+	 * ClientRole
 	 *
-	 * @ORM\Table(name="ClientUserRole")
-	 * @ORM\Entity(repositoryClass="ClientBundle\Entity\ClientUserRoleRepository")
+	 * @ORM\Table(name="ClientRole")
+	 * @ORM\Entity(repositoryClass="ClientBundle\Entity\ClientRoleRepository")
 	 *
 	 *
 	 */
-	class ClientUserRole {
+	class ClientRole {
 
 		const READ = "READ";
 		const UPDATE = "UPDATE";

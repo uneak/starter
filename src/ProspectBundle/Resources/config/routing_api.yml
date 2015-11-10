@@ -1,0 +1,5 @@
+api_prospect:
+    type:     rest
+    resource: ProspectBundle\Controller\ProspectApiController
+    prefix: v1
+    name_prefix: api_v1_prospect_

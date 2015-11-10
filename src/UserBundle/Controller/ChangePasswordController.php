@@ -54,7 +54,7 @@
             $panel->addBlock($formBlock);
             $layout->getSubLayoutContentBody()->addBlock($panel, 'form');
 
-            return $blockBuilder->render("layout");
+            return $blockBuilder->renderResponse("layout");
 
 
 
