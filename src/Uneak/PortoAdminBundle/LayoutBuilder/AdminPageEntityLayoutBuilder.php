@@ -6,6 +6,7 @@
     use Symfony\Component\Form\FormInterface;
     use Symfony\Component\Form\FormView;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\PropertyAccess\PropertyAccess;
     use Symfony\Component\Security\Core\User\UserInterface;
     use Uneak\BlocksManagerBundle\Blocks\BlocksManager;
     use Uneak\PortoAdminBundle\Blocks\Datatable\Datatable;
@@ -53,9 +54,12 @@
         public function buildEntityLayout(FlattenRoute $route) {
             $twig = new \Twig_Environment(new \Twig_Loader_Array(array()));
 
+
             $this->breadcrumb->setFlattenRoute($route);
 
+
             $menu = $this->blocksManager->getBlock("block_flattenroute_menu")->setFlattenRoute($route);
+
             $this->subLayoutSidebar->addWidget("menu", $menu, false, 999999);
 
             $this->layoutContentHeader->setTitle($route->getMetaData('_label'));
@@ -77,7 +81,8 @@
                 $this->subLayoutContent->setTitle($label);
                 $this->subLayoutContent->setSubtitle($description);
 
-                $photoFile = ($route->getMetaData('_image')) ? $this->uploaderHelper->asset($entity, $route->getMetaData('_image')) : null;
+                $accessor = PropertyAccess::createPropertyAccessor();
+                $photoFile = ($route->getMetaData('_image') && $accessor->isReadable($entity, $route->getMetaData('_image'))) ? $this->uploaderHelper->asset($entity, $route->getMetaData('_image')) : null;
 
                 if ($photoFile) {
                     $photo = new Photo();

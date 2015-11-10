@@ -51,6 +51,7 @@
                 new CampaignBundle\CampaignBundle(),
                 new ProspectGroupBundle\ProspectGroupBundle(),
                 new ProspectBundle\ProspectBundle(),
+                new GroupFieldBundle\GroupFieldBundle(),
             	new OAuthServerBundle\OAuthServerBundle(),
 			);
 

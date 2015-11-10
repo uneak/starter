@@ -41,6 +41,7 @@
         }
 
         public function editAction(FlattenRoute $route, Request $request) {
+
             $crudHandler = $route->getHandler();
             $blockBuilder = $this->get("uneak.blocksmanager.builder");
 
@@ -48,7 +49,9 @@
 
             $layout = $this->get("uneak.admin.page.entity.layout");
             $layout->setLayout($blockBuilder->getBlock("layout"));
+
             $layout->buildEntityLayout($route);
+
 
             $form = $crudHandler->getForm($route, Request::METHOD_POST);
             $form->add('submit', 'submit', array('label' => 'Modifier'));
@@ -62,6 +65,10 @@
             while($entityRoute && !$entityRoute instanceof FlattenEntityRoute) {
                 $entityRoute = $entityRoute->getParent();
             }
+
+
+
+
 
             if ($request->getMethod() == Request::METHOD_POST) {
                 $form->handleRequest($request);

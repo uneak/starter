@@ -4,7 +4,6 @@
 
     use Symfony\Component\HttpFoundation\JsonResponse;
 	use Symfony\Component\HttpFoundation\Request;
-	use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
 	use Uneak\PortoAdminBundle\Controller\LayoutEntityController;
 	use Uneak\PortoAdminBundle\PNotify\PNotify;
 	use Uneak\RoutesManagerBundle\Routes\FlattenRoute;
@@ -171,6 +170,39 @@
 
 
 			return $blockBuilder->renderResponse("layout");
+		}
+
+
+		public function groupsShowAction(FlattenRoute $route, Request $request) {
+			return $this->forward('ProspectGroupBundle:ProspectGroupAdmin:show', array('route' => $route->getParameter('groups')->getChild('show'), 'request' => $request));
+		}
+
+		public function groupsEditAction(FlattenRoute $route, Request $request) {
+			return $this->forward('ProspectGroupBundle:ProspectGroupAdmin:edit', array('route' => $route->getParameter('groups')->getChild('edit'), 'request' => $request));
+		}
+
+		public function groupsDeleteAction(FlattenRoute $route, Request $request) {
+			return $this->forward('ProspectGroupBundle:ProspectGroupAdmin:delete', array('route' => $route->getParameter('groups')->getChild('delete'), 'request' => $request));
+		}
+
+		public function groupsProspectsIndexAction(FlattenRoute $route, Request $request) {
+			return $this->forward('ProspectGroupBundle:ProspectGroupAdmin:prospectsIndex', array('route' => $route->getParameter('groups')->getChild('prospects/index'), 'request' => $request));
+		}
+
+		public function groupsProspectsShowAction(FlattenRoute $route, Request $request) {
+			return $this->forward('ProspectBundle:ProspectAdmin:show', array('route' => $route->getParameter('prospects')->getChild('show'), 'request' => $request));
+		}
+
+		public function groupsProspectsEditAction(FlattenRoute $route, Request $request) {
+			return $this->forward('ProspectBundle:ProspectAdmin:edit', array('route' => $route->getParameter('prospects')->getChild('edit'), 'request' => $request));
+		}
+
+		public function groupsProspectsDeleteAction(FlattenRoute $route, Request $request) {
+			return $this->forward('ProspectBundle:ProspectAdmin:delete', array('route' => $route->getParameter('prospects')->getChild('delete'), 'request' => $request));
+		}
+
+		public function groupsProspectsIndexGridAction(FlattenRoute $route, Request $request) {
+			return $this->forward('ProspectGroupBundle:ProspectGroupAdmin:prospectsIndexGrid', array('route' => $route->getParameter('groups')->getChild('prospects/index/_grid'), 'request' => $request));
 		}
 
 

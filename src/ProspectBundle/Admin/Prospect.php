@@ -19,7 +19,6 @@
             $this->setFormType(new ProspectType());
 
 			$this->setMetaData('_icon', 'briefcase');
-			$this->setMetaData('_image', 'imageFile');
 			$this->setMetaData('_label', 'Prospect');
 			$this->setMetaData('_description', 'Gestion des prospects');
 
@@ -51,7 +50,7 @@
 				->addRowAction('edit', '*/subject/edit')
 				->addRowAction('delete', '*/subject/delete')
 
-				->addId('prospects', 'slug')
+				->addId($this->getId(), 'slug')
 				->addId('groups', 'group.id')
 
 				->addColumn(array('title' => 'Identifiant', 'name' => 'slug'))
@@ -73,7 +72,7 @@
 			$this->addChild($newRoute);
 
 
-			$subjectRoute = new NestedEntityRoute('subject');
+			$subjectRoute = new NestedProspectRoute('subject');
 			$subjectRoute
 				->setParameterName($this->getId())
 //				->setParameterPattern('\d+')
