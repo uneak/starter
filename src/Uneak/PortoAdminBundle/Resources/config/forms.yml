@@ -1,9 +1,13 @@
 parameters:
     uneak.portoadmin.form.type.gender.class: Uneak\PortoAdminBundle\Forms\GenderType
     uneak.form.type.collection.class: Uneak\PortoAdminBundle\Forms\CollectionType
+    uneak.form.type.collection.key.class: Uneak\PortoAdminBundle\Forms\CollectionKeyType
+
+    uneak.form.type.attribute.class: Uneak\PortoAdminBundle\Forms\AttributeType
 
     uneak.form.type.choice.select2.class: Uneak\PortoAdminBundle\Forms\ChoiceSelect2Type
     uneak.form.type.entity.select2.class: Uneak\PortoAdminBundle\Forms\EntitySelect2Type
+    uneak.form.type.datepicker.class: Uneak\PortoAdminBundle\Forms\DatePickerType
 
 services:
 
@@ -11,6 +15,11 @@ services:
         class: %uneak.form.type.choice.select2.class%
         tags:
             - { name: form.type, alias: choice_select2 }
+
+    uneak.form.type.datepicker:
+        class: %uneak.form.type.datepicker.class%
+        tags:
+            - { name: form.type, alias: uneak_date_picker }
 
     uneak.form.type.entity.select2:
         class: %uneak.form.type.entity.select2.class%
@@ -21,6 +30,16 @@ services:
         class: %uneak.form.type.collection.class%
         tags:
             - { name: form.type, alias: uneak_collection }
+
+    uneak.form.type.collection.key:
+        class: %uneak.form.type.collection.key.class%
+        tags:
+            - { name: form.type, alias: uneak_collection_key }
+
+    uneak.form.type.attribute:
+        class: %uneak.form.type.attribute.class%
+        tags:
+            - { name: form.type, alias: uneak_attribute }
 
     uneak.portoadmin.form.type.gender:
         class: %uneak.portoadmin.form.type.gender.class%

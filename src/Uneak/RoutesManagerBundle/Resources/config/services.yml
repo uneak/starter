@@ -1,0 +1,70 @@
+parameters:
+    uneak.routesmanager.cache.class: Uneak\RoutesManagerBundle\Routes\RoutesCache
+    uneak.routesmanager.cache.warmup.class: Uneak\RoutesManagerBundle\Routes\RoutesCacheWarmUp
+    uneak.routesmanager.loader.class: Uneak\RoutesManagerBundle\Routes\RoutesLoader
+    uneak.routesmanager.flatten.factory.class: Uneak\RoutesManagerBundle\Routes\FlattenRouteFactory
+    uneak.routesmanager.nested.config.class: Uneak\RoutesManagerBundle\Routes\NestedRouteConfigurator
+    uneak.routesmanager.nestedmanager.class: Uneak\RoutesManagerBundle\Routes\NestedRouteManager
+    uneak.routesmanager.flattenmanager.class: Uneak\RoutesManagerBundle\Routes\FlattenRouteManager
+    uneak.routesmanager.flatten.controller.listener.class: Uneak\RoutesManagerBundle\EventListener\FlattenRouteControllerListener
+    uneak.routesmanager.voter.class: Uneak\RoutesManagerBundle\Security\Authorization\Voter\RouteVoter
+
+
+services:
+
+    uneak.routesmanager.nestedmanager:
+        class: %uneak.routesmanager.nestedmanager.class%
+
+    uneak.routesmanager.flattenmanager:
+        class: %uneak.routesmanager.flattenmanager.class%
+
+    uneak.routesmanager.nested.config:
+        class: %uneak.routesmanager.nested.config.class%
+        arguments: [ @uneak.routesmanager.nestedmanager ]
+
+    uneak.routesmanager.flatten.factory:
+        class: %uneak.routesmanager.flatten.factory.class%
+        arguments:
+            - @router
+            - @doctrine.orm.entity_manager
+            - @uneak.routesmanager.flattenmanager
+
+    uneak.routesmanager.flatten.controller.listener:
+        class: %uneak.routesmanager.flatten.controller.listener.class%
+        arguments:
+            - @router
+            - @twig
+            - @security.authorization_checker
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+            
+    uneak.routesmanager.cache:
+        class: %uneak.routesmanager.cache.class%
+        arguments:
+            - %kernel.cache_dir%/uneak/routesmanager
+            - %kernel.debug%
+            - @uneak.routesmanager.flatten.factory
+            
+    uneak.routesmanager.cache.warmup:
+        class: %uneak.routesmanager.cache.warmup.class%
+        arguments:
+            - @uneak.routesmanager.cache
+            - @uneak.routesmanager.nestedmanager
+        tags:
+            - { name: kernel.cache_warmer, priority: 30 }
+
+    uneak.routesmanager.loader:
+        class: %uneak.routesmanager.loader.class%
+        arguments:
+            - @uneak.routesmanager.nestedmanager
+            - @uneak.routesmanager.flattenmanager
+            - @uneak.routesmanager.flatten.factory
+            - %uneak.routesmanager.root_path%
+        tags:
+            - { name: routing.loader }
+
+    uneak.routesmanager.voter:
+        class: %uneak.routesmanager.voter.class%
+        public: false
+        tags:
+            - { name: security.voter }

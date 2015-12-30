@@ -1,5 +1,0 @@
-api_field:
-    type:     rest
-    resource: GroupFieldBundle\Controller\GroupFieldApiController
-    prefix: v1
-    name_prefix: api_v1_field_

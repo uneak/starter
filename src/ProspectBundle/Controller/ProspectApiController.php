@@ -94,7 +94,7 @@ class ProspectApiController extends FOSRestController
      *    section="Utilisateurs",
      *  description="affiche l'utilisateur par sont identifiant",
      *    deprecated=false,
-     *   output = "ProspectBundle\Entity\Prospect",
+     *   output = "Uneak\ProspectBundle\Entity\Prospect",
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     404 = "Returned when the page is not found"

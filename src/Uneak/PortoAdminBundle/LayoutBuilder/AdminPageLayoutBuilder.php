@@ -4,6 +4,10 @@
 
 
 
+    use Symfony\Component\Form\FormView;
+    use Uneak\PortoAdminBundle\Blocks\Form\Form;
+    use Uneak\PortoAdminBundle\Blocks\Panel\Panel;
+
     class AdminPageLayoutBuilder implements LayoutBuilderInterface {
 
 
@@ -36,6 +40,23 @@
 
         }
 
+
+        public function buildFormPage(FormView $formView, $title) {
+
+            $formBlock = new Form($formView);
+            $formBlock->addClass("form-horizontal");
+            $formBlock->addClass("form-bordered");
+
+            $panel = new Panel();
+            $panel->setTitle($title);
+            $panel->isCollapsed(false);
+            $panel->isDismiss(false);
+            $panel->isToggle(false);
+            $panel->addBlock($formBlock);
+            $this->layoutContentBody->addBlock($panel, 'form');
+
+            return $formView;
+        }
 
 
 

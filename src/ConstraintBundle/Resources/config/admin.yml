@@ -1,0 +1,32 @@
+parameters:
+    uneak.admin.constraint.admin.class: ConstraintBundle\Admin\Constraint
+    uneak.admin.constraint.api.handler.class: ConstraintBundle\Handler\ConstraintAPIHandler
+    uneak.admin.constraint.crud.handler.class: ConstraintBundle\Handler\ConstraintCRUDHandler
+
+services:
+
+    uneak.admin.constraint.admin:
+        class: %uneak.admin.constraint.admin.class%
+        arguments: [ constraints ]
+        calls:
+            - [ setController, [ ConstraintBundle\Controller\ConstraintAdminController ] ]
+            - [ setHandler, [ @uneak.admin.constraint.crud.handler ] ]
+            - [ setParentPath, [ "fields.subject" ] ]
+        tags:
+            -  { name: uneak.routesmanager.route }
+
+    uneak.admin.constraint.api.handler:
+        class: %uneak.admin.constraint.api.handler.class%
+        arguments:
+            - @form.factory
+            - @doctrine.orm.entity_manager
+            - @uneak.constraints.helper
+            - @uneak.constraintsmanager
+        calls:
+            - [ setEntityClass, [ Uneak\FieldBundle\Entity\Field ] ]
+
+    uneak.admin.constraint.crud.handler:
+        class: %uneak.admin.constraint.crud.handler.class%
+        arguments:
+            - @uneak.admin.constraint.api.handler
+            - @uneak.routesmanager.menu.helper

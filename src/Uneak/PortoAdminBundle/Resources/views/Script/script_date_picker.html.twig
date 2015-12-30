@@ -1,0 +1,5 @@
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('#{{ item.vars.id }}').datetimepicker({{ item.vars.options | json_encode | raw }});
+	});
+</script>

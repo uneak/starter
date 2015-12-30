@@ -10,6 +10,7 @@ use Uneak\PortoAdminBundle\Blocks\Menu\Menu;
 use Uneak\PortoAdminBundle\LayoutBuilder\AdminPageSubLayoutBuilder;
 use Uneak\RoutesManagerBundle\Helper\GridHelper;
 use Uneak\RoutesManagerBundle\Helper\MenuHelper;
+use Uneak\RoutesManagerBundle\Routes\FlattenAdminRoute;
 use Uneak\RoutesManagerBundle\Routes\FlattenEntityRoute;
 use Uneak\RoutesManagerBundle\Routes\FlattenRoute;
 
@@ -33,10 +34,11 @@ class CRUDHandler implements CRUDHandlerInterface {
      */
     public function getForm(FlattenRoute $route, $method = Request::METHOD_POST) {
         $entityRoute = $route;
-        while($entityRoute && !$entityRoute instanceof FlattenEntityRoute) {
+        $crudRoute = $route->getCRUD();
+        while($entityRoute && !$entityRoute instanceof FlattenEntityRoute && $entityRoute !== $crudRoute) {
             $entityRoute = $entityRoute->getParent();
         }
-        $entity = ($entityRoute) ? $entityRoute->getParameterSubject() : $this->createEntity();
+        $entity = ($entityRoute && $entityRoute instanceof FlattenEntityRoute) ? $entityRoute->getParameterSubject() : $this->createEntity();
         $formType = $route->getFormType();
 
         return $this->apiHandler->getForm($formType, $entity, $method);
@@ -95,11 +97,16 @@ class CRUDHandler implements CRUDHandlerInterface {
             $row = array();
             foreach ($columns as $column) {
                 if ($column['name'] && substr($column['name'], 0, 1) != '_') {
-                    $value = $object[str_replace(".", "_", $column['name'])];
-                    if ($value instanceof \DateTime) {
-                        $value = $value->format('d/m/Y H:m:s');
+                    $columnName = str_replace(".", "_", $column['name']);
+                    if (isset($object[$columnName])) {
+                        $value = $object[$columnName];
+                        if ($value instanceof \DateTime) {
+                            $value = $value->format('d/m/Y H:i:s');
+                        }
+                        $row[$column['data']] = $value;
+                    } else {
+                        $row[$column['data']] = "";
                     }
-                    $row[$column['data']] = $value;
                 } else {
                     $row[$column['data']] = "";
                 }

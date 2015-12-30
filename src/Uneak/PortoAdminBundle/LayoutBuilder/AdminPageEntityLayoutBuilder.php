@@ -59,7 +59,6 @@
 
 
             $menu = $this->blocksManager->getBlock("block_flattenroute_menu")->setFlattenRoute($route);
-
             $this->subLayoutSidebar->addWidget("menu", $menu, false, 999999);
 
             $this->layoutContentHeader->setTitle($route->getMetaData('_label'));

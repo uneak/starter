@@ -1,0 +1,7 @@
+services:
+
+    uneak.field.helper:
+        class: Uneak\FieldBundle\Field\FieldsHelper
+        arguments:
+            - @uneak.fieldtypesmanager
+            - @uneak.constraints.helper

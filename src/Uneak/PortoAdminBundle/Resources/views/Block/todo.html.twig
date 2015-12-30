@@ -1,0 +1,15 @@
+<li id="todo_{{ slug }}">
+    <div class="checkbox-custom checkbox-default">
+        <input type="checkbox" id="{{ slug }}" class="todo-check">
+        <label class="todo-label" for="{{ slug }}"><span>{{ content | raw }}</span></label>
+    </div>
+    <div class="todo-actions">
+        {{ renderBlock(menu) }}
+        {#<a class="todo-action" href="#">#}
+            {#<i class="fa fa-user"></i>#}
+        {#</a>#}
+        {#<a class="todo-action" href="#remove">#}
+            {#<i class="fa fa-times"></i>#}
+        {#</a>#}
+    </div>
+</li>

@@ -63,19 +63,39 @@
 
         events: function() {
             var _self = this,
+
                 $remove = this.$el.find( '.todo-remove' ),
                 $check = this.$el.find('.todo-check'),
                 $window = $( window );
 
-            $remove.on('click.widget-todo-list', function( ev ) {
-                ev.preventDefault();
-                $(this).closest("li").remove();
+            this.$el.find('.todo-action').on('click', function(e) {
+                e.preventDefault();
+                var event = $.Event("todo-action", { object: $(this).closest("li"), action:$(this) } );
+                _self.$el.trigger( event );
             });
 
-            $check.on('change', function () {
-                var label = $(this).closest('li').find('.todo-label');
-                _self.check( $(this), label );
+            this.$el.find('.todo-check').on('change', function(e) {
+                e.preventDefault();
+                var event = $.Event("todo-check", { object: $(this).closest("li"), checkbox: this } );
+                _self.$el.trigger( event );
             });
+
+
+            //$remove.on('click.widget-todo-list', function( ev ) {
+            //    ev.preventDefault();
+            //
+            //    var e = $.Event("remove", { object: $(this).closest("li") } );
+            //    _self.$el.trigger( e );
+            //    //$(this).closest("li").remove();
+            //});
+            //
+            //$check.on('change', function () {
+            //    var label = $(this).closest('li').find('.todo-label');
+            //
+            //    var e = $.Event("check", { object: $(this).closest("li") } );
+            //    _self.$el.trigger( e );
+            //    //_self.check( $(this), label );
+            //});
 
             if ( $.isFunction( $.fn.sortable ) ) {
                 this.$el.sortable({

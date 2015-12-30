@@ -1,0 +1,47 @@
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var $todo = $(".widget-todo-list");
+        $todo.on("sortupdate", function( event, ui ) {
+
+            var data = $(this).sortable("toArray");
+
+            $.ajax({
+                url: "{{ url('uneak_admin.fields.index.sort', {fieldset: fieldset}) }}",
+                method: "POST",
+                data: {data: data},
+            }).done(function() {
+                $( this ).addClass( "done" );
+            });
+
+
+        });
+
+
+
+        $todo.on("todo-action", function( event ) {
+            var id = event.object.attr('id');
+            var action = event.action.attr('href');
+            console.log(id);
+            console.log(action);
+        });
+
+        $todo.on("todo-check", function( event ) {
+
+            $.ajax({
+                url: "{{ url('uneak_admin.fields.index.check', {fieldset: fieldset}) }}",
+                method: "POST",
+                dataType: "json",
+                data: {data: event.object.attr('id'), checked: event.checkbox.checked},
+            }).done(function(data) {
+                $(event.checkbox).prop( "checked", data.checked );
+
+            });
+
+
+        });
+
+    });
+
+</script>

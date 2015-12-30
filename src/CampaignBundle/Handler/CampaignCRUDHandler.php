@@ -3,7 +3,8 @@
 	namespace CampaignBundle\Handler;
 
 
-	use Symfony\Component\HttpFoundation\Request;
+	use Symfony\Component\Form\FormInterface;
+    use Symfony\Component\HttpFoundation\Request;
 	use Uneak\PortoAdminBundle\Handler\APIHandlerInterface;
 	use Uneak\PortoAdminBundle\Handler\CRUDHandler;
 	use Uneak\RoutesManagerBundle\Helper\GridHelper;
@@ -18,50 +19,74 @@
 
 
 
-		/**
-		 * @param FlattenRoute $route
-		 * @param string $method
-		 * @return FormInterface
-		 */
-		public function getCampaignForm(FlattenRoute $route, $method = Request::METHOD_POST) {
-			$client = $route->getParameter('clients')->getParameterSubject();
-			$entity = ($route->hasParameter('campaigns')) ? $route->getParameter('campaigns')->getParameterSubject() : $this->createEntity();
-			$entity->setClient($client);
-			$formType = $route->getFormType();
-			return $this->apiHandler->getForm($formType, $entity, $method);
-		}
+        /**
+         * @param FlattenRoute $route
+         * @param string $method
+         * @return FormInterface
+         */
+        public function getForm(FlattenRoute $route, $method = Request::METHOD_POST) {
+
+            if ($route->hasParameter('clients')) {
+                $client = $route->getParameter('clients')->getParameterSubject();
+            } else {
+                $client = null;
+            }
+
+            if ($route->hasParameter('campaigns')) {
+                $campaigns = $route->getParameter('campaigns')->getParameterSubject();
+            } else {
+                $campaigns = null;
+            }
+
+            $entity = ($campaigns) ? $campaigns : $this->createEntity();
+            $entity->setClient($client);
+            $formType = $route->getFormType();
+            return $this->apiHandler->getForm($formType, $entity, $method);
+        }
 
 
 
-		private function _qb($gridHelper, $params, $clientID) {
-			$qb = $gridHelper->createGridQueryBuilder('CampaignBundle\Entity\Campaign', $params);
-			$qb->innerjoin('o.client', 'client');
-			$qb->andWhere($qb->expr()->eq('client.id', ':clientID'));
-			$qb->setParameter('clientID', $clientID);
-			return $qb;
-		}
 
-		public function getCampaignDatatableArray(FlattenRoute $route, array $params, GridHelper $gridHelper) {
-
-			$nestedGridRoute = $route->getParent()->getNestedRoute();
-			$ids = $nestedGridRoute->getIds();
-
-			$client = $route->getParameter('clients')->getParameterSubject()->getId();
-
-			$gridData = $gridHelper->gridFields($this->_qb($gridHelper, $params, $client), $params, $ids);
-			$recordsTotal = $gridHelper->gridFieldsCount($this->_qb($gridHelper, $params, $client));
-			$recordsFiltered = $gridHelper->gridFieldsCount($this->_qb($gridHelper, $params, $client));
-
-			$gridDataArray = $this->getGridDataArray($gridData, $ids, $params['columns']);
-
-			return array_merge($gridDataArray, array(
-				'draw'            => $params["draw"],
-				'recordsTotal'    => $recordsTotal,
-				'recordsFiltered' => $recordsFiltered,
-			));
+        private function _qb($entityClass, $gridHelper, $params, $clientID) {
+            $qb = $gridHelper->createGridQueryBuilder($entityClass, $params);
+            if ($clientID) {
+                $qb->innerjoin('o.client', 'client');
+                $qb->andWhere($qb->expr()->eq('client.id', ':clientID'));
+                $qb->setParameter('clientID', $clientID);
+            }
+            return $qb;
+        }
 
 
-		}
+
+        public function getDatatableArray(FlattenRoute $route, array $params, GridHelper $gridHelper) {
+
+            if ($route->hasParameter('clients')) {
+                $client = $route->getParameter('clients')->getParameterSubject()->getId();
+            } else {
+                $client = null;
+            }
+
+            $nestedGridRoute = $route->getParent()->getNestedRoute();
+            $ids = $nestedGridRoute->getIds();
+            $entityClass = $route->getCRUD()->getEntity();
+
+            $gridData = $gridHelper->gridFields($this->_qb($entityClass, $gridHelper, $params, $client), $params, $ids);
+            $recordsTotal = $gridHelper->gridFieldsCount($this->_qb($entityClass, $gridHelper, $params, $client));
+            $recordsFiltered = $gridHelper->gridFieldsCount($this->_qb($entityClass, $gridHelper, $params, $client));
+
+
+            $gridDataArray = $this->getGridDataArray($gridData, $ids, $params['columns']);
+
+            return array_merge($gridDataArray, array(
+                'draw'            => $params["draw"],
+                'recordsTotal'    => $recordsTotal,
+                'recordsFiltered' => $recordsFiltered,
+            ));
+        }
+
+
+
 
 
 	}

@@ -35,6 +35,11 @@
                 new Uneak\OAuthFacebookServiceBundle\UneakOAuthFacebookServiceBundle(),
                 new Uneak\OAuthGoogleServiceBundle\UneakOAuthGoogleServiceBundle(),
                 new Uneak\OAuthTwitterServiceBundle\UneakOAuthTwitterServiceBundle(),
+                new Uneak\ProspectBundle\UneakProspectBundle(),
+                new Uneak\FieldBundle\UneakFieldBundle(),
+                new Uneak\FieldDataBundle\UneakFieldDataBundle(),
+                new Uneak\FieldTypeBundle\UneakFieldTypeBundle(),
+                new Uneak\ConstraintBundle\UneakConstraintBundle(),
 				// OAUTH
 				new JMS\SerializerBundle\JMSSerializerBundle(),
 				new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
@@ -45,14 +50,15 @@
 				new Uneak\PortoAdminBundle\UneakPortoAdminBundle(),
 				// OWN,
 				new AppBundle\AppBundle(),
-            	new MemberBundle\MemberBundle(),
+                new OAuthServerBundle\OAuthServerBundle(),
                 new UserBundle\UserBundle(),
                 new ClientBundle\ClientBundle(),
                 new CampaignBundle\CampaignBundle(),
                 new ProspectGroupBundle\ProspectGroupBundle(),
                 new ProspectBundle\ProspectBundle(),
-                new GroupFieldBundle\GroupFieldBundle(),
-            	new OAuthServerBundle\OAuthServerBundle(),
+                new ProspectGroupFieldBundle\ProspectGroupFieldBundle(),
+                new ConstraintBundle\ConstraintBundle(),
+
 			);
 
 			if (in_array($this->getEnvironment(), array('dev', 'test'))) {

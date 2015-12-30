@@ -20,7 +20,7 @@ services:
         arguments:
             - @form.factory
             - @doctrine.orm.entity_manager
-            - 'ProspectBundle\Entity\Prospect'
+            - 'Uneak\ProspectBundle\Entity\Prospect'
 
     uneak.admin.prospect.crud.handler:
         class: %uneak.admin.prospect.crud.handler.class%

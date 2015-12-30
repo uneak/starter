@@ -1,0 +1,16 @@
+parameters:
+    uneak.routesmanager.grid.helper.class: Uneak\RoutesManagerBundle\Helper\GridHelper
+    uneak.routesmanager.menu.helper.class: Uneak\RoutesManagerBundle\Helper\MenuHelper
+
+    
+services:
+    uneak.routesmanager.grid.helper:
+        class: %uneak.routesmanager.grid.helper.class%
+        arguments:
+            - @doctrine.orm.default_entity_manager
+
+    uneak.routesmanager.menu.helper:
+        class: %uneak.routesmanager.menu.helper.class%
+        arguments:
+            - @knp_menu.factory
+            - @security.authorization_checker

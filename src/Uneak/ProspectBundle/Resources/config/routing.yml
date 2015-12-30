@@ -1,0 +1,3 @@
+uneak_prospect_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: UneakProspectBundle:Default:index }

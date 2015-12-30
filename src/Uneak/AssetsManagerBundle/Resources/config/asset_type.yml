@@ -1,0 +1,33 @@
+parameters:
+    uneak.assettypemanager.class: Uneak\AssetsManagerBundle\Assets\AssetTypeManager
+
+    uneak.assettypemanager.externaljs.class: Uneak\AssetsManagerBundle\Assets\Js\AssetTypeExternalJs
+    uneak.assettypemanager.internaljs.class: Uneak\AssetsManagerBundle\Assets\Js\AssetTypeInternalJs
+    uneak.assettypemanager.externalcss.class: Uneak\AssetsManagerBundle\Assets\Css\AssetTypeExternalCss
+    uneak.assettypemanager.internalcss.class: Uneak\AssetsManagerBundle\Assets\Css\AssetTypeInternalCss
+
+services:
+
+    uneak.assettypemanager:
+        class: %uneak.assettypemanager.class%
+
+    uneak.assettypemanager.externaljs:
+        class: %uneak.assettypemanager.externaljs.class%
+        tags:
+            - { name: uneak.assetsmanager.type, id: externaljs }
+
+    uneak.assettypemanager.internaljs:
+        class: %uneak.assettypemanager.internaljs.class%
+        tags:
+            - { name: uneak.assetsmanager.type, id: internaljs }
+
+    uneak.assettypemanager.externalcss:
+        class: %uneak.assettypemanager.externalcss.class%
+        tags:
+            - { name: uneak.assetsmanager.type, id: externalcss }
+
+    uneak.assettypemanager.internalcss:
+        class: %uneak.assettypemanager.internalcss.class%
+        tags:
+            - { name: uneak.assetsmanager.type, id: internalcss }
+

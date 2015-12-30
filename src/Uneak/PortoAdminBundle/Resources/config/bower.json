@@ -1,6 +1,7 @@
 {
   "name": "bower-assets",
   "dependencies": {
+	"eonasdan-bootstrap-datetimepicker": "latest",
     "bourbon": "*",
 	"jquery": "*",
 	"font-awesome": "*",
@@ -45,7 +46,7 @@
 	"morris": "https://github.com/morrisjs/morris.js.git#*",
 	"nanoscroller": "*",
 	"owl-carousel": "*",
-	"pnotify": "*",
+	"pnotify": "master",
 	"raphael": "*",
 	"select2": "*",
 	"select2-bootstrap-css": "latest",

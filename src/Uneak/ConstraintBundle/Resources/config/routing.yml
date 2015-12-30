@@ -1,0 +1,3 @@
+uneak_constraint_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: UneakConstraintBundle:Default:index }

@@ -1,0 +1,2 @@
+# TemplatesManagerBundle
+Templates manager

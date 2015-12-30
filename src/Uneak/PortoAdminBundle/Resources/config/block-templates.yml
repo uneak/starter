@@ -66,8 +66,20 @@ parameters:
 
     uneak.portoadmin.pnotify.template.class: Uneak\PortoAdminBundle\Templates\PNotify\PNotifyTemplate
 
+    uneak.portoadmin.todos.template.class: Uneak\PortoAdminBundle\Templates\Todo\TodosTemplate
+    uneak.portoadmin.todo.template.class: Uneak\PortoAdminBundle\Templates\Todo\TodoTemplate
+
 services:
 
+    uneak.portoadmin.todos.template.template:
+        class: %uneak.portoadmin.todos.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_todos }
+
+    uneak.portoadmin.todo.template.template:
+        class: %uneak.portoadmin.todo.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_todo }
 
     uneak.portoadmin.pnotify.template:
         class: %uneak.portoadmin.pnotify.template.class%
@@ -174,6 +186,8 @@ services:
         class: %uneak.portoadmin.usermenu.template.class%
         tags:
             - { name: uneak.blocksmanager.template, alias: block_template_user_menu }
+
+
 
     uneak.portoadmin.user.template:
         class: %uneak.portoadmin.user.template.class%

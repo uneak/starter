@@ -40,6 +40,34 @@ select2_bootstrap_css:
 
 
 
+#
+#
+#       DATEPICKER
+#
+#
+moment_js:
+    type: externaljs
+    config:
+        src: "vendor/moment/moment.js"
+
+datepicker_js:
+    type: externaljs
+    config:
+        src: "vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"
+        dependencies: [ "jquery_js" ]
+
+datetimepicker_js:
+    type: externaljs
+    config:
+        src: "vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"
+
+datetimepicker_css:
+    type: externalcss
+    config:
+        href: "vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"
+
+
+
 
 
 
@@ -112,6 +140,13 @@ jquery_js:
     type: externaljs
     config:
         src: "vendor/jquery/dist/jquery.js"
+
+
+jquery_ui_js:
+    type: externaljs
+    config:
+        src: "vendor/jquery-ui/jquery-ui.js"
+
 
 jquery_browser_mobile_js:
     type: externaljs
@@ -437,7 +472,7 @@ porto_admin_theme_widget_todo_js:
     config:
         src: "bundles/uneakportoadmin/js/theme/widget_todo.js"
         category: "AssetExternalJs_theme"
-        dependencies: [ "porto_admin_window_theme_js" ]
+        dependencies: [ "porto_admin_window_theme_js", "jquery_ui_js" ]
 
 porto_admin_theme_widget_toggle_js:
     type: externaljs

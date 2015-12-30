@@ -30,9 +30,6 @@ oauth_server_api:
 #    resource: "@FOSUserBundle/Resources/config/routing/group.xml"
 #    prefix: /admin/group
 
-uneak_member:
-    resource: "@MemberBundle/Resources/config/routing.yml"
-    prefix: /
 
 uneak_user:
     resource: "@UserBundle/Resources/config/routing.yml"

@@ -47,6 +47,8 @@
 				->setMetaData('_icon', 'list')
 				->setMetaData('_label', 'Liste des clients')
 
+                ->addRowAction('groups', '*/subject/groups/index')
+                ->addRowAction('campaigns', '*/subject/campaigns/index')
 				->addRowAction('show', '*/subject/show')
 				->addRowAction('edit', '*/subject/edit')
 				->addRowAction('delete', '*/subject/delete')
@@ -79,8 +81,9 @@
 					'show'   => '*/subject/show',
 					'edit'   => '*/subject/edit',
 					'delete' => '*/subject/delete',
-					'campaigns_index' => '*/subject/campaigns/index',
-					'groups_index' => '*/subject/groups/index',
+                    'groups' => '*/subject/groups/index',
+					'campaigns' => '*/subject/campaigns/index',
+
 				));
 			$this->addChild($subjectRoute);
 

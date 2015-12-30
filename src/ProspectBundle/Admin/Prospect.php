@@ -3,7 +3,6 @@
 	namespace ProspectBundle\Admin;
 
 	use ProspectBundle\Form\ProspectDeleteType;
-	use ProspectBundle\Form\ProspectType;
 	use Uneak\RoutesManagerBundle\Routes\NestedAdminRoute;
 	use Uneak\RoutesManagerBundle\Routes\NestedCRUDRoute;
 	use Uneak\RoutesManagerBundle\Routes\NestedEntityRoute;
@@ -11,12 +10,12 @@
 
     class Prospect extends NestedCRUDRoute {
 
-		protected $entity = 'ProspectBundle\Entity\Prospect';
+		protected $entity = 'Uneak\ProspectBundle\Entity\Prospect';
 
 		public function initialize() {
 			parent::initialize();
 
-            $this->setFormType(new ProspectType());
+//            $this->setFormType(new ProspectType());
 
 			$this->setMetaData('_icon', 'briefcase');
 			$this->setMetaData('_label', 'Prospect');
@@ -50,12 +49,12 @@
 				->addRowAction('edit', '*/subject/edit')
 				->addRowAction('delete', '*/subject/delete')
 
-				->addId($this->getId(), 'slug')
-				->addId('groups', 'group.id')
+				->addId($this->getId(), 'code')
+//				->addId('groups', 'group.id')
 
-				->addColumn(array('title' => 'Identifiant', 'name' => 'slug'))
-				->addColumn(array('title' => 'Groupe', 'name' => 'group.label'))
-				->addColumn(array('title' => 'Source', 'name' => 'source'))
+				->addColumn(array('title' => 'Identifiant', 'name' => 'code'))
+//				->addColumn(array('title' => 'Groupe', 'name' => 'group.label'))
+//				->addColumn(array('title' => 'Source', 'name' => 'source'))
 				;
 
 			$this->addChild($indexRoute);

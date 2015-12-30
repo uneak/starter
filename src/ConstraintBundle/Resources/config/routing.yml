@@ -1,0 +1,3 @@
+constraint_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: ConstraintBundle:Default:index }

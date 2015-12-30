@@ -1,0 +1,17 @@
+parameters:
+    uneak.formsmanager.class: Uneak\FormsManagerBundle\Forms\FormsManager
+
+services:
+
+    uneak.formsmanager:
+        class: %uneak.formsmanager.class%
+        arguments:
+            - @twig.form.engine
+            - @uneak.templatesmanager
+        tags:
+            - { name: uneak.assetsmanager.assets }
+
+
+
+
+

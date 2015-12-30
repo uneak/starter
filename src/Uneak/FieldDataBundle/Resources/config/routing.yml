@@ -1,0 +1,3 @@
+uneak_field_data_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: UneakFieldDataBundle:Default:index }

@@ -1,0 +1,44 @@
+parameters:
+    uneak.blocksmanager.blocks.class: Uneak\BlocksManagerBundle\Blocks\BlocksManager
+    uneak.blocksmanager.templates.class: Uneak\BlocksManagerBundle\Blocks\BlockTemplatesManager
+    uneak.blocksmanager.builder.class: Uneak\BlocksManagerBundle\Blocks\BlockBuilder
+    uneak.blocksmanager.twig.extension.class: Uneak\BlocksManagerBundle\Twig\Extension\BlocksManagerExtension
+    uneak.jsarray.twig.extension.class: Uneak\BlocksManagerBundle\Twig\Extension\JsArrayExtension
+
+services:
+
+    uneak.blocksmanager.templates:
+        class: %uneak.blocksmanager.templates.class%
+        calls:
+            - [ setContainer, [ @service_container ] ]
+
+    uneak.blocksmanager.blocks:
+        class: %uneak.blocksmanager.blocks.class%
+        calls:
+            - [ setContainer, [ @service_container ] ]
+
+    uneak.blocksmanager.builder:
+        class: %uneak.blocksmanager.builder.class%
+        arguments:
+            - @uneak.templatesmanager
+            - @uneak.blocksmanager.blocks
+            - @uneak.blocksmanager.templates
+            - @service_container
+        tags:
+            - { name: uneak.assetsmanager.assets }
+
+    uneak.blocksmanager.twig.extension:
+        class: %uneak.blocksmanager.twig.extension.class%
+        arguments:
+            - @uneak.blocksmanager.builder
+            - @uneak.blocksmanager.templates
+            - @uneak.templatesmanager
+            - @twig
+        tags:
+            - { name: twig.extension }
+
+    uneak.jsarray.twig.extension:
+        class: %uneak.jsarray.twig.extension.class%
+        tags:
+            - { name: twig.extension }
+

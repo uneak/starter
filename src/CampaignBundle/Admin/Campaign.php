@@ -21,7 +21,7 @@
 			$this->setMetaData('_icon', 'briefcase');
 			$this->setMetaData('_image', 'imageFile');
 			$this->setMetaData('_label', 'Campaign');
-			$this->setMetaData('_description', 'Gestion des campaigns');
+			$this->setMetaData('_description', 'Gestion des campagnes');
 
 			$this->setMetaData('_menu', array(
 				'index'  => '*/index',
@@ -65,7 +65,7 @@
 				->setPath('new')
 				->setAction('new')
 				->setMetaData('_icon', 'plus-circle')
-                ->setMetaData('_label', 'Nouveau campaign')
+                ->setMetaData('_label', 'Nouvelle campagne')
 //                ->setFormType(new CampaignNewType());
 			;
 			$this->addChild($newRoute);
@@ -88,7 +88,7 @@
 			$showRoute
 				->setAction('show')
 				->setMetaData('_icon', 'eye')
-			    ->setMetaData('_label', "Voir le campaign")
+			    ->setMetaData('_label', "Voir la campagne")
 			    ->setMetaData('_description', '{{ entity }}')
 				->setRequirement('_method', 'GET');
 			$subjectRoute->addChild($showRoute);
@@ -98,7 +98,7 @@
 			$editRoute
 				->setAction('edit')
 				->setMetaData('_icon', 'edit')
-                ->setMetaData('_label', "Editer le campaign")
+                ->setMetaData('_label', "Editer la campagne")
                 ->setMetaData('_description', '{{ entity }}');
 
 			$subjectRoute->addChild($editRoute);
@@ -107,7 +107,7 @@
 			$deleteRoute
 				->setAction('delete')
 				->setMetaData('_icon', 'times')
-                ->setMetaData('_label', "Supprimer le campaign")
+                ->setMetaData('_label', "Supprimer la campagne")
                 ->setMetaData('_description', '{{ entity }}')
 				->setFormType(new CampaignDeleteType());
 			$subjectRoute->addChild($deleteRoute);

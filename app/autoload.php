@@ -11,11 +11,11 @@
 	AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
 
-	$loader->set('Uneak\\TemplatesManagerBundle', array('/Users/marc/Workspace/uneak/templatesManagerBundle'));
-	$loader->set('Uneak\\AssetsManagerBundle', array('/Users/marc/Workspace/uneak/assetsManagerBundle'));
-	$loader->set('Uneak\\BlocksManagerBundle', array('/Users/marc/Workspace/uneak/blocksManagerBundle'));
-	$loader->set('Uneak\\FormsManagerBundle', array('/Users/marc/Workspace/uneak/formsManagerBundle'));
-	$loader->set('Uneak\\RoutesManagerBundle', array('/Users/marc/Workspace/uneak/routesManagerBundle'));
+//	$loader->set('Uneak\\TemplatesManagerBundle', array('/Users/marc/Workspace/uneak/templatesManagerBundle'));
+//	$loader->set('Uneak\\AssetsManagerBundle', array('/Users/marc/Workspace/uneak/assetsManagerBundle'));
+//	$loader->set('Uneak\\BlocksManagerBundle', array('/Users/marc/Workspace/uneak/blocksManagerBundle'));
+//	$loader->set('Uneak\\FormsManagerBundle', array('/Users/marc/Workspace/uneak/formsManagerBundle'));
+//	$loader->set('Uneak\\RoutesManagerBundle', array('/Users/marc/Workspace/uneak/routesManagerBundle'));
 
 
 	return $loader;

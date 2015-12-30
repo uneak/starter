@@ -1,0 +1,66 @@
+services:
+
+    uneak.fieldtype.form.fieldtype.selector:
+        class: Uneak\FieldTypeBundle\Form\FieldTypeSelectorType
+        arguments: [@uneak.fieldtypesmanager]
+        tags:
+            -  { name: form.type, alias: "fieldtypes_selector" }
+
+
+    uneak.fieldtypes.helper:
+        class: Uneak\FieldTypeBundle\Field\FieldTypesHelper
+        arguments: [@uneak.constraints.helper]
+
+    uneak.fieldtypesmanager:
+        class: Uneak\FieldTypeBundle\Field\FieldTypesManager
+
+
+    uneak.fieldtype.config.type.text:
+        class: Uneak\FieldTypeBundle\Field\ConfigType\TextConfigType
+        tags:
+            -  { name: uneak.fieldtypesmanager.field, alias_config: "config_text", alias_field: "text", field_data: "string", label: "Texte" }
+
+    uneak.fieldtype.config.type.choice:
+        class: Uneak\FieldTypeBundle\Field\ConfigType\ChoiceConfigType
+        tags:
+            -  { name: uneak.fieldtypesmanager.field, alias_config: "config_choice_select2", alias_field: "choice_select2", field_data: "string", label: "Choix multiple" }
+
+    uneak.fieldtype.config.type.date:
+        class: Uneak\FieldTypeBundle\Field\ConfigType\DateConfigType
+        tags:
+            -  { name: uneak.fieldtypesmanager.field, alias_config: "config_uneak_date_picker", alias_field: "uneak_date_picker", field_data: "datetime", label: "Date" }
+
+    uneak.fieldtype.config.type.textarea:
+        class: Uneak\FieldTypeBundle\Field\ConfigType\TextAreaConfigType
+        tags:
+            -  { name: uneak.fieldtypesmanager.field, alias_config: "config_textarea", alias_field: "textarea", field_data: "text", label: "Texte area" }
+
+    uneak.fieldtype.config.type.hidden:
+        class: Uneak\FieldTypeBundle\Field\ConfigType\HiddenConfigType
+        tags:
+            -  { name: uneak.fieldtypesmanager.field, alias_config: "config_hidden", alias_field: "hidden", field_data: "string", label: "Caché" }
+
+    uneak.fieldtype.config.type.integer:
+        class: Uneak\FieldTypeBundle\Field\ConfigType\IntegerConfigType
+        tags:
+            -  { name: uneak.fieldtypesmanager.field, alias_config: "config_integer", alias_field: "integer", field_data: "integer", label: "Entier numérique" }
+
+    uneak.fieldtype.config.type.url:
+        class: Uneak\FieldTypeBundle\Field\ConfigType\UrlConfigType
+        tags:
+            -  { name: uneak.fieldtypesmanager.field, alias_config: "config_url", alias_field: "url", field_data: "string", label: "Url" }
+
+    uneak.fieldtype.config.type.number:
+        class: Uneak\FieldTypeBundle\Field\ConfigType\NumberConfigType
+        tags:
+            -  { name: uneak.fieldtypesmanager.field, alias_config: "config_number", alias_field: "number", field_data: "float", label: "Double numérique" }
+
+    uneak.fieldtype.config.type.email:
+        class: Uneak\FieldTypeBundle\Field\ConfigType\EmailConfigType
+        tags:
+            -  { name: uneak.fieldtypesmanager.field, alias_config: "config_email", alias_field: "email", field_data: "string", label: "Email" }
+
+    uneak.fieldtype.config.type.checkbox:
+        class: Uneak\FieldTypeBundle\Field\ConfigType\CheckboxConfigType
+        tags:
+            -  { name: uneak.fieldtypesmanager.field, alias_config: "config_checkbox", alias_field: "checkbox", field_data: "boolean", label: "Case a cocher" }

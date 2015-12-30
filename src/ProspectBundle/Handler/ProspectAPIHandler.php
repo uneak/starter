@@ -3,7 +3,7 @@
 namespace ProspectBundle\Handler;
 
 
-use ProspectBundle\Entity\Prospect;
+use Uneak\ProspectBundle\Entity\Prospect;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;

@@ -1,0 +1,31 @@
+services:
+
+    uneak.constraint.form.constraint.selector:
+        class: Uneak\ConstraintBundle\Form\ConstraintSelectorType
+        arguments: [@uneak.constraintsmanager]
+        tags:
+            -  { name: form.type, alias: "constraints_selector" }
+
+
+    uneak.constraints.helper:
+        class: Uneak\ConstraintBundle\Constraint\ConstraintsHelper
+
+    uneak.constraintsmanager:
+        class: Uneak\ConstraintBundle\Constraint\ConstraintsManager
+
+
+    uneak.constraint.config.type.blank:
+        class: 	Uneak\ConstraintBundle\Constraint\ConfigType\BlankConfigType
+        tags:
+            -  { name: uneak.constraintsmanager.constraint, alias: "blank", alias_config: "config_constraint_blank", class: 'Symfony\Component\Validator\Constraints\Blank', label: "Doit être vide" }
+
+
+    uneak.constraint.config.type.notblank:
+        class: Uneak\ConstraintBundle\Constraint\ConfigType\NotBlankConfigType
+        tags:
+            -  { name: uneak.constraintsmanager.constraint, alias: "notblank", alias_config: "config_constraint_notblank", class: 'Symfony\Component\Validator\Constraints\NotBlank', label: "Ne doit pas être vide" }
+
+    uneak.constraint.config.type.length:
+        class: Uneak\ConstraintBundle\Constraint\ConfigType\LengthConfigType
+        tags:
+            -  { name: uneak.constraintsmanager.constraint, alias: "length", alias_config: "config_constraint_length", class: 'Symfony\Component\Validator\Constraints\Length', label: "Longueur de texte" }

@@ -1,0 +1,39 @@
+parameters:
+    uneak.bowermanager.class: Uneak\AssetsManagerBundle\Bower\BowerManager
+    uneak.assetsmanager.class: Uneak\AssetsManagerBundle\Assets\AssetsManager
+    uneak.assetsbuildermanager.class: Uneak\AssetsManagerBundle\Assets\AssetsBuilderManager
+    uneak.assetsmanager.twig.extension.class: Uneak\AssetsManagerBundle\Twig\Extension\AssetsManagerExtension
+
+services:
+
+    uneak.bowermanager:
+        class: %uneak.bowermanager.class%
+
+
+    uneak.assetsmanager:
+        class: %uneak.assetsmanager.class%
+        arguments:
+            - @uneak.assettypemanager
+            - %uneak_assets%
+
+    uneak.assetsbuildermanager:
+        class: %uneak.assetsbuildermanager.class%
+        arguments:
+            - @uneak.assetsmanager
+            - @uneak.assettypemanager
+
+    uneak.assetsmanager.twig.extension:
+        class: %uneak.assetsmanager.twig.extension.class%
+        arguments:
+            - @uneak.assetsbuildermanager
+            - @uneak.templatesmanager
+            - @twig
+            - @service_container
+
+        tags:
+            - { name: twig.extension }
+
+    twig.stringloader:
+        class: Twig_Loader_String
+        tags:
+            - { name: twig.loader }

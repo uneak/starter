@@ -16,8 +16,6 @@ security:
         uneak_user:
             id: uneak.user_provider.username
 
-        uneak_member:
-            id: uneak.member_provider.username
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -68,17 +66,7 @@ security:
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
 
 
-        member:
-            anonymous: ~
 
-            form_login:
-                provider: uneak_member
-                csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
-                login_path:  member_security_login
-                check_path:  member_security_check
-            logout:
-                path: member_security_logout
-                target: member_security_login
 
 
 

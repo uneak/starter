@@ -6,5 +6,4 @@
 
     class CampaignAdminController extends LayoutEntityController {
 
-
 	}
