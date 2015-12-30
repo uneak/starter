@@ -58,7 +58,7 @@
 		 */
 		public function setDefaultOptions(OptionsResolverInterface $resolver) {
 			$resolver->setDefaults(array(
-				'data_class' => 'ProspectGroupBundle\Entity\ProspectGroup',
+				'data_class' => 'Uneak\FieldGroupBundle\Entity\FieldGroup',
 			));
 		}
 

@@ -17,8 +17,8 @@
 
 //            $this->setFormType(new ProspectType());
 
-			$this->setMetaData('_icon', 'briefcase');
-			$this->setMetaData('_label', 'Prospect');
+			$this->setMetaData('_icon', 'male');
+			$this->setMetaData('_label', 'Prospects');
 			$this->setMetaData('_description', 'Gestion des prospects');
 
 			$this->setMetaData('_menu', array(
@@ -71,10 +71,10 @@
 			$this->addChild($newRoute);
 
 
-			$subjectRoute = new NestedProspectRoute('subject');
+			$subjectRoute = new NestedEntityRoute('subject');
 			$subjectRoute
 				->setParameterName($this->getId())
-//				->setParameterPattern('\d+')
+				->setParameterPattern('\d+')
 				->setEnabled(false)
 				->setMetaData('_menu', array(
 					'show'   => '*/subject/show',

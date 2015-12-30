@@ -3,7 +3,7 @@
 	namespace ProspectGroupFieldBundle\Handler;
 
 
-	use ProspectGroupBundle\Entity\ProspectGroup;
+	use Uneak\FieldGroupBundle\Entity\FieldGroup;
     use Symfony\Component\Form\FormInterface;
     use Uneak\FieldBundle\Entity\Field;
     use Symfony\Component\HttpFoundation\Request;
@@ -94,7 +94,7 @@
 
         public function getFieldsPanel(FlattenRoute $route) {
 
-            /** @var $group ProspectGroup*/
+            /** @var $group FieldGroup*/
             $group = $route->getParameter('groups')->getParameterSubject();
             $fields = $this->apiHandler->getFields($group->getSlug());
 

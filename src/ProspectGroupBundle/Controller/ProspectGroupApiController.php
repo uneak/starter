@@ -72,7 +72,7 @@ class ProspectGroupApiController extends FOSRestController
         $maxperpage = $paramFetcher->get('maxperpage');
 
         $em = $this->getDoctrine()->getManager();
-        $groupsRepository = $em->getRepository('ProspectGroupBundle:ProspectGroup');
+        $groupsRepository = $em->getRepository('UneakFieldGroupBundle:FieldGroup');
 
         $groups = $groupsRepository->findAll();
 
@@ -94,7 +94,7 @@ class ProspectGroupApiController extends FOSRestController
      *    section="Utilisateurs",
      *  description="affiche l'utilisateur par sont identifiant",
      *    deprecated=false,
-     *   output = "ProspectGroupBundle\Entity\ProspectGroup",
+     *   output = "Uneak\FieldGroupBundle\Entity\FieldGroup",
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     404 = "Returned when the page is not found"

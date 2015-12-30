@@ -18,7 +18,7 @@
 
             $this->setFormType(new ProspectGroupFieldType());
 
-			$this->setMetaData('_icon', 'briefcase');
+			$this->setMetaData('_icon', 'terminal');
 			$this->setMetaData('_label', 'Champs');
 			$this->setMetaData('_description', 'Gestion des champs');
 

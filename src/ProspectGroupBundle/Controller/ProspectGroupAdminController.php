@@ -25,23 +25,18 @@
         public function fieldsIndexAction(FlattenRoute $route, Request $request) {
             return $this->forward('ProspectGroupFieldBundle:ProspectGroupFieldAdmin:index', array('route' => $route->getParameter('groups')->getChild('fields/index'), 'request' => $request));
         }
-
         public function fieldsNewAction(FlattenRoute $route, Request $request) {
             return $this->forward('ProspectGroupFieldBundle:ProspectGroupFieldAdmin:new', array('route' => $route->getParameter('groups')->getChild('fields/new'), 'request' => $request));
         }
-
         public function fieldsShowAction(FlattenRoute $route, Request $request) {
             return $this->forward('ProspectGroupFieldBundle:ProspectGroupFieldAdmin:show', array('route' => $route->getParameter('fields')->getChild('show'), 'request' => $request));
         }
-
         public function fieldsEditAction(FlattenRoute $route, Request $request) {
             return $this->forward('ProspectGroupFieldBundle:ProspectGroupFieldAdmin:edit', array('route' => $route->getParameter('fields')->getChild('edit'), 'request' => $request));
         }
-
         public function fieldsDeleteAction(FlattenRoute $route, Request $request) {
             return $this->forward('ProspectGroupFieldBundle:ProspectGroupFieldAdmin:delete', array('route' => $route->getParameter('fields')->getChild('delete'), 'request' => $request));
         }
-
         public function fieldsConfigAction(FlattenRoute $route, Request $request) {
             return $this->forward('ProspectGroupFieldBundle:ProspectGroupFieldAdmin:config', array('route' => $route->getParameter('fields')->getChild('config'), 'request' => $request));
         }
@@ -58,9 +53,9 @@
         public function fieldsConstraintsTypenewAction(FlattenRoute $route, Request $request) {
             return $this->forward('ProspectGroupFieldBundle:ProspectGroupFieldAdmin:constraintsTypenew', array('route' => $route->getParameter('typeconstraint')->getChild('new'), 'request' => $request));
         }
-
-
-
+        public function fieldsConstraintsEditAction(FlattenRoute $route, Request $request) {
+            return $this->forward('ProspectGroupFieldBundle:ProspectGroupFieldAdmin:constraintsEdit', array('route' => $route->getParameter('constraints')->getChild('edit'), 'request' => $request));
+        }
 
 
 
@@ -70,23 +65,18 @@
         public function prospectsIndexAction(FlattenRoute $route, Request $request) {
             return $this->forward('ProspectBundle:ProspectAdmin:index', array('route' => $route->getParameter('groups')->getChild('prospects/index'), 'request' => $request));
         }
-
         public function prospectsIndexGridAction(FlattenRoute $route, Request $request) {
             return $this->forward('ProspectBundle:ProspectAdmin:indexGrid', array('route' => $route->getParameter('groups')->getChild('prospects/index/_grid'), 'request' => $request));
         }
-
         public function prospectsNewAction(FlattenRoute $route, Request $request) {
             return $this->forward('ProspectBundle:ProspectAdmin:new', array('route' => $route->getParameter('groups')->getChild('prospects/new'), 'request' => $request));
         }
-
         public function prospectsShowAction(FlattenRoute $route, Request $request) {
             return $this->forward('ProspectBundle:ProspectAdmin:show', array('route' => $route->getParameter('prospects')->getChild('show'), 'request' => $request));
         }
-
         public function prospectsEditAction(FlattenRoute $route, Request $request) {
             return $this->forward('ProspectBundle:ProspectAdmin:edit', array('route' => $route->getParameter('prospects')->getChild('edit'), 'request' => $request));
         }
-
         public function prospectsDeleteAction(FlattenRoute $route, Request $request) {
             return $this->forward('ProspectBundle:ProspectAdmin:delete', array('route' => $route->getParameter('prospects')->getChild('delete'), 'request' => $request));
         }

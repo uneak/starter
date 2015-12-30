@@ -3,7 +3,7 @@
 namespace ProspectGroupBundle\Handler;
 
 
-use ProspectGroupBundle\Entity\ProspectGroup;
+use Uneak\FieldGroupBundle\Entity\FieldGroup;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -12,22 +12,16 @@ use Uneak\PortoAdminBundle\Handler\EntityAPIHandler;
 
 class ProspectGroupAPIHandler extends EntityAPIHandler {
 
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-    protected $entityClass;
-    protected $repository;
 
 
-    public function __construct(FormFactoryInterface $formFactory, EntityManager $em, $entityClass)
+    public function __construct(FormFactoryInterface $formFactory, EntityManager $em)
     {
-        parent::__construct($formFactory, $em, $entityClass);
+        parent::__construct($formFactory, $em);
 
     }
 
     public function createEntity() {
-        return new ProspectGroup();
+        return new FieldGroup();
     }
 
 
@@ -39,9 +33,9 @@ class ProspectGroupAPIHandler extends EntityAPIHandler {
     }
 
     public function get($id) {
-        $entity = $this->em->getRepository('ProspectGroupBundle:ProspectGroup')->findOneBy(array('id' => $id));
+        $entity = $this->em->getRepository('UneakFieldGroupBundle:FieldGroup')->findOneBy(array('id' => $id));
         if (!$entity) {
-            throw new NotFoundException("ProspectGroup $id not found", $id);
+            throw new NotFoundException("FieldGroup $id not found", $id);
         }
         return $entity;
     }

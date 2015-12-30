@@ -27,6 +27,28 @@
         }
 
         //
+        // GROUPS / PROSPECTS
+        //
+        public function groupsProspectsIndexAction(FlattenRoute $route, Request $request) {
+            return $this->forward('ProspectGroupBundle:ProspectGroupAdmin:prospectsIndex', array('route' => $route->getParameter('groups')->getChild('prospects/index'), 'request' => $request));
+        }
+        public function groupsProspectsIndexGridAction(FlattenRoute $route, Request $request) {
+            return $this->forward('ProspectGroupBundle:ProspectGroupAdmin:prospectsIndexGrid', array('route' => $route->getParameter('groups')->getChild('prospects/index/_grid'), 'request' => $request));
+        }
+        public function groupsProspectsNewAction(FlattenRoute $route, Request $request) {
+            return $this->forward('ProspectGroupBundle:ProspectGroupAdmin:prospectsNew', array('route' => $route->getParameter('groups')->getChild('prospects/new'), 'request' => $request));
+        }
+        public function groupsProspectsShowAction(FlattenRoute $route, Request $request) {
+            return $this->forward('ProspectGroupBundle:ProspectGroupAdmin:prospectsShow', array('route' => $route->getParameter('prospects')->getChild('show'), 'request' => $request));
+        }
+        public function groupsProspectsEditAction(FlattenRoute $route, Request $request) {
+            return $this->forward('ProspectGroupBundle:ProspectGroupAdmin:prospectsEdit', array('route' => $route->getParameter('prospects')->getChild('edit'), 'request' => $request));
+        }
+        public function groupsProspectsDeleteAction(FlattenRoute $route, Request $request) {
+            return $this->forward('ProspectGroupBundle:ProspectGroupAdmin:prospectsDelete', array('route' => $route->getParameter('prospects')->getChild('delete'), 'request' => $request));
+        }
+
+        //
         // GROUPS / FIELDS
         //
         public function groupsFieldsIndexAction(FlattenRoute $route, Request $request) {
@@ -84,6 +106,9 @@
         public function campaignsNewAction(FlattenRoute $route, Request $request) {
             return $this->forward('CampaignBundle:CampaignAdmin:new', array('route' => $route->getParameter('clients')->getChild('campaigns/new'), 'request' => $request));
         }
+
+
+
 
 
 

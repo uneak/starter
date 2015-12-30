@@ -92,6 +92,7 @@
          */
         public function __construct() {
             $this->fieldDatas = new ArrayCollection();
+            $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         }
 
 
@@ -110,7 +111,7 @@
          *
          * @return Prospect
          */
-        public function addField(FieldData $fieldData) {
+        public function addFieldData(FieldData $fieldData) {
             $fieldData->setProspect($this);
             $this->fieldDatas[] = $fieldData;
             return $this;
@@ -121,7 +122,7 @@
          *
          * @param FieldData $fieldData
          */
-        public function removeField(FieldData $fieldData) {
+        public function removeFieldData(FieldData $fieldData) {
             $fieldData->setProspect(null);
             $this->fieldDatas->removeElement($fieldData);
         }
@@ -150,6 +151,50 @@
             $this->fieldDatas = $fieldDatas;
             return $this;
         }
+
+
+
+
+
+
+
+
+        public function hasField($property) {
+            /** @var $fieldData FieldData */
+            foreach ($this->fieldDatas as $fieldData) {
+                if ($fieldData->getField()->getSlug() == $property) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        public function getField($property) {
+            /** @var $fieldData FieldData */
+            foreach ($this->fieldDatas as $fieldData) {
+                if ($fieldData->getField()->getSlug() == $property) {
+                    return $fieldData->getValue();
+                }
+            }
+
+            throw new \InvalidArgumentException("Le champs ".$property." n'existe pas pour ce prospect");
+        }
+
+        public function setField($property, $value) {
+            /** @var $fieldData FieldData */
+            foreach ($this->fieldDatas as $fieldData) {
+                if ($fieldData->getField()->getSlug() == $property) {
+                    $fieldData->setValue($value);
+                    return $this;
+                }
+            }
+
+            throw new \InvalidArgumentException("Le champs ".$property." n'existe pas pour ce prospect");
+        }
+
+
+
 
 
 

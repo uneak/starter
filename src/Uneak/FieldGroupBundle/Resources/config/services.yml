@@ -1,0 +1,9 @@
+services:
+
+    uneak.fieldgroup.helper:
+        class: Uneak\FieldGroupBundle\Group\FieldGroupsHelper
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @form.factory
+            - @uneak.prospectmanager
+            - @uneak.constraintsmanager

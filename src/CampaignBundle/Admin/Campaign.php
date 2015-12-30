@@ -18,7 +18,7 @@
 
             $this->setFormType(new CampaignType());
 
-			$this->setMetaData('_icon', 'briefcase');
+			$this->setMetaData('_icon', 'comment');
 			$this->setMetaData('_image', 'imageFile');
 			$this->setMetaData('_label', 'Campaign');
 			$this->setMetaData('_description', 'Gestion des campagnes');

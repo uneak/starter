@@ -11,14 +11,14 @@
 
     class ProspectGroup extends NestedCRUDRoute {
 
-		protected $entity = 'ProspectGroupBundle\Entity\ProspectGroup';
+		protected $entity = 'Uneak\FieldGroupBundle\Entity\FieldGroup';
 
 		public function initialize() {
 			parent::initialize();
 
             $this->setFormType(new ProspectGroupType());
 
-			$this->setMetaData('_icon', 'briefcase');
+			$this->setMetaData('_icon', 'list-alt');
 			$this->setMetaData('_image', 'imageFile');
 			$this->setMetaData('_label', 'Groupe');
 			$this->setMetaData('_description', 'Gestion des groupes');

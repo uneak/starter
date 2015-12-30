@@ -17,7 +17,7 @@
 			parent::initialize();
 
 
-			$this->setMetaData('_icon', 'briefcase');
+			$this->setMetaData('_icon', 'check-square-o');
 			$this->setMetaData('_label', 'Contraintes');
 			$this->setMetaData('_description', 'Gestion des contraintes de validation');
 

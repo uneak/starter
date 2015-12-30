@@ -18,7 +18,7 @@
 
             $this->setFormType(new ClientType());
 
-			$this->setMetaData('_icon', 'briefcase');
+			$this->setMetaData('_icon', 'users');
 			$this->setMetaData('_image', 'imageFile');
 			$this->setMetaData('_label', 'Client');
 			$this->setMetaData('_description', 'Gestion des clients');

@@ -1,13 +1,13 @@
-#parameters:
-#
-#    uneak.prospectmanager.class: Uneak\ProspectBundle\Prospect\ProspectsManager
-#
-#
-#services:
-#
-#    uneak.prospectmanager:
-#        class: %uneak.prospectmanager.class%
-#        arguments:
-#            - @doctrine.orm.entity_manager
-#            - @uneak.fieldsmanager
-#            - @uneak.fielddatasmanager
+parameters:
+
+    uneak.prospectmanager.class: Uneak\ProspectBundle\Prospect\ProspectsManager
+
+
+services:
+
+    uneak.prospectmanager:
+        class: %uneak.prospectmanager.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @uneak.fieldtypesmanager
+            - @uneak.fielddatasmanager

@@ -34,7 +34,7 @@
         protected $id;
 
         /**
-         * @ORM\ManyToOne(targetEntity="\ProspectGroupBundle\Entity\ProspectGroup", cascade={"persist"})
+         * @ORM\ManyToOne(targetEntity="\Uneak\FieldGroupBundle\Entity\FieldGroup", cascade={"persist"})
          * @ORM\JoinColumn(name="group_id", referencedColumnName="id", nullable=false)
          * @NotNull()
          */

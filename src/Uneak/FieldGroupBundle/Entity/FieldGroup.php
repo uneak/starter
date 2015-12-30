@@ -1,6 +1,6 @@
 <?php
 
-	namespace ProspectGroupBundle\Entity;
+	namespace Uneak\FieldGroupBundle\Entity;
 
 	use AppBundle\Traits\DesignationableEntity;
 	use AppBundle\VichUploader\Traits\ImageableEntity;
@@ -13,15 +13,15 @@
 
 
 	/**
-	 * ProspectGroup
+	 * FieldGroup
 	 *
-	 * @ORM\Table(name="ProspectGroup")
-	 * @ORM\Entity(repositoryClass="ProspectGroupBundle\Entity\ProspectGroupRepository")
+	 * @ORM\Table(name="FieldGroup")
+	 * @ORM\Entity(repositoryClass="Uneak\FieldGroupBundle\Entity\FieldGroupRepository")
 	 *
 	 * @Uploadable
 	 *
 	 */
-	class ProspectGroup {
+	class FieldGroup {
 
 		use TimestampableEntity;
 		use ImageableEntity;
