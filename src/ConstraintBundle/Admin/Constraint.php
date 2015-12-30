@@ -45,7 +45,6 @@
 				->setMetaData('_icon', 'list')
 				->setMetaData('_label', 'Liste des contraintes')
 
-				->addRowAction('show', '*/subject/show')
 				->addRowAction('edit', '*/subject/edit')
 				->addRowAction('delete', '*/subject/delete')
 
@@ -98,21 +97,12 @@
 				->setParameterPattern('\d+')
 				->setEnabled(false)
 				->setMetaData('_menu', array(
-					'show'   => '*/subject/show',
 					'edit'   => '*/subject/edit',
 					'delete' => '*/subject/delete',
 				));
 			$this->addChild($subjectRoute);
 
 
-			$showRoute = new NestedAdminRoute('show');
-			$showRoute
-				->setAction('show')
-				->setMetaData('_icon', 'eye')
-			    ->setMetaData('_label', "Voir la contrainte")
-			    ->setMetaData('_description', '{{ entity }}')
-				->setRequirement('_method', 'GET');
-			$subjectRoute->addChild($showRoute);
 
 
 			$editRoute = new NestedAdminRoute('edit');

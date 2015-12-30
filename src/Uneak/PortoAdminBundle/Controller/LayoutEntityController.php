@@ -145,8 +145,9 @@
                     while($entityRoute && !$entityRoute instanceof FlattenEntityRoute) {
                         $entityRoute = $entityRoute->getParent();
                     }
-                    $url = $entityRoute->getChild('show')->getRoutePath();
-
+                    $redirectRoute = $entityRoute->getChild('show');
+                    $url = ($redirectRoute) ? $redirectRoute->getRoutePath() : null;
+                    
 
                     //
                     $event = new LayoutCrudCompletedFormEvent($route, $request, $crudHandler, $form, $url);
@@ -154,8 +155,10 @@
                     $url = $event->getRedirectUrl();
                     //
 
-
-                    return $this->redirect($url);
+                    if ($url) {
+                        return $this->redirect($url);
+                    }
+                    
 
 
                 } else {
@@ -247,7 +250,9 @@
                     $this->addFlash($flash['type'], new PNotify($flash));
 
 
-                    $url = $route->getChild('*/index')->getRoutePath();
+                    $redirectRoute = $route->getChild('*/index');
+                    $url = ($redirectRoute) ? $redirectRoute->getRoutePath() : null;
+
 
                     //
                     $event = new LayoutCrudCompletedFormEvent($route, $request, $crudHandler, $form, $url);
@@ -255,8 +260,10 @@
                     $url = $event->getRedirectUrl();
                     //
 
-
-                    return $this->redirect($url);
+                    if ($url) {
+                        return $this->redirect($url);
+                    }
+                    
 
 
                 } else {
@@ -356,7 +363,9 @@
                     $this->addFlash($flash['type'], new PNotify($flash));
 
 
-                    $url = $route->getChild('*/index')->getRoutePath();
+                    $redirectRoute = $route->getChild('*/index');
+                    $url = ($redirectRoute) ? $redirectRoute->getRoutePath() : null;
+                    
 
                     //
                     $event = new LayoutCrudCompletedFormEvent($route, $request, $crudHandler, $form, $url);
@@ -365,7 +374,9 @@
                     //
 
 
-                    return $this->redirect($url);
+                    if ($url) {
+                        return $this->redirect($url);
+                    }
 
 
                 } else {

@@ -4,6 +4,8 @@
 
     use Symfony\Component\HttpFoundation\Request;
     use Uneak\PortoAdminBundle\Controller\LayoutEntityController;
+    use Uneak\PortoAdminBundle\Event\LayoutCrudCompletedFormEvent;
+    use Uneak\PortoAdminBundle\Event\LayoutCrudEvents;
     use Uneak\RoutesManagerBundle\Routes\FlattenRoute;
     use Uneak\PortoAdminBundle\PNotify\PNotify;
 
@@ -74,5 +76,31 @@
             return parent::newAction($route, $request);
         }
 
+
+        public function editAction(FlattenRoute $route, Request $request) {
+
+            //            $this->dispatcher->addListener(LayoutCrudEvents::INITIALIZE, function (LayoutCrudInitializeEvent $event) {
+            //                $event->setCrudHandler(null);
+            //            });
+
+            //            $this->dispatcher->addListener(LayoutCrudEvents::FORM_INITIALIZE, function (LayoutCrudFormEvent $event) {
+            //                $form = $event->getForm();
+            //                $form->add('submit2', 'submit', array('label' => 'YEP Modifier'));
+            //            });
+
+            $this->dispatcher->addListener(LayoutCrudEvents::FORM_COMPLETE, function (LayoutCrudCompletedFormEvent $event) {
+                $route = $event->getRoute();
+                $url = $route->getChild('*/index')->getRoutePath();
+                $event->setRedirectUrl($url);
+            });
+
+            //
+            //            $this->dispatcher->addListener(LayoutCrudEvents::LAYOUT_BUILD, function (LayoutCrudBuildEvent $event) {
+            //                $layout = $event->getLayout();
+            //            });
+
+
+            return parent::editAction($route, $request);
+        }
 
 	}

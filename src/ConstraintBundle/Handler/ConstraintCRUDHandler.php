@@ -39,17 +39,30 @@
 
             /** @var $field Field*/
             $field = $route->getParameter('fields')->getParameterSubject();
-//            if ($route->hasParameter('typeconstraint')) {
+            $fieldId = $field->getId();
+
+            if ($route->getSlug() == "edit") {
+                $constraintId = $route->getParameter('constraints')->getParameterValue();
+                $constraint = $this->apiHandler->getConstraint($field->getOptions(), $constraintId);
+                $type = $constraint['alias'];
+
+                $id = $fieldId.'/'.$constraintId;
+                $data = $this->apiHandler->get($id);
+                $data = $data['parameters'];
+
+            } else {
                 $type = $route->getParameter('typeconstraint')->getParameterValue();
-//            }
+
+                $id = $fieldId.'/';
+                $data = null;
+            }
+
 
             $constraintData = $this->apiHandler->getConstraintData($type);
 
-
-            $data = null;//$field->getOptions();
-
             $form = $this->apiHandler->getForm($constraintData['alias_config'], $data, $method);
-            $form->add('o_id', 'hidden', array('mapped' => false, 'data' => $field->getId()));
+            $form->add('o_id', 'hidden', array('mapped' => false, 'data' => $id));
+            $form->add('o_type', 'hidden', array('mapped' => false, 'data' => $type));
 
             return $form;
         }
@@ -68,15 +81,15 @@
             foreach ($constraints as $constraint) {
                 $constraintData = $this->apiHandler->getConstraintData($constraint['alias']);
 
-                $html = "<span class='todo-title'>".$constraintData['alias']."</span>";
-                $todo = new Todo($constraintData['id'], $html);
+                $html = "<span class='todo-title'>".$constraintData['label']."</span>";
+                $todo = new Todo($constraint['id'], $html);
 
-                $subjectRoute = $route->getChild('*/subject', array('constraints' => $constraintData['id'] ) );
+                $subjectRoute = $route->getChild('*/subject', array('constraints' => $constraint['id'] ) );
                 $rowActions = $subjectRoute->getMetaData('_menu');
 
                 $menu = new Menu();
                 $menu->setTemplateAlias("block_template_grid_actions_menu");
-                $root = $this->menuHelper->createMenu($rowActions, $route, array('constraints' => $constraintData['id']));
+                $root = $this->menuHelper->createMenu($rowActions, $route, array('constraints' => $constraint['id']));
                 $menu->setRoot($root);
 
                 $todo->setMenu($menu);

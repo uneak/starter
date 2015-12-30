@@ -32,15 +32,10 @@
          * @var MenuHelper
          */
         protected $menuHelper;
-        /**
-         * @var FieldTypesManager
-         */
-        private $fieldTypesManager;
 
-        public function __construct(APIHandlerInterface $apiHandler, MenuHelper $menuHelper, FieldTypesManager $fieldTypesManager) {
+        public function __construct(APIHandlerInterface $apiHandler, MenuHelper $menuHelper) {
 			parent::__construct($apiHandler);
             $this->menuHelper = $menuHelper;
-            $this->fieldTypesManager = $fieldTypesManager;
         }
 
 
@@ -56,7 +51,7 @@
             $field = $route->getParameter('fields')->getParameterSubject();
             $options = $field->getOptions();
 
-            $fieldType = $this->fieldTypesManager->getFieldType($field->getFieldType());
+            $fieldType = $this->apiHandler->getFieldType($field->getFieldType());
             $form = $this->apiHandler->getForm($fieldType['alias_config'], $options, $method);
             $form->add('o_id', 'hidden', array('mapped' => false, 'data' => $field->getId()));
 

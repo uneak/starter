@@ -22,6 +22,15 @@
             $options['constraints'] = $constraints;
         }
 
+
+        public function getConstraint(array &$options = null, $id) {
+            if (!$options || !isset($options['constraints']) || !isset($options['constraints'][$id])) {
+                return null;
+            }
+            return $options['constraints'][$id];
+        }
+
+
         public function addConstraint(array &$options = null, array $constraint) {
             if (!$options) {
                 $options = array();
@@ -30,14 +39,25 @@
                 $options['constraints'] = array();
             }
 
-            $options['constraints'][$constraint['id']] = $constraint;
+            if ($constraint['id'] === '') {
+                if (count($options['constraints'])) {
+                    $keys = array_keys($options['constraints']);
+                    $last = max($keys);
+                    $id = $last + 1;
+                } else {
+                    $id = 1;
+                }
+                $constraint['id'] = $id;
+            } else {
+                $id = $constraint['id'];
+            }
+            $options['constraints'][$id] = $constraint;
         }
 
         public function removeConstraint(array &$options = null, $id) {
             if (!$options || !isset($options['constraints'])) {
                 return;
             }
-
             unset($options['constraints'][$id]);
         }
 

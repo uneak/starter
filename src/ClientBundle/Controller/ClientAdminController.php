@@ -60,6 +60,15 @@
             return $this->forward('ProspectGroupFieldBundle:ProspectGroupFieldAdmin:constraintsIndex', array('route' => $route->getParameter('fields')->getChild('constraints/index'), 'request' => $request));
         }
 
+        public function groupsFieldsConstraintsNewAction(FlattenRoute $route, Request $request) {
+            return $this->forward('ProspectGroupFieldBundle:ProspectGroupFieldAdmin:constraintsNew', array('route' => $route->getParameter('fields')->getChild('constraints/new'), 'request' => $request));
+        }
+
+        public function groupsFieldsConstraintsTypenewAction(FlattenRoute $route, Request $request) {
+            return $this->forward('ProspectGroupFieldBundle:ProspectGroupFieldAdmin:constraintsTypenew', array('route' => $route->getParameter('typeconstraint')->getChild('new'), 'request' => $request));
+        }
+
+
 
         //
         // CAMPAIGNS

@@ -27,6 +27,9 @@
         public function constraintsTypenewAction(FlattenRoute $route, Request $request) {
             return $this->forward('ConstraintBundle:ConstraintAdmin:typenew', array('route' => $route->getParameter('typeconstraint')->getChild('new'), 'request' => $request));
         }
+        public function constraintsEditAction(FlattenRoute $route, Request $request) {
+            return $this->forward('ConstraintBundle:ConstraintAdmin:edit', array('route' => $route->getParameter('constraints')->getChild('edit'), 'request' => $request));
+        }
 
 
 

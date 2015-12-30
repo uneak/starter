@@ -96,30 +96,6 @@
 
 
 
-        public function editAction(FlattenRoute $route, Request $request) {
-
-//            $this->dispatcher->addListener(LayoutCrudEvents::INITIALIZE, function (LayoutCrudInitializeEvent $event) {
-//                $event->setCrudHandler(null);
-//            });
-
-//            $this->dispatcher->addListener(LayoutCrudEvents::FORM_INITIALIZE, function (LayoutCrudFormEvent $event) {
-//                $form = $event->getForm();
-//                $form->add('submit2', 'submit', array('label' => 'YEP Modifier'));
-//            });
-//
-//            $this->dispatcher->addListener(LayoutCrudEvents::FORM_COMPLETE, function (LayoutCrudCompletedFormEvent $event) {
-//                $url = $event->getRedirectUrl();
-//                $event->setRedirectUrl($url);
-//            });
-//
-//            $this->dispatcher->addListener(LayoutCrudEvents::LAYOUT_BUILD, function (LayoutCrudBuildEvent $event) {
-//                $layout = $event->getLayout();
-//            });
-
-
-            return parent::editAction($route, $request);
-        }
-
 
 //
 //

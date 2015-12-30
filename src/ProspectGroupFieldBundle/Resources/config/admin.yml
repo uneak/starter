@@ -20,6 +20,7 @@ services:
         arguments:
             - @form.factory
             - @doctrine.orm.entity_manager
+            - @uneak.fieldtypesmanager
         calls:
             - [ setEntityClass, [ Uneak\FieldBundle\Entity\Field ] ]
 
@@ -28,4 +29,3 @@ services:
         arguments:
             - @uneak.admin.field.api.handler
             - @uneak.routesmanager.menu.helper
-            - @uneak.fieldtypesmanager

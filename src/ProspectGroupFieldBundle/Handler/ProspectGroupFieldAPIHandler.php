@@ -7,6 +7,7 @@ use Uneak\FieldBundle\Entity\Field;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Uneak\FieldTypeBundle\Field\FieldTypesManager;
 use Uneak\PortoAdminBundle\Exception\NotFoundException;
 use Uneak\PortoAdminBundle\Handler\EntityAPIHandler;
 
@@ -17,16 +18,25 @@ class ProspectGroupFieldAPIHandler extends EntityAPIHandler {
      */
     protected $em;
     protected $repository;
+    /**
+     * @var \Uneak\FieldTypeBundle\Field\FieldTypesManager
+     */
+    private $fieldTypesManager;
 
 
-    public function __construct(FormFactoryInterface $formFactory, EntityManager $em)
+    public function __construct(FormFactoryInterface $formFactory, EntityManager $em, FieldTypesManager $fieldTypesManager)
     {
         parent::__construct($formFactory, $em);
 
+        $this->fieldTypesManager = $fieldTypesManager;
     }
 
     public function createEntity() {
         return new Field();
+    }
+
+    public function getFieldType($alias) {
+        return $this->fieldTypesManager->getFieldType($alias);
     }
 
     public function persistConfig(FormInterface $form) {
