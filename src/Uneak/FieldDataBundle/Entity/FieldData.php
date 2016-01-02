@@ -6,6 +6,7 @@
 	use Gedmo\Timestampable\Traits\TimestampableEntity;
 	use Gedmo\Mapping\Annotation as Gedmo;
     use Uneak\FieldBundle\Entity\Field;
+    use Uneak\ProspectBundle\Entity\Prospect;
 
 
     /**
@@ -62,7 +63,7 @@
 		}
 
 		/**
-		 * @return mixed
+		 * @return Field
 		 */
 		public function getField() {
 			return $this->field;
@@ -76,7 +77,7 @@
 		}
 
 		/**
-		 * @return mixed
+		 * @return Prospect
 		 */
 		public function getProspect() {
 			return $this->prospect;

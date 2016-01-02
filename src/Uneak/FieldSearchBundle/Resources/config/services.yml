@@ -1,0 +1,12 @@
+services:
+
+
+    uneak.fieldsearchmanager:
+        class: Uneak\FieldSearchBundle\Field\FieldSearchManager
+
+
+    uneak.fieldtype.config.type.text:
+        class: Uneak\FieldSearchBundle\Field\SearchType\TextSearchType
+        tags:
+            -  { name: uneak.fieldsearchmanager.field, alias_search: "search_text", alias_field: "text", field_data: "string" }
+

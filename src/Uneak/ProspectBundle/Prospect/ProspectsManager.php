@@ -3,7 +3,8 @@
 	namespace Uneak\ProspectBundle\Prospect;
 
 	use Uneak\FieldBundle\Entity\Field;
-	use Uneak\FieldDataBundle\Entity\FieldData;
+    use Uneak\FieldBundle\Field\FieldsHelper;
+    use Uneak\FieldDataBundle\Entity\FieldData;
 
     use Uneak\FieldTypeBundle\Field\FieldTypesManager;
     use Uneak\ProspectBundle\Entity\Prospect;
@@ -13,7 +14,6 @@
 	use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 	use Symfony\Component\Security\Core\User\UserInterface;
 	use Symfony\Component\Security\Core\User\UserProviderInterface;
-	use Uneak\FieldBundle\Field\FieldsManager;
 	use Uneak\FieldDataBundle\FieldData\FieldDatasManager;
 
 
@@ -31,24 +31,29 @@
 		 * @var FieldDatasManager
 		 */
 		private $fieldDatasManager;
+        /**
+         * @var FieldsHelper
+         */
+        private $fieldsHelper;
 
 
-		public function __construct(EntityManager $em, FieldTypesManager $fieldTypesManager, FieldDatasManager $fieldDatasManager) {
+        public function __construct(EntityManager $em, FieldTypesManager $fieldTypesManager, FieldDatasManager $fieldDatasManager, FieldsHelper $fieldsHelper) {
 			$this->em = $em;
 			$this->fieldTypesManager = $fieldTypesManager;
 			$this->fieldDatasManager = $fieldDatasManager;
-		}
+            $this->fieldsHelper = $fieldsHelper;
+        }
 
 
 
-        public function findProspectsFieldsByGroup($group = null) {
+        public function findProspectsFieldsByGroup($slug = null) {
 
             $qb = $this->em->createQueryBuilder();
             $qb->select('field');
             $qb->from('UneakFieldBundle:Field', 'field');
             $qb->leftJoin('UneakFieldDataBundle:FieldData', 'fieldData', Join::WITH, $qb->expr()->eq('fieldData.field', 'field'));
 
-            if ($group) {
+            if ($slug) {
                 $qbProspect = $this->em->createQueryBuilder();
                 $qbProspect->select('p_prospect');
                 $qbProspect->distinct(true);
@@ -60,7 +65,7 @@
                 //
                 $qb->innerJoin('fieldData.prospect', 'prospect');
                 $qb->where($qb->expr()->in('prospect.id', $qbProspect->getDQL()));
-                $qb->setParameter("groupSlug", $group);
+                $qb->setParameter("groupSlug", $slug);
             }
 
             $qb->orderBy("field.sort", "ASC");
@@ -69,8 +74,6 @@
 
             return $qb->getQuery()->getResult();
         }
-
-
 
 
 
@@ -148,17 +151,6 @@
             return $qb;
         }
 
-        public function findFieldsByProspects(array $prospectsId) {
-            $qb = $this->em->createQueryBuilder();
-            $qb->select('field');
-            $qb->from('UneakFieldBundle:Field', 'field');
-            $qb->leftJoin('UneakFieldDataBundle:FieldData', 'fieldData', Join::WITH, $qb->expr()->eq('fieldData.field', 'field'));
-            $qb->innerJoin('fieldData.prospect', 'prospect');
-            $qb->where($qb->expr()->in('prospect.id', $prospectsId));
-            $qb->orderBy("field.sort", "ASC");
-
-            return $qb->getQuery()->getResult();
-        }
 
 
 
@@ -177,20 +169,6 @@
 
 
 
-
-		public function findProspectByFieldset($group) {
-			$qb = $this->em->createQueryBuilder();
-			$qb->select('prospect');
-			$qb->distinct(true);
-			$qb->from('UneakProspectBundle:Prospect', 'prospect');
-			$qb->innerJoin('prospect.fields', 'fieldData');
-			$qb->innerJoin('fieldData.field', 'field');
-			$qb->innerJoin('field.group', 'fieldGroup');
-			$qb->where($qb->expr()->eq('fieldGroup.slug', ':group'));
-			$qb->setParameter("group", $group);
-
-			return $qb->getQuery()->getResult();
-		}
 
 
 
@@ -205,51 +183,36 @@
 			return $data;
 		}
 
-		protected function _findFields($group) {
-			$qb = $this->em->createQueryBuilder();
-			$qb->select('field');
-			$qb->from('UneakFieldBundle:Field', 'field');
-			$qb->leftJoin('field.group', 'fieldGroup');
-			$qb->where($qb->expr()->eq('fieldGroup.slug', ':group'));
-			$qb->setParameter('group', $group);
-			$qb->orderBy("field.sort", "ASC");
-			return $qb->getQuery()->getResult();
-		}
 
 
 
-		public function setField(Prospect $prospect, $fieldSlug, $value = null) {
-			if ($prospect->hasField($fieldSlug)) {
-				$prospect->setField($fieldSlug, $value);
 
-			} else {
+        public function setField(Prospect $prospect, $field, $value = null) {
 
-				$qb = $this->em->createQueryBuilder();
-				$qb->select('field');
-				$qb->from('UneakFieldBundle:Field', 'field');
-				$qb->where($qb->expr()->eq('field.slug', ':fieldSlug'));
-				$qb->setParameter('fieldSlug', $fieldSlug);
-				$field = $qb->getQuery()->getOneOrNullResult();
+            try {
+                $prospect->setField($field, $value);
+            } catch (\InvalidArgumentException $e) {
+                if ($field instanceof Field) {
+                    $fieldDataClass = $this->fieldDatasManager->getFieldDataClass($field->getType());
+                    $fieldData = new $fieldDataClass($field, $value);
+                    $prospect->addFieldData($fieldData);
+                } else {
+                    throw new \InvalidArgumentException("Le champs ".$field." n'existe pas pour ce prospect");
+                }
 
-				if (!$field) {
-					// TODO: exeption
-					throw new \Exception("Le champ ".$fieldSlug." n'existe pas");
-				}
+            }
 
-				$fieldInfo = $this->fieldTypesManager->getFieldType($field->getType());
-				$fieldDataClass = $this->fieldDatasManager->getFieldDataClass($fieldInfo['field_data']);
-				$fieldData = new $fieldDataClass($field, $value);
-				$prospect->addFieldData($fieldData);
-			}
-			return $prospect;
-		}
+            return $prospect;
+        }
+
+
 
 		public function createProspect($group = null) {
 			$prospect = new Prospect();
 			$prospect->setCode($this->_generateCode());
 
 			if ($group) {
-				$fields = $this->_findFields($group);
+				$fields = $this->fieldsHelper->findFieldsByGroup($group);
 				/** @var $field Field */
 				foreach ($fields as $field) {
 					$fieldInfo = $this->fieldTypesManager->getFieldType($field->getType());

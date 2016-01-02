@@ -6,6 +6,11 @@ services:
         tags:
             -  { name: form.type, alias: "fielddatas_selector" }
 
+    uneak.fielddata.helper:
+        class: Uneak\FieldDataBundle\FieldData\FieldDataHelper
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @uneak.fielddatasmanager
 
     uneak.fielddatasmanager:
         class: Uneak\FieldDataBundle\FieldData\FieldDatasManager

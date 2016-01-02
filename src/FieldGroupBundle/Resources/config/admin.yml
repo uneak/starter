@@ -1,0 +1,30 @@
+parameters:
+    uneak.admin.group.admin.class: FieldGroupBundle\Admin\FieldGroup
+    uneak.admin.group.api.handler.class: FieldGroupBundle\Handler\FieldGroupAPIHandler
+    uneak.admin.group.crud.handler.class: FieldGroupBundle\Handler\FieldGroupCRUDHandler
+
+services:
+
+    uneak.admin.group.admin:
+        class: %uneak.admin.group.admin.class%
+        arguments: [ groups ]
+        calls:
+            - [ setController, [ FieldGroupBundle\Controller\FieldGroupAdminController ] ]
+            - [ setHandler, [ @uneak.admin.group.crud.handler ] ]
+            - [ setParentPath, [ "clients.subject" ] ]
+        tags:
+            -  { name: uneak.routesmanager.route }
+
+    uneak.admin.group.api.handler:
+        class: %uneak.admin.group.api.handler.class%
+        arguments:
+            - @form.factory
+            - @doctrine.orm.entity_manager
+        calls:
+            - [ setEntityClass, [ Uneak\FieldGroupBundle\Entity\FieldGroup ] ]
+
+
+    uneak.admin.group.crud.handler:
+        class: %uneak.admin.group.crud.handler.class%
+        arguments:
+            - @uneak.admin.group.api.handler

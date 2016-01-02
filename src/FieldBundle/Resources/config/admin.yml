@@ -1,0 +1,29 @@
+parameters:
+    uneak.admin.field.admin.class: FieldBundle\Admin\Field
+    uneak.admin.field.api.handler.class: FieldBundle\Handler\FieldAPIHandler
+    uneak.admin.field.crud.handler.class: FieldBundle\Handler\FieldCRUDHandler
+
+services:
+
+    uneak.admin.field.admin:
+        class: %uneak.admin.field.admin.class%
+        arguments: [ fields ]
+        calls:
+            - [ setController, [ FieldBundle\Controller\FieldAdminController ] ]
+            - [ setHandler, [ @uneak.admin.field.crud.handler ] ]
+            - [ setParentPath, [ "groups.subject" ] ]
+        tags:
+            -  { name: uneak.routesmanager.route }
+
+    uneak.admin.field.api.handler:
+        class: %uneak.admin.field.api.handler.class%
+        arguments:
+            - @form.factory
+            - @uneak.field.helper
+            - @uneak.fieldtypes.helper
+
+    uneak.admin.field.crud.handler:
+        class: %uneak.admin.field.crud.handler.class%
+        arguments:
+            - @uneak.admin.field.api.handler
+            - @uneak.routesmanager.menu.helper

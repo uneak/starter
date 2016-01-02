@@ -1,0 +1,5 @@
+api_field:
+    type:     rest
+    resource: FieldBundle\Controller\FieldApiController
+    prefix: v1
+    name_prefix: api_v1_field_

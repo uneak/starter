@@ -7,6 +7,7 @@
 	use Uneak\RoutesManagerBundle\Routes\NestedCRUDRoute;
 	use Uneak\RoutesManagerBundle\Routes\NestedEntityRoute;
 	use Uneak\RoutesManagerBundle\Routes\NestedGridRoute;
+    use Uneak\RoutesManagerBundle\Routes\NestedRoute;
 
     class Prospect extends NestedCRUDRoute {
 
@@ -24,6 +25,7 @@
 			$this->setMetaData('_menu', array(
 				'index'  => '*/index',
 				'new'    => '*/new',
+				'import_csv'    => '*/import/csv',
 			));
 
 
@@ -66,12 +68,42 @@
 				->setAction('new')
 				->setMetaData('_icon', 'plus-circle')
                 ->setMetaData('_label', 'Nouveau prospect')
-//                ->setFormType(new ProspectNewType());
 			;
 			$this->addChild($newRoute);
 
 
-			$subjectRoute = new NestedEntityRoute('subject');
+            $importRoute = new NestedRoute('import');
+            $importRoute
+                ->setPath('import')
+                ->setAction('import')
+                ->setEnabled(false)
+            ;
+            $this->addChild($importRoute);
+
+
+            $importCSVRoute = new NestedAdminRoute('csv');
+            $importCSVRoute
+                ->setPath('csv')
+                ->setAction('csv')
+                ->setMetaData('_icon', 'download')
+                ->setMetaData('_label', 'Importation CSV')
+            ;
+            $importRoute->addChild($importCSVRoute);
+
+
+
+            $importCSVProceedRoute = new NestedAdminRoute('proceed');
+            $importCSVProceedRoute
+                ->setPath('proceed')
+                ->setAction('proceed')
+                ->setMetaData('_icon', 'spinner')
+                ->setMetaData('_label', 'Processus d\'importation')
+            ;
+            $importCSVRoute->addChild($importCSVProceedRoute);
+
+
+
+            $subjectRoute = new NestedEntityRoute('subject');
 			$subjectRoute
 				->setParameterName($this->getId())
 				->setParameterPattern('\d+')

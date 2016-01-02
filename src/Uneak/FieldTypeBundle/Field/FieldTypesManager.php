@@ -29,13 +29,13 @@ class FieldTypesManager {
 	}
 
 	public function getFieldTypesByFieldData($fieldData) {
-		$fields = array();
+		$fieldTypes = array();
 		foreach ($this->fieldTypes as $field) {
 			if ($field['field_data'] == $fieldData) {
-				$fields['alias_field'] = $field;
+				$fieldTypes[$field['alias_field']] = $field;
 			}
 		}
-		return $fields;
+		return $fieldTypes;
 	}
 
 	public function getFieldType($alias) {

@@ -9,7 +9,10 @@ services:
 
     uneak.fieldtypes.helper:
         class: Uneak\FieldTypeBundle\Field\FieldTypesHelper
-        arguments: [@uneak.constraints.helper]
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @form.factory
+            - @uneak.fieldtypesmanager
 
     uneak.fieldtypesmanager:
         class: Uneak\FieldTypeBundle\Field\FieldTypesManager

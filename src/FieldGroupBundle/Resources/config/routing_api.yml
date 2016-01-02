@@ -1,0 +1,5 @@
+api_group:
+    type:     rest
+    resource: FieldGroupBundle\Controller\FieldGroupApiController
+    prefix: v1
+    name_prefix: api_v1_group_

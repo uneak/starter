@@ -4,11 +4,13 @@
 
 	use AppBundle\Traits\DesignationableEntity;
 	use AppBundle\VichUploader\Traits\ImageableEntity;
-	use Doctrine\ORM\Mapping as ORM;
+    use CampaignBundle\Entity\Campaign;
+    use Doctrine\Common\Collections\ArrayCollection;
+    use Doctrine\ORM\Mapping as ORM;
 	use Gedmo\Timestampable\Traits\TimestampableEntity;
-	use Symfony\Component\HttpFoundation\File\File;
 	use Gedmo\Mapping\Annotation as Gedmo;
-	use Vich\UploaderBundle\Mapping\Annotation\Uploadable;
+    use Uneak\FieldGroupBundle\Entity\FieldGroup;
+    use Vich\UploaderBundle\Mapping\Annotation\Uploadable;
 
 
 	/**
@@ -40,7 +42,17 @@
 		 * @ORM\OneToMany(targetEntity="\ClientBundle\Entity\ClientUser", mappedBy="client", cascade={"persist", "remove"})
 		 */
 		protected $clientUsers;
-		
+
+        /**
+         * @ORM\OneToMany(targetEntity="\Uneak\FieldGroupBundle\Entity\FieldGroup", mappedBy="client", cascade={"persist", "remove"})
+         */
+        protected $groups;
+
+        /**
+         * @ORM\OneToMany(targetEntity="\CampaignBundle\Entity\Campaign", mappedBy="client", cascade={"persist", "remove"})
+         */
+        protected $campaigns;
+
 		/**
 		 * @var boolean
 		 */
@@ -51,7 +63,9 @@
 		 * Constructor
 		 */
 		public function __construct() {
-			$this->clientUsers = new \Doctrine\Common\Collections\ArrayCollection();
+			$this->clientUsers = new ArrayCollection();
+			$this->groups = new ArrayCollection();
+			$this->campaigns = new ArrayCollection();
 		}
 
 
@@ -83,20 +97,19 @@
 		/**
 		 * Get clientUsers
 		 *
-		 * @return \Doctrine\Common\Collections\Collection
+		 * @return ArrayCollection
 		 */
 		public function getClientUsers() {
 			return $this->clientUsers;
 		}
 
-
 		/**
 		 * Set clientUsers
-		 * @param \Doctrine\Common\Collections\ArrayCollection
+		 * @param ArrayCollection
 		 *
 		 * @return Client
 		 */
-		public function setClientUsers(\Doctrine\Common\Collections\ArrayCollection $clientUsers) {
+		public function setClientUsers(ArrayCollection $clientUsers) {
 			foreach ($clientUsers as $clientUser) {
 				$clientUser->setClient($this);
 			}
@@ -105,11 +118,118 @@
 		}
 
 
-		
-		
-		
 
-		public function __toString() {
+
+
+
+
+        /**
+         * Add groups
+         *
+         * @param FieldGroup $group
+         *
+         * @return Client
+         */
+        public function addGroup(FieldGroup $group) {
+            $group->setClient($this);
+            $this->groups[] = $group;
+            return $this;
+        }
+
+        /**
+         * Remove groups
+         *
+         * @param FieldGroup $group
+         */
+        public function removeGroup(FieldGroup $group) {
+            $group->setClient(null);
+            $this->groups->removeElement($group);
+        }
+
+        /**
+         * Get groups
+         *
+         * @return ArrayCollection
+         */
+        public function getGroups() {
+            return $this->groups;
+        }
+
+        /**
+         * Set groups
+         * @param ArrayCollection
+         *
+         * @return Client
+         */
+        public function setGroups(ArrayCollection $groups) {
+            foreach ($groups as $group) {
+                $group->setClient($this);
+            }
+            $this->$groups = $groups;
+            return $this;
+        }
+
+
+
+
+
+
+
+        /**
+         * Add campaigns
+         *
+         * @param Campaign $campaign
+         *
+         * @return Client
+         */
+        public function addCampaign(Campaign $campaign) {
+            $campaign->setClient($this);
+            $this->campaigns[] = $campaign;
+            return $this;
+        }
+
+        /**
+         * Remove campaigns
+         *
+         * @param Campaign $campaign
+         */
+        public function removeCampaign(Campaign $campaign) {
+            $campaign->setClient(null);
+            $this->campaigns->removeElement($campaign);
+        }
+
+        /**
+         * Get campaigns
+         *
+         * @return ArrayCollection
+         */
+        public function getCampaigns() {
+            return $this->campaigns;
+        }
+
+        /**
+         * Set campaigns
+         * @param ArrayCollection
+         *
+         * @return Client
+         */
+        public function setCampaigns(ArrayCollection $campaigns) {
+            foreach ($campaigns as $campaign) {
+                $campaign->setClient($this);
+            }
+            $this->$campaigns = $campaigns;
+            return $this;
+        }
+
+
+
+
+
+
+
+
+
+        public function __toString() {
 			return $this->getLabel();
 		}
 

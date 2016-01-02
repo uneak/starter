@@ -39,32 +39,14 @@
 
             /** @var $field Field*/
             $field = $route->getParameter('fields')->getParameterSubject();
-            $fieldId = $field->getId();
 
             if ($route->getSlug() == "edit") {
-                $constraintId = $route->getParameter('constraints')->getParameterValue();
-                $constraint = $this->apiHandler->getConstraint($field->getOptions(), $constraintId);
-                $type = $constraint['alias'];
-
-                $id = $fieldId.'/'.$constraintId;
-                $data = $this->apiHandler->get($id);
-                $data = $data['parameters'];
-
+                $idOrType = $route->getParameter('constraints')->getParameterValue();
             } else {
-                $type = $route->getParameter('typeconstraint')->getParameterValue();
-
-                $id = $fieldId.'/';
-                $data = null;
+                $idOrType = $route->getParameter('typeconstraint')->getParameterValue();
             }
 
-
-            $constraintData = $this->apiHandler->getConstraintData($type);
-
-            $form = $this->apiHandler->getForm($constraintData['alias_config'], $data, $method);
-            $form->add('o_id', 'hidden', array('mapped' => false, 'data' => $id));
-            $form->add('o_type', 'hidden', array('mapped' => false, 'data' => $type));
-
-            return $form;
+            return $this->apiHandler->getForm($idOrType, $field, $method);
         }
 
 
@@ -74,8 +56,7 @@
             /** @var $field Field*/
             $field = $route->getParameter('fields')->getParameterSubject();
 
-            $options = $field->getOptions();
-            $constraints = $this->apiHandler->getConstraints($options);
+            $constraints = $this->apiHandler->getConstraints($field);
 
             $todos = new Todos($field->getSlug());
             foreach ($constraints as $constraint) {

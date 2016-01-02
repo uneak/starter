@@ -41,6 +41,7 @@
                 new Uneak\FieldTypeBundle\UneakFieldTypeBundle(),
                 new Uneak\FieldGroupBundle\UneakFieldGroupBundle(),
                 new Uneak\ConstraintBundle\UneakConstraintBundle(),
+                new Uneak\FieldSearchBundle\UneakFieldSearchBundle(),
 				// OAUTH
 				new JMS\SerializerBundle\JMSSerializerBundle(),
 				new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
@@ -55,9 +56,9 @@
                 new UserBundle\UserBundle(),
                 new ClientBundle\ClientBundle(),
                 new CampaignBundle\CampaignBundle(),
-                new ProspectGroupBundle\ProspectGroupBundle(),
+                new FieldGroupBundle\FieldGroupBundle(),
                 new ProspectBundle\ProspectBundle(),
-                new ProspectGroupFieldBundle\ProspectGroupFieldBundle(),
+                new FieldBundle\FieldBundle(),
                 new ConstraintBundle\ConstraintBundle(),
 			);
 

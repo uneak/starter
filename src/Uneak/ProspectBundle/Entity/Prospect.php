@@ -7,6 +7,7 @@
 	use Gedmo\Timestampable\Traits\TimestampableEntity;
 	use Gedmo\Mapping\Annotation as Gedmo;
     use Symfony\Component\Security\Core\User\UserInterface;
+    use Uneak\FieldBundle\Entity\Field;
     use Uneak\FieldDataBundle\Entity\FieldData;
     use Vich\UploaderBundle\Mapping\Annotation\Uploadable;
 
@@ -55,7 +56,7 @@
 
 
         /**
-         * @ORM\OneToMany(targetEntity="\Uneak\FieldDataBundle\Entity\FieldData", mappedBy="prospect", cascade={"persist", "remove"})
+         * @ORM\OneToMany(targetEntity="\Uneak\FieldDataBundle\Entity\FieldData", mappedBy="prospect", orphanRemoval=true, cascade={"persist", "remove"})
          */
         protected $fieldDatas;
 
@@ -161,20 +162,49 @@
 
         public function hasField($property) {
             /** @var $fieldData FieldData */
-            foreach ($this->fieldDatas as $fieldData) {
-                if ($fieldData->getField()->getSlug() == $property) {
-                    return true;
+            if (is_string($property)) {
+                foreach ($this->fieldDatas as $fieldData) {
+                    if ($fieldData->getField()->getSlug() == $property) {
+                        return true;
+                    }
+                }
+            } else if ($property instanceof Field) {
+                foreach ($this->fieldDatas as $fieldData) {
+                    if ($fieldData->getField() == $property) {
+                        return true;
+                    }
+                }
+            } else if (is_numeric($property)) {
+                foreach ($this->fieldDatas as $fieldData) {
+                    if ($fieldData->getField()->getId() == $property) {
+                        return true;
+                    }
                 }
             }
+
             return false;
         }
 
 
         public function getField($property) {
             /** @var $fieldData FieldData */
-            foreach ($this->fieldDatas as $fieldData) {
-                if ($fieldData->getField()->getSlug() == $property) {
-                    return $fieldData->getValue();
+            if (is_string($property)) {
+                foreach ($this->fieldDatas as $fieldData) {
+                    if ($fieldData->getField()->getSlug() == $property) {
+                        return $fieldData->getValue();
+                    }
+                }
+            } else if ($property instanceof Field) {
+                foreach ($this->fieldDatas as $fieldData) {
+                    if ($fieldData->getField() == $property) {
+                        return $fieldData->getValue();
+                    }
+                }
+            } else if (is_numeric($property)) {
+                foreach ($this->fieldDatas as $fieldData) {
+                    if ($fieldData->getField()->getId() == $property) {
+                        return $fieldData->getValue();
+                    }
                 }
             }
 
@@ -183,10 +213,26 @@
 
         public function setField($property, $value) {
             /** @var $fieldData FieldData */
-            foreach ($this->fieldDatas as $fieldData) {
-                if ($fieldData->getField()->getSlug() == $property) {
-                    $fieldData->setValue($value);
-                    return $this;
+            if (is_string($property)) {
+                foreach ($this->fieldDatas as $fieldData) {
+                    if ($fieldData->getField()->getSlug() == $property) {
+                        $fieldData->setValue($value);
+                        return $this;
+                    }
+                }
+            } else if ($property instanceof Field) {
+                foreach ($this->fieldDatas as $fieldData) {
+                    if ($fieldData->getField() == $property) {
+                        $fieldData->setValue($value);
+                        return $this;
+                    }
+                }
+            } else if (is_numeric($property)) {
+                foreach ($this->fieldDatas as $fieldData) {
+                    if ($fieldData->getField()->getId() == $property) {
+                        $fieldData->setValue($value);
+                        return $this;
+                    }
                 }
             }
 

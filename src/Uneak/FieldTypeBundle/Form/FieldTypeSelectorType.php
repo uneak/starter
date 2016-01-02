@@ -28,6 +28,9 @@
 
             $resolver->setDefaults(array(
                 'choices' => $choices,
+                'required'    => false,
+                'placeholder' => 'Champ par défaut',
+                'empty_data'  => null
             ));
         }
 

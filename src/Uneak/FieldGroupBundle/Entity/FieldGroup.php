@@ -4,12 +4,14 @@
 
 	use AppBundle\Traits\DesignationableEntity;
 	use AppBundle\VichUploader\Traits\ImageableEntity;
-	use Doctrine\ORM\Mapping as ORM;
+    use Doctrine\Common\Collections\ArrayCollection;
+    use Doctrine\ORM\Mapping as ORM;
 	use Gedmo\Timestampable\Traits\TimestampableEntity;
 	use Symfony\Component\HttpFoundation\File\File;
 	use Gedmo\Mapping\Annotation as Gedmo;
 	use Symfony\Component\Validator\Constraints\NotNull;
-	use Vich\UploaderBundle\Mapping\Annotation\Uploadable;
+    use Uneak\FieldBundle\Entity\Field;
+    use Vich\UploaderBundle\Mapping\Annotation\Uploadable;
 
 
 	/**
@@ -44,11 +46,23 @@
 		 */
 		protected $client;
 
+        /**
+         * @ORM\OneToMany(targetEntity="\Uneak\FieldBundle\Entity\Field", mappedBy="group", cascade={"persist", "remove"})
+         */
+        protected $fields;
+
 		/**
 		 * @ORM\Column(name="enabled", type="boolean")
 		 */
 		protected $enabled = false;
 
+
+        /**
+         * Constructor
+         */
+        public function __construct() {
+            $this->fields = new ArrayCollection();
+        }
 
 
 		public function __toString() {
@@ -64,7 +78,64 @@
 		}
 
 
-		/**
+
+
+
+
+
+        /**
+         * Add fields
+         *
+         * @param Field $field
+         *
+         * @return FieldGroup
+         */
+        public function addField(Field $field) {
+            $field->setGroup($this);
+            $this->fields[] = $field;
+            return $this;
+        }
+
+        /**
+         * Remove fields
+         *
+         * @param Field $field
+         */
+        public function removeField(Field $field) {
+            $field->setGroup(null);
+            $this->fields->removeElement($field);
+        }
+
+        /**
+         * Get fields
+         *
+         * @return ArrayCollection
+         */
+        public function getFields() {
+            return $this->fields;
+        }
+
+        /**
+         * Set fields
+         * @param ArrayCollection
+         *
+         * @return FieldGroup
+         */
+        public function setFields(ArrayCollection $fields) {
+            foreach ($fields as $field) {
+                $field->setGroup($this);
+            }
+            $this->$fields = $fields;
+            return $this;
+        }
+
+
+
+
+
+
+
+        /**
 		 * @return mixed
 		 */
 		public function getClient() {

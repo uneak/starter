@@ -9,6 +9,10 @@ services:
 
     uneak.constraints.helper:
         class: Uneak\ConstraintBundle\Constraint\ConstraintsHelper
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @form.factory
+            - @uneak.constraintsmanager
 
     uneak.constraintsmanager:
         class: Uneak\ConstraintBundle\Constraint\ConstraintsManager

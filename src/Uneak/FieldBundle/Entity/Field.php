@@ -64,8 +64,7 @@
 
 
         /**
-         * @ORM\Column(name="field_type", type="string", length=128, nullable=false)
-         * @NotNull()
+         * @ORM\Column(name="field_type", type="string", length=128, nullable=true)
          */
         protected $fieldType;
 

@@ -12,21 +12,4 @@
 	 */
 	class FieldRepository extends APIRepository {
 
-        public function findFields($group)
-        {
-            $qb = $this->_em->createQueryBuilder();
-            $qb
-                ->select('field')
-                ->from('UneakFieldBundle:Field', 'field')
-                ->innerJoin('field.group', 'fieldgroup')
-                ->where(
-                    $qb->expr()->eq('fieldgroup.slug', ':fieldgroup')
-                )
-                ->setParameter("fieldgroup", $group)
-                ->orderBy("field.sort", "DESC");
-
-            return $qb->getQuery()->getResult();
-        }
-
-
-	}
+    }

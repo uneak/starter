@@ -6,6 +6,7 @@ namespace ConstraintBundle\Handler;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Uneak\ConstraintBundle\Constraint\ConstraintsHelper;
 use Uneak\ConstraintBundle\Constraint\ConstraintsManager;
 use Uneak\FieldBundle\Entity\Field;
@@ -30,19 +31,23 @@ class ConstraintAPIHandler extends EntityAPIHandler {
         $this->constraintsManager = $constraintsManager;
     }
 
-    public function getConstraints(array $options = null) {
-        return $this->constraintsHelper->getConstraints($options);
+    public function getConstraints(Field $field) {
+        return $this->constraintsHelper->getConstraints($field);
     }
 
-    public function getConstraint(array $options = null, $id) {
-        return $this->constraintsHelper->getConstraint($options, $id);
-    }
 
     public function getConstraintData($alias) {
         return $this->constraintsManager->getConstraint($alias);
     }
 
 
+
+
+
+
+    public function getForm($formType, $entity, $method = Request::METHOD_PUT) {
+        return $this->constraintsHelper->createForm($formType, $entity, $method);
+    }
 
 
 
@@ -58,18 +63,9 @@ class ConstraintAPIHandler extends EntityAPIHandler {
             throw new NotFoundException($this->entityClass." ".$ids[0]." not found", $id);
         }
 
-        $options = $field->getOptions();
-
-        $constraint = array(
-            'id' => (isset($ids[1])) ? $ids[1] : '',
-            'alias' => $type,
-            'parameters' => $form->getData()
-        );
-
-        $this->constraintsHelper->addConstraint($options, $constraint);
-
-        $field->setOptions($options);
-        $this->em->flush($field);
+        $constraint = $this->constraintsHelper->createConstraint($type, $form->getData());
+        $constraint['id'] = (isset($ids[1])) ? $ids[1] : '';
+        $this->constraintsHelper->saveConstraint($field, $constraint);
 
         return $constraint;
     }
@@ -77,16 +73,13 @@ class ConstraintAPIHandler extends EntityAPIHandler {
 
     public function get($id) {
         $ids = explode('/', $id);
-
         /** @var $field Field */
         $field = $this->getRepository()->findOneById($ids[0]);
         if (!$field) {
             throw new NotFoundException($this->entityClass." ".$ids[0]." not found", $id);
         }
 
-        $options = $field->getOptions();
-
-        $constraint = $this->constraintsHelper->getConstraint($options, $ids[1]);
+        $constraint = $this->constraintsHelper->getConstraint($field, $ids[1]);
         if (!$constraint) {
             throw new NotFoundException($ids[1]." constraint not found", $id);
         }
@@ -97,18 +90,15 @@ class ConstraintAPIHandler extends EntityAPIHandler {
 
     public function delete($id) {
         $ids = explode('/', $id);
-
         /** @var $field Field */
         $field = $this->getRepository()->findOneById($ids[0]);
         if (!$field) {
             throw new NotFoundException($this->entityClass." ".$ids[0]." not found", $id);
         }
 
-        $options = $field->getOptions();
-        $this->constraintsHelper->removeConstraint($options, $ids[1]);
+        $constraint = $this->get($id);
+        $this->constraintsHelper->removeConstraint($field, $constraint);
 
-        $field->setOptions($options);
-        $this->em->flush($field);
     }
 
 }

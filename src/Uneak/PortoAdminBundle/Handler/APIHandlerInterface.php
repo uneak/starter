@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 interface APIHandlerInterface
 {
 
-    public function setEntityClass($entityClass);
+//    public function setEntityClass($entityClass);
 
     public function createEntity();
     public function persistEntity(FormInterface $form);

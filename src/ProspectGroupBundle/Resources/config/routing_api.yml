@@ -1,5 +1,0 @@
-api_group:
-    type:     rest
-    resource: ProspectGroupBundle\Controller\ProspectGroupApiController
-    prefix: v1
-    name_prefix: api_v1_group_

@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Uneak\ConstraintBundle\Constraint\ConstraintsManager;
 use Uneak\FieldBundle\Entity\Field;
+use Uneak\FieldBundle\Field\FieldsHelper;
+use Uneak\FieldGroupBundle\Entity\FieldGroup;
 use Uneak\FieldGroupBundle\Form\FieldGroupType;
 use Uneak\ProspectBundle\Entity\Prospect;
 use Uneak\ProspectBundle\Prospect\ProspectsManager;
@@ -19,10 +21,7 @@ class FieldGroupsHelper {
      * @var FormFactoryInterface
      */
     private $formFactory;
-    /**
-     * @var ProspectsManager
-     */
-    private $prospectsManager;
+
     /**
      * @var EntityManagerInterface
      */
@@ -31,24 +30,26 @@ class FieldGroupsHelper {
      * @var ConstraintsManager
      */
     private $constraintsManager;
+    /**
+     * @var FieldsHelper
+     */
+    private $fieldsHelper;
 
-    public function __construct(EntityManagerInterface $em, FormFactoryInterface $formFactory, ProspectsManager $prospectsManager, ConstraintsManager $constraintsManager) {
+    public function __construct(EntityManagerInterface $em, FormFactoryInterface $formFactory, ConstraintsManager $constraintsManager, FieldsHelper $fieldsHelper) {
         $this->formFactory = $formFactory;
-        $this->prospectsManager = $prospectsManager;
         $this->em = $em;
         $this->constraintsManager = $constraintsManager;
+        $this->fieldsHelper = $fieldsHelper;
     }
 
 
     public function createForm($group, Prospect $prospect = null, $method = Request::METHOD_POST) {
-
         $id = 0;
         $data = array();
 
-
         if ($prospect) {
             $id = $prospect->getId();
-            $prospectFields = $this->getProspectFields($prospect);
+            $prospectFields = $this->fieldsHelper->findFieldsByProspects(array($id));
             /** @var $field Field */
             foreach ($prospectFields as $field) {
                 $data[$field->getSlug()] = $prospect->getField($field->getSlug());
@@ -56,7 +57,7 @@ class FieldGroupsHelper {
         }
 
         if ($group) {
-            $fields = $this->getFormFields($this->getFieldGroupFields($group));
+            $fields = $this->getFormFields($this->fieldsHelper->findFieldsByGroup($group));
         } elseif (isset($prospectFields)) {
             $fields = $this->getFormFields($prospectFields);
         } else {
@@ -74,9 +75,6 @@ class FieldGroupsHelper {
     }
 
 
-    public function getProspectFields(Prospect $prospect) {
-        return $this->prospectsManager->findFieldsByProspects(array($prospect->getId()));
-    }
 
     protected function getFormFields($dbFields) {
         $fields = array();
@@ -84,11 +82,9 @@ class FieldGroupsHelper {
         foreach ($dbFields as $dbField) {
             $field = array(
                 'slug' => $dbField->getSlug(),
-                'type' => $dbField->getType(),
+                'type' => $dbField->getFieldType(),
                 'options' => $dbField->getOptions(),
             );
-
-
 
             if (isset($field['options']['constraints'])) {
                 $field['options']['constraints'] = $this->constraintsManager->resolveConstraints($field['options']['constraints']);
@@ -101,18 +97,5 @@ class FieldGroupsHelper {
     }
 
 
-
-
-    public function getFieldGroupFields($group) {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('field');
-        $qb->from('UneakFieldBundle:Field', 'field');
-        $qb->innerJoin('field.group', 'fieldGroup');
-        $qb->where($qb->expr()->eq('fieldGroup.slug', ':group'));
-        $qb->setParameter("group", $group);
-        $qb->orderBy("field.sort", "ASC");
-
-        return $qb->getQuery()->getResult();
-    }
 
 }

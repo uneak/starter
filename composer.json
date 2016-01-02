@@ -30,7 +30,8 @@
         "jms/serializer-bundle": "dev-master",
         "friendsofsymfony/oauth-server-bundle": "dev-master",
         "friendsofsymfony/rest-bundle": "dev-master",
-        "nelmio/api-doc-bundle": "dev-master"
+        "nelmio/api-doc-bundle": "dev-master",
+        "ddeboer/data-import-bundle": "~0.1"
 
     },
     "require-dev": {
