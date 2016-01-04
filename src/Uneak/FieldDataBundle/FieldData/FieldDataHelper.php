@@ -25,12 +25,27 @@ class FieldDataHelper {
         $this->fieldDatasManager = $fieldDatasManager;
     }
 
-    public function createFieldData($type, Prospect $prospect = null, Field $field = null, $value = null)
+    public function createFieldData($fieldOrType, Prospect $prospect = null, $value = null)
     {
+        /** @var $field Field */
+        if (is_string($fieldOrType)) {
+            $type = $fieldOrType;
+            $field = null;
+        } elseif ($fieldOrType instanceof Field) {
+            $type = $fieldOrType->getType();
+            $field = $fieldOrType;
+        } else {
+            throw new \Exception("Field or type ".$fieldOrType." n'a pas été reconnu");
+        }
+
         $typeClass = $this->fieldDatasManager->getFieldDataClass($type);
         $fieldData = new $typeClass();
-        $fieldData->setProspect($prospect);
-        $fieldData->setField($field);
+        if ($prospect) {
+            $prospect->addFieldData($fieldData);
+        }
+        if ($field) {
+            $field->addFieldData($fieldData);
+        }
         $fieldData->setValue($value);
         return $fieldData;
     }

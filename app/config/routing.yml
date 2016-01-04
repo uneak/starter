@@ -1,8 +1,6 @@
-
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
-
 
 oauth:
     resource: "@UneakOAuthClientBundle/Controller/"
@@ -21,23 +19,21 @@ oauth_server_api:
     prefix: /api
 
 
-# FOS User
-#fos_user:
-#    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
-#    prefix: /admin
-#
-#fos_user_group:
-#    resource: "@FOSUserBundle/Resources/config/routing/group.xml"
-#    prefix: /admin/group
+prospect_api:
+    type: rest
+    resource: "@ProspectBundle/Resources/config/routing_api.yml"
+    prefix: /api
+
+
+
+
+
+
 
 
 uneak_user:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix: admin
-
-
-
-
 
 
 # uneak_routesmanager

@@ -58,12 +58,12 @@ class FieldAPIHandler extends AbstractAPIHandler implements APIHandlerInterface 
         $this->fieldsHelper->removeField($entity);
     }
 
-    public function all(array $filters) {
-        return null;//$this->getRepository()->getFilter($filters);
+    public function all(array $criteria) {
+        return $this->getRepository()->getAll($criteria);
     }
 
-    public function count(array $filters = null) {
-        return null;//$this->getRepository()->getCount($filters);
+    public function count(array $criteria = null) {
+        return $this->getRepository()->getCount($criteria);
     }
 
 

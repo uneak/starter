@@ -48,9 +48,9 @@
 
             $panel = new Panel();
             $panel->setTitle("Modification du mot de passe");
-            $panel->isCollapsed(false);
-            $panel->isDismiss(false);
-            $panel->isToggle(false);
+            $panel->setCollapsed(false);
+            $panel->setDismiss(false);
+            $panel->setToggle(false);
             $panel->addBlock($formBlock);
             $layout->getSubLayoutContentBody()->addBlock($panel, 'form');
 

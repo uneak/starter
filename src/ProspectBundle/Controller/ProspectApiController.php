@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Uneak\PortoAdminBundle\Exception\InvalidFormException;
 
 
@@ -18,157 +19,112 @@ class ProspectApiController extends FOSRestController
 {
 
     /**
-     * affiche la liste complete des utilisateurs
+     * affiche la liste complete des prospects
      *
      *
-     * @QueryParam(name="page", requirements="\d+", default="1", description="Pagination : Page a afficher.")
-     * @QueryParam(name="maxperpage", requirements="\d+", default="0", description="Pagination : Nombre d'entité
-     *                                par page a afficher.")
-     *
+     * @QueryParam(name="offset", requirements="\d+", default=null, description="Pagination : offset.")
+     * @QueryParam(name="limit", requirements="\d+", default=null, description="Pagination : how many objects to return.")
+     * @QueryParam(name="fields", default=null, description="comma separated list of fields to include, ex: fields=id,subject,customer_name,updated_at")
+     * @QueryParam(map=true, name="like", default=null, description="Like = ex: like[label]=%marc%")
+     * @QueryParam(map=true, name="eq", default=null, description="Equal == ex: eq[createdAt]=2015-15-42 15:15:14")
+     * @QueryParam(map=true, name="ne", default=null, description="Not Equal != ex: ne[createdAt]=2015-15-42 15:15:14")
+     * @QueryParam(map=true, name="lt", default=null, description="Less than < ex: lt[createdAt]=2015-15-42 15:15:14")
+     * @QueryParam(map=true, name="gt", default=null, description="Greater than > ex: gt[createdAt]=2015-15-42 15:15:14")
+     * @QueryParam(map=true, name="le", default=null, description="Less than or equal <= ex: le[createdAt]=2015-15-42 15:15:14")
+     * @QueryParam(map=true, name="ge", default=null, description="Greater than or equal >= ex: ge[createdAt]=2015-15-42 15:15:14")
+     * @QueryParam(name="sort", default=null, description="comma separated list of fields to sort, ex: -lastName,+model")
      *
      * @ApiDoc(
-     *  resource=true,
-     *    section="Utilisateurs",
-     *  description="affiche la liste complete des utilisateurs",
-     *    deprecated=false,
-     *    tags={
-     *    "stable",
-     *    "deprecated" = "#ff0000"
-     *    },
-     *    views = { "default" },
-     *    input="Your\Namespace\Form\Type\YourType",
-     *  output="Your\Namespace\Class",
-     *    requirements={
-     *        {
-     *            "name"="limit",
-     *            "dataType"="integer",
-     *            "requirement"="\d+",
-     *            "description"="how many objects to return"
-     *        }
-     *    },
-     *    parameters={
-     *        {"name"="categoryId", "dataType"="integer", "required"=true, "description"="category id"}
-     *    },
-     *    filters={
-     *        {"name"="a-filter", "dataType"="integer"},
-     *        {"name"="another-filter", "dataType"="string", "pattern"="(foo|bar) ASC|DESC"}
-     *  },
-     *  statusCodes={
-     *    200="Returned when successful",
-     *        403="Returned when the user is not authorized to say hello",
-     *    404={
-     *           "Returned when the user is not found",
-     *           "Returned when something else is not found"
-     *        }
-     *  }
+     *      resource=true,
+     *      section="Prospect",
+     *      description="affiche la liste complete des prospects",
+     *      deprecated=false,
+     *      tags={
+     *          "beta" = "#9999FF",
+     *          "danger" = "#ff0000"
+     *      },
+     *      views = { "default" },
+     *      output="Uneak\ProspectBundle\Entity\Prospect",
+     *
+     *      statusCodes={
+     *          200="OK – Eyerything is working.",
+     *          403="Forbidden – The server understood the request, but is refusing it or the access is not allowed.",
+     *          404="Not found – There is no resource behind the URI."
+     *      }
      * )
      */
     // [GET] /users
     public function getProspectsAction(ParamFetcher $paramFetcher)
     {
+        $filters = array(
+            'offset' => $paramFetcher->get('offset'),
+            'limit' => $paramFetcher->get('limit'),
+            'fields' => $paramFetcher->get('fields'),
+            'sort' => $paramFetcher->get('sort'),
+            'like' => $paramFetcher->get('like'),
+            'eq' => $paramFetcher->get('eq'),
+            'ne' => $paramFetcher->get('ne'),
+            'lt' => $paramFetcher->get('lt'),
+            'gt' => $paramFetcher->get('gt'),
+            'le' => $paramFetcher->get('le'),
+            'ge' => $paramFetcher->get('ge'),
+        );
 
-        $data = array();
-        $page = $paramFetcher->get('page');
-        $maxperpage = $paramFetcher->get('maxperpage');
 
-        $em = $this->getDoctrine()->getManager();
-        $prospectsRepository = $em->getRepository('ProspectBundle:Prospect');
+        $handler = $this->container->get('uneak.admin.prospect.api.handler');
+        $data = $handler->all($filters);
+        $count = $handler->count($filters);
 
-        $prospects = $prospectsRepository->findAll();
 
-        $data = $prospects;
+        $paginations = array();
 
-        $view = new View();
-        $view->setData($data);
-        $view->setStatusCode(200);
+        $offset = ($filters['offset']) ? $filters['offset'] : 0;
+        $limit = ($filters['limit']) ? $filters['limit'] : null;
 
+        $firstFilters = $filters;
+        $firstFilters['offset'] = 0;
+        if ($firstFilters['offset'] != $offset) {
+            $paginations['first'] = $this->generateUrl('api_v1_prospect_get_prospects', $firstFilters, UrlGeneratorInterface::ABSOLUTE_URL);
+        }
+
+        $prevFilters = $filters;
+        if ($offset > 0) {
+            $prevFilters['offset'] = $offset - 1;
+            $paginations['prev'] = $this->generateUrl('api_v1_prospect_get_prospects', $prevFilters, UrlGeneratorInterface::ABSOLUTE_URL);
+        }
+
+
+        if ($limit) {
+            if (($offset+1) * $limit < $count) {
+                $nextFilters = $filters;
+                $nextFilters['offset'] = $offset + 1;
+                $paginations['next'] = $this->generateUrl('api_v1_prospect_get_prospects', $nextFilters, UrlGeneratorInterface::ABSOLUTE_URL);
+            };
+
+            $lastFilters = $filters;
+            $lastFilters['offset'] = floor($count/$limit) - 1;
+            $lastFilters['offset'] = ($lastFilters['offset'] < 0) ? 0 : $lastFilters['offset'];
+            if ($lastFilters['offset'] != $offset) {
+                $paginations['last'] = $this->generateUrl('api_v1_prospect_get_prospects', $lastFilters, UrlGeneratorInterface::ABSOLUTE_URL);
+            }
+
+        }
+
+        $linkHeaders = array();
+        foreach ($paginations as $rel => $url) {
+            $linkHeaders[] = "<".$url.">; rel=\"".$rel."\"";
+        }
+
+
+        $view = $this->view($data, Response::HTTP_OK);
+        if (count($linkHeaders)) {
+            $view->setHeader("Link", join(",", $linkHeaders));
+        }
+        $view->setHeader("X-Total-Count", $count);
         return $this->handleView($view);
     }
 
 
-    /**
-     * Get single Page,
-     *
-     * @ApiDoc(
-     *  resource=true,
-     *    section="Utilisateurs",
-     *  description="affiche l'utilisateur par sont identifiant",
-     *    deprecated=false,
-     *   output = "Uneak\ProspectBundle\Entity\Prospect",
-     *   statusCodes = {
-     *     200 = "Returned when successful",
-     *     404 = "Returned when the page is not found"
-     *   }
-     * )
-     *
-     *
-     * @param Request $request the request object
-     * @param int $id the user id
-     *
-     * @return array
-     *
-     * @throws NotFoundHttpException when page not exist
-     */
-    public function getProspectAction($id)
-    {
-        $handler = $this->container->get('uneak.admin.user.crud.handler');
-        $user = $handler->get($id);
-
-        if (!$user) {
-            throw new NotFoundHttpException(sprintf('The user \'%s\' was not found.', $id));
-        }
-
-
-        $view = new View();
-        $view->setData($user);
-        $view->setStatusCode(200);
-
-        return $this->handleView($view);
-    }
-
-
-    /**
-     * Create a Page from the submitted data.
-     *
-     * @ApiDoc(
-     *   resource = true,
-     *   section="Utilisateurs",
-     *   description = "Creates a new page from the submitted data.",
-     *   input = "Acme\BlogBundle\Form\PageType",
-     *   statusCodes = {
-     *     200 = "Returned when successful",
-     *     400 = "Returned when the form has errors"
-     *  }
-     *)
-     *
-     *
-     *
-     * @param Request $request the request object
-     *
-     * @return FormTypeInterface | View
-     */
-    public function postProspectAction(Request $request)
-    {
-        $handler = $this->container->get('uneak.admin.user.crud.handler');
-        $entity = $handler->createEntity();
-        $formType = new RegistrationFormType();
-        $form = $handler->getForm($formType, $entity, Request::METHOD_POST);
-
-        try {
-
-            $user = $handler->post($form, $request->request->all());
-
-            $routeOptions = array(
-                'id' => $user->getId(),
-                '_format' => $request->get('_format')
-            );
-
-            return $this->routeRedirectView('api_v1_user_get_user', $routeOptions, Response::HTTP_CREATED);
-
-        } catch (InvalidFormException $exception) {
-            return $exception->getForm();
-        }
-    }
 
 
 }

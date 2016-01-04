@@ -3,9 +3,10 @@
 namespace ProspectBundle\Handler;
 
 
+use FieldBundle\Admin\Field;
 use Symfony\Component\HttpFoundation\Request;
 use Uneak\FieldGroupBundle\Group\FieldGroupsHelper;
-use Uneak\ProspectBundle\Entity\Prospect;
+use Uneak\FieldSearchBundle\Field\FieldSearchManager;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -24,28 +25,40 @@ class ProspectAPIHandler extends EntityAPIHandler {
      * @var FieldGroupsHelper
      */
     private $fieldGroupsHelper;
+    /**
+     * @var FieldSearchManager
+     */
+    private $fieldSearchManager;
 
-    public function __construct(FormFactoryInterface $formFactory, EntityManager $em, ProspectsManager $prospectsManager, FieldGroupsHelper $fieldGroupsHelper)
+    public function __construct(FormFactoryInterface $formFactory, EntityManager $em, ProspectsManager $prospectsManager, FieldGroupsHelper $fieldGroupsHelper, FieldSearchManager $fieldSearchManager)
     {
         parent::__construct($formFactory, $em);
         $this->prospectsManager = $prospectsManager;
         $this->fieldGroupsHelper = $fieldGroupsHelper;
+        $this->fieldSearchManager = $fieldSearchManager;
     }
 
 
     public function getProspectsFieldsByGroup($group = null) {
-        return $this->prospectsManager->findProspectsFieldsByGroup($group);
+        $dbFields = $this->prospectsManager->findProspectsFieldsByGroup($group);
+        $fields = array();
+        /** @var $dbField Field */
+        foreach ($dbFields as $dbField) {
+            $fields[] = array(
+                'title' => $dbField->getLabel(),
+                'name' => $dbField->getSlug(),
+                'fieldsearch' => $this->fieldSearchManager->getFieldSearchsByFieldData($dbField->getType()),
+            );
+
+        }
+
+        return $fields;
     }
 
-    public function getProspectsArray(array $criteria = array()) {
-        return $this->prospectsManager->getProspectsArray($criteria);
-    }
 
     public function getForm($formType, $entity, $method = Request::METHOD_PUT) {
         return $this->fieldGroupsHelper->createForm($formType, $entity, $method);
     }
-
-
 
 
     public function createEntity() {
@@ -66,15 +79,14 @@ class ProspectAPIHandler extends EntityAPIHandler {
     }
 
 
-//		TODO: faire les class ci dessous
+    public function all(array $criteria) {
+        return $this->prospectsManager->getAll($criteria);
+    }
 
-//		public function all(array $filters) {
-//			return $this->getRepository()->getFilter($filters);
-//		}
-//
-//		public function count(array $filters = null) {
-//			return $this->getRepository()->getCount($filters);
-//		}
+    public function count(array $criteria = null) {
+        return $this->prospectsManager->getCount($criteria);
+    }
+
 
 
 
@@ -83,9 +95,9 @@ class ProspectAPIHandler extends EntityAPIHandler {
         $formProspect = $form->get('o_prospect')->getData();
         $prospect = $this->prospectsManager->findProspectById($formProspect);
         if (!$prospect) {
-//				$gslug = $form->get('o_group')->getData();
-//				$prospect = $this->prospectsManager->createProspect($gslug);
-            $prospect = $this->prospectsManager->createProspect();
+            $gslug = $form->get('o_group')->getData();
+            $prospect = $this->prospectsManager->createProspect($gslug);
+//            $prospect = $this->prospectsManager->createProspect();
         }
 
         $data = $form->getData();

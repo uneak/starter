@@ -51,10 +51,12 @@
 				->addRowAction('edit', '*/subject/edit')
 				->addRowAction('delete', '*/subject/delete')
 
-				->addId($this->getId(), 'code')
+				->addId($this->getId(), 'id')
 //				->addId('groups', 'group.id')
 
-				->addColumn(array('title' => 'Identifiant', 'name' => 'code'))
+                ->addColumn(array('title' => 'ID', 'name' => 'id'))
+                ->addColumn(array('title' => 'Création', 'name' => 'createdAt'))
+                ->addColumn(array('title' => 'Identifiant', 'name' => 'code'))
 //				->addColumn(array('title' => 'Groupe', 'name' => 'group.label'))
 //				->addColumn(array('title' => 'Source', 'name' => 'source'))
 				;

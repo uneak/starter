@@ -19,6 +19,7 @@
 		protected $processing = true;
 		protected $serverSide = true;
 		protected $searchInput = null;
+		protected $query = null;
 		protected $ajax;
 		protected $scriptTemplate;
 
@@ -40,6 +41,21 @@
 			$this->searchInput = $searchInput;
 		}
 
+
+        /**
+         * @return mixed
+         */
+        public function getQuery() {
+            return $this->query;
+        }
+
+        /**
+         * @param mixed $ajax
+         */
+        public function setQuery($query) {
+            $this->query = $query;
+            return $this;
+        }
 
 		/**
 		 * @return mixed

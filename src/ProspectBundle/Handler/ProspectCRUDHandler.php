@@ -3,7 +3,7 @@
 	namespace ProspectBundle\Handler;
 
 
-	use Uneak\FieldGroupBundle\Entity\FieldGroup;
+    use Uneak\FieldGroupBundle\Entity\FieldGroup;
     use Symfony\Component\Form\FormInterface;
     use Symfony\Component\HttpFoundation\Request;
 	use Uneak\PortoAdminBundle\Handler\APIHandlerInterface;
@@ -18,7 +18,6 @@
 		public function __construct(APIHandlerInterface $apiHandler) {
 			parent::__construct($apiHandler);
 		}
-
 
 
         /**
@@ -51,16 +50,7 @@
                 $groupSlug = null;
             }
 
-            $fields = $this->apiHandler->getProspectsFieldsByGroup($groupSlug);
-
-            $data = array();
-            foreach ($fields as $field) {
-                $data[] = array(
-                    'title' => $field->getLabel(),
-                    'name' => $field->getSlug(),
-                );
-            }
-            return $data;
+            return $this->apiHandler->getProspectsFieldsByGroup($groupSlug);
         }
 
 
@@ -72,14 +62,26 @@
             if ($route->hasParameter('groups')) {
                 /** @var $group FieldGroup*/
                 $group = $route->getParameter('groups')->getParameterSubject();
-                $criteria['group'] = $group->getSlug();
+                $criteria['eq'] = array();
+                $criteria['eq']['group'] = $group->getSlug();
             }
 
 
+            $allCriteria = array_merge_recursive($params, $criteria);
+
             $gridData = array();
-            $results = $this->apiHandler->getProspectsArray($criteria);
-            $recordsTotal = count($results);
+
+
+            $results = $this->apiHandler->all($allCriteria);
+            $recordsTotal = $this->apiHandler->count($criteria);
             $recordsFiltered = count($results);
+
+
+
+//            ld($recordsFiltered);
+//            ldd($recordsTotal);
+            
+
             foreach ($results as $result) {
                 $gridDataRow = $result;
                 $gridDataRow['idkey_prospects'] = $result['id'];

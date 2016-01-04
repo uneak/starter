@@ -11,10 +11,9 @@ class FieldSearchManager {
 		$this->fieldSearchs = array();
 	}
 
-	public function addFieldSearch($aliasSearch, $aliasField, $fieldData) {
-		$this->fieldSearchs[$aliasField] = array(
+	public function addFieldSearch($aliasSearch, $fieldData) {
+		$this->fieldSearchs[$aliasSearch] = array(
 			'field_data' => $fieldData,
-			'alias_field' => $aliasField,
 			'alias_search' => $aliasSearch,
 		);
 	}
@@ -31,7 +30,7 @@ class FieldSearchManager {
 		$fieldSearchs = array();
 		foreach ($this->fieldSearchs as $field) {
 			if ($field['field_data'] == $fieldData) {
-				$fieldSearchs[$field['alias_field']] = $field;
+				$fieldSearchs[$field['alias_search']] = $field;
 			}
 		}
 		return $fieldSearchs;

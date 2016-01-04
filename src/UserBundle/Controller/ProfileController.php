@@ -73,9 +73,9 @@
 
             $panel = new Panel();
             $panel->setTitle("Edition");
-            $panel->isCollapsed(false);
-            $panel->isDismiss(false);
-            $panel->isToggle(false);
+            $panel->setCollapsed(false);
+            $panel->setDismiss(false);
+            $panel->setToggle(false);
             $panel->addBlock(new Twig('user_connect_login', array(
                 'user' => $user,
                 'oAuthUser' => $oAuthUser,
@@ -141,9 +141,9 @@
 
             $panel = new Panel();
             $panel->setTitle("Edition");
-            $panel->isCollapsed(false);
-            $panel->isDismiss(false);
-            $panel->isToggle(false);
+            $panel->setCollapsed(false);
+            $panel->setDismiss(false);
+            $panel->setToggle(false);
             $panel->addBlock($formBlock);
             $layout->getSubLayoutContentBody()->addBlock($panel, 'form');
 

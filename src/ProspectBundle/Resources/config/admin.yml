@@ -22,6 +22,7 @@ services:
             - @doctrine.orm.entity_manager
             - @uneak.prospectmanager
             - @uneak.fieldgroup.helper
+            - @uneak.fieldsearchmanager
         calls:
             - [ setEntityClass, [ Uneak\ProspectBundle\Entity\Prospect ] ]
 

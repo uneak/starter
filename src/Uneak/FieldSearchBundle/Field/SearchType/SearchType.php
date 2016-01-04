@@ -14,11 +14,12 @@
 		 * @param array                $options
 		 */
 		public function buildForm(FormBuilderInterface $builder, array $options) {
-//			$builder
-//                ->add('label', 'text', array(
-//                    'label' => "Search",
-//                ))
-//				;
+			$builder
+                ->add('enabled', 'checkbox', array(
+                    'label' => "Activer",
+                ))
+				;
 		}
 
+        abstract public function buildQuery(array &$query, $key, array $data);
 	}

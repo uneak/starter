@@ -116,9 +116,9 @@
 
             $panel = new Panel();
             $panel->setTitle("Liste des champs");
-            $panel->isCollapsed(false);
-            $panel->isDismiss(false);
-            $panel->isToggle(false);
+            $panel->setCollapsed(false);
+            $panel->setDismiss(false);
+            $panel->setToggle(false);
             $panel->addBlock($todos);
 
             return $panel;

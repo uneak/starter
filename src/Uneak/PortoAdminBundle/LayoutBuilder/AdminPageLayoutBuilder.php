@@ -49,9 +49,9 @@
 
             $panel = new Panel();
             $panel->setTitle($title);
-            $panel->isCollapsed(false);
-            $panel->isDismiss(false);
-            $panel->isToggle(false);
+            $panel->setCollapsed(false);
+            $panel->setDismiss(false);
+            $panel->setToggle(false);
             $panel->addBlock($formBlock);
             $this->layoutContentBody->addBlock($panel, 'form');
 

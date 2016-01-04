@@ -2,13 +2,11 @@
 
 	namespace Uneak\FieldSearchBundle\Field\SearchType;
 
-	use Symfony\Component\Form\AbstractType;
 	use Symfony\Component\Form\FormBuilderInterface;
-	use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 	use Symfony\Component\Validator\Constraints\Collection;
-	use Uneak\FormsManagerBundle\Forms\AssetsFormType;
 
-	class TextSearchType extends SearchType {
+	class IntegerSearchType extends ComparatorSearchType {
+
 		/**
 		 * @param FormBuilderInterface $builder
 		 * @param array                $options
@@ -16,21 +14,25 @@
 		public function buildForm(FormBuilderInterface $builder, array $options) {
 			parent::buildForm($builder, $options);
             $builder
-                ->add('like', 'text', array(
-                    'label' => "Texte",
-                    'attr' => array(
-                        'help_text' => "utiliser le caractère '%' comme jocker",
-                    )
+
+                ->add('value1', 'integer', array(
+                    'label' => "Valeur"
+                ))
+                ->add('value2', 'integer', array(
+                    'label' => "Valeur"
                 ))
             ;
 		}
 
+        public function buildQuery(array &$query, $key, array $data) {
+            parent::buildQuery($query, $key, $data);
 
+        }
 
 		/**
 		 * @return string
 		 */
 		public function getName() {
-			return 'search_text';
+			return 'search_integer';
 		}
 	}

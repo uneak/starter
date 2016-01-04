@@ -12,3 +12,4 @@ services:
             - @uneak.fieldtypesmanager
             - @uneak.fielddatasmanager
             - @uneak.field.helper
+            - @uneak.fielddata.helper

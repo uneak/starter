@@ -40,7 +40,11 @@
             "stateSave": {{ state_save ? 'true':'false' }},
             "processing": {{ processing ? 'true':'false' }},
             "serverSide": {{ server_side ? 'true':'false' }},
-            "ajax": "{{ ajax }}",
+            "ajax": {
+                "url": "{{ ajax }}",
+                "type": "POST",
+                {% if query %}"data": {{ query | json_encode | raw }}{% endif %}
+            },
             "columns": [{% for column in columns %}{{ column | json_encode() | raw }}, {% endfor %}
                 {"name": "", "data": "_actions", "sortable": false, "searchable": false}
             ],

@@ -430,7 +430,32 @@
             $gridHelper = $this->get("uneak.routesmanager.grid.helper");
             $menuHelper = $this->get("uneak.routesmanager.menu.helper");
             $blockBuilder = $this->get("uneak.blocksmanager.builder");
-            $params = $request->query->all();
+            $params = $request->request->all();
+
+
+            //
+            // convert datatable param
+            if (isset($params['order'])) {
+                $pOrder = array();
+                foreach ($params['order'] as $order) {
+                    $plOrder = '';
+                    $plOrder .= ($order['dir'] == 'asc') ? '+' : '-';
+                    $plOrder .= $params['columns'][$order['column']]['name'];
+                    $pOrder[] = $plOrder;
+                }
+                $params['sort'] = join(',', $pOrder);
+            }
+
+            if (isset($params['start'])) {
+                $params['offset'] = $params['start'];
+            }
+
+            if (isset($params['length'])) {
+                $params['limit'] = $params['length'];
+            }
+            //
+            //
+
 
             $datatableArray = $crudHandler->getDatatableArray($route, $params, $gridHelper);
             $crudHandler->addDatatableArrayActions($datatableArray, $route, $menuHelper, $blockBuilder);

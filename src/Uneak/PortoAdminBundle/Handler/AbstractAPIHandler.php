@@ -26,7 +26,7 @@ abstract class AbstractAPIHandler implements APIHandlerInterface {
     abstract public function persistEntity(FormInterface $form);
     abstract public function get($id);
     abstract public function delete($id);
-    abstract public function all(array $filters);
+    abstract public function all(array $criteria);
 
     public function post($formType, array $parameters)
     {

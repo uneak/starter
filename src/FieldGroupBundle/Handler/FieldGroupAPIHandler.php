@@ -47,12 +47,12 @@ class FieldGroupAPIHandler extends EntityAPIHandler {
     }
 
 
-    public function all(array $filters) {
-        return $this->repository->getFilter($filters);
+    public function all(array $criteria) {
+        return $this->repository->getAll($criteria);
     }
 
-    public function count(array $filters = null) {
-        return $this->repository->getCount($filters);
+    public function count(array $criteria = null) {
+        return $this->repository->getCount($criteria);
     }
 
 }

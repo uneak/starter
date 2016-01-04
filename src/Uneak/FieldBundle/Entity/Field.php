@@ -110,7 +110,7 @@
          *
          * @return Field
          */
-        public function addField(FieldData $fieldData) {
+        public function addFieldData(FieldData $fieldData) {
             $fieldData->setField($this);
             $this->fieldDatas[] = $fieldData;
             return $this;
@@ -121,7 +121,7 @@
          *
          * @param FieldData $fieldData
          */
-        public function removeField(FieldData $fieldData) {
+        public function removeFieldData(FieldData $fieldData) {
             $fieldData->setField(null);
             $this->fieldDatas->removeElement($fieldData);
         }

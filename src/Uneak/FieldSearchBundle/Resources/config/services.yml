@@ -1,12 +1,15 @@
 services:
 
-
     uneak.fieldsearchmanager:
         class: Uneak\FieldSearchBundle\Field\FieldSearchManager
 
 
-    uneak.fieldtype.config.type.text:
-        class: Uneak\FieldSearchBundle\Field\SearchType\TextSearchType
+    uneak.fieldtype.config.type.string:
+        class: Uneak\FieldSearchBundle\Field\SearchType\StringSearchType
         tags:
-            -  { name: uneak.fieldsearchmanager.field, alias_search: "search_text", alias_field: "text", field_data: "string" }
+            -  { name: uneak.fieldsearchmanager.field, alias_search: "search_string", field_data: "string" }
 
+    uneak.fieldtype.config.type.integer:
+        class: Uneak\FieldSearchBundle\Field\SearchType\IntegerSearchType
+        tags:
+            -  { name: uneak.fieldsearchmanager.field, alias_search: "search_integer", field_data: "integer" }

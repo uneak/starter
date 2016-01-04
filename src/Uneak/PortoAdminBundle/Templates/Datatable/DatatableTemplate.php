@@ -19,6 +19,7 @@
 			$options['processing'] = $parameters->isProcessing();
 			$options['server_side'] = $parameters->isServerSide();
 			$options['ajax'] = $parameters->getAjax();
+			$options['query'] = $parameters->getQuery();
 			$options['search_input'] = $parameters->getSearchInput();
 
 
@@ -41,6 +42,7 @@
 			$options['processing'] = $block->isProcessing();
 			$options['server_side'] = $block->isServerSide();
 			$options['ajax'] = $block->getAjax();
+			$options['query'] = $block->getQuery();
 			$options['search_input'] = $block->getSearchInput();
 
 		}

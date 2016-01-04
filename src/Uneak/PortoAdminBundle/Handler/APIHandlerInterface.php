@@ -16,8 +16,8 @@ interface APIHandlerInterface
 
     public function get($id);
     public function delete($id);
-    public function all(array $filters);
-    public function count(array $filters = null);
+    public function all(array $criteria);
+    public function count(array $criteria = null);
     public function post($formType, array $parameters);
     public function put($formType, $entity, array $parameters);
     public function patch($formType, $entity, array $parameters);

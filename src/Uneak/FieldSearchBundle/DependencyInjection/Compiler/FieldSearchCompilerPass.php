@@ -21,7 +21,7 @@ class FieldSearchCompilerPass implements CompilerPassInterface {
 		foreach ($taggedServices as $id => $tagAttributes) {
 			foreach ($tagAttributes as $attributes) {
 				$types[$attributes['alias_search']] = $id;
-				$definition->addMethodCall('addFieldSearch', array($attributes['alias_search'], $attributes['alias_field'], $attributes['field_data']));
+				$definition->addMethodCall('addFieldSearch', array($attributes['alias_search'], $attributes['field_data']));
 			}
 		}
 
