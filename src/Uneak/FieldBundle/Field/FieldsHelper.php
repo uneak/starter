@@ -158,6 +158,33 @@ class FieldsHelper {
         return $repository->findOneBy(array('id' => $id));
     }
 
+    public function findFieldBy(array $criteria) {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('field');
+        $qb->from('UneakFieldBundle:Field', 'field');
+        $qb->innerJoin('field.group', 'fieldgroup');
+
+        if (isset($criteria['group'])) {
+            $group = $criteria['group'];
+            if ($group instanceof FieldGroup || is_numeric($group)) {
+                $qb->where($qb->expr()->eq('fieldgroup.id', ':fieldgroup'));
+            } else {
+                $qb->where($qb->expr()->eq('fieldgroup.slug', ':fieldgroup'));
+            }
+            $qb->setParameter("fieldgroup", $group);
+            unset($criteria['group']);
+        }
+
+        foreach ($criteria as $key => $value) {
+            $qb->andWhere($qb->expr()->eq('field.'.$key, ':field_'.$key));
+            $qb->setParameter('field_'.$key, $value);
+        }
+
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+
     public function findFieldsByGroup($group) {
         $qb = $this->em->createQueryBuilder();
         $qb

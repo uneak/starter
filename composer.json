@@ -31,7 +31,8 @@
         "friendsofsymfony/oauth-server-bundle": "dev-master",
         "friendsofsymfony/rest-bundle": "dev-master",
         "nelmio/api-doc-bundle": "dev-master",
-        "ddeboer/data-import-bundle": "~0.1"
+        "ddeboer/data-import-bundle": "~0.1",
+        "cocur/slugify": "1.4.*@dev"
 
     },
     "require-dev": {

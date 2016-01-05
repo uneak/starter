@@ -17,13 +17,20 @@
         public function groupsIndexAction(FlattenRoute $route, Request $request) {
             return $this->forward('FieldGroupBundle:FieldGroupAdmin:index', array('route' => $route->getParameter('clients')->getChild('groups/index'), 'request' => $request));
         }
-
         public function groupsIndexGridAction(FlattenRoute $route, Request $request) {
             return $this->forward('FieldGroupBundle:FieldGroupAdmin:indexGrid', array('route' => $route->getParameter('clients')->getChild('groups/index/_grid'), 'request' => $request));
         }
-
         public function groupsNewAction(FlattenRoute $route, Request $request) {
             return $this->forward('FieldGroupBundle:FieldGroupAdmin:new', array('route' => $route->getParameter('clients')->getChild('groups/new'), 'request' => $request));
+        }
+        public function groupsDeleteAction(FlattenRoute $route, Request $request) {
+            return $this->forward('FieldGroupBundle:FieldGroupAdmin:delete', array('route' => $route->getParameter('groups')->getChild('delete'), 'request' => $request));
+        }
+        public function groupsEditAction(FlattenRoute $route, Request $request) {
+            return $this->forward('FieldGroupBundle:FieldGroupAdmin:edit', array('route' => $route->getParameter('groups')->getChild('edit'), 'request' => $request));
+        }
+        public function groupsShowAction(FlattenRoute $route, Request $request) {
+            return $this->forward('FieldGroupBundle:FieldGroupAdmin:show', array('route' => $route->getParameter('groups')->getChild('show'), 'request' => $request));
         }
 
         //

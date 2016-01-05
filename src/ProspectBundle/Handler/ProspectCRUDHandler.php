@@ -74,12 +74,8 @@
 
             $results = $this->apiHandler->all($allCriteria);
             $recordsTotal = $this->apiHandler->count($criteria);
-            $recordsFiltered = count($results);
+            $recordsFiltered = $recordsTotal;//count($results);
 
-
-
-//            ld($recordsFiltered);
-//            ldd($recordsTotal);
             
 
             foreach ($results as $result) {

@@ -100,79 +100,42 @@ class ProspectsManager implements UserProviderInterface, APIQueryInterface
 
     public function getCount(array $criteria = array())
     {
-//        $qb = $this->em->createQueryBuilder();
-//
-//        $qb->from('UneakProspectBundle:Prospect', 'prospect');
-//        $qb->leftJoin('prospect.fieldDatas', 'fieldData');
-//        $qb->leftJoin('fieldData.field', 'field');
-//        $qb->leftJoin('field.group', 'fieldGroup');
-//
-//        $qbType = $this->em->createQueryBuilder();
-//        $qbType->select('field.slug, field.type');
-//        $qbType->from('UneakFieldBundle:Field', 'field');
-//        if (isset($criteria['fields']) && count($criteria['fields'])) {
-//            $fields = explode(',', $criteria['fields']);
-//            $qbType->where($qbType->expr()->in('field.slug', $fields));
-//        }
-//        $dbFields = $qbType->getQuery()->getArrayResult();
-//
-//        foreach ($dbFields as $dbField) {
-//            $fieldData = $this->fieldDatasManager->getFieldData($dbField['type']);
-//            $dataName = 'fieldData_' . $dbField['slug'];
-//            $qb->leftJoin($fieldData['class'], $dataName, Join::WITH, $qb->expr()->andX(
-//                $qb->expr()->eq($dataName . '.prospect', 'prospect.id')
-//            ));
-//
-//            $fieldName = 'field_' . $dbField['slug'];
-//            $qb->leftJoin('UneakFieldBundle:Field', $fieldName, Join::WITH, $qb->expr()->andX(
-//                $qb->expr()->eq($fieldName . '.id', $dataName . '.field')
-//            ));
-//        }
-//
-//
-//        $this->addFilters($qb, $criteria);
-//
-//        $qb->distinct(true);
-//        $qb->select('COUNT(prospect)');
-//        return $qb->getQuery()->getSingleScalarResult();
+        $qb = $this->baseQuery($criteria);
+        $this->addFilters($qb, $criteria);
 
-        $criteria['fields'] = 'id';
-        return count($this->getAll($criteria));
+        $qb->select('COUNT(prospect)');
+        return $qb->getQuery()->getSingleScalarResult();
     }
 
 
     public function getAll(array $criteria = array())
     {
-        $result = $this->getCriteriaQuery($criteria)->getQuery()->getArrayResult();
+        $qb = $this->getCriteriaQuery($criteria);
+        $query = $qb->getQuery();
+        $result = $query->getResult();
         return $result;
     }
 
 
 
-    public function getCriteriaQuery(array $criteria = array())
-    {
+    protected function baseQuery(array $criteria = array()) {
         $qb = $this->em->createQueryBuilder();
 
-        $this->addSelect($qb, $criteria);
-
         $qb->from('UneakProspectBundle:Prospect', 'prospect');
-        $qb->leftJoin('prospect.fieldDatas', 'fieldData');
-        $qb->leftJoin('fieldData.field', 'field');
-        $qb->leftJoin('field.group', 'fieldGroup');
-        $qb->groupBy('prospect');
 
         $qbType = $this->em->createQueryBuilder();
         $qbType->select('field.slug, field.type');
         $qbType->from('UneakFieldBundle:Field', 'field');
+
         if (isset($criteria['fields']) && count($criteria['fields'])) {
-            $fields = explode(',', $criteria['fields']);
+            $fields = $this->getFieldsArray($criteria['fields']);
             $qbType->where($qbType->expr()->in('field.slug', $fields));
         }
         $dbFields = $qbType->getQuery()->getArrayResult();
 
-
         foreach ($dbFields as $dbField) {
             $fieldData = $this->fieldDatasManager->getFieldData($dbField['type']);
+
             $dataName = 'fieldData_' . $dbField['slug'];
             $qb->leftJoin($fieldData['class'], $dataName, Join::WITH, $qb->expr()->andX(
                 $qb->expr()->eq($dataName . '.prospect', 'prospect.id')
@@ -180,18 +143,52 @@ class ProspectsManager implements UserProviderInterface, APIQueryInterface
 
             $fieldName = 'field_' . $dbField['slug'];
             $qb->leftJoin('UneakFieldBundle:Field', $fieldName, Join::WITH, $qb->expr()->andX(
-                $qb->expr()->eq($fieldName . '.id', $dataName . '.field')
+                $qb->expr()->eq($fieldName . '.id', $dataName . '.field'),
+                $qb->expr()->eq($fieldName . '.slug', ':'.$fieldName.'_join')
             ));
+            $qb->setParameter($fieldName.'_join', $dbField['slug']);
+
+
+            if (isset($criteria['like']['group'])) {
+                $groupName = 'group_' . $dbField['slug'];
+                $qb->leftJoin('UneakFieldGroupBundle:FieldGroup', $groupName, Join::WITH, $qb->expr()->andX(
+                    $qb->expr()->eq($groupName . '.id', $fieldName . '.group'),
+                    $qb->expr()->like($groupName . '.slug', ':'.$groupName.'_join')
+                ));
+                $qb->setParameter($groupName.'_join', $criteria['eq']['group']);
+            }
+
+            if (isset($criteria['eq']['group'])) {
+                $groupName = 'group_' . $dbField['slug'];
+                $qb->leftJoin('UneakFieldGroupBundle:FieldGroup', $groupName, Join::WITH, $qb->expr()->andX(
+                    $qb->expr()->eq($groupName . '.id', $fieldName . '.group'),
+                    $qb->expr()->eq($groupName . '.slug', ':'.$groupName.'_join')
+                ));
+                $qb->setParameter($groupName.'_join', $criteria['eq']['group']);
+            }
+
+            if (isset($criteria['ne']['group'])) {
+                $groupName = 'group_' . $dbField['slug'];
+                $qb->leftJoin('UneakFieldGroupBundle:FieldGroup', $groupName, Join::WITH, $qb->expr()->andX(
+                    $qb->expr()->eq($groupName . '.id', $fieldName . '.group'),
+                    $qb->expr()->neq($groupName . '.slug', ':'.$groupName.'_join')
+                ));
+                $qb->setParameter($groupName.'_join', $criteria['eq']['group']);
+            }
+
         }
 
+        return $qb;
+    }
 
+    public function getCriteriaQuery(array $criteria = array())
+    {
+        $qb = $this->baseQuery($criteria);
+        $this->addSelect($qb, $criteria);
         $this->addFilters($qb, $criteria);
-//        $this->addLimits($qb, $criteria);
+        $this->addLimits($qb, $criteria);
         $this->addOrder($qb, $criteria);
 
-
-//        var_dump($qb->getQuery()->getDQL());
-//        die();
         return $qb;
     }
 
@@ -200,7 +197,8 @@ class ProspectsManager implements UserProviderInterface, APIQueryInterface
 
         if (isset($criteria['fields']) && count($criteria['fields'])) {
             $select = array();
-            $fields = explode(',', $criteria['fields']);
+            $fields = $this->getFieldsArray($criteria['fields']);
+
             foreach ($fields as $field) {
                 if (in_array($field, $this->getBaseField())) {
                     $select[] = $dataName = 'prospect.' . $field . ' as ' . $field;
@@ -209,9 +207,17 @@ class ProspectsManager implements UserProviderInterface, APIQueryInterface
                 }
             }
 
+
             $qb->select(join(',', $select));
         }
+    }
 
+    private function getFieldsArray($fields) {
+        $fields = explode(',', $fields);
+        for ($i = 0; $i<count($fields); $i++) {
+            $fields[$i] = trim($fields[$i]);
+        }
+        return $fields;
     }
 
     public function addFilters(QueryBuilder &$qb, array $criteria = array(), $alias = "o")
@@ -230,15 +236,11 @@ class ProspectsManager implements UserProviderInterface, APIQueryInterface
                 $fieldName = 'field_' . $col;
                 $dataName = 'fieldData_' . $col;
 
-                if ($col == 'group') {
-                    $colFilters->add($qb->expr()->like('fieldGroup.slug', ':group_slug_like_' . $cmpt));
-                    $qb->setParameter('group_slug_like_' . $cmpt, $val);
-
-                } else if (in_array($col, $this->getBaseField())) {
+                if (in_array($col, $this->getBaseField())) {
                     $colFilters->add($qb->expr()->like('prospect.' . $col, ':' . $col . '_slug_like_' . $cmpt));
                     $qb->setParameter($col . '_slug_like_' . $cmpt, $val);
 
-                } else {
+                } else if ($col != 'group') {
 
                     $fieldSet = new Andx();
 
@@ -257,27 +259,16 @@ class ProspectsManager implements UserProviderInterface, APIQueryInterface
         if (isset($criteria['eq'])) {
             foreach ($criteria['eq'] as $col => $val) {
 
-                $fieldName = 'field_' . $col;
                 $dataName = 'fieldData_' . $col;
 
-                if ($col == 'group') {
-                    $colFilters->add($qb->expr()->eq('fieldGroup.slug', ':group_slug_eq_' . $cmpt));
-                    $qb->setParameter('group_slug_eq_' . $cmpt, $val);
-
-                } else if (in_array($col, $this->getBaseField())) {
+                if (in_array($col, $this->getBaseField())) {
                     $colFilters->add($qb->expr()->eq('prospect.' . $col, ':' . $col . '_slug_eq_' . $cmpt));
                     $qb->setParameter($col . '_slug_eq_' . $cmpt, $val);
 
-                } else {
-                    $fieldSet = new Andx();
-
-                    $fieldSet->add($qb->expr()->eq($fieldName . '.slug', ':field_slug_eq_' . $cmpt));
-                    $qb->setParameter('field_slug_eq_' . $cmpt, $col);
-
-                    $fieldSet->add($qb->expr()->eq($dataName . '.value', ':field_value_eq_' . $cmpt));
+                } else if ($col != 'group') {
+                    $colFilters->add($qb->expr()->eq($dataName . '.value', ':field_value_eq_' . $cmpt));
                     $qb->setParameter('field_value_eq_' . $cmpt, $val);
 
-                    $colFilters->add($fieldSet);
                 }
                 $cmpt++;
 
@@ -288,27 +279,15 @@ class ProspectsManager implements UserProviderInterface, APIQueryInterface
         if (isset($criteria['ne'])) {
             foreach ($criteria['ne'] as $col => $val) {
 
-                $fieldName = 'field_' . $col;
                 $dataName = 'fieldData_' . $col;
 
-                if ($col == 'group') {
-                    $colFilters->add($qb->expr()->neq('fieldGroup.slug', ':group_slug_ne_' . $cmpt));
-                    $qb->setParameter('group_slug_ne_' . $cmpt, $val);
-
-                } else if (in_array($col, $this->getBaseField())) {
+                if (in_array($col, $this->getBaseField())) {
                     $colFilters->add($qb->expr()->neq('prospect.' . $col, ':' . $col . '_slug_ne_' . $cmpt));
                     $qb->setParameter($col . '_slug_ne_' . $cmpt, $val);
 
-                } else {
-                    $fieldSet = new Andx();
-
-                    $fieldSet->add($qb->expr()->eq($fieldName . '.slug', ':field_slug_ne_' . $cmpt));
-                    $qb->setParameter('field_slug_ne_' . $cmpt, $col);
-
-                    $fieldSet->add($qb->expr()->neq($dataName . '.value', ':field_value_ne_' . $cmpt));
+                } else if ($col != 'group') {
+                    $colFilters->add($qb->expr()->neq($dataName . '.value', ':field_value_ne_' . $cmpt));
                     $qb->setParameter('field_value_ne_' . $cmpt, $val);
-
-                    $colFilters->add($fieldSet);
                 }
                 $cmpt++;
 
@@ -319,27 +298,15 @@ class ProspectsManager implements UserProviderInterface, APIQueryInterface
         if (isset($criteria['lt'])) {
             foreach ($criteria['lt'] as $col => $val) {
 
-                $fieldName = 'field_' . $col;
                 $dataName = 'fieldData_' . $col;
 
-                if ($col == 'group') {
-                    $colFilters->add($qb->expr()->lt('fieldGroup.slug', ':group_slug_lt_' . $cmpt));
-                    $qb->setParameter('group_slug_lt_' . $cmpt, $val);
-
-                } else if (in_array($col, $this->getBaseField())) {
+                if (in_array($col, $this->getBaseField())) {
                     $colFilters->add($qb->expr()->lt('prospect.' . $col, ':' . $col . '_slug_lt_' . $cmpt));
                     $qb->setParameter($col . '_slug_lt_' . $cmpt, $val);
 
-                } else {
-                    $fieldSet = new Andx();
-
-                    $fieldSet->add($qb->expr()->eq($fieldName . '.slug', ':field_slug_lt_' . $cmpt));
-                    $qb->setParameter('field_slug_lt_' . $cmpt, $col);
-
-                    $fieldSet->add($qb->expr()->lt($dataName . '.value', ':field_value_lt_' . $cmpt));
+                } else if ($col != 'group') {
+                    $colFilters->add($qb->expr()->lt($dataName . '.value', ':field_value_lt_' . $cmpt));
                     $qb->setParameter('field_value_lt_' . $cmpt, $val);
-
-                    $colFilters->add($fieldSet);
                 }
                 $cmpt++;
             }
@@ -348,27 +315,16 @@ class ProspectsManager implements UserProviderInterface, APIQueryInterface
         if (isset($criteria['gt'])) {
             foreach ($criteria['gt'] as $col => $val) {
 
-                $fieldName = 'field_' . $col;
                 $dataName = 'fieldData_' . $col;
 
-                if ($col == 'group') {
-                    $colFilters->add($qb->expr()->gt('fieldGroup.slug', ':group_slug_gt_' . $cmpt));
-                    $qb->setParameter('group_slug_gt_' . $cmpt, $val);
-
-                } else if (in_array($col, $this->getBaseField())) {
+                if (in_array($col, $this->getBaseField())) {
                     $colFilters->add($qb->expr()->gt('prospect.' . $col, ':' . $col . '_slug_gt_' . $cmpt));
                     $qb->setParameter($col . '_slug_gt_' . $cmpt, $val);
 
-                } else {
-                    $fieldSet = new Andx();
-
-                    $fieldSet->add($qb->expr()->eq($fieldName . '.slug', ':field_slug_gt_' . $cmpt));
-                    $qb->setParameter('field_slug_gt_' . $cmpt, $col);
-
-                    $fieldSet->add($qb->expr()->gt($dataName . '.value', ':field_value_gt_' . $cmpt));
+                } else if ($col != 'group') {
+                    $colFilters->add($qb->expr()->gt($dataName . '.value', ':field_value_gt_' . $cmpt));
                     $qb->setParameter('field_value_gt_' . $cmpt, $val);
 
-                    $colFilters->add($fieldSet);
                 }
                 $cmpt++;
             }
@@ -377,27 +333,16 @@ class ProspectsManager implements UserProviderInterface, APIQueryInterface
         if (isset($criteria['le'])) {
             foreach ($criteria['le'] as $col => $val) {
 
-                $fieldName = 'field_' . $col;
                 $dataName = 'fieldData_' . $col;
 
-                if ($col == 'group') {
-                    $colFilters->add($qb->expr()->lte('fieldGroup.slug', ':group_slug_le_' . $cmpt));
-                    $qb->setParameter('group_slug_le_' . $cmpt, $val);
-
-                } else if (in_array($col, $this->getBaseField())) {
+                if (in_array($col, $this->getBaseField())) {
                     $colFilters->add($qb->expr()->lte('prospect.' . $col, ':' . $col . '_slug_le_' . $cmpt));
                     $qb->setParameter($col . '_slug_le_' . $cmpt, $val);
 
-                } else {
-                    $fieldSet = new Andx();
-
-                    $fieldSet->add($qb->expr()->eq($fieldName . '.slug', ':field_slug_le_' . $cmpt));
-                    $qb->setParameter('field_slug_le_' . $cmpt, $col);
-
-                    $fieldSet->add($qb->expr()->lte($dataName . '.value', ':field_value_le_' . $cmpt));
+                } else if ($col != 'group') {
+                    $colFilters->add($qb->expr()->lte($dataName . '.value', ':field_value_le_' . $cmpt));
                     $qb->setParameter('field_value_le_' . $cmpt, $val);
 
-                    $colFilters->add($fieldSet);
                 }
                 $cmpt++;
             }
@@ -406,27 +351,16 @@ class ProspectsManager implements UserProviderInterface, APIQueryInterface
         if (isset($criteria['ge'])) {
             foreach ($criteria['ge'] as $col => $val) {
 
-                $fieldName = 'field_' . $col;
                 $dataName = 'fieldData_' . $col;
 
-                if ($col == 'group') {
-                    $colFilters->add($qb->expr()->gte('fieldGroup.slug', ':group_slug_ge_' . $cmpt));
-                    $qb->setParameter('group_slug_ge_' . $cmpt, $val);
-
-                } else if (in_array($col, $this->getBaseField())) {
+                if (in_array($col, $this->getBaseField())) {
                     $colFilters->add($qb->expr()->gte('prospect.' . $col, ':' . $col . '_slug_ge_' . $cmpt));
                     $qb->setParameter($col . '_slug_ge_' . $cmpt, $val);
 
-                } else {
-                    $fieldSet = new Andx();
-
-                    $fieldSet->add($qb->expr()->eq($fieldName . '.slug', ':field_slug_ge_' . $cmpt));
-                    $qb->setParameter('field_slug_ge_' . $cmpt, $col);
-
-                    $fieldSet->add($qb->expr()->gte($dataName . '.value', ':field_value_ge_' . $cmpt));
+                } else if ($col != 'group') {
+                    $colFilters->add($qb->expr()->gte($dataName . '.value', ':field_value_ge_' . $cmpt));
                     $qb->setParameter('field_value_ge_' . $cmpt, $val);
 
-                    $colFilters->add($fieldSet);
                 }
                 $cmpt++;
             }
@@ -485,22 +419,32 @@ class ProspectsManager implements UserProviderInterface, APIQueryInterface
     }
 
 
-    public function setField(Prospect $prospect, $field, $value = null)
+    public function setField(Prospect $prospect, $keyOrField, $value = null)
     {
-
         try {
-            $prospect->setField($field, $value);
+            $prospect->setField($keyOrField, $value);
         } catch (\InvalidArgumentException $e) {
-            if ($field instanceof Field) {
-                $fieldDataClass = $this->fieldDatasManager->getFieldDataClass($field->getType());
-                $fieldData = new $fieldDataClass($field, $value);
+            if ($keyOrField instanceof Field) {
+                $fieldDataClass = $this->fieldDatasManager->getFieldDataClass($keyOrField->getType());
+                $fieldData = new $fieldDataClass($keyOrField, $value);
                 $prospect->addFieldData($fieldData);
             } else {
-                throw new \InvalidArgumentException("Le champs " . $field . " n'existe pas pour ce prospect");
+                throw new \InvalidArgumentException("Le champs " . $keyOrField . " n'existe pas pour ce prospect");
             }
-
         }
 
+        return $prospect;
+    }
+
+
+
+    public function setGroupField(Prospect $prospect, $group, $key, $value = null)
+    {
+        $field = $this->fieldsHelper->findFieldBy(array('group' => $group, 'slug' => $key));
+        if (!$field) {
+            throw new \InvalidArgumentException("Le champs " . $field . " n'existe pas pour ce prospect");
+        }
+        $this->setField($prospect,$field, $value);
         return $prospect;
     }
 

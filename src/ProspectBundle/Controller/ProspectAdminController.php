@@ -220,6 +220,12 @@ class ProspectAdminController extends LayoutEntityController
 
         $reader = new CsvReader($file, $separator);
         $reader->setHeaderRowNumber(0);
+        $columns = array();
+        foreach ($reader->getColumnHeaders() as $column) {
+            $slug = $this->get('slugify')->slugify($column, '_');
+            $columns[$slug] = $column;
+        }
+
 
         /** @var $group FieldGroup */
         $group = $route->getParameter('groups')->getParameterSubject();
@@ -257,8 +263,9 @@ class ProspectAdminController extends LayoutEntityController
         $layout->getLayoutContentHeader()->setTitle($route->getMetaData('_label'));
 
         $form = $this->createFormBuilder();
-        foreach ($reader->getColumnHeaders() as $column) {
-            $form->add($column, 'choice', array(
+
+        foreach ($columns as $key => $column) {
+            $form->add($key, 'choice', array(
                 'label' => $column,
                 'choices' => $choices,
                 'data' => '__unuse__',
@@ -276,7 +283,7 @@ class ProspectAdminController extends LayoutEntityController
                 $fields = array();
                 foreach ($data as $key => $value) {
                     if ($value == '__create__') {
-                        $field = $fieldHelper->createField($group, $key);
+                        $field = $fieldHelper->createField($group, $columns[$key]);//, 'string', 0, $key);
                         $fieldHelper->saveField($field);
                         $fields[$key] = $field;
                     } else if ($value != '__unuse__' && $value != '') {
@@ -285,12 +292,15 @@ class ProspectAdminController extends LayoutEntityController
                     }
                 }
 
+
                 $cmpt = 0;
                 if (count($fields)) {
                     foreach ($reader as $row) {
                         $prospect = $prospectManager->createProspect();
                         foreach ($row as $id => $rowData) {
-                            $prospectManager->setField($prospect, $fields[$id], $rowData);
+                            if (isset($fields[array_search($id, $columns)])) {
+                                $prospectManager->setField($prospect, $fields[array_search($id, $columns)], $rowData);
+                            }
                         }
                         $prospectManager->saveProspect($prospect, false);
                         $cmpt++;
@@ -324,7 +334,7 @@ class ProspectAdminController extends LayoutEntityController
 
         $formsManager = $this->get('uneak.formsmanager');
         $formView = $formsManager->createView($form);
-        $layout->buildFormPage($formView, "Ajouter une contrainte");
+        $layout->buildFormPage($formView, "Gestion des champs");
 
         return $blockBuilder->renderResponse("layout");
     }

@@ -19,6 +19,7 @@
                 new Sp\BowerBundle\SpBowerBundle(),
                 new Liip\ImagineBundle\LiipImagineBundle(),
 				new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+				new Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle(),
 				// DATABASE,
                 new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
                 new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),

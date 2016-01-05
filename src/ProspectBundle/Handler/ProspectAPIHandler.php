@@ -95,14 +95,14 @@ class ProspectAPIHandler extends EntityAPIHandler {
         $formProspect = $form->get('o_prospect')->getData();
         $prospect = $this->prospectsManager->findProspectById($formProspect);
         if (!$prospect) {
-            $gslug = $form->get('o_group')->getData();
-            $prospect = $this->prospectsManager->createProspect($gslug);
-//            $prospect = $this->prospectsManager->createProspect();
+            $prospect = $this->prospectsManager->createProspect();
         }
+
+        $group = $form->get('o_group')->getData();
 
         $data = $form->getData();
         foreach ($data as $key => $value) {
-            $this->prospectsManager->setField($prospect, $key, $value);
+            $this->prospectsManager->setGroupField($prospect, $group, $key, $value);
         }
 
         $this->prospectsManager->saveProspect($prospect);

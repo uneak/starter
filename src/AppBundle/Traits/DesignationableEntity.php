@@ -19,7 +19,7 @@ trait DesignationableEntity
 
     /**
      * @ORM\Column(name="slug", type="string", length=128, unique=true)
-     * @Gedmo\Slug(fields={"label"})
+     * @Gedmo\Slug(fields={"label"}, separator="_", updatable=false )
      */
     protected $slug;
 

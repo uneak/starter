@@ -260,8 +260,10 @@ doctrine:
                         is_bundle: false
 
 stof_doctrine_extensions:
-    default_locale: "%locale%"
+#    class:
+#        sluggable: AppBundle\Sluggable\SluggableListener
 
+    default_locale: "%locale%"
     orm:
         default:
             tree: false
