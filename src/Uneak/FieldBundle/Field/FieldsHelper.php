@@ -11,7 +11,6 @@ use Uneak\ConstraintBundle\Constraint\ConstraintsHelper;
 use Uneak\FieldBundle\Entity\Field;
 use Uneak\FieldDataBundle\Entity\FieldData;
 use Uneak\FieldDataBundle\FieldData\FieldDataHelper;
-use Uneak\FieldDataBundle\FieldData\FieldDatasManager;
 use Uneak\FieldGroupBundle\Entity\FieldGroup;
 use Uneak\FieldTypeBundle\Field\FieldTypesHelper;
 use Uneak\FieldTypeBundle\Field\FieldTypesManager;
@@ -30,10 +29,7 @@ class FieldsHelper {
      * @var EntityManagerInterface
      */
     private $em;
-    /**
-     * @var FieldDatasManager
-     */
-    private $fieldDatasManager;
+
     /**
      * @var FieldDataHelper
      */
@@ -48,11 +44,10 @@ class FieldsHelper {
     private $formFactory;
 
 
-    public function __construct(EntityManagerInterface $em, FieldTypesManager $fieldTypesManager, ConstraintsHelper $constraintsHelper, FieldDatasManager $fieldDatasManager, FieldDataHelper $fieldDataHelper, FieldTypesHelper $fieldTypesHelper, FormFactory $formFactory) {
+    public function __construct(EntityManagerInterface $em, FieldTypesManager $fieldTypesManager, ConstraintsHelper $constraintsHelper, FieldDataHelper $fieldDataHelper, FieldTypesHelper $fieldTypesHelper, FormFactory $formFactory) {
         $this->em = $em;
         $this->fieldTypesManager = $fieldTypesManager;
         $this->constraintsHelper = $constraintsHelper;
-        $this->fieldDatasManager = $fieldDatasManager;
         $this->fieldDataHelper = $fieldDataHelper;
         $this->fieldTypesHelper = $fieldTypesHelper;
         $this->formFactory = $formFactory;
@@ -87,7 +82,6 @@ class FieldsHelper {
     }
 
     public function saveField(Field $field, $andFlush = true) {
-        $this->updateFieldDataType($field);
         if ($field->getFieldType() == null) {
             $this->fieldTypesHelper->removeFieldType($field, false);
         }
@@ -97,41 +91,6 @@ class FieldsHelper {
             $this->em->flush();
         }
         return $this;
-    }
-
-
-
-    protected function updateFieldDataType(Field $field) {
-
-        $typeClass = $this->fieldDatasManager->getFieldDataClass($field->getType());
-
-        $qb = $this->em->createQueryBuilder();
-        $qb
-            ->select('fieldData')
-            ->from('UneakFieldDataBundle:FieldData', 'fieldData')
-            ->innerJoin('fieldData.field', 'field')
-            ->where(
-                $qb->expr()->andX(
-                    $qb->expr()->eq('field.id', ':fieldId'),
-                    'fieldData NOT INSTANCE OF '.$typeClass
-                )
-            )
-            ->setParameter("fieldId", $field->getId())
-        ;
-
-        $fieldDatas = $qb->getQuery()->getResult();
-
-
-        if (count($fieldDatas)) {
-            /** @var $fieldData FieldData */
-            foreach ($fieldDatas as $fieldData) {
-                $nFieldData = $this->fieldDataHelper->createFieldData($field->getType(), $fieldData->getProspect(), $field, $fieldData->getValue());
-                $this->fieldDataHelper->saveFieldData($nFieldData, false);
-                $this->fieldDataHelper->removeFieldData($fieldData, false);
-            }
-            $this->fieldTypesHelper->removeFieldType($field, false);
-        }
-
     }
 
 

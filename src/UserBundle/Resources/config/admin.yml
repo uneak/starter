@@ -20,8 +20,9 @@ services:
         arguments:
             - @form.factory
             - @doctrine.orm.entity_manager
-            - "UserBundle\Entity\User"
             - @uneak.user_manager
+        calls:
+            - [ setEntityClass, [ UserBundle\Entity\User ] ]
 
     uneak.admin.user.crud.handler:
         class: %uneak.admin.user.crud.handler.class%

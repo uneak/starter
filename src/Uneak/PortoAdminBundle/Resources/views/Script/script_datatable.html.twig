@@ -36,6 +36,82 @@
 
 
         var grid = $('#{{ uniqid }}').dataTable({
+            "dom": 'Bfrtip',
+            "buttons": [
+                {
+                    extend: 'pageLength',
+                    text: 'Résultats numbre'
+                },
+                {
+                    extend: 'copyHtml5',
+                    text: '<i class="fa fa-files-o"></i>',
+                    titleAttr: 'Copier'
+                },
+                {
+                    extend:    'excelHtml5',
+                    text:      '<i class="fa fa-file-excel-o"></i>',
+                    titleAttr: 'Excel',
+                    exportOptions: {
+                        columns: ':visible',
+                        modifier: {
+                            search: 'applied',
+                            order: 'applied'
+                        }
+                    }
+                },
+                {
+                    extend:    'csvHtml5',
+                    text:      '<i class="fa fa-file-text-o"></i>',
+                    titleAttr: 'CSV',
+                    exportOptions: {
+                        columns: ':visible',
+                        modifier: {
+                            search: 'applied',
+                            order: 'applied'
+                        }
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text:      '<i class="fa fa-file-pdf-o"></i>',
+                    titleAttr: 'PDF',
+                    exportOptions: {
+                        columns: ':visible',
+                        modifier: {
+                            search: 'applied',
+                            order: 'applied'
+                        }
+                    },
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL'
+                },
+                {
+                    extend: 'print',
+                    text:      '<i class="fa fa-print"></i>',
+                    titleAttr: 'Imprimer',
+                    exportOptions: {
+                        columns: ':visible',
+                        modifier: {
+                            search: 'applied',
+                            order: 'applied'
+                        }
+                    }
+                },
+                {
+                    text: 'Colonnes',
+                    extend: 'colvis',
+                    collectionLayout: 'fixed two-column',
+                    columns: ':not(:last-child)'
+                }
+            ],
+            "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Tous"]],
+            "colReorder": {
+                realtime: false
+            },
+            "fixedHeader": {
+                "header": true
+            },
+            "responsive": true,
             "iDisplayLength": {{ display_length }},
             "stateSave": {{ state_save ? 'true':'false' }},
             "processing": {{ processing ? 'true':'false' }},
@@ -49,6 +125,10 @@
                 {"name": "", "data": "_actions", "sortable": false, "searchable": false}
             ],
             "language": {
+                "buttons": {
+                    "copyTitle": 'Copier au clipboard',
+                    "copyKeys": 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données de table à votre presse-papiers du système. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.'
+                },
                 "sProcessing": "Traitement en cours...",
                 "sSearch": "Rechercher&nbsp;:",
                 "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
@@ -88,6 +168,17 @@
             e.preventDefault();
             grid.fnLengthChange($(this).data('value'));
         });
+
+        $('.table-export').on("click", function(e) {
+            e.preventDefault();
+            gridApi.button($(this).data('value')).trigger();
+        });
+
+        gridApi.on('column-reorder', function ( e, settings, details ) {
+            gridApi.ajax.reload( null, false );
+        });
+
+
 //
 //        $('a.grid-col-vis').on('click', function(e) {
 //            e.preventDefault();
@@ -102,7 +193,7 @@
         $(".dataTables_filter").hide();
 //        $(".dataTables_info").hide();
         $(".dataTables_length").hide();
-
+        $(".dt-buttons").hide();
 
 
 //        $('.dataTables_filter input').addClass("form-control"); // modify table search input

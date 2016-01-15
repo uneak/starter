@@ -1,0 +1,5 @@
+api_campaign:
+    type:     rest
+    resource: CampaignBundle\Controller\CampaignApiController
+    prefix: v1
+    name_prefix: api_v1_campaign_

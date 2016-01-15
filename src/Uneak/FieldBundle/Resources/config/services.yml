@@ -6,7 +6,6 @@ services:
             - @doctrine.orm.entity_manager
             - @uneak.fieldtypesmanager
             - @uneak.constraints.helper
-            - @uneak.fielddatasmanager
             - @uneak.fielddata.helper
             - @uneak.fieldtypes.helper
             - @form.factory

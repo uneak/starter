@@ -144,6 +144,68 @@ assetic:
 
     assets:
 
+        porto_admin_datatable_button_bootstrap__css:
+            inputs:
+                - %kernel.root_dir%/../web/vendor/datatables-buttons/css/buttons.bootstrap.scss
+            filters:
+                - sass
+            output: css/porto_admin/datatable/buttons/buttons.bootstrap.css
+
+        porto_admin_datatable_button_datatables__css:
+            inputs:
+                - %kernel.root_dir%/../web/vendor/datatables-buttons/css/buttons.dataTables.scss
+            filters:
+                - sass
+            output: css/porto_admin/datatable/buttons/buttons.dataTables.css
+
+        porto_admin_datatable_button_foundation__css:
+            inputs:
+                - %kernel.root_dir%/../web/vendor/datatables-buttons/css/buttons.foundation.scss
+            filters:
+                - sass
+            output: css/porto_admin/datatable/buttons/buttons.foundation.css
+
+        porto_admin_datatable_button_jqueryui__css:
+            inputs:
+                - %kernel.root_dir%/../web/vendor/datatables-buttons/css/buttons.jqueryui.scss
+            filters:
+                - sass
+            output: css/porto_admin/datatable/buttons/buttons.jqueryui.css
+
+
+        porto_admin_datatable_colreorder_datatables__css:
+            inputs:
+                - %kernel.root_dir%/../web/vendor/datatables-colreorder/css/colReorder.dataTables.scss
+            filters:
+                - sass
+            output: css/porto_admin/datatable/colreorder/colReorder.dataTables.css
+
+        porto_admin_datatable_colreorder_bootstrap__css:
+            inputs:
+                - %kernel.root_dir%/../web/vendor/datatables-colreorder/css/colReorder.bootstrap.scss
+            filters:
+                - sass
+            output: css/porto_admin/datatable/colreorder/colReorder.bootstrap.css
+
+
+        porto_admin_datatable_fixedheader_datatables__css:
+            inputs:
+                - %kernel.root_dir%/../web/vendor/datatables-fixedheader/css/fixedHeader.dataTables.scss
+            filters:
+                - sass
+            output: css/porto_admin/datatable/fixedheader/fixedHeader.dataTables.css
+
+        porto_admin_datatable_fixedheader_bootstrap__css:
+            inputs:
+                - %kernel.root_dir%/../web/vendor/datatables-fixedheader/css/fixedHeader.bootstrap.scss
+            filters:
+                - sass
+            output: css/porto_admin/datatable/fixedheader/fixedHeader.bootstrap.css
+
+
+
+
+
         porto_admin_uielements_tabs__css:
             inputs:
                 - %kernel.root_dir%/Resources/sass/porto_admin/modules/ui-elements/tabs.scss
@@ -260,9 +322,6 @@ doctrine:
                         is_bundle: false
 
 stof_doctrine_extensions:
-#    class:
-#        sluggable: AppBundle\Sluggable\SluggableListener
-
     default_locale: "%locale%"
     orm:
         default:

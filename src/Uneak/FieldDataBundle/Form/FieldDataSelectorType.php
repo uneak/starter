@@ -5,25 +5,15 @@
 	use Symfony\Component\Form\AbstractType;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
     use Symfony\Component\Validator\Constraints\Collection;
-    use Uneak\FieldDataBundle\FieldData\FieldDatasManager;
+    use Uneak\FieldDataBundle\FieldData\FieldDataHelper;
 
-	class FieldDataSelectorType extends AbstractType {
-
-		/**
-		 * @var FieldDatasManager
-		 */
-		private $fieldDatasManager;
-
-		public function __construct(FieldDatasManager $fieldDatasManager) {
-			$this->fieldDatasManager = $fieldDatasManager;
-		}
-
+    class FieldDataSelectorType extends AbstractType {
 
         public function setDefaultOptions(OptionsResolverInterface $resolver) {
             $choices = array();
-            $fieldDatas = $this->fieldDatasManager->getFieldDatas();
-            foreach ($fieldDatas as $fieldData) {
-                $choices[$fieldData['alias']] = $fieldData['label'];
+            $alias = FieldDataHelper::ALIAS();
+            foreach ($alias as $type => $label) {
+                $choices[$type] = $label;
             }
 
             $resolver->setDefaults(array(

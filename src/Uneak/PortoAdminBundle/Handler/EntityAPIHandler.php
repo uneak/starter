@@ -62,7 +62,7 @@
 		}
 
 		public function count(array $criteria = null) {
-			return $this->getRepository()->getCount($criteria);
+			return intval($this->getRepository()->getCount($criteria));
 		}
 
 	}

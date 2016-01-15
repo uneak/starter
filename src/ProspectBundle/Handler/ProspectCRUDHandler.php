@@ -73,8 +73,9 @@
 
 
             $results = $this->apiHandler->all($allCriteria);
+            $recordsFiltered = $this->apiHandler->count($allCriteria);
             $recordsTotal = $this->apiHandler->count($criteria);
-            $recordsFiltered = $recordsTotal;//count($results);
+
 
             
 
@@ -90,7 +91,7 @@
             $gridDataArray = $this->getGridDataArray($gridData, $ids, $params['columns']);
 
             return array_merge($gridDataArray, array(
-                'draw'            => $params["draw"],
+                'draw'            => intval($params["draw"] + 1),
                 'recordsTotal'    => $recordsTotal,
                 'recordsFiltered' => $recordsFiltered,
             ));

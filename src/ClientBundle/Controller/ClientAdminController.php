@@ -34,6 +34,35 @@
         }
 
         //
+        // GROUPS / IMPORTS
+        //
+        public function groupsImportsIndexAction(FlattenRoute $route, Request $request) {
+            return $this->forward('FieldGroupBundle:FieldGroupAdmin:importsIndex', array('route' => $route->getParameter('groups')->getChild('imports/index'), 'request' => $request));
+        }
+        public function groupsImportsIndexGridAction(FlattenRoute $route, Request $request) {
+            return $this->forward('FieldGroupBundle:FieldGroupAdmin:importsIndexGrid', array('route' => $route->getParameter('groups')->getChild('imports/index/_grid'), 'request' => $request));
+        }
+        public function groupsImportsCsvAction(FlattenRoute $route, Request $request) {
+            return $this->forward('FieldGroupBundle:FieldGroupAdmin:importsCsv', array('route' => $route->getParameter('groups')->getChild('imports/csv'), 'request' => $request));
+        }
+        public function groupsImportsXlsAction(FlattenRoute $route, Request $request) {
+            return $this->forward('FieldGroupBundle:FieldGroupAdmin:importsXls', array('route' => $route->getParameter('groups')->getChild('imports/xls'), 'request' => $request));
+        }
+        public function groupsImportsShowAction(FlattenRoute $route, Request $request) {
+            return $this->forward('FieldGroupBundle:FieldGroupAdmin:importsShow', array('route' => $route->getParameter('imports')->getChild('show'), 'request' => $request));
+        }
+        public function groupsImportsDeleteAction(FlattenRoute $route, Request $request) {
+            return $this->forward('FieldGroupBundle:FieldGroupAdmin:importsDelete', array('route' => $route->getParameter('imports')->getChild('delete'), 'request' => $request));
+        }
+        public function groupsImportsStatusAction(FlattenRoute $route, Request $request) {
+            return $this->forward('FieldGroupBundle:FieldGroupAdmin:importsStatus', array('route' => $route->getParameter('imports')->getChild('status'), 'request' => $request));
+        }
+        public function groupsImportsStopAction(FlattenRoute $route, Request $request) {
+            return $this->forward('FieldGroupBundle:FieldGroupAdmin:importsStop', array('route' => $route->getParameter('imports')->getChild('stop'), 'request' => $request));
+        }
+
+
+        //
         // GROUPS / PROSPECTS
         //
         public function groupsProspectsIndexAction(FlattenRoute $route, Request $request) {
@@ -44,12 +73,6 @@
         }
         public function groupsProspectsNewAction(FlattenRoute $route, Request $request) {
             return $this->forward('FieldGroupBundle:FieldGroupAdmin:prospectsNew', array('route' => $route->getParameter('groups')->getChild('prospects/new'), 'request' => $request));
-        }
-        public function groupsProspectsImportcsvAction(FlattenRoute $route, Request $request) {
-            return $this->forward('FieldGroupBundle:FieldGroupAdmin:prospectsImportCsv', array('route' => $route->getParameter('groups')->getChild('prospects/import/csv'), 'request' => $request));
-        }
-        public function groupsProspectsImportCsvProceedAction(FlattenRoute $route, Request $request) {
-            return $this->forward('FieldGroupBundle:FieldGroupAdmin:prospectsImportCsvProceed', array('route' => $route->getParameter('groups')->getChild('prospects/import/csv/proceed'), 'request' => $request));
         }
         public function groupsProspectsShowAction(FlattenRoute $route, Request $request) {
             return $this->forward('FieldGroupBundle:FieldGroupAdmin:prospectsShow', array('route' => $route->getParameter('prospects')->getChild('show'), 'request' => $request));
@@ -99,16 +122,15 @@
         public function groupsFieldsConstraintsIndexAction(FlattenRoute $route, Request $request) {
             return $this->forward('FieldBundle:FieldAdmin:constraintsIndex', array('route' => $route->getParameter('fields')->getChild('constraints/index'), 'request' => $request));
         }
-
-
         public function groupsFieldsConstraintsEditAction(FlattenRoute $route, Request $request) {
             return $this->forward('FieldBundle:FieldAdmin:constraintsEdit', array('route' => $route->getParameter('constraints')->getChild('edit'), 'request' => $request));
         }
-
+        public function groupsFieldsConstraintsDeleteAction(FlattenRoute $route, Request $request) {
+            return $this->forward('FieldBundle:FieldAdmin:constraintsDelete', array('route' => $route->getParameter('constraints')->getChild('delete'), 'request' => $request));
+        }
         public function groupsFieldsConstraintsNewAction(FlattenRoute $route, Request $request) {
             return $this->forward('FieldBundle:FieldAdmin:constraintsNew', array('route' => $route->getParameter('fields')->getChild('constraints/new'), 'request' => $request));
         }
-
         public function groupsFieldsConstraintsTypenewAction(FlattenRoute $route, Request $request) {
             return $this->forward('FieldBundle:FieldAdmin:constraintsTypenew', array('route' => $route->getParameter('typeconstraint')->getChild('new'), 'request' => $request));
         }
@@ -132,221 +154,4 @@
 
 
 
-
-
-
-
-//		public function campaignsIndexAction(FlattenRoute $route) {
-//			$blockBuilder = $this->get("uneak.blocksmanager.builder");
-//			$blockBuilder->addBlock("layout", "block_main_interface");
-//
-//			$layout = $this->get("uneak.admin.page.entity.layout");
-//			$layout->setLayout($blockBuilder->getBlock("layout"));
-//			$layout->buildEntityLayout($route);
-//			$layout->buildGridPage($route);
-//
-//			return $blockBuilder->renderResponse("layout");
-//		}
-//
-//
-//		public function campaignsNewAction(FlattenRoute $route, Request $request) {
-//			$crudHandler = $route->getHandler();
-//			$blockBuilder = $this->get("uneak.blocksmanager.builder");
-//
-//			$blockBuilder->addBlock("layout", "block_main_interface");
-//
-//			$layout = $this->get("uneak.admin.page.entity.layout");
-//			$layout->setLayout($blockBuilder->getBlock("layout"));
-//			$layout->buildEntityLayout($route);
-//
-//
-//			$form = $crudHandler->getCampaignForm($route, Request::METHOD_POST);
-//			$form->add('submit', 'submit', array('label' => 'Créer'));
-//
-//
-//			$formsManager = $this->get('uneak.formsmanager');
-//			$formView = $formsManager->createView($form);
-//
-//			$layout->buildFormPage($formView, $route->getMetaData('_label'));
-//
-//			if ($request->getMethod() == Request::METHOD_POST) {
-//				$form->handleRequest($request);
-//				if ($form->isValid()) {
-//
-//					$crudHandler->persistEntity($form);
-//
-//
-//					$this->addFlash('info', new PNotify(array(
-//						'type' => 'info',
-//						'title' => 'Formulaire',
-//						'text' => 'La création a été réalisé avec succes',
-//						'shadow' => true,
-//						'stack' => 'stack-bar-bottom',
-//						'icon' => 'fa fa-'.$route->getMetaData('_icon')
-//					)));
-//
-//
-//					return $this->redirect($route->getChild('*/index')->getRoutePath());
-//				} else {
-//					$this->addFlash('error', new PNotify(array(
-//						'type' => 'error',
-//						'title' => 'Formulaire',
-//						'text' => 'Votre formulaire est invalide.',
-//						'shadow' => true,
-//						'stack' => 'stack-bar-bottom'
-//						//				'icon' => 'fa fa-twitter'
-//					)));
-//				}
-//			}
-//
-//
-//			return $blockBuilder->renderResponse("layout");
-//		}
-//
-//
-//
-//
-//		public function campaignsIndexGridAction(FlattenRoute $route, Request $request) {
-//
-//			$crudHandler = $route->getCRUD()->getHandler();
-//			$gridHelper = $this->get("uneak.routesmanager.grid.helper");
-//			$menuHelper = $this->get("uneak.routesmanager.menu.helper");
-//			$blockBuilder = $this->get("uneak.blocksmanager.builder");
-//			$params = $request->query->all();
-//
-//			$datatableArray = $crudHandler->getCampaignDatatableArray($route, $params, $gridHelper);
-//			$crudHandler->addDatatableArrayActions($datatableArray, $route, $menuHelper, $blockBuilder);
-//
-//			unset($datatableArray['id']);
-//			return new JsonResponse($datatableArray);
-//
-//		}
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//		public function groupsIndexAction(FlattenRoute $route) {
-//			$blockBuilder = $this->get("uneak.blocksmanager.builder");
-//			$blockBuilder->addBlock("layout", "block_main_interface");
-//
-//			$layout = $this->get("uneak.admin.page.entity.layout");
-//			$layout->setLayout($blockBuilder->getBlock("layout"));
-//			$layout->buildEntityLayout($route);
-//			$layout->buildGridPage($route);
-//
-//			return $blockBuilder->renderResponse("layout");
-//		}
-//
-//
-//		public function groupsNewAction(FlattenRoute $route, Request $request) {
-//			$crudHandler = $route->getHandler();
-//			$blockBuilder = $this->get("uneak.blocksmanager.builder");
-//
-//			$blockBuilder->addBlock("layout", "block_main_interface");
-//
-//			$layout = $this->get("uneak.admin.page.entity.layout");
-//			$layout->setLayout($blockBuilder->getBlock("layout"));
-//			$layout->buildEntityLayout($route);
-//
-//
-//			$form = $crudHandler->getFieldGroupForm($route, Request::METHOD_POST);
-//			$form->add('submit', 'submit', array('label' => 'Créer'));
-//
-//
-//			$formsManager = $this->get('uneak.formsmanager');
-//			$formView = $formsManager->createView($form);
-//
-//			$layout->buildFormPage($formView, $route->getMetaData('_label'));
-//
-//			if ($request->getMethod() == Request::METHOD_POST) {
-//				$form->handleRequest($request);
-//				if ($form->isValid()) {
-//
-//					$crudHandler->persistEntity($form);
-//
-//
-//					$this->addFlash('info', new PNotify(array(
-//						'type' => 'info',
-//						'title' => 'Formulaire',
-//						'text' => 'La création a été réalisé avec succes',
-//						'shadow' => true,
-//						'stack' => 'stack-bar-bottom',
-//						'icon' => 'fa fa-'.$route->getMetaData('_icon')
-//					)));
-//
-//
-//					return $this->redirect($route->getChild('*/index')->getRoutePath());
-//				} else {
-//					$this->addFlash('error', new PNotify(array(
-//						'type' => 'error',
-//						'title' => 'Formulaire',
-//						'text' => 'Votre formulaire est invalide.',
-//						'shadow' => true,
-//						'stack' => 'stack-bar-bottom'
-//						//				'icon' => 'fa fa-twitter'
-//					)));
-//				}
-//			}
-//
-//
-//			return $blockBuilder->renderResponse("layout");
-//		}
-//
-//
-//		public function groupsShowAction(FlattenRoute $route, Request $request) {
-//			return $this->forward('FieldGroupBundle:FieldGroupAdmin:show', array('route' => $route->getParameter('groups')->getChild('show'), 'request' => $request));
-//		}
-//
-//		public function groupsEditAction(FlattenRoute $route, Request $request) {
-//			return $this->forward('FieldGroupBundle:FieldGroupAdmin:edit', array('route' => $route->getParameter('groups')->getChild('edit'), 'request' => $request));
-//		}
-//
-//		public function groupsDeleteAction(FlattenRoute $route, Request $request) {
-//			return $this->forward('FieldGroupBundle:FieldGroupAdmin:delete', array('route' => $route->getParameter('groups')->getChild('delete'), 'request' => $request));
-//		}
-//
-//		public function groupsProspectsIndexAction(FlattenRoute $route, Request $request) {
-//			return $this->forward('FieldGroupBundle:FieldGroupAdmin:prospectsIndex', array('route' => $route->getParameter('groups')->getChild('prospects/index'), 'request' => $request));
-//		}
-//
-//		public function groupsProspectsShowAction(FlattenRoute $route, Request $request) {
-//			return $this->forward('ProspectBundle:ProspectAdmin:show', array('route' => $route->getParameter('prospects')->getChild('show'), 'request' => $request));
-//		}
-//
-//		public function groupsProspectsEditAction(FlattenRoute $route, Request $request) {
-//			return $this->forward('ProspectBundle:ProspectAdmin:edit', array('route' => $route->getParameter('prospects')->getChild('edit'), 'request' => $request));
-//		}
-//
-//		public function groupsProspectsDeleteAction(FlattenRoute $route, Request $request) {
-//			return $this->forward('ProspectBundle:ProspectAdmin:delete', array('route' => $route->getParameter('prospects')->getChild('delete'), 'request' => $request));
-//		}
-//
-//		public function groupsProspectsIndexGridAction(FlattenRoute $route, Request $request) {
-//			return $this->forward('FieldGroupBundle:FieldGroupAdmin:prospectsIndexGrid', array('route' => $route->getParameter('groups')->getChild('prospects/index/_grid'), 'request' => $request));
-//		}
-//
-//
-//
-//
-//		public function groupsIndexGridAction(FlattenRoute $route, Request $request) {
-//
-//			$crudHandler = $route->getCRUD()->getHandler();
-//			$gridHelper = $this->get("uneak.routesmanager.grid.helper");
-//			$menuHelper = $this->get("uneak.routesmanager.menu.helper");
-//			$blockBuilder = $this->get("uneak.blocksmanager.builder");
-//			$params = $request->query->all();
-//
-//			$datatableArray = $crudHandler->getFieldGroupDatatableArray($route, $params, $gridHelper);
-//			$crudHandler->addDatatableArrayActions($datatableArray, $route, $menuHelper, $blockBuilder);
-//
-//			unset($datatableArray['id']);
-//			return new JsonResponse($datatableArray);
-//
-//
-//		}
 	}

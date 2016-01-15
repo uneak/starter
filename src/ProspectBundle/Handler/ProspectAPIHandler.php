@@ -102,7 +102,12 @@ class ProspectAPIHandler extends EntityAPIHandler {
 
         $data = $form->getData();
         foreach ($data as $key => $value) {
-            $this->prospectsManager->setGroupField($prospect, $group, $key, $value);
+            if ($group) {
+                $this->prospectsManager->setGroupField($prospect, $group, $key, $value);
+            } else {
+                $this->prospectsManager->setField($prospect, $key, $value);
+            }
+
         }
 
         $this->prospectsManager->saveProspect($prospect);

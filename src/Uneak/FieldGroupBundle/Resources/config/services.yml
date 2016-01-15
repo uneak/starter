@@ -7,3 +7,4 @@ services:
             - @form.factory
             - @uneak.constraintsmanager
             - @uneak.field.helper
+            - @uneak.fieldtypesmanager

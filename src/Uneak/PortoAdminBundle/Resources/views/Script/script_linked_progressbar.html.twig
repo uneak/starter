@@ -1,0 +1,54 @@
+<script type="text/javascript">
+	$(document).ready(function () {
+
+
+		{#$('.stop-process').on('click', function(event){#}
+			{#event.preventDefault();#}
+			{#clearInterval(interval{{ uniqid }});#}
+			{##}
+			{#$.ajax({#}
+				{#url: $(this).attr("href"),#}
+				{#method: "POST",#}
+				{#dataType: "json",#}
+				{#async: true#}
+			{#}).done(function(data) {#}
+				{#location.href = data.redirect;#}
+
+			{#});#}
+
+		{#})#}
+
+		function refresh{{ uniqid }}() {
+
+			clearInterval(interval{{ uniqid }});
+
+			$.ajax({
+				url: "{{ url }}",
+				method: "POST",
+//				data: {id: ids},
+				dataType: "json",
+				async: true
+			}).done(function(data) {
+
+				$('#{{ uniqid }} .message-value').html(data.current+' / '+data.total);
+				$('#{{ uniqid }} .progress-bar').attr('aria-valuenow', data.perc);
+				$('#{{ uniqid }} .progress-bar').attr('aria-valuemax', data.total);
+				$('#{{ uniqid }} .progress-bar').css('width', data.perc+'%');
+
+				if (data.status != "STATUS_PROGRESS") {
+					location.reload();
+
+				} else {
+					interval{{ uniqid }} = setInterval(function(){ refresh{{ uniqid }}() }, 3000);
+				}
+
+			});
+
+
+		};
+
+		var interval{{ uniqid }} = 0;
+		refresh{{ uniqid }}();
+
+	});
+</script>

@@ -9,7 +9,6 @@
     use Symfony\Component\Security\Core\User\UserInterface;
     use Uneak\FieldBundle\Entity\Field;
     use Uneak\FieldDataBundle\Entity\FieldData;
-    use Vich\UploaderBundle\Mapping\Annotation\Uploadable;
 
 
 	/**
@@ -17,8 +16,7 @@
 	 *
 	 * @ORM\Table(name="Prospect")
 	 * @ORM\Entity(repositoryClass="Uneak\ProspectBundle\Entity\ProspectRepository")
-	 *
-	 * @Uploadable
+	 * @ORM\HasLifecycleCallbacks()
 	 *
 	 */
 	class Prospect implements UserInterface {
@@ -53,10 +51,16 @@
 		 */
 		protected $source;
 
-
+        /**
+         *
+         * @ORM\Column(name="cache", type="json_array")
+         */
+        protected $cache;
 
         /**
-         * @ORM\OneToMany(targetEntity="\Uneak\FieldDataBundle\Entity\FieldData", mappedBy="prospect", orphanRemoval=true, cascade={"persist", "remove"})
+         * @ORM\OneToMany(targetEntity="\Uneak\FieldDataBundle\Entity\FieldData", mappedBy="prospect",
+         *                                                                        orphanRemoval=true,
+         *                                                                        cascade={"persist", "remove"})
          */
         protected $fieldDatas;
 
@@ -100,6 +104,35 @@
         public function __toString() {
             return $this->getCode();
         }
+
+
+        /**
+         * @ORM\PreFlush()
+         */
+        public function updateCache()
+        {
+            $data = array();
+            /** @var $fieldData FieldData */
+            foreach ($this->fieldDatas as $fieldData) {
+                $data[$fieldData->getField()->getSlug()] = $fieldData->getValue();
+            }
+            $this->cache = $data;
+        }
+
+        /**
+         * @return mixed
+         */
+        public function getCache() {
+            $data = $this->cache;
+            $data['id'] = $this->id;
+            $data['createdAt'] = $this->createdAt;
+            $data['updatedAt'] = $this->updatedAt;
+            $data['code'] = $this->code;
+            $data['enabled'] = $this->enabled;
+            $data['source'] = $this->source;
+            return $data;
+        }
+
 
 
 

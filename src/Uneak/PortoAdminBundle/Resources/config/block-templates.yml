@@ -19,6 +19,7 @@ parameters:
     uneak.portoadmin.notification.template.class: Uneak\PortoAdminBundle\Templates\Notification\NotificationTemplate
 
     uneak.portoadmin.progress.bar.notification.template.class: Uneak\PortoAdminBundle\Templates\Notification\ProgressBarTemplate
+    uneak.portoadmin.linked.progress.bar.notification.template.class: Uneak\PortoAdminBundle\Templates\Notification\LinkedProgressBarTemplate
     uneak.portoadmin.message.notification.template.class: Uneak\PortoAdminBundle\Templates\Notification\MessageTemplate
     uneak.portoadmin.icon.message.notification.template.class: Uneak\PortoAdminBundle\Templates\Notification\IconMessageTemplate
 
@@ -213,6 +214,14 @@ services:
         class: %uneak.portoadmin.progress.bar.notification.template.class%
         tags:
             - { name: uneak.blocksmanager.template, alias: block_template_progress_bar }
+
+
+    uneak.portoadmin.linked.progress.bar.notification.template:
+        class: %uneak.portoadmin.linked.progress.bar.notification.template.class%
+        tags:
+            - { name: uneak.blocksmanager.template, alias: block_template_linked_progress_bar }
+
+
 
     uneak.portoadmin.message.notification.template:
         class: %uneak.portoadmin.message.notification.template.class%

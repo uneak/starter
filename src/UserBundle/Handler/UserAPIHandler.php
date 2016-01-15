@@ -14,20 +14,14 @@ use Uneak\PortoAdminBundle\Handler\EntityAPIHandler;
 class UserAPIHandler extends EntityAPIHandler {
 
     /**
-     * @var EntityManager
-     */
-    protected $em;
-    protected $entityClass;
-    protected $repository;
-    /**
      * @var UserManagerInterface
      */
     private $userManager;
 
 
-    public function __construct(FormFactoryInterface $formFactory, EntityManager $em, $entityClass, UserManagerInterface $userManager)
+    public function __construct(FormFactoryInterface $formFactory, EntityManager $em, UserManagerInterface $userManager)
     {
-        parent::__construct($formFactory, $em, $entityClass);
+        parent::__construct($formFactory, $em);
 
         $this->userManager = $userManager;
     }

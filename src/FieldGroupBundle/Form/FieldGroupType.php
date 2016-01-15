@@ -32,7 +32,6 @@
 					)
 				)
 
-
 				->add('description', null, array(
 						'label' => 'Description',
 						'required' => false,

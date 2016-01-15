@@ -2,7 +2,6 @@ services:
 
     uneak.fielddata.form.fielddata.selector:
         class: Uneak\FieldDataBundle\Form\FieldDataSelectorType
-        arguments: [@uneak.fielddatasmanager]
         tags:
             -  { name: form.type, alias: "fielddatas_selector" }
 
@@ -10,43 +9,3 @@ services:
         class: Uneak\FieldDataBundle\FieldData\FieldDataHelper
         arguments:
             - @doctrine.orm.entity_manager
-            - @uneak.fielddatasmanager
-
-    uneak.fielddatasmanager:
-        class: Uneak\FieldDataBundle\FieldData\FieldDatasManager
-
-
-    uneak.fielddata.integer:
-        class: Uneak\FieldDataBundle\Entity\FieldDataInteger
-        tags:
-            -  { name: uneak.fielddatasmanager.fielddata, alias: "integer", label: "Entier" }
-
-    uneak.fielddata.float:
-        class: Uneak\FieldDataBundle\Entity\FieldDataFloat
-        tags:
-            -  { name: uneak.fielddatasmanager.fielddata, alias: "float", label: "Float" }
-
-    uneak.fielddata.text:
-        class: Uneak\FieldDataBundle\Entity\FieldDataText
-        tags:
-            -  { name: uneak.fielddatasmanager.fielddata, alias: "text", label: "Text" }
-
-    uneak.fielddata.boolean:
-        class: Uneak\FieldDataBundle\Entity\FieldDataBoolean
-        tags:
-            -  { name: uneak.fielddatasmanager.fielddata, alias: "boolean", label: "Boolean" }
-
-    uneak.fielddata.datetime:
-        class: Uneak\FieldDataBundle\Entity\FieldDataDatetime
-        tags:
-            -  { name: uneak.fielddatasmanager.fielddata, alias: "datetime", label: "Date et temps" }
-
-    uneak.fielddata.array:
-        class: Uneak\FieldDataBundle\Entity\FieldDataArray
-        tags:
-            -  { name: uneak.fielddatasmanager.fielddata, alias: "array", label: "Tableau" }
-
-    uneak.fielddata.string:
-        class: Uneak\FieldDataBundle\Entity\FieldDataString
-        tags:
-            -  { name: uneak.fielddatasmanager.fielddata, alias: "string", label: "String" }

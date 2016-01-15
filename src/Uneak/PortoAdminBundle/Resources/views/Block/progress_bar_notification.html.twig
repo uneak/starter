@@ -1,7 +1,11 @@
-<p class="clearfix mb-xs">
-	<span class="message pull-left">{{ title }}</span>
-	<span class="message pull-right text-dark">{{ value }}</span>
-</p>
-<div class="progress progress-xs light">
-	<div class="progress-bar" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent }}%;"></div>
+<div id="{{ uniqid }}">
+
+	<p class="clearfix mb-xs">
+		<span class="message-title message pull-left">{{ title }}</span>
+		<span class="message-value message pull-right text-dark">{{ value }}</span>
+	</p>
+	<div class="progress progress-xs light">
+		<div class="progress-bar" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent }}%;"></div>
+	</div>
+
 </div>

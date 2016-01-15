@@ -4,12 +4,12 @@ services:
         class: Uneak\FieldSearchBundle\Field\FieldSearchManager
 
 
-    uneak.fieldtype.config.type.string:
+    uneak.fieldsearch.config.type.string:
         class: Uneak\FieldSearchBundle\Field\SearchType\StringSearchType
         tags:
             -  { name: uneak.fieldsearchmanager.field, alias_search: "search_string", field_data: "string" }
 
-    uneak.fieldtype.config.type.integer:
+    uneak.fieldsearch.config.type.integer:
         class: Uneak\FieldSearchBundle\Field\SearchType\IntegerSearchType
         tags:
             -  { name: uneak.fieldsearchmanager.field, alias_search: "search_integer", field_data: "integer" }

@@ -190,10 +190,10 @@ owl_carousel_theme_css:
         href: "vendor/owl-carousel/owl-carousel/owl.theme.css"
         dependencies: [ "owl_carousel_css" ]
 
-datatable_bs3_css:
-    type: externalcss
-    config:
-        href: "vendor/datatables-bs3/BS3/assets/css/datatables.css"
+#datatable_bs3_css:
+#    type: externalcss
+#    config:
+#        href: "vendor/datatables-bs3/BS3/assets/css/datatables.css"
 
 datatable_fontawsome_css:
     type: externalcss
@@ -204,16 +204,129 @@ datatable_js:
     type: externaljs
     config:
         src: "vendor/datatables/media/js/jquery.dataTables.js"
-        dependencies: [ "jquery_js" ]
+        dependencies: [ "jquery_js", "datatable_fontawsome_css" ]
 
-datatable_bs3_js:
+datatable_bootstrap_js:
     type: externaljs
     config:
-        src: "vendor/datatables-bs3/BS3/assets/js/datatables.js"
-        dependencies: [ "datatable_bs3_css", "datatable_fontawsome_css", "datatable_js" ]
+        src: "vendor/datatables/media/js/dataTables.bootstrap.js"
+        dependencies: [ "datatable_js", "datatable_bootstrap_css" ]
+
+datatable_bootstrap_css:
+    type: externalcss
+    config:
+        href: "vendor/datatables/media/css/dataTables.bootstrap.css"
+
+
+#datatable_bs3_js:
+#    type: externaljs
+#    config:
+#        src: "vendor/datatables-bs3/BS3/assets/js/datatables.js"
+#        dependencies: [ "datatable_bs3_css", "datatable_fontawsome_css", "datatable_js" ]
+
+
+datatable_ext_buttons_js:
+    type: externaljs
+    config:
+        src: "vendor/datatables-buttons/js/dataTables.buttons.js"
+        dependencies: [ "datatable_js" ]
+
+datatable_ext_buttons_bootstrap_js:
+    type: externaljs
+    config:
+        src: "vendor/datatables-buttons/js/buttons.bootstrap.js"
+        dependencies: [ "datatable_ext_buttons_js", "datatable_ext_buttons_bootstrap_css" ]
+
+#datatable_ext_buttons_css:
+#    type: externalcss
+#    config:
+#        href: "css/porto_admin/datatable/buttons/buttons.dataTables.css"
+
+datatable_ext_buttons_bootstrap_css:
+    type: externalcss
+    config:
+        href: "css/porto_admin/datatable/buttons/buttons.bootstrap.css"
+#        dependencies: [ "datatable_ext_buttons_css" ]
+
+
+datatable_ext_buttons_print_js:
+    type: externaljs
+    config:
+        src: "vendor/datatables-buttons/js/buttons.print.js"
+        dependencies: [ "datatable_ext_buttons_bootstrap_js" ]
+
+datatable_ext_buttons_html5_js:
+    type: externaljs
+    config:
+        src: "vendor/datatables-buttons/js/buttons.html5.js"
+        dependencies: [ "datatable_ext_buttons_bootstrap_js", "jszip_js", "pdfmake_js", "vfs_fonts_js" ]
+
+
+datatable_ext_buttons_colvis_js:
+    type: externaljs
+    config:
+        src: "vendor/datatables-buttons/js/buttons.colVis.js"
+        dependencies: [ "datatable_ext_buttons_bootstrap_js"]
+
+
+datatable_ext_buttons_responsive_js:
+    type: externaljs
+    config:
+        src: "vendor/datatables-fixedheader/js/dataTables.fixedHeader.js"
+        dependencies: [ "datatable_js" ]
+
+datatable_ext_buttons_fixedheader_js:
+    type: externaljs
+    config:
+        src: "vendor/datatables-fixedheader/js/dataTables.fixedHeader.js"
+        dependencies: [ "datatable_js", "datatable_ext_fixedheader_bootstrap_css" ]
+
+
+#datatable_ext_fixedheader_css:
+#    type: externalcss
+#    config:
+#        href: "css/porto_admin/datatable/fixedheader/fixedHeader.dataTables.css"
+
+datatable_ext_fixedheader_bootstrap_css:
+    type: externalcss
+    config:
+        href: "css/porto_admin/datatable/fixedheader/fixedHeader.bootstrap.css"
+#        dependencies: [ "datatable_ext_fixedheader_css" ]
 
 
 
+datatable_ext_buttons_colreorder_js:
+    type: externaljs
+    config:
+        src: "vendor/datatables-colreorder/js/dataTables.colReorder.js"
+        dependencies: [ "datatable_js", "datatable_ext_colreorder_bootstrap_css" ]
+
+
+#datatable_ext_colreorder_css:
+#    type: externalcss
+#    config:
+#        href: "css/porto_admin/datatable/colreorder/colReorder.dataTables.css"
+
+datatable_ext_colreorder_bootstrap_css:
+    type: externalcss
+    config:
+        href: "css/porto_admin/datatable/colreorder/colReorder.bootstrap.css"
+#        dependencies: [ "datatable_ext_colreorder_css" ]
+
+jszip_js:
+    type: externaljs
+    config:
+        src: "vendor/jszip/dist/jszip.js"
+
+pdfmake_js:
+    type: externaljs
+    config:
+        src: "vendor/pdfmake/build/pdfmake.js"
+
+vfs_fonts_js:
+    type: externaljs
+    config:
+        src: "vendor/pdfmake/build/vfs_fonts.js"
 
 
 #

@@ -3,6 +3,10 @@
 	namespace FieldBundle\Controller;
 
     use Uneak\FieldBundle\Entity\Field;
+    use Uneak\PortoAdminBundle\Event\LayoutEntityEvents;
+    use Uneak\PortoAdminBundle\Event\LayoutEntityFormCreateEvent;
+    use Uneak\PortoAdminBundle\Event\LayoutEntityFormSubmitEvent;
+    use Uneak\PortoAdminBundle\Event\LayoutEntityLayoutEvent;
     use Uneak\PortoAdminBundle\PNotify\PNotify;
     use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\HttpFoundation\Request;
@@ -11,8 +15,6 @@
     use Uneak\RoutesManagerBundle\Routes\FlattenRoute;
 
     class FieldAdminController extends LayoutEntityController {
-
-
 
 
         //
@@ -30,162 +32,51 @@
         public function constraintsEditAction(FlattenRoute $route, Request $request) {
             return $this->forward('ConstraintBundle:ConstraintAdmin:edit', array('route' => $route->getParameter('constraints')->getChild('edit'), 'request' => $request));
         }
+        public function constraintsDeleteAction(FlattenRoute $route, Request $request) {
+            return $this->forward('ConstraintBundle:ConstraintAdmin:delete', array('route' => $route->getParameter('constraints')->getChild('delete'), 'request' => $request));
+        }
 
 
 
+        public function indexAction(FlattenRoute $route, Request $request) {
 
-        public function indexAction(FlattenRoute $route) {
+            $this->on(LayoutEntityEvents::LAYOUT_INITIALIZE, function (LayoutEntityLayoutEvent $event) {
+                $route = $event->getRoute();
+                $layout = $event->getLayout();
+                $crudHandler = $event->getCrudHandler();
 
-            $crudHandler = $route->getHandler();
+                $layout->getLayoutContentHeader()->setTitle($route->getMetaData('_label'));
+                $layout->getSubLayoutContentBody()->addBlock($crudHandler->getFieldsPanel($route), 'liste');
 
-            $blockBuilder = $this->get("uneak.blocksmanager.builder");
-            $blockBuilder->addBlock("layout", "block_main_interface");
+                $event->stopPropagation();
+            }, false, 10);
 
-            $layout = $this->get("uneak.admin.page.entity.layout");
-            $layout->setLayout($blockBuilder->getBlock("layout"));
-            $layout->buildEntityLayout($route);
+            return parent::indexAction($route, $request);
 
-            $layout->getLayoutContentHeader()->setTitle($route->getMetaData('_label'));
-            $layout->getSubLayoutContentBody()->addBlock($crudHandler->getFieldsPanel($route), 'liste');
-
-
-            return $blockBuilder->renderResponse("layout");
         }
 
         public function configAction(FlattenRoute $route, Request $request) {
 
-            $crudHandler = $route->getHandler();
-            $blockBuilder = $this->get("uneak.blocksmanager.builder");
+            $this->on(LayoutEntityEvents::FORM_CREATE, function (LayoutEntityFormCreateEvent $event) {
+                $crudHandler = $event->getCrudHandler();
+                $route = $event->getRoute();
+                $form = $crudHandler->getConfigForm($route, Request::METHOD_POST);
+                $event->setForm($form);
 
-            $blockBuilder->addBlock("layout", "block_main_interface");
-            $layout = $this->get("uneak.admin.page.entity.layout");
-            $layout->setLayout($blockBuilder->getBlock("layout"));
-            $layout->buildEntityLayout($route);
+                $event->stopPropagation();
+            }, false, 10);
 
-            $form = $crudHandler->getConfigForm($route, Request::METHOD_POST);
-            $form->add('submit', 'submit', array('label' => 'Modifier'));
+            $this->on(LayoutEntityEvents::FORM_SUCCESS, function (LayoutEntityFormSubmitEvent $event) {
+                $form = $event->getForm();
+                $crudHandler = $event->getCrudHandler();
+                $entity = $crudHandler->persistConfig($form);
+                $event->setEntity($entity);
 
+                $event->stopPropagation();
+            }, false, 10);
 
-            if ($request->getMethod() == Request::METHOD_POST) {
-                $form->handleRequest($request);
-
-                if ($form->isValid()) {
-
-                    $flash = array(
-                        'type' => 'info',
-                        'title' => 'Formulaire',
-                        'text' => 'L\'édition a été réalisé avec succes',
-                        'shadow' => true,
-                        'stack' => 'stack-bar-bottom',
-                        'icon' => 'fa fa-'.$route->getMetaData('_icon')
-                    );
-
-                    $crudHandler->persistConfig($form);
-
-                    $this->addFlash($flash['type'], new PNotify($flash));
-
-
-                    $entityRoute = $route;
-                    while($entityRoute && !$entityRoute instanceof FlattenEntityRoute) {
-                        $entityRoute = $entityRoute->getParent();
-                    }
-                    $url = $entityRoute->getChild('show')->getRoutePath();
-
-
-                    return $this->redirect($url);
-
-
-                } else {
-
-                    $flash = array(
-                        'type' => 'error',
-                        'title' => 'Formulaire',
-                        'text' => 'Votre formulaire est invalide.',
-                        'shadow' => true,
-                        'stack' => 'stack-bar-bottom'
-                        //				'icon' => 'fa fa-twitter'
-                    );
-
-                    $this->addFlash($flash['type'], new PNotify($flash));
-                }
-            }
-
-
-            $formsManager = $this->get('uneak.formsmanager');
-            $formView = $formsManager->createView($form);
-            $layout->buildFormPage($formView, $route->getMetaData('_label'));
-
-            return $blockBuilder->renderResponse("layout");
+            return parent::editAction($route, $request);
         }
-
-//
-//        public function constraintAction(FlattenRoute $route, Request $request) {
-//
-//            $crudHandler = $route->getHandler();
-//            $blockBuilder = $this->get("uneak.blocksmanager.builder");
-//
-//            $blockBuilder->addBlock("layout", "block_main_interface");
-//            $layout = $this->get("uneak.admin.page.entity.layout");
-//            $layout->setLayout($blockBuilder->getBlock("layout"));
-//            $layout->buildEntityLayout($route);
-//
-//            $form = $crudHandler->getConfigForm($route, Request::METHOD_POST);
-//            $form->add('submit', 'submit', array('label' => 'Modifier'));
-//
-//
-//            if ($request->getMethod() == Request::METHOD_POST) {
-//                $form->handleRequest($request);
-//
-//                if ($form->isValid()) {
-//
-//                    $flash = array(
-//                        'type' => 'info',
-//                        'title' => 'Formulaire',
-//                        'text' => 'L\'édition a été réalisé avec succes',
-//                        'shadow' => true,
-//                        'stack' => 'stack-bar-bottom',
-//                        'icon' => 'fa fa-'.$route->getMetaData('_icon')
-//                    );
-//
-//                    $crudHandler->persistConfig($form);
-//
-//                    $this->addFlash($flash['type'], new PNotify($flash));
-//
-//
-//                    $entityRoute = $route;
-//                    while($entityRoute && !$entityRoute instanceof FlattenEntityRoute) {
-//                        $entityRoute = $entityRoute->getParent();
-//                    }
-//                    $url = $entityRoute->getChild('show')->getRoutePath();
-//
-//
-//                    return $this->redirect($url);
-//
-//
-//                } else {
-//
-//                    $flash = array(
-//                        'type' => 'error',
-//                        'title' => 'Formulaire',
-//                        'text' => 'Votre formulaire est invalide.',
-//                        'shadow' => true,
-//                        'stack' => 'stack-bar-bottom'
-//                        //				'icon' => 'fa fa-twitter'
-//                    );
-//
-//                    $this->addFlash($flash['type'], new PNotify($flash));
-//                }
-//            }
-//
-//
-//            $formsManager = $this->get('uneak.formsmanager');
-//            $formView = $formsManager->createView($form);
-//            $layout->buildFormPage($formView, $route->getMetaData('_label'));
-//
-//            return $blockBuilder->renderResponse("layout");
-//        }
-//
-
 
 
 

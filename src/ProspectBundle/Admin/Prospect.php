@@ -25,7 +25,6 @@
 			$this->setMetaData('_menu', array(
 				'index'  => '*/index',
 				'new'    => '*/new',
-				'import_csv'    => '*/import/csv',
 			));
 
 
@@ -81,27 +80,6 @@
                 ->setEnabled(false)
             ;
             $this->addChild($importRoute);
-
-
-            $importCSVRoute = new NestedAdminRoute('csv');
-            $importCSVRoute
-                ->setPath('csv')
-                ->setAction('csv')
-                ->setMetaData('_icon', 'download')
-                ->setMetaData('_label', 'Importation CSV')
-            ;
-            $importRoute->addChild($importCSVRoute);
-
-
-
-            $importCSVProceedRoute = new NestedAdminRoute('proceed');
-            $importCSVProceedRoute
-                ->setPath('proceed')
-                ->setAction('proceed')
-                ->setMetaData('_icon', 'spinner')
-                ->setMetaData('_label', 'Processus d\'importation')
-            ;
-            $importCSVRoute->addChild($importCSVProceedRoute);
 
 
 

@@ -1,0 +1,29 @@
+parameters:
+    uneak.admin.import.admin.class: ImportBundle\Admin\Import
+    uneak.admin.import.api.handler.class: ImportBundle\Handler\ImportAPIHandler
+    uneak.admin.import.crud.handler.class: ImportBundle\Handler\ImportCRUDHandler
+
+services:
+
+    uneak.admin.import.admin:
+        class: %uneak.admin.import.admin.class%
+        arguments: [ imports ]
+        calls:
+            - [ setController, [ ImportBundle\Controller\ImportAdminController ] ]
+            - [ setHandler, [ @uneak.admin.import.crud.handler ] ]
+            - [ setParentPath, [ "groups.subject" ] ]
+        tags:
+            -  { name: uneak.routesmanager.route }
+
+    uneak.admin.import.api.handler:
+        class: %uneak.admin.import.api.handler.class%
+        arguments:
+            - @form.factory
+            - @doctrine.orm.entity_manager
+        calls:
+            - [ setEntityClass, [ Uneak\ImportBundle\Entity\Import ] ]
+
+    uneak.admin.import.crud.handler:
+        class: %uneak.admin.import.crud.handler.class%
+        arguments:
+            - @uneak.admin.import.api.handler

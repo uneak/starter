@@ -12,17 +12,10 @@ use Uneak\PortoAdminBundle\Handler\EntityAPIHandler;
 
 class ClientRoleAPIHandler extends EntityAPIHandler {
 
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-    protected $entityClass;
-    protected $repository;
 
-
-    public function __construct(FormFactoryInterface $formFactory, EntityManager $em, $entityClass)
+    public function __construct(FormFactoryInterface $formFactory, EntityManager $em)
     {
-        parent::__construct($formFactory, $em, $entityClass);
+        parent::__construct($formFactory, $em);
 
     }
 

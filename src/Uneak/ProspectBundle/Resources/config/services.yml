@@ -10,6 +10,5 @@ services:
         arguments:
             - @doctrine.orm.entity_manager
             - @uneak.fieldtypesmanager
-            - @uneak.fielddatasmanager
             - @uneak.field.helper
             - @uneak.fielddata.helper

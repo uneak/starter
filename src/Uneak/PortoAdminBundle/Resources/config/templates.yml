@@ -90,6 +90,7 @@ pnotify_script_template: "UneakPortoAdminBundle:Script:script_pnotify.html.twig"
 select2_script_template: "UneakPortoAdminBundle:Script:script_select2.html.twig"
 todo_script_template: "UneakPortoAdminBundle:Script:script_todo.html.twig"
 date_picker_script_template: "UneakPortoAdminBundle:Script:script_date_picker.html.twig"
+linked_progressbar_script: "UneakPortoAdminBundle:Script:script_linked_progressbar.html.twig"
 
 
 # FOS USER

@@ -119,8 +119,8 @@
 				->setAction('delete')
 				->setMetaData('_icon', 'times')
                 ->setMetaData('_label', "Supprimer la contrainte")
-                ->setMetaData('_description', '{{ entity }}');
-//				->setFormType(new ConstraintDeleteType());
+                ->setMetaData('_description', '{{ entity }}')
+				->setFormType(new ConstraintDeleteType());
 			$subjectRoute->addChild($deleteRoute);
 
 		}

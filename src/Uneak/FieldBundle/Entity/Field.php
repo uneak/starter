@@ -4,11 +4,14 @@
 
 	use AppBundle\Traits\DesignationableEntity;
     use Doctrine\Common\Collections\ArrayCollection;
+    use Doctrine\ORM\Event\LifecycleEventArgs;
     use Doctrine\ORM\Mapping as ORM;
-	use Gedmo\Timestampable\Traits\TimestampableEntity;
+    use Doctrine\ORM\Query\Expr\Join;
+    use Gedmo\Timestampable\Traits\TimestampableEntity;
 	use Gedmo\Mapping\Annotation as Gedmo;
     use Symfony\Component\Validator\Constraints\NotNull;
     use Uneak\FieldDataBundle\Entity\FieldData;
+    use Uneak\ProspectBundle\Entity\Prospect;
 
 
     /**
@@ -16,7 +19,7 @@
 	 *
 	 * @ORM\Table(name="Field")
 	 * @ORM\Entity(repositoryClass="Uneak\FieldBundle\Entity\FieldRepository")
-	 *
+     * @ORM\HasLifecycleCallbacks()
 	 *
 	 */
 	class Field {
@@ -85,6 +88,32 @@
         public function __toString() {
             return $this->getLabel();
         }
+
+
+        /**
+         * @ORM\PostUpdate()
+         */
+        public function updateCache(LifecycleEventArgs $eventArgs)
+        {
+            $em = $eventArgs->getEntityManager();
+            $qb = $em->createQueryBuilder();
+            $qb->select('prospect');
+            $qb->from('UneakProspectBundle:Prospect', 'prospect');
+            $qb->innerJoin('prospect.fieldDatas', 'fieldData');
+            $qb->innerJoin('fieldData.field', 'field');
+
+            $qb->where($qb->expr()->eq('field.id', ':field'));
+            $qb->setParameter("field", $this->id);
+
+            $prospects = $qb->getQuery()->getResult();
+
+            /** @var $prospect Prospect */
+            foreach ($prospects as $prospect) {
+                $prospect->updateCache();
+            }
+            $em->flush();
+        }
+
 
 
         /**

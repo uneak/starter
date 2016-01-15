@@ -6,7 +6,4 @@
 
     class ClientRoleAdminController extends LayoutEntityController {
 
-
-
-
 	}

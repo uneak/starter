@@ -43,6 +43,8 @@
                 new Uneak\FieldGroupBundle\UneakFieldGroupBundle(),
                 new Uneak\ConstraintBundle\UneakConstraintBundle(),
                 new Uneak\FieldSearchBundle\UneakFieldSearchBundle(),
+				new Uneak\ImportBundle\UneakImportBundle(),
+				new Uneak\ExecBundle\UneakExecBundle(),
 				// OAUTH
 				new JMS\SerializerBundle\JMSSerializerBundle(),
 				new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
@@ -61,6 +63,7 @@
                 new ProspectBundle\ProspectBundle(),
                 new FieldBundle\FieldBundle(),
                 new ConstraintBundle\ConstraintBundle(),
+            	new ImportBundle\ImportBundle(),
 			);
 
 			if (in_array($this->getEnvironment(), array('dev', 'test'))) {

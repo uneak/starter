@@ -11,6 +11,7 @@ use Uneak\FieldBundle\Entity\Field;
 use Uneak\FieldBundle\Field\FieldsHelper;
 use Uneak\FieldGroupBundle\Entity\FieldGroup;
 use Uneak\FieldGroupBundle\Form\FieldGroupType;
+use Uneak\FieldTypeBundle\Field\FieldTypesManager;
 use Uneak\ProspectBundle\Entity\Prospect;
 use Uneak\ProspectBundle\Prospect\ProspectsManager;
 
@@ -34,12 +35,17 @@ class FieldGroupsHelper {
      * @var FieldsHelper
      */
     private $fieldsHelper;
+    /**
+     * @var \Uneak\FieldTypeBundle\Field\FieldTypesManager
+     */
+    private $fieldTypesManager;
 
-    public function __construct(EntityManagerInterface $em, FormFactoryInterface $formFactory, ConstraintsManager $constraintsManager, FieldsHelper $fieldsHelper) {
+    public function __construct(EntityManagerInterface $em, FormFactoryInterface $formFactory, ConstraintsManager $constraintsManager, FieldsHelper $fieldsHelper, FieldTypesManager $fieldTypesManager) {
         $this->formFactory = $formFactory;
         $this->em = $em;
         $this->constraintsManager = $constraintsManager;
         $this->fieldsHelper = $fieldsHelper;
+        $this->fieldTypesManager = $fieldTypesManager;
     }
 
 
@@ -80,9 +86,17 @@ class FieldGroupsHelper {
         $fields = array();
         /** @var $dbField Field */
         foreach ($dbFields as $dbField) {
+
+            $type = $dbField->getFieldType();
+            if (!$type) {
+                $fieldType = $this->fieldTypesManager->getFieldTypesByFieldData($dbField->getType());
+                $defaultFieldType = reset($fieldType);
+                $type = $defaultFieldType['alias_field'];
+            }
+
             $field = array(
                 'slug' => $dbField->getSlug(),
-                'type' => $dbField->getFieldType(),
+                'type' => $type,
                 'options' => $dbField->getOptions(),
             );
 

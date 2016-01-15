@@ -1,0 +1,10 @@
+services:
+
+    uneak.import.helper:
+        class: Uneak\ImportBundle\Import\ImportHelper
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @uneak.exec
+            - @uneak.field.helper
+            - @uneak.prospectmanager
+

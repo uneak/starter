@@ -114,7 +114,7 @@
                 'icon' => 'chevron-down',
             ));
             $root->addChild($tableShow);
-            $showRow = array("100", "50", "25", "10");
+            $showRow = array("10", "25", "50", "100", "tout les");
             foreach ($showRow as $rowNumber) {
                 $tableShow->addChild($factory->createItem('row_show_'.$rowNumber, array(
                     'label' => 'afficher '.$rowNumber.' éléments',
@@ -125,8 +125,29 @@
                 )));
             }
 
-            $this->subLayoutContentActions->setRoot($root);
 
+
+            $tableShow = $factory->createItem('table_export', array(
+                'label' => 'Export',
+                'icon' => 'download',
+            ));
+            $root->addChild($tableShow);
+            $showRow = array("Copier", "Excel", "CSV", "PDF", "Imprimer");
+            $cmpt = 1;
+            foreach ($showRow as $rowNumber) {
+                $tableShow->addChild($factory->createItem('table_export_'.$rowNumber, array(
+                    'label' => $rowNumber,
+                    'linkAttributes' => array(
+                        'class' => 'table-export',
+                        'data-value' => $cmpt,
+                    )
+                )));
+                $cmpt++;
+            }
+
+
+
+            $this->subLayoutContentActions->setRoot($root);
             $gridNested = $route->getNestedRoute();
             $datatable = new Datatable();
             $datatable->setSearchInput('#'.$search->getInputName());

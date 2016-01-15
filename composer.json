@@ -32,6 +32,7 @@
         "friendsofsymfony/rest-bundle": "dev-master",
         "nelmio/api-doc-bundle": "dev-master",
         "ddeboer/data-import-bundle": "~0.1",
+        "phpoffice/phpexcel": "dev-master",
         "cocur/slugify": "1.4.*@dev"
 
     },

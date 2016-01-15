@@ -1,0 +1,6 @@
+services:
+
+    uneak.exec:
+        class: Uneak\ExecBundle\Exec\Exec
+        arguments:
+            - @kernel

@@ -1,0 +1,3 @@
+uneak_exec_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: UneakExecBundle:Default:index }

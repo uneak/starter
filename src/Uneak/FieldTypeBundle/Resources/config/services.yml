@@ -43,10 +43,12 @@ services:
         tags:
             -  { name: uneak.fieldtypesmanager.field, alias_config: "config_hidden", alias_field: "hidden", field_data: "string", label: "Caché" }
 
+
     uneak.fieldtype.config.type.integer:
         class: Uneak\FieldTypeBundle\Field\ConfigType\IntegerConfigType
         tags:
             -  { name: uneak.fieldtypesmanager.field, alias_config: "config_integer", alias_field: "integer", field_data: "integer", label: "Entier numérique" }
+
 
     uneak.fieldtype.config.type.url:
         class: Uneak\FieldTypeBundle\Field\ConfigType\UrlConfigType

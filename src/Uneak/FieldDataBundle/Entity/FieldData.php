@@ -14,17 +14,6 @@
 	 *
 	 * @ORM\Table(name="FieldData")
 	 * @ORM\Entity(repositoryClass="Uneak\FieldDataBundle\Entity\FieldDataRepository")
-	 * @ORM\InheritanceType("JOINED")
-	 * @ORM\DiscriminatorColumn(name="type", type="string")
-	 * @ORM\DiscriminatorMap({
-	 *        "integer" = "FieldDataInteger",
-	 *        "string" = "FieldDataString",
-	 *        "text" = "FieldDataText",
-	 *        "boolean" = "FieldDataBoolean",
-	 *        "datetime" = "FieldDataDatetime",
-	 *        "array" = "FieldDataArray",
-	 *        "float" = "FieldDataFloat",
-	 * })
 	 *
 	 *
 	 */
@@ -53,6 +42,24 @@
 		 * @ORM\JoinColumn(name="prospect_id", referencedColumnName="id")
 		 * */
 		protected $prospect;
+
+
+		/**
+		 * @var string
+		 * @ORM\Column(name="value", type="text", nullable=true)
+		 */
+		protected $value;
+
+
+		public function __construct(Prospect $prospect = null, Field $field = null, $type = null, $value = null) {
+			if ($type && in_array($type, self::TYPE())) {
+				throw new \InvalidArgumentException("Type de donnée inconnu : ".$type);
+			}
+			$this->prospect = ($prospect) ? $prospect : null;
+			$this->field = ($field) ? $field : null;
+			$this->type = $type;
+			$this->value = $value;
+		}
 
 
 		/**
@@ -91,115 +98,6 @@
 		}
 
 
-	}
-
-
-	/**
-	 * FieldDataInteger
-	 *
-	 * @ORM\Table(name="FieldDataInteger")
-	 * @ORM\Entity
-	 *
-	 */
-	class FieldDataInteger extends FieldData {
-
-		/**
-		 * @var integer
-		 * @ORM\Column(name="value", type="integer", nullable=true)
-		 */
-		protected $value;
-
-		public function __construct(Field $field = null, $value = null) {
-			if ($value) {
-				$this->value = $value;
-			}
-			if ($field) {
-				$this->field = $field;
-			}
-		}
-
-		/**
-		 * @return int
-		 */
-		public function getValue() {
-			return $this->value;
-		}
-
-		/**
-		 * @param int $value
-		 */
-		public function setValue($value) {
-			$this->value = $value;
-		}
-
-	}
-
-
-	/**
-	 * FieldDataFloat
-	 *
-	 * @ORM\Table(name="FieldDataFloat")
-	 * @ORM\Entity
-	 *
-	 */
-	class FieldDataFloat extends FieldData {
-
-		/**
-		 * @ORM\Column(name="value", type="float", nullable=true)
-		 */
-		protected $value;
-
-		public function __construct(Field $field = null, $value = null) {
-			if ($value) {
-				$this->value = $value;
-			}
-			if ($field) {
-				$this->field = $field;
-			}
-		}
-
-		/**
-		 * @return int
-		 */
-		public function getValue() {
-			return $this->value;
-		}
-
-		/**
-		 * @param int $value
-		 */
-		public function setValue($value) {
-			$this->value = $value;
-		}
-
-	}
-
-
-	/**
-	 * FieldDataInteger
-	 *
-	 * @ORM\Table(name="FieldDataString")
-	 * @ORM\Entity
-	 *
-	 */
-	class FieldDataString extends FieldData {
-
-
-		/**
-		 * @var string
-		 * @ORM\Column(name="value", type="string", nullable=true)
-		 */
-		protected $value;
-
-		public function __construct(Field $field = null, $value = null) {
-			if ($value) {
-				$this->value = $value;
-			}
-			if ($field) {
-				$this->field = $field;
-			}
-		}
-
 		/**
 		 * @return string
 		 */
@@ -214,168 +112,5 @@
 			$this->value = $value;
 		}
 
-	}
-
-
-	/**
-	 * FieldDataText
-	 *
-	 * @ORM\Table(name="FieldDataText")
-	 * @ORM\Entity
-	 *
-	 */
-	class FieldDataText extends FieldData {
-
-		/**
-		 * @var string
-		 * @ORM\Column(name="value", type="text", nullable=true)
-		 */
-		protected $value;
-
-		public function __construct(Field $field = null, $value = null) {
-			if ($value) {
-				$this->value = $value;
-			}
-			if ($field) {
-				$this->field = $field;
-			}
-		}
-
-		/**
-		 * @return string
-		 */
-		public function getValue() {
-			return $this->value;
-		}
-
-		/**
-		 * @param string $value
-		 */
-		public function setValue($value) {
-			$this->value = $value;
-		}
-
-	}
-
-
-	/**
-	 * FieldDataBoolean
-	 *
-	 * @ORM\Table(name="FieldDataBoolean")
-	 * @ORM\Entity
-	 *
-	 */
-	class FieldDataBoolean extends FieldData {
-
-		/**
-		 * @var boolean
-		 * @ORM\Column(name="value", type="boolean", nullable=true)
-		 */
-		protected $value;
-
-		public function __construct(Field $field = null, $value = null) {
-			if ($value) {
-				$this->value = $value;
-			}
-			if ($field) {
-				$this->field = $field;
-			}
-		}
-
-		/**
-		 * @return boolean
-		 */
-		public function getValue() {
-			return $this->value;
-		}
-
-		/**
-		 * @param boolean $value
-		 */
-		public function setValue($value) {
-			$this->value = $value;
-		}
-
-	}
-
-
-	/**
-	 * FieldDataDatetime
-	 *
-	 * @ORM\Table(name="FieldDataDatetime")
-	 * @ORM\Entity
-	 *
-	 */
-	class FieldDataDatetime extends FieldData {
-
-		/**
-		 * @var datetime
-		 * @ORM\Column(name="value", type="datetime", nullable=true)
-		 */
-		protected $value;
-
-		public function __construct(Field $field = null, $value = null) {
-			if ($value) {
-				$this->value = $value;
-			}
-			if ($field) {
-				$this->field = $field;
-			}
-		}
-
-		/**
-		 * @return datetime
-		 */
-		public function getValue() {
-			return $this->value;
-		}
-
-		/**
-		 * @param datetime $value
-		 */
-		public function setValue($value) {
-			$this->value = $value;
-		}
-
-	}
-
-
-	/**
-	 * FieldDataArray
-	 *
-	 * @ORM\Table(name="FieldDataArray")
-	 * @ORM\Entity
-	 *
-	 */
-	class FieldDataArray extends FieldData {
-
-		/**
-		 * @var array
-		 * @ORM\Column(name="value", type="array", nullable=true)
-		 */
-		protected $value;
-
-		public function __construct(Field $field = null, $value = null) {
-			if ($value) {
-				$this->value = $value;
-			}
-			if ($field) {
-				$this->field = $field;
-			}
-		}
-
-		/**
-		 * @return array
-		 */
-		public function getValue() {
-			return $this->value;
-		}
-
-		/**
-		 * @param array $value
-		 */
-		public function setValue($value) {
-			$this->value = $value;
-		}
 
 	}

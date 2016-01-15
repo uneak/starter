@@ -59,16 +59,10 @@ services:
             - { name: knp_menu.voter, request: true }
 
 
-    uneak.portoadmin.layout.controller.listener:
-        class: %uneak.portoadmin.layout.controller.listener.class%
-        arguments:
-            - @router
-            - @uneak.blocksmanager.builder
-            - @uneak.blocksmanager.blocks
-            - @vich_uploader.templating.helper.uploader_helper
+#    uneak.portoadmin.layout.controller.listener:
+#        class: %uneak.portoadmin.layout.controller.listener.class%
+#        tags:
+#            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
-        tags:
-            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
-            - { name: kernel.event_listener, event: kernel.view, method: onKernelView }
 
 

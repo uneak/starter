@@ -1,0 +1,3 @@
+uneak_import_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: UneakImportBundle:Default:index }

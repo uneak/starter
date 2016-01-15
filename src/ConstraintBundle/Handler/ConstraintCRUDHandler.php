@@ -90,6 +90,10 @@
         }
 
 
+        public function deleteEntity(FormInterface $form, $entity) {
+            ldd($entity);
+            return $this->apiHandler->delete($entity->getId());
+        }
 
 
 	}

@@ -52,6 +52,7 @@
 
                 ->addRowAction('fields', '*/subject/fields/index')
                 ->addRowAction('prospects', '*/subject/prospects/index')
+                ->addRowAction('imports', '*/subject/imports/index')
 				->addRowAction('show', '*/subject/show')
 				->addRowAction('edit', '*/subject/edit')
 				->addRowAction('delete', '*/subject/delete')

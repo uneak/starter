@@ -28,8 +28,14 @@
 				->add("porto_admin_datatable_script", "internaljs", array(
 					"template"   => 'porto_admin_datatable_script_template',
 					"parameters" => $options,
-					"dependencies" => array("datatable_bs3_js")
-				));
+					"dependencies" => array("datatable_bootstrap_js")
+				))
+				->add("datatable_ext_buttons_print_js")
+				->add("datatable_ext_buttons_html5_js")
+				->add("datatable_ext_buttons_colvis_js")
+				->add("datatable_ext_buttons_colreorder_js")
+				->add("datatable_ext_buttons_fixedheader_js")
+
 			;
 		}
 

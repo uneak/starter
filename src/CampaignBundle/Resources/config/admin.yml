@@ -20,7 +20,8 @@ services:
         arguments:
             - @form.factory
             - @doctrine.orm.entity_manager
-            - "CampaignBundle\Entity\Campaign"
+        calls:
+            - [ setEntityClass, [ CampaignBundle\Entity\Campaign ] ]
 
     uneak.admin.campaign.crud.handler:
         class: %uneak.admin.campaign.crud.handler.class%

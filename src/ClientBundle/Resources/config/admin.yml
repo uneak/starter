@@ -23,7 +23,8 @@ services:
         arguments:
             - @form.factory
             - @doctrine.orm.entity_manager
-            - "ClientBundle\Entity\Client"
+        calls:
+            - [ setEntityClass, [ ClientBundle\Entity\Client ] ]
 
     uneak.admin.client.crud.handler:
         class: %uneak.admin.client.crud.handler.class%
@@ -47,7 +48,8 @@ services:
         arguments:
             - @form.factory
             - @doctrine.orm.entity_manager
-            - "ClientBundle\Entity\Client"
+        calls:
+            - [ setEntityClass, [ ClientBundle\Entity\Client ] ]
 
     uneak.admin.client.role.crud.handler:
         class: %uneak.admin.client.role.crud.handler.class%
