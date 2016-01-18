@@ -5,7 +5,7 @@
 	use Symfony\Component\Form\FormBuilderInterface;
 	use Symfony\Component\Validator\Constraints\Collection;
 
-	class ComparatorSearchType extends SearchType {
+    abstract class ComparatorSearchType extends SearchType {
 
 		/**
 		 * @param FormBuilderInterface $builder
@@ -30,7 +30,7 @@
 		}
 
 
-        public function buildQuery(array &$query, $key, array $data) {
+        static public function buildQuery(array &$query, $key, array $data) {
             if ($data['operator'] == 'bw') {
                 if (!isset($query['ge'])) {
                     $query['ge'] = array();

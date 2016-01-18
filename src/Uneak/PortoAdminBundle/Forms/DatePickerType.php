@@ -61,6 +61,7 @@
 			//			}
 
 			//			$view->vars['markup'] = $options['markup'];
+
 			$view->vars['widget'] = "single_text";
 			$view->vars['options'] = $options['options'];
 		}
@@ -75,7 +76,7 @@
 			$resolver->setDefaults(array(
 				'widget'  => 'single_text',
 				'format'  => self::$defaultFormat,
-				'options' => array(),
+//				'options' => array(),
 			));
 		}
 
@@ -88,6 +89,7 @@
 				->add("datetimepicker_js")
 
 				->add("datetimepicker_css")
+
 
 				->add("script_datepicker_js", 'internaljs', array(
 					"template"     => "date_picker_script_template",

@@ -79,13 +79,25 @@ class FieldAPIHandler extends AbstractAPIHandler implements APIHandlerInterface 
             throw new NotFoundException("Field $field not found", $field);
         }
 
-        $options = array($field->getFieldType() => $form->getData());
-//        ldd($form->getData());
+        $data = $this->clearFormData($form->getData());
+
+        $options = array($field->getFieldType() => $data);
         $this->fieldTypesHelper->saveFieldType($field, $options);
 
         return $options;
     }
 
+    private function clearFormData($data) {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $data[$key] = $this->clearFormData($data[$key]);
+            }
+            if (empty($data[$key])) {
+                unset($data[$key]);
+            }
+        }
+        return $data;
+    }
 
 
     public function getFields($group) {

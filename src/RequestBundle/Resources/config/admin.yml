@@ -1,0 +1,29 @@
+parameters:
+    uneak.admin.request.admin.class: RequestBundle\Admin\Request
+    uneak.admin.request.api.handler.class: RequestBundle\Handler\RequestAPIHandler
+    uneak.admin.request.crud.handler.class: RequestBundle\Handler\RequestCRUDHandler
+
+services:
+
+    uneak.admin.request.admin:
+        class: %uneak.admin.request.admin.class%
+        arguments: [ requests ]
+        calls:
+            - [ setController, [ RequestBundle\Controller\RequestAdminController ] ]
+            - [ setHandler, [ @uneak.admin.request.crud.handler ] ]
+            - [ setParentPath, [ "clients.subject" ] ]
+        tags:
+            -  { name: uneak.routesmanager.route }
+
+    uneak.admin.request.api.handler:
+        class: %uneak.admin.request.api.handler.class%
+        arguments:
+            - @form.factory
+            - @doctrine.orm.entity_manager
+        calls:
+            - [ setEntityClass, [ RequestBundle\Entity\Request ] ]
+
+    uneak.admin.request.crud.handler:
+        class: %uneak.admin.request.crud.handler.class%
+        arguments:
+            - @uneak.admin.request.api.handler

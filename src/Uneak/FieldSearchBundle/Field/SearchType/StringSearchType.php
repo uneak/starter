@@ -16,22 +16,31 @@
 		public function buildForm(FormBuilderInterface $builder, array $options) {
 			parent::buildForm($builder, $options);
             $builder
-                ->add('like', 'text', array(
+                ->add('text', 'text', array(
                     'label' => "Texte",
                     'attr' => array(
                         'help_text' => "utiliser le caractère '%' comme jocker",
                     )
                 ))
+				->add('content', 'checkbox', array(
+					'label' => "Texte contenu",
+				))
             ;
 		}
 
 
-        public function buildQuery(array &$query, $key, array $data) {
+		static public function buildQuery(array &$query, $key, array $data) {
             if (!isset($query['like'])) {
                 $query['like'] = array();
             }
 
-            $query['like'][$key] = $data['like'];
+
+			$text = $data['text'];
+			if ($data['content']) {
+				$text = "%".$text."%";
+			}
+
+            $query['like'][$key] = $text;
         }
 
 		/**

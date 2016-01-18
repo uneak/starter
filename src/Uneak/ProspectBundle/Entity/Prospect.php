@@ -9,9 +9,10 @@
     use Symfony\Component\Security\Core\User\UserInterface;
     use Uneak\FieldBundle\Entity\Field;
     use Uneak\FieldDataBundle\Entity\FieldData;
+    use Uneak\FieldDataBundle\FieldData\FieldDataHelper;
 
 
-	/**
+    /**
 	 * Prospect
 	 *
 	 * @ORM\Table(name="Prospect")
@@ -244,26 +245,34 @@
             throw new \InvalidArgumentException("Le champs ".$property." n'existe pas pour ce prospect");
         }
 
+
+        private function _setField(FieldData $fieldData, $value) {
+            if ($fieldData->getField()->getType() == FieldDataHelper::TYPE_BOOLEAN) {
+                $value = intval($value);
+            }
+            $fieldData->setValue($value);
+        }
+
         public function setField($property, $value) {
             /** @var $fieldData FieldData */
             if (is_string($property)) {
                 foreach ($this->fieldDatas as $fieldData) {
                     if ($fieldData->getField()->getSlug() == $property) {
-                        $fieldData->setValue($value);
+                        $this->_setField($fieldData, $value);
                         return $this;
                     }
                 }
             } else if ($property instanceof Field) {
                 foreach ($this->fieldDatas as $fieldData) {
                     if ($fieldData->getField() == $property) {
-                        $fieldData->setValue($value);
+                        $this->_setField($fieldData, $value);
                         return $this;
                     }
                 }
             } else if (is_numeric($property)) {
                 foreach ($this->fieldDatas as $fieldData) {
                     if ($fieldData->getField()->getId() == $property) {
-                        $fieldData->setValue($value);
+                        $this->_setField($fieldData, $value);
                         return $this;
                     }
                 }

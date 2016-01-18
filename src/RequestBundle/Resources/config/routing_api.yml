@@ -1,0 +1,5 @@
+api_request:
+    type:     rest
+    resource: RequestBundle\Controller\RequestApiController
+    prefix: v1
+    name_prefix: api_v1_request_

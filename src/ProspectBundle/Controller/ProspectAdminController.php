@@ -59,7 +59,7 @@ class ProspectAdminController extends LayoutEntityController
                     if ($type instanceof SearchType) {
                         $data = $child->getData();
                         if ($data['enabled'] == true) {
-                            $type->buildQuery($query, $key, $data);
+                            $type::buildQuery($query, $key, $data);
                         }
                     }
                 }

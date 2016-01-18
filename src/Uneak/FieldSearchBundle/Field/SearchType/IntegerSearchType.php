@@ -24,9 +24,8 @@
             ;
 		}
 
-        public function buildQuery(array &$query, $key, array $data) {
+		static public function buildQuery(array &$query, $key, array $data) {
             parent::buildQuery($query, $key, $data);
-
         }
 
 		/**

@@ -439,6 +439,11 @@ class ProspectsManager implements UserProviderInterface, APIQueryInterface
                 $fieldData = new FieldData();
                 $prospect->addFieldData($fieldData);
                 $keyOrField->addFieldData($fieldData);
+
+                if ($keyOrField->getType() == FieldDataHelper::TYPE_BOOLEAN) {
+                    $value = intval($value);
+                }
+
                 $fieldData->setValue($value);
             } else {
                 throw new \InvalidArgumentException("Le champs " . $keyOrField . " n'existe pas pour ce prospect");

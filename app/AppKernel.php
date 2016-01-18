@@ -64,6 +64,7 @@
                 new FieldBundle\FieldBundle(),
                 new ConstraintBundle\ConstraintBundle(),
             	new ImportBundle\ImportBundle(),
+            	new RequestBundle\RequestBundle(),
 			);
 
 			if (in_array($this->getEnvironment(), array('dev', 'test'))) {

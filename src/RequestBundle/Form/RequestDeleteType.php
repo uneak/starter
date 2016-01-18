@@ -1,39 +1,36 @@
 <?php
 
-	namespace Uneak\FieldTypeBundle\Field\ConfigType;
+	namespace RequestBundle\Form;
 
 	use Symfony\Component\Form\AbstractType;
 	use Symfony\Component\Form\FormBuilderInterface;
+	use Symfony\Component\Form\FormInterface;
 	use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 	use Symfony\Component\Validator\Constraints\Collection;
-	use IntlDateFormatter;
-	use Uneak\FormsManagerBundle\Forms\AssetsFormType;
+	use Symfony\Component\Validator\Constraints\IsTrue;
+	use Symfony\Component\Validator\Constraints\IsTrueValidator;
 
-	class DateConfigType extends ConfigType {
-
+	class RequestDeleteType extends AbstractType {
 		/**
 		 * @param FormBuilderInterface $builder
 		 * @param array                $options
 		 */
 		public function buildForm(FormBuilderInterface $builder, array $options) {
-			parent::buildForm($builder, $options);
-
 			$builder
-				->add('options', new BsDateTimeConfigType())
-				->add('input', 'hidden', array(
-					'data' => 'string'
+                ->add('confirm', 'checkbox', array(
+					'label' => "Confirmer la suppression",
+					'required' => true,
+					'constraints' => array(new IsTrue())
 				))
-				;
+			;
 
 		}
-
-
 
 
 		/**
 		 * @return string
 		 */
 		public function getName() {
-			return 'config_uneak_date_picker';
+			return 'requestbundle_delete_user';
 		}
 	}

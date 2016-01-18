@@ -13,3 +13,8 @@ services:
         class: Uneak\FieldSearchBundle\Field\SearchType\IntegerSearchType
         tags:
             -  { name: uneak.fieldsearchmanager.field, alias_search: "search_integer", field_data: "integer" }
+
+    uneak.fieldsearch.config.type.boolean:
+        class: Uneak\FieldSearchBundle\Field\SearchType\BooleanSearchType
+        tags:
+            -  { name: uneak.fieldsearchmanager.field, alias_search: "search_boolean", field_data: "boolean" }
